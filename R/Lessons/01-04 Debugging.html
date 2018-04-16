@@ -1,0 +1,314 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=MichiganSt-1906753" target="_self">Mathematical Operations</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=MichiganSt-1914236" target="_self">Strings and Inputs</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">01-04: Debugging</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Set up RStudio diagnostics to help find errors in your code</li>
+<li>Find syntax errors in your script using the Console Window</li>
+<li>Find logic errors in your script using the Environment Window</li>
+<li>Use breakpoints to pause you script</li>
+</ul>
+<h2>Concepts</h2>
+<h2>RStudio Diagnostics</h2>
+<p>RStudio has real-time debugging (called <em class="hl">diagnostics</em>) that you can turn on by clicking: <em><strong>Tools</strong> </em>-&gt; <em><strong>Global Options</strong></em> -&gt; <em><strong>Code</strong> </em>-&gt; <em><strong>Diagnostics.</strong> </em></p>
+<p><em><strong></strong></em></p>
+<p><em></em>You should check everything on the page (<em class="figureRef" title="diagnostics">fig</em>) <em class="hl">except</em> "Provide R style diagnostics", which is not particularly helpful</p>
+<p><img src="../Images/R-01-04%20Debug%20Options.PNG" alt="" class="fs" /></p>
+<h5 class="" id="diagnostics">RStudio diagnostic settings page.</h5>
+<p></p>
+<p>RStudio diagnostics works in the background checking your script for certain issue. RStudio diagnostics will not run properly unless:</p>
+<ol>
+<li>You have saved your script file (i.e., your script does not still have the name <em><strong>Untitled1</strong></em>).</li>
+<li>You use semicolons ( <em><strong>;</strong></em> ) to end your code statements.</li>
+<li>You have curly brackets ( <em><strong>{ }</strong></em> ) at the start and end of your script.</li>
+</ol>
+<p>Note: Most R script you will run across do not use semicolons or put curly brackets at the beginning and end.</p>
+<p>&nbsp;</p>
+<p>The two main issues that diagnostics will warn you about are:</p>
+<ol>
+<li>You use variables that have not been declared (i.e., no variable exists with that name)</li>
+<li>You are missing a matching start or end quote, bracket, or parentheses.</li>
+</ol>
+<h3>Yellow Triangle: variable used that is not declared</h3>
+<p>A yellow triangle (<em class="figureRef" title="undeclared">fig</em>) will be placed on any line that is using a variable that has not previously been declared:</p>
+<h6>rm(list=ls()); <br />options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>time = 10;</h6>
+<h6>velocity = distance/time;&nbsp; # distance is undeclared variable</h6>
+<p></p>
+<p><img src="../Images/R-01-04%20Undeclared%20variable.PNG" alt="" class="fs" /></p>
+<h5 class="" id="undeclared">A yellow triangle appears where there is an undeclared variable.</h5>
+<p></p>
+<p>This often happens because a variable name is misspelled.&nbsp; In the following example, velocity is initially declared with a lowercase <em><strong>v</strong></em>, but later it is spelled with an uppercase<em><strong> V</strong></em>.&nbsp; Remember, case counts and changing the case means you have changed the name.</p>
+<p></p>
+<h6>rm(list=ls()); <br />options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>velocity = 10;&nbsp;</h6>
+<h6>mass = 3;</h6>
+<h6>kineticEnergy = (1/2)*mass*Velocity^2;&nbsp; # velocity is "spelled" wrong</h6>
+<p></p>
+<p>If you hover over the yellow triangle (<em class="figureRef" title="hover">fig</em>), a message appears that Velocity is not a valid variable (symbol) -- and then offers a suggestion for what you might have meant.</p>
+<p></p>
+<p><img src="../Images/R-01-04%20Mispelled%20Variable.PNG" alt="" class="fs" /></p>
+<h5 class="" id="hover">Hovering over the yellow triangle gives some helpful information about the error.</h5>
+<h3>Red X: Missing a matching quote, parenthesis, or bracket</h3>
+<p>A red X almost always means that there is a quote, parenthesis, or bracket missing.&nbsp; When this happens, you will often see multiple red x's (<em class="figureRef" title="missingParen">fig</em>) -- RStudio diagnostics is not quite robust enough to figure out the exact line.&nbsp; It is best to start with the first line that has a red x and move down until you identify the issue.</p>
+<p></p>
+<p>The following script has a missing end parenthesis on line 2:</p>
+<h6>rm(list=ls();&nbsp; # missing end parenthesis <br />options(show.error.locations = TRUE); <br /> <br />distance = 10;<br />time = 5;<br />velocity = distance/time;</h6>
+<p></p>
+<p><img src="../Images/R-01-04%20Missing%20parenthesis.PNG" alt="" class="fs" /></p>
+<h5 class="" id="missingParen">Missing end parenthesis on line 2 causing RStudio to place red a X on subsequent lines.</h5>
+<p></p>
+<p>Here is another example with a missing parenthesis</p>
+<h6>rm(list=ls());<br /> options(show.error.locations = TRUE);<br /> <br /> velocity = 10; <br /> mass = 3;<br /> kineticEnergy = 1/2)*mass*velocity^2;&nbsp; # missing parenthesis</h6>
+<p></p>
+<p>Hovering over the red X (<em class="figureRef" title="hover2">fig</em>) gives some hints:</p>
+<ol>
+<li>the end parenthesis was unexpected (because there was no start parenthesis)</li>
+<li>the <strong>*</strong> was unexpected (this is a cascade error that gets fixed when you correct the first issue)</li>
+</ol>
+<p></p>
+<p><img src="../Images/R-01-04%20Missing%20parenthesis2.PNG" alt="" class="fs" /></p>
+<h5 class="" id="hover2">Hovering over the red X which indicated the missing parenthesis.</h5>
+<h2>Debugging Errors</h2>
+<p>In programming tiny mistakes can easily propagate especially as scripts get longer and more complicated -- and these mistakes can cause huge problems if they are not resolved.&nbsp; <em><span class="hl">Debugging</span> </em>helps you ferret out these tiny errors and is a vital part of maintaining a larger script.&nbsp;</p>
+<p></p>
+<p>In RStudio, there are three levels of debugging:</p>
+<ol>
+<li>Using the Console Window to debug <span style="color: #990000;"><em class="hl">syntax errors</em></span></li>
+<li>Using the Environment Window to debug<em><span class="hl"> logic errors</span></em></li>
+<li>Using <em><span class="hl">breakpoints</span> </em>to examine the script in the middle of execution</li>
+</ol>
+<h3>Using console to debugging syntax errors</h3>
+<p>The simplest form of debugging is to use the Console Window to check for syntax errors in your code.&nbsp; Syntax errors prevent the script from moving forward because the script is being told to do something it cannot do. <em class="hl">R will stop execution of the script at the first syntax error it finds </em>-- so all code beyond that point will not be executed.&nbsp; The mistakes indicated by the yellow triangle and the red X are examples of syntax errors.</p>
+<p></p>
+<p>Examples of syntax errors include:</p>
+<ol>
+<li>Using an undeclared variable</li>
+<li>Forgetting to use the multiplication operator</li>
+<li>Forgetting to start or end a set of parentheses</li>
+</ol>
+<h4>Using an undeclared variable</h4>
+<h6>rm(list=ls()); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
+<h6>options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>finalDistance = 10;</h6>
+<h6>initDistance = 50;</h6>
+<h6>finalTime = 20;</h6>
+<h6>initTime = 15;</h6>
+<h6>velocity = (finalDistance - initDistance) / (finaltime - <em class="hl">initialTime</em>);</h6>
+<h6>mass = 100;</h6>
+<h6>kineticEnergy = (1/2)*mass*velocity^2;&nbsp;</h6>
+<p></p>
+<p>The Console Window error is: "<em class="hl">object 'initialTime' not found</em>" because <em><strong>initialTime </strong></em>has not been declared as a variable (i.e., it does not exist in your script).</p>
+<p></p>
+<p><img src="../Images/R-01-04%20object%20not%20found.PNG" alt="" class="fs" /></p>
+<h5 class="" id="undeclared">Object not found error because of an undeclared variable</h5>
+<p></p>
+<h4>Forgetting to use the multiplication operation</h4>
+<h6>rm(list=ls()); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
+<h6>options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>finalDistance = 10;</h6>
+<h6>initDistance = 50;</h6>
+<h6>finalTime = 20;</h6>
+<h6>initTime = 15;</h6>
+<h6>velocity = (finalDistance - initDistance) / (finaltime - initTime);</h6>
+<h6>mass = 100;</h6>
+<h6>kineticEnergy = <em class="hl">(1/2)mass</em>*velocity^2;</h6>
+<p></p>
+<p>Console Window error: "<em class="hl">unexpected symbol</em>" because the script is looking for an operator after<em><strong> (1/2)</strong><strong></strong></em> and gets a variable, <em><strong>mass</strong></em>, instead</p>
+<p></p>
+<p><img src="../Images/R-01-04%20unexpected%20symbol.PNG" alt="" class="fs" /></p>
+<h5>Unexpected symbol error because of the missing multiplication symbol</h5>
+<p></p>
+<h4>Forgetting to end a set of parentheses</h4>
+<h6>rm(list=ls()); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
+<h6>options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>finalDistance = 10;</h6>
+<h6>initDistance = 50;</h6>
+<h6>finalTime = 20;</h6>
+<h6>initTime = 15;</h6>
+<h6>velocity = (finalDistance - initDistance) / (finalTime - initTim<em class="hl">e;</em></h6>
+<h6>mass = 100;</h6>
+<h6>kineticEnergy = (1/2)*mass*velocity^2;</h6>
+<p></p>
+<p>The Console Window (<em class="figureRef" title="parenthesis">Fig</em>) puts a caret (<em><strong> ^ </strong></em>) under the semicolon (<strong><em> ; </em></strong>) and the error is "<em><span style="color: #990000;">unexpected ';'</span></em>" .&nbsp;</p>
+<p>R was expecting the closing parenthesis to come before the semicolon, which indicates the end of the statement.</p>
+<p></p>
+<p><img src="../Images/R-01-04%20unexpected%20semicolon.PNG" alt="" class="fs" /></p>
+<h5 class="" id="parenthesis">Unexpected ";" error because the closing parenthesis is missing</h5>
+<p></p>
+<p>This type of error is common as there are many characters used in scripting that require matching opening and closing characters:</p>
+<ul>
+<li>square brackets<strong></strong><em><strong>: [&nbsp;</strong></em><strong> </strong><em><strong>]</strong></em></li>
+<li>curly brackets<strong></strong><em><strong>: </strong></em><em><strong>{&nbsp;</strong></em><em><strong> }</strong></em></li>
+<li>parentheses:<strong> </strong><em><strong></strong></em><em><strong>( </strong></em><em><strong>)</strong></em></li>
+<li>double quotes: <em><strong>" </strong></em><strong></strong><em><strong> "</strong></em></li>
+<li>single quotes: <em><strong>'</strong></em><em><strong> </strong></em><strong></strong><em><strong> ' </strong></em><em><strong><br /></strong></em></li>
+</ul>
+<h3>The Environment Window: debugging logic errors</h3>
+<p>Logic errors are any error that results in the script running differently than the user expected.&nbsp; Logic errors are different, and more cryptic, than syntax errors because a script can still run with logic errors but the script will produce unexpected results.&nbsp; These errors are often found by looking at the Environment Window.</p>
+<p></p>
+<p>We will talk about logic errors in future lessons when the coding gets more advanced.&nbsp; For now, the most common logic error is going to be parentheses that need to be added or placed incorrectly.&nbsp;&nbsp;</p>
+<p></p>
+<h4>Parentheses need to be added</h4>
+<h6>rm(list=ls()); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
+<h6>options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>finalDistance = 10;</h6>
+<h6>initDistance = 50;</h6>
+<h6>finalTime = 20;</h6>
+<h6>initTime = 15;</h6>
+<h6>velocity = (finalDistance - initDistance) / finalTime - initTime;</h6>
+<h6>mass = 100;</h6>
+<h6>kineticEnergy = (1/2)*mass*velocity^2;</h6>
+<p></p>
+<p>In the Environment Window, the values for <em><strong>velocity</strong> </em>is <strong>-17</strong> (it should be <strong>-8</strong>) because, in line 9,&nbsp; you are subtracting <em><strong>initTime</strong> </em>from (<em><strong>finalDistance</strong> </em>- <em><strong>initDistance</strong></em>) / <em><strong>finalTime.</strong></em></p>
+<p><em><strong></strong></em></p>
+<p><img src="../Images/R-01-04%20need%20parenthesis.PNG" alt="" class="fs" /></p>
+<h5 class="" id="place">Logic error: parentheses are needed around <strong>(finalTime - initTime)</strong></h5>
+<p></p>
+<h4>Parentheses placed incorrectly</h4>
+<h6>rm(list=ls()); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
+<h6>options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>finalDistance = 10;</h6>
+<h6>initDistance = 50;</h6>
+<h6>finalTime = 20;</h6>
+<h6>initTime = 15;</h6>
+<h6>velocity = (finalDistance - initDistance) / (finalTime - initTime);</h6>
+<h6>mass = 100;</h6>
+<h6>kineticEnergy = (1/2)*<em class="hl">(</em>mass*velocity<em class="hl">)</em>^2;</h6>
+<p></p>
+<p><em><strong>kineticEnergy</strong> </em>is <strong>320000</strong> (should be <strong>3200</strong>) because the script squares <em><strong>mass*velocity</strong></em> instead of squaring just <em><strong>velocity</strong></em>.</p>
+<p></p>
+<p><img src="../Images/R-01-04%20do%20not%20need%20parenthesis.PNG" alt="" class="fs" /></p>
+<h5 class="" id="misplaced">Logic error: parentheses are misplaced around <strong>mass*velocity</strong>.</h5>
+<p></p>
+<p>This problem (<em class="figureRef" title="misplaced">fig</em>) can either be fixed by getting rid of the parentheses:</p>
+<h6 class="p" title="11">kineticEnergy = (1/2)*<em class="hl"></em>mass*velocity<em class="hl"></em>^2;</h6>
+<p></p>
+<p>Or by enclosing only velocity in parentheses:</p>
+<h6 class="p" title="11">kineticEnergy = (1/2)*<em class="hl"></em>mass*(velocity)<em class="hl"></em>^2;</h6>
+<h2 class="application" title="Lesson Practice">Using breakpoints</h2>
+<p>So far all of the debugging in this lesson has happened after the whole script has be executed or while it is being developed. The real power of debugging is the ability to stop the script in the middle of its execution and observe all the variables at that point.&nbsp; RStudio gives you the ability to stop execution at any point in your script using <em class="hl">breakpoints</em>.&nbsp;</p>
+<p></p>
+<p>A <span style="color: #990000;"><span style="color: #000000;"><em class="hl">breakpoint</em></span> </span>is an instruction that says "pause the script here".&nbsp; You can specify which line to stop at by clicking to the left of the line number.&nbsp; Click once and a red dot appears to the left of the line number.&nbsp; Click again and it disappears.&nbsp; You can put a breakpoint on any line <span class="hl">that has executable code </span> -- so you cannot put breakpoints on comment lines or blank lines.</p>
+<p><em><span style="color: #990000;"></span></em></p>
+<p><span class="" style="color: #990000;">Note: <em class="hl">You must save your script before using breakpoints</em>.&nbsp; Copy the script below, save it, put a breakpoint at</span><span class="" style="color: #990000;"> line</span><span class="" style="color: #990000;"></span><span class="" style="color: #990000;"> 10, and execute the script:</span></p>
+<h6>rm(list=ls()); <br /> options(show.error.locations = TRUE);<br /> <br /> finalDistance = 10;<br /> initDistance = 50;<br /> finalTime = 20;<br /> initTime = 15;<br /> <br /> velocity = (finalDistance - initDistance) / (finalTime - initTime);</h6>
+<h6></h6>
+<h6># change initDistance and recalculate velocity<br /> initDistance = -10;<br /> velocity2 = (finalDistance - initDistance) / (finalTime - initTime);</h6>
+<p><span style="color: #660000;"><span style="color: #000000;"></span></span></p>
+<p>A green arrow now appears to the left of line 10 (<em class="figureRef" title="breakpoint" id="fig-breakpoint">Fig</em>).&nbsp; The arrow indicates that code execution has been stopped at line10 (and line 10 <span style="color: #660000;"><em class="hl">has not been executed</em></span>).&nbsp; Notice that all variables except <em><strong>velocity</strong></em> and <em><strong>velocity2 </strong></em>are in the Environment Window.&nbsp; <em class="hl">This is because <strong>velocity</strong> and <strong>velocity2</strong> have not yet been declared.</em><br /><span style="color: #660000;"><span style="color: #000000;"></span></span></p>
+<p></p>
+<p><img src="../Images/R-01-04%20breakpoint.PNG" alt="" class="fs" /></p>
+<h5 class="" id="breakpoint">Executing a script that has a breakpoint.</h5>
+<p></p>
+<p>The Console Windows has 5 new buttons at the top:</p>
+<ul>
+<li><em><strong>Next</strong></em>: executes only the current line of code and moves the breakpoint to the next line with code</li>
+<li><em><strong>Continue</strong></em>: runs the rest of the script</li>
+<li><em><strong>Stop</strong></em>: ends the script (no more lines are executed)</li>
+<li>The other two buttons (between <em><strong>next</strong> </em>and <em><strong>continue</strong></em>) are used when you are dealing with functions or looping code.</li>
+</ul>
+<p></p>
+<p>With your script stopped at line 10:</p>
+<p>1) Click the <em><strong>next</strong> </em>button.</p>
+<ul>
+<li>This will execute line 10 and move the breakpoint to the <em class="hl">next executable line of code</em>, which is line 13.</li>
+<li><em><strong>velocity</strong></em>, which was assigned a value in line 10, now appears with a value of <em><strong>-8 </strong></em>in the Environment Window (<em class="figureRef" title="line-19" id="fig-line-19">fig</em>).<br /><br /></li>
+</ul>
+<p><img src="../Images/R-01-04%20breakpoint-next.PNG" alt="" class="fs" /></p>
+<h5 class="" id="line-19">Executing one line using the next button</h5>
+<p></p>
+<p>2) Click the <em><strong>next</strong> </em>button again:</p>
+<ul>
+<li>This will execute line 13 and move the breakpoint to the next executable line of code, which is line 14.</li>
+<li><em><strong>initDistance </strong></em>has been reassigned the value of <em><strong>-10 </strong></em>(<em class="figureRef" title="line-20" id="fig-line-20">fig</em>) -- remember variables can change values in a script by simply assigning the variable a new value</li>
+</ul>
+<p></p>
+<p><img src="../Images/R-01-04%20breakpoint-%20reassign%20value.PNG" alt="" class="fs" /></p>
+<h5 class="" id="line-20">Variable gets a new value assigned to it</h5>
+<p></p>
+<p>3) Click the <em><strong>next</strong> </em>button a third time:</p>
+<ul>
+<li>This will execute line 14 and end the script.</li>
+<li><em><strong>velocity2</strong> </em>now appears and has a value in the Environment Window (<em class="figureRef" title="end" id="fig-end">fig</em>).</li>
+</ul>
+<p><span style="color: #660000;"><span style="color: #000000;"></span></span></p>
+<p><span style="color: #660000;"><span style="color: #000000;"><img src="../Images/R-01-04%20breakpoint-%20end%20script.PNG" alt="" class="fs" /></span></span></p>
+<h5 id="end">Debugger reached the end of the script</h5>
+<p><span style="color: #660000;"><span style="color: #000000;"></span></span></p>
+<p><span style="color: #660000;"><span style="color: #000000;">The use of breakpoints is vital when developing large scripts.&nbsp; Large scripts are never developed from top to bottom -- they are often edited in the middle.&nbsp; If you want to debug the area of the script you are editing, you should use breakpoints so that you can see the environment as it exists at the point of the script you want to edit.</span></span></p>
+<h2>Application</h2>
+<p>Find the errors (both syntax and logic) in the following code:</p>
+<p></p>
+<h6>rm(list=ls()) # clean out the environment<br /> options(show.error.locations = TRUE) # give line numbers on errors<br /> <br /> fish1Weight = 45<br /> fish2Weight = 64<br /> fish3Weight = 50<br /> fish4Weight = 58<br /> fish5Weight = 49<br /> <br /> # solve for the mean fish weight<br /> meanWeight = fish1Weight + fish2Weight + Fish3weight + fish4Weight + fish5Weight /5<br /> <br /> # solve the variance for each fish<br /> fish1Var = (fish1Weight - meanWeight)^2<br /> fish2Var = (fish1Weight - meanWeight)^2<br /> fish3Var = (fish1Weight - meanWeight)^2<br /> fish4Var = (fish1Weight - meanWeihgt)^2<br /> fish5Var = (fish1Weight - meanWeight)^2<br /> <br /> # find the variance of the sample<br /> weightVariance = (fish1Var + fish2Var + fish3Var + fish4Var + fishvar5 / 5)<br /> <br /> # solve for the standard deviation in the fish weight<br /> weightStandardDev == (weightVariance) ^ 1/2<br /> <br /> # solve for the 95% confidence interval<br /> Z = 1.960;<br /> lowEnd = meanWeight - z(weightStandardDev / 5^2)<br /> highEnd = meanWeight + z(weightStandardDev / 5^2)</h6>
+<p></p>
+<h2 class="extension" id="declaring">Extension: Declaring variables at beginning of script</h2>
+<p>It is often considered good programming practice to declare all variables at the beginning of the script.&nbsp; One way to think about this is that a script is a recipe and the variables are the ingredients.&nbsp; Just like the ingredients are the resources used in the recipe, the variables are the resources used in the script and. It is best to gather all the ingredients (variables) before you start cooking (programming).</p>
+<p></p>
+<p>This means we should assign a value to variables that don't yet have a value.&nbsp; We can do this using the <em><strong>NULL</strong> </em>value.&nbsp; <em><strong>NULL</strong> </em>is a common programming tern that means there is no value.&nbsp; In the code below, <em><strong>velocity</strong> </em>and <em><strong>kineticEnergy</strong> </em>are assigned the value <strong>NULL</strong> in the declaration section and are later assigned a calculated value.</p>
+<p></p>
+<h6>rm(list=ls()); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
+<h6>options(show.error.locations = TRUE);&nbsp;</h6>
+<h6>&nbsp;</h6>
+<h6>##### declaration section</h6>
+<h6>finalDistance = 10;</h6>
+<h6>initDistance = 50;</h6>
+<h6>finalTime = 20;</h6>
+<h6>initTime = 15;</h6>
+<h6>mass = 100;</h6>
+<h6>velocity = NULL;</h6>
+<h6>kineticEnergy = NULL;</h6>
+<h6>##### end of declaration section</h6>
+<h6>&nbsp;</h6>
+<h6>velocity = (finalDistance - initDistance) / (finalTime - initTime);</h6>
+<h6>kineticEnergy = (1/2)*mass*velocity^2;</h6>
+<p></p>
+<p>Such declarations are not required in R like they are in other programming languages, but they can help with script organization.</p>
+<h2 class="extension" id="declarations">Extension: Declarations in other programming languages</h2>
+<p>In many programming languages, including C, variables must be declared with a name <em class="hl">and a type</em>. In C you need to be explicit about the type of value because C allocates resources for variables before it executes the code whereas R allocates resources on the fly -- so R will allocate the necessary resources when it sees the assigned value.</p>
+<p></p>
+<p>So, if you were doing the calculation <em><strong>velocity</strong> </em>=<em><strong> distance/time</strong></em> in C you would need to declare<em><strong> velocity, distance</strong></em>, and <em><strong>time </strong></em>as decimal numbers, which C calls <em><strong>float</strong></em>.&nbsp; After the variables are declared, you can assign values to them.</p>
+<h6 class="p">float distance;</h6>
+<h6>float time;</h6>
+<h6>float velocity;</h6>
+<h6>distance = 10;</h6>
+<h6>time = 5;</h6>
+<h6>velocity = distance/time;</h6>
+<p></p>
+<p>If you do not declare variables (below), you would get three <em class="hl">variable not declared</em> errors in C (one for each variable):</p>
+<h6 class="p">distance = 10;</h6>
+<h6>time = 5;</h6>
+<h6>velocity = distance/ time;</h6>
+</body>
+</html>

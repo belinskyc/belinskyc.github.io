@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2044334" target="_self">Functions 2</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2268078" target="_self">Data Frame Manipulation</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">03-01: Packages</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Introduce R packages</li>
+<li>Connect to the NOAA/NCDC database using a package</li>
+<li>Get weather data from the NOAA/NCDC database</li>
+</ul>
+<h2>Concepts<em><br /></em></h2>
+<h2>The NOAA/NCDC Climate database</h2>
+<p>For the majority of the unit, we will be using weather data from the NOAA/NCDC governmental databases.&nbsp; The weather databases are free to use but you first need to get a <em class="hl">token</em>, which is similar to a password.&nbsp; So, before we write script to connect to the database, let's get the token.</p>
+<p></p>
+<p>You can <a href="https://www.ncdc.noaa.gov/cdo-web/token" target="_blank" rel="noopener noreferrer">register for a token on this page</a>.&nbsp; Just put in your email address and NOAA/NCDC will send a very random looking 32 character string to your email.&nbsp; This 32 character string is your token and allows you to access the climate database.&nbsp; Don't forget to check your SPAM folder for the email if you don't receive it right away. I have tested it a few times and got the email within 1 minute each time.</p>
+<p></p>
+<p><img src="../Images/R-03-01%20token%20email.PNG" alt="" class="fs" /></p>
+<h5>The email from NOAA/NCDC with your token.</h5>
+<h3>Using toolbox.r for the token</h3>
+<p>The token is used as a parameter whenever you make a call to the NOAA/NCDC database in your script.&nbsp; It would be nice to keep the 32 character token in a place where you can access it easily and not have to remember it.&nbsp; One place to keep the token is inside your <em><strong>toolbox.r</strong> </em>script file.&nbsp;</p>
+<p></p>
+<p>Just add this line at the top of the<em><strong class="hl"> toolbox.r</strong></em> file:</p>
+<h6>myToken = "<em class="partial">put your 32 character token her</em>e";</h6>
+<p></p>
+<p>Now you just need to include<em><strong> toolbox.r</strong> </em>in any script where you access the NOAA/NCDC database and you can use <em><strong>myToken</strong> </em>to represent the 32 character token.</p>
+<p></p>
+<p>Let's start a new script that includes<em><strong> toolbox.r.</strong></em>&nbsp; To include a script file inside another script file, you use the <em><strong>source()</strong></em> function and set the parameter <em><strong>file</strong> </em>to the location of <strong>toolbox.r</strong>.&nbsp; Note: <em class="hl">"scripts/toolbox.r"</em> assumes that you have saved<em><strong> toolbox.r</strong></em> inside the <em><strong>scripts</strong> </em>folder in your <em><strong>R Root</strong></em> folder.&nbsp;</p>
+<h6 class="">rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6 class="partial"></h6>
+<h6 class="partial">source(file="scripts/toolbox.r");</h6>
+<p></p>
+<p>Because you have included <em><strong>toolbox.r</strong></em>, you now have access to <em><strong>myToken</strong> </em>inside your new script file.</p>
+<p></p>
+<p><img src="../Images/R-03-01%20toolbox-token.PNG" alt="" class="fs" /></p>
+<h5>Including the<strong> toolbox.r</strong> script with the <strong>myToken</strong> variable.</h5>
+<h2>Packages (or, other peoples' functions)</h2>
+<p>In the last lesson we used some plot functions like <em><strong>boxplot(</strong><strong>)</strong></em> and <em><strong>hist()</strong></em>.&nbsp; These functions exist in the&nbsp;&nbsp;<a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html" target="_blank" rel="noopener noreferrer">R Base Package</a> -- the R Base Package is script that contains a large list of built-in functions.&nbsp; However, as we saw in the last lesson, you can create a file that contains your own functions.&nbsp; In fact, many people have done this and created their own public scripts that contain related functions.&nbsp; These public scripts are called <em class="hl">packages</em>.&nbsp;</p>
+<p></p>
+<p>In the next few lessons we will work with two packages: <strong><a href="https://cran.r-project.org/web/packages/rnoaa/rnoaa.pdf" target="_blank" rel="noopener noreferrer">rnoaa </a></strong>and <strong><a href="https://cran.r-project.org/web/packages/reshape2/reshape2.pdf" target="_blank" rel="noopener noreferrer">reshape2</a></strong>.&nbsp; The functions in the <strong>rnoaa</strong> package allow you to connect to, and gather weather information from, the NOAA/NCDC online weather database.&nbsp; The functions in the <strong>reshape2</strong> package allow you to manipulate (reshape) your data frame.</p>
+<p></p>
+<p>To use the functions inside the <strong>rnoaa</strong> and <strong>reshape2</strong> packages, you need to:</p>
+<ol>
+<li>install <strong>rnoaa</strong> and <strong>reshape2</strong> in R</li>
+<li>include <strong> rnoaa</strong> and <strong>reshape2</strong> in your script</li>
+</ol>
+<h3>Installing the rnoaa and reshape2 package</h3>
+<p>To install the <strong>rnoaa</strong> package in R</p>
+<ol>
+<li>click on <em><strong>Tools -&gt; Install Packages</strong></em>...</li>
+<li>type in <strong>rnoaa</strong> in the Packages textbox</li>
+<li>click on <em><strong>Install</strong> </em>(make sure "Install Dependencies" is checked)</li>
+</ol>
+<p></p>
+<p><img src="../Images/R-03-01%20Install%20Package.PNG" alt="" class="flexSize" /></p>
+<h5>Installing the <strong>rnoaa</strong> package in R</h5>
+<p></p>
+<p>Repeat the above steps for the <em><strong>reshape2</strong> </em>package.&nbsp; These steps will work for any package you want to install in the future.</p>
+<p></p>
+<p class="linkTo" title="dependencies">Extension: Dependencies</p>
+<h3>Including the packages in your script</h3>
+<p>You still need to tell your script that you are going to use the functions in the <strong>rnoaa</strong> and <strong>reshape2</strong> package, which is done using the <em><strong>library()</strong></em> function with the parameter <strong><em>package</em></strong>.</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6 class="partial"></h6>
+<h6>source(file="script/toolbox.r");</h6>
+<h6 class="partial">library(package="rnoaa");&nbsp;&nbsp;&nbsp; # include functions from the rnoaa package</h6>
+<h6>library(package="reshape2"); # include functions from the reshape2 package</h6>
+<p></p>
+<p>Now your script has access to all of the <strong>rnoaa</strong> and <strong>reshape2</strong> functions -- and, of course, your <em><strong>toolbox.r</strong> </em>script, which has <em><strong>myToken</strong></em>.</p>
+<h2>The rnoaa package</h2>
+<p>A huge disclaimer:&nbsp; the <em><strong>rnoaa</strong> </em>package espouses the problems that exists in many R packages, which includes poor documentation and unintuitive function naming.</p>
+<p></p>
+<p>The purpose of this lesson is not to give a complete treatise on how to use packages -- it is to give you a starting point and make using packages a little less intimidating.&nbsp;</p>
+<p></p>
+<p>The starting point for finding most R packages is <a href="https://cran.r-project.org/" target="_blank" rel="noopener noreferrer">The Comprehensive R Archive Network (CRAN) website</a>.&nbsp; This website holds pretty much everything R related and you will often see it on R package-related internet searches.</p>
+<p></p>
+<p>When I do a search for "r rnoaa" in google I get:</p>
+<p></p>
+<p><img src="../Images/R-03-01%20CRAN.PNG" alt="" class="fs" /></p>
+<h5>A google search for "r rnoaa" -- with results from the CRAN website.</h5>
+<p>&nbsp;</p>
+<p>The first two results are from the CRAN website (<a href="http://cran.r-project.org" target="_blank" rel="noopener noreferrer">cran.r-project.org</a>) and the next three are linked inside the CRAN website.&nbsp; So, when you see CRAN or cran.r-project.org, you probably have a good starting point for learning about the package.</p>
+<h3>Package home page</h3>
+<p>For every package homepage inside CRAN, there are two links that are important: the <strong>URL </strong>and the<strong> Reference Manual</strong>.&nbsp; The URL takes you to the main page for the package and the reference manual is a pdf that lists every function inside the<em> </em>package.&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-03-01%20Package%20main%20page.PNG" alt="" class="fs" /></p>
+<h5>The homepage for the rnoaa package.</h5>
+<p></p>
+<p>The <em><strong>rnoaa</strong> </em>pdf lists way more functions than you will ever use.&nbsp; Most of the functions listed are <em class="hl">helper functions</em>, or functions used by other functions inside the package.&nbsp; Helper function are rarely directly called by the user but the documentation does not differentiate the helper functions from the main functions.&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-03-01%20rnoaa%20functions.PNG" alt="" class="fs" /></p>
+<h5>A partial list of functions on page 2 of the rnoaa pdf.</h5>
+<p></p>
+<p>Finding out which functions to use can be tricky but if you go through the community page at the <strong>URL</strong> you will notice that the function<em><strong> ncdc()</strong> </em>is often used to get weather data.&nbsp; In fact <em><strong>ncdc()</strong> </em>is meant to be the broad function that links to the NOAA/NCDC databases and this is the function we will use.</p>
+<h2>Getting data using the rnoaa package</h2>
+<p>We want to get all of the weather information for 2016 from Lansing, Michigan.&nbsp; To do this we will use the <em><strong>ncdc() </strong></em>function in the <strong>weatherData</strong> package.</p>
+<p></p>
+<p><em><strong>ncdc() </strong></em>looks like this (from page 9 on the <a href="https://cran.r-project.org/web/packages/rnoaa/rnoaa.pdf" target="_blank" rel="noopener noreferrer">rnoaa.pdf</a>):</p>
+<h6 class="partial">ncdc(datasetid = NULL, datatypeid = NULL, stationid = NULL,<br />&nbsp;&nbsp;&nbsp;&nbsp; locationid = NULL, startdate = NULL, enddate = NULL, sortfield = NULL,<br />&nbsp;&nbsp;&nbsp;&nbsp; sortorder = NULL, limit = 25, offset = NULL, token = NULL,<br />&nbsp;&nbsp;&nbsp;&nbsp; dataset = NULL, datatype = NULL, station = NULL, location = NULL,<br />&nbsp;&nbsp;&nbsp;&nbsp; locationtype = NULL, page = NULL, year = NULL, month = NULL,<br />&nbsp;&nbsp;&nbsp;&nbsp; day = NULL, includemetadata = TRUE, results = NULL, ...)</h6>
+<p></p>
+<p>The ( <strong>... )</strong> at the end of <em><strong>ncdc()</strong></em> means there are many more optional parameters to change but we have no need to change the default values on any of these parameters.</p>
+<p></p>
+<p>The parameters we will be changing in <em><strong>ncdc()</strong></em> are (i.e., the parameters whose values we will change from the default value):</p>
+<ul>
+<li><em><strong>datasetid</strong></em>: the database we want the data from</li>
+<li><em><strong>datatypeid</strong></em>: the data we want from the database</li>
+<li><em><strong>stationid</strong></em>: the weather station we are getting data from</li>
+<li><em><strong>startdate</strong></em>: start date for the data</li>
+<li><em><strong> enddate</strong></em>: end date for the data</li>
+<li><em><strong>token</strong></em>: the 32 character token you got from NOAA/NCDC</li>
+<li><em><strong> limit</strong></em>: the maximum number of data points that will be returned to you</li>
+</ul>
+<h3>Using your token</h3>
+<p>We have <em><strong>toolbox.r</strong></em> included in our script and <em><strong>toolbox.r</strong></em> has a variable named <em><strong>myToken</strong> </em>that was assigned the 32 character token you got from&nbsp; NOAA/NCDC.&nbsp; So we can use <em><strong>myToken</strong> </em>as the token:</p>
+<p></p>
+<h6 class="partial">token = myToken</h6>
+<h3>The limit parameter</h3>
+<p>The <em><strong>limit</strong> </em>parameter is the maximum amount of data you will get.&nbsp; This is mostly to protect NOAA/NCDC from people accidentally (or maliciously) requesting millions of data points and crashing the server!&nbsp; The highest number you can put is 1000.&nbsp; You generally want to put in a number that is a little higher than the amount of data you expect to receive. We are getting 10 data points for every day for one month so we are getting around 300 data points.&nbsp; To be safe, we will set the limit to 400.&nbsp;</p>
+<p></p>
+<h6 class="partial">limit = 400</h6>
+<p></p>
+<p>Note: If you do not receive all the data from NOAA/NCDC that you requested, there is a good chance that NOAA/NCDC cut off the data because there were too may data points.&nbsp; It is easy to miscalculate the number of data points, so it is always good idea to check the data you received for completeness.</p>
+<h3>The start and end date parameters</h3>
+<p>Alright, lets get to the real data.&nbsp; <em><strong>startdate</strong> </em>and <em><strong>enddate</strong> </em>are just like they sound -- they give the date range for the data.</p>
+<p></p>
+<p>We want all of January 2016 so:</p>
+<p></p>
+<h6 class="partial">startdate = "2016-01-01", enddate = "2016-01-31"</h6>
+<p>note the YEAR-MONTH-DAY format for the dates.</p>
+<h3>The datasetid parameter</h3>
+<p><em><strong>datasetid</strong> (data set id) </em>is the name of the database you want to get data from.&nbsp;</p>
+<p></p>
+<p>We are going to using the Global Historical Climatology Network-Daily database -- the id is <em><strong>GHCND</strong></em>.</p>
+<p></p>
+<h6 class="partial">datasetid = "GHCND"</h6>
+<p></p>
+<p class="linkTo" title="datasetid">Extension: Finding the datasetid</p>
+<h3>The stationid parameter</h3>
+<p>The <em><strong>stationid</strong> </em>is a unique string for a weather station that is 17 characters long and starts with "GHCND:".&nbsp; <a href="https://www.ncdc.noaa.gov/cdo-web/results" target="_blank" rel="noopener noreferrer">You can find station ids on this page</a>.&nbsp; Just type in a search parameter and click "Search".</p>
+<p></p>
+<p>For this lesson we will use the Lansing Capital City Airport station -- id: <strong>GHCND:USW00014836</strong></p>
+<p></p>
+<h6 class="partial">stationid = "GHCND:USW00014836"</h6>
+<p></p>
+<p><img src="../Images/R-03-01%20StationID.PNG" alt="" class="flexSize" /></p>
+<h5>Searching for a station id -- in this case we will use the one at Lansing Airport</h5>
+<h3>the datatypeid</h3>
+<p>Finally, we need to tell NOAA/NCDC what kind of data we want (e.g., temperature, rainfall, etc).&nbsp;</p>
+<p></p>
+<p>If you go to the<a href="https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USW00014836/detail" target="_blank" rel="noopener noreferrer"> Lansing Capital City Airport station page </a>and scroll to the bottom, you will see a section called <em><strong>Available Data Type.</strong></em> Clicking on the categories produces a list of data types and their 4 digit code.&nbsp; It is these 4 digits codes that are used for the <em><strong>datatypeid</strong></em>.</p>
+<p></p>
+<p><img src="../Images/R-03-01%20datatypeids.PNG" alt="" class="fs" /></p>
+<h5>Location of the 4-digit <strong>datatypeids</strong>.</h5>
+<p></p>
+<p>For this example, we will use the following codes:</p>
+<p>TMAX, TAVG, TMIN, PRCP, SNOW, AWND, WDF2, WSF2, WT01, WT09</p>
+<p></p>
+<p>We need to put these IDs in a vector to assign them to the parameter <em><strong>datatypeid</strong></em></p>
+<h6 class="partial">datatypeid=c("TMAX", "TAVG", "TMIN", "PRCP", "SNOW", "AWND",</h6>
+<h6 class="partial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "WDF2", "WSF2", "WT01", "WT09")</h6>
+<p></p>
+<p>Note: if you are really bored and want to know everything about the data contained with the GHCND data set,<a href="https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/readme.txt" target="_blank" rel="noopener noreferrer"> you can consult this document.</a></p>
+<h3>Putting the function together</h3>
+<p>Here is the full function call to NOAA/NCDC with all the parameters.&nbsp; I assign the return value from <em><strong>ncdc()</strong> </em>to the variable <em><strong>lansingWeather</strong></em></p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>source("scripts/toolbox.r");</h6>
+<h6 class="partial">library("rnoaa");&nbsp;&nbsp;&nbsp; # include functions from the rnoaa package</h6>
+<h6>library("reshape2"); # include functions from the reshape2 package</h6>
+<h6></h6>
+<h6 class="">lansingWeather =&nbsp; ncdc(datasetid='GHCND', <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; datatypeid=c("TMAX", "TAVG", "TMIN", "PRCP", <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "SNOW", "AWND", "WDF2", "WSF2",&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "WT01", "WT02", "WT03"),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; stationid='GHCND:USW00014836', <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; startdate = '2016-01-01', enddate ='2016-01-31',<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; token=myToken,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; limit=400 );</h6>
+<p></p>
+<p><em><strong>ncdc()</strong></em> <em><strong>lansingWeather</strong> </em>is a list.&nbsp; You can think of lists as folders that contain objects like vectors, data frames, matrices, or even other lists (e.g., folder inside a folder).&nbsp; In this case, the list <em><strong>weatherData</strong></em> contains two objects: <em><strong>meta</strong>, </em>another list,<em> </em>and <em><strong>data</strong></em>, a data frame.&nbsp; <em><strong>data</strong> </em>contains the weather information we requested.</p>
+<p></p>
+<p><img src="../Images/R-03-01%20Return%20list.PNG" alt="" class="flexSize" /></p>
+<h5><strong>list</strong> object return from the function call to the NOAA/NCDC database.</h5>
+<p></p>
+<p>Note: We are making requests to the NOAA/NCDC servers and these severs are not the fastest, so it might take some time for your script to run. </p>
+<h3>Subsetting a list</h3>
+<p>We want to extract the data frame <em><strong>data</strong> </em>from the <strong>list</strong> object named <em><strong>lansingWeather</strong></em>. Essentially we want to pull an object out of <em><strong>lansingWeather</strong>.&nbsp; </em>To pull an object out of a list,<em> </em><em></em>we use double brackets [[ ]].&nbsp; Note: to subset a data frame we used single brackets [ ].</p>
+<p></p>
+<p>The following line gets the data frame named <em><strong>data</strong> </em>from the <em><strong>lansingWeather</strong> </em>list and saves it to the variable <em><strong>lansingWeatherDF</strong></em>.</p>
+<h6 class="partial">lansingWeatherDF = lansingWeather[["data"]];</h6>
+<h2>Application</h2>
+<ol>
+<li>Get the following data for December 2016 through February 2017 in Lansing, MI:&nbsp; <strong>PRCP, SNOW, TAVG, TMAX, TMIN</strong></li>
+<li><em></em>Save the data frame (<em><strong>data</strong></em>) from the list to a variable named <em><strong>lansingWinterWeather</strong></em></li>
+</ol>
+<h2 class="extension" id="dependencies">Extension: Dependencies</h2>
+<p>A package is just somebody else's script that you are including in your own script file.&nbsp; These packages are almost always dependent upon other scripts, or packages.&nbsp; These are its <em class="hl">dependencies </em>and the dependencies get installed with the package.&nbsp; That is why you might see something like this when installing a package:</p>
+<p></p>
+<p><img src="../Images/R-03-01%20Dependencies.PNG" alt="" class="fs" /></p>
+<h5>Installing <strong>reshape2</strong> package, which has 5 package dependencies.</h5>
+<p></p>
+<p><em><strong>Reshape2</strong> </em>is dependent upon 5 other packages and RStudio has installed those packages for you, too (because you had "Install Dependencies" checked).</p>
+<h2 class="extension" id="datasetid">Extension: Finding the datasetid</h2>
+<p>Unfortunately, the help pages for the NOAA/NCDC databases are quite lacking, so finding what the names of the databases (i.e., the <em><strong>datasetid</strong></em>) is not elementary.</p>
+<p></p>
+<p><a href="https://www.ncdc.noaa.gov/cdo-web/datasets" target="_blank" rel="noopener noreferrer">This webpage </a>presents the different data sets but does not give you the ids.&nbsp; I still have not found good documentation about this, however, <em><strong>GHCND</strong> </em>is probably the most common <em><strong>datasetid</strong></em>.</p>
+</body>
+</html>

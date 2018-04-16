@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../AuxFiles/Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../AuxFiles/Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	<style type="text/css">
+		/* These styles are repeated in the stylesheet bu the D2L editor
+			does not read the stylesheet so these are used to make the
+			editor more user-friendly */
+		h1 
+		{ } 
+		h2
+		{ margin-top: 0px; margin-bottom: 0px; padding: 0px; text-align: left; }
+		p
+		{ margin:0px; }
+		table
+		{ margin-bottom: 10px; width: 100%; } 
+		td 
+		{ height: 18px; }
+		ul,ol
+		{ margin-top: 0px; padding-top: 0px; margin-bottom:0px; padding-bottom: 0px; }
+		body
+		{ font-size: 14px; }
+
+	</style>
+</head>
+
+<body>
+<table class="lessonLink previousLesson" id="p1" title="link to previous lesson">
+<tbody>
+<tr>
+<td>Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=MichiganSt-1878686" target="_self">R Installation</a></td>
+</tr>
+</tbody>
+</table>
+<table class="lessonLink nextLesson" id="p2" title="link to next lesson">
+<tbody>
+<tr>
+<td>Up next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=MichiganSt-1889299" target="_self"> Mathematics Operations</a></td>
+</tr>
+</tbody>
+</table>
+<table class="title" id="p3" title="title of current lesson">
+<tbody>
+<tr style="height: 18px;">
+<td style="height: 18px;" class="">
+<p style="padding: 0;">Variables</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="purpose" id="p4" title="Purpose of the lesson">
+<tbody>
+<tr>
+<th>
+<h2>Purpose</h2>
+</th>
+</tr>
+<tr>
+<td>
+<ul>
+<li>Discuss what a programming variable is and how it compares to an algebraic variable.</li>
+<li>Discuss naming conventions for variables.</li>
+<li>Assign values to the variables, and change the value.</li>
+<li>Briefly discuss the different variable types.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="concept" id="p5" title="Lesson Concepts">
+<tbody>
+<tr>
+<th>
+<h2>Concepts</h2>
+</th>
+</tr>
+<tr>
+<td><iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/811482/sp/81148200/embedIframeJs/uiconf_id/27554931/partner_id/811482?iframeembed=true&amp;playerId=kaltura_player&amp;entry_id=1_82ipmmoq&amp;flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[leadWithHTML5]=true&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;&amp;wid=1_3f76xvmo" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" width="480" height="306" frameborder="0"></iframe></td>
+</tr>
+</tbody>
+</table>
+<table class="activities programming content" id="p6" title="Lesson Examples" style="width: 907px;">
+<tbody>
+<tr style="height: 26px;">
+<th style="height: 26px; width: 897px;">
+<h2>Instruction: Intro to variables</h2>
+</th>
+</tr>
+<tr>
+<td style="width: 897px;">
+<p>In Physics properties are algebraically denoted by some symbol and the symbol can represent some generic value that can change based on the situation.&nbsp; For example, velocity can be expressed algebraically as&nbsp; <em><strong>v=d/t</strong></em> where <em><strong>v</strong></em>, <em><strong>d</strong></em>, and <em><strong>t</strong></em> are symbols representing the physical properties velocity, distance, and time.&nbsp;</p>
+<p></p>
+<p>In programming, variables work in a similar way.&nbsp; Variables are storage locations that hold information and have three properties: name, type, and value.</p>
+<p></p>
+<h4>Variable name</h4>
+<p>The name corresponds to the symbol in physics.&nbsp; The name is used to reference the storage location that holds the information.&nbsp; For our initial example, we will use the symbols (<em><strong>v,d,t</strong></em>) as the variables' names.&nbsp; Later in this lesson I will talk more about naming conventions.</p>
+<p></p>
+<h4>Variable value&nbsp;</h4>
+<p>The value is the information that is stored in the location.&nbsp; So, when <em><strong>v = 10</strong></em><strong>,</strong> that mean there is a storage location in memory called <em><strong>v</strong></em> and in that location there is the number <em><strong>10</strong></em></p>
+<p></p>
+<h4>Variable type</h4>
+<p>Distance, velocity, and time are have numeric values.&nbsp; This is one type of variables that can be stored in memory. &nbsp; However, there are multiple types of values that can be stored including&nbsp; Boolean (true/false), strings, categorical.&nbsp; The type of variable you have because that determines the operation that you can perform on it.&nbsp; For instance, multiplication makes sense on a numeric variable but not on a categorical variable.&nbsp; We will talk more about non-numeric variable types in future lessons.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="application answers" id="p13" title="Lesson Practice">
+<tbody>
+<tr style="height: 26px;">
+<th style="height: 26px;">
+<h2>Instruction: Using variables in a script</h2>
+</th>
+</tr>
+<tr style="height: 34.55px;">
+<td style="height: 34.55px;">
+<p>We are going to create a simple program that calculates velocity given a distance and time.&nbsp;</p>
+<p>So there are three variables in this script: <em><strong>d</strong></em>,<em><strong>v</strong></em>, and <em><strong>t</strong></em></p>
+<p></p>
+<p>To do this you need to start a new script, add code to the script, and then run the code.</p>
+<h4>1) Start a new script</h4>
+<p><span style="color: #000000;">Click on File -&gt; New File -&gt; R Script</span></p>
+<p></p>
+<img src="../../AuxFiles/Pics/Variables%20--%20New%20Script.PNG" alt="opoening a script file" title="opoening a script file" class="flexSize" /><br />
+<h4>2) Add code to the script</h4>
+<p>Copy and paste the following lines into the code window</p>
+<pre class=""># the next two lines should, for now, be at the top of all your scripts <br />rm(list=ls())                         # clean out the environment<br />options(show.error.locations = TRUE) &nbsp;# give line numbers on errors<br /><br /># create three variables: d, t, and v<br /># give d and t values and use them to calculate v<br />d = 100<br />t = 20<br />v = d/t</pre>
+<p>- Lines 1, 5, and 6 are comment lines.&nbsp; You can take them out and the script will run exactly the same.&nbsp; Go ahead, try it -- but put the comments back in for your future self.</p>
+<p>- Lines 2 and 3 should go at the beginning of all your script for now.&nbsp; &lt;Extension: First two lines of code &gt;</p>
+<p>- Lines 7, 8, and 9 are where the real action occurs and will be described in more detail after you...</p>
+<h4>3) Run your code</h4>
+<p>Click "source".&nbsp; Your RStudio window should look like this:</p>
+<p></p>
+<p><img src="../../AuxFiles/Pics/Variables%20--%20v-d-t%20script.PNG" alt="velocity, distance, time script" title="velocity, distance, time script" class="flexSize" /></p>
+<p></p>
+<span style="color: #660000;">Note how the environment window (upper-right corner) displays the values of all the variables.&nbsp;&nbsp;</span> <br /><br />
+<p>Lines 7, 8, and 9 each contain an assignment.&nbsp; &lt;extension: &lt;- vs = &gt;</p>
+<p></p>
+<p>Line 7 assigns the value <em><strong>100</strong> </em>to the variable named <em><strong>d</strong></em> <em><strong></strong></em></p>
+<p>Line 8 assigns the value <strong><em>20</em> </strong>to the variable named <em><strong>t</strong></em></p>
+<p>Line 9 assigns the answer to <em><strong>d/v</strong></em> to the variable named <em><strong>v</strong></em>.</p>
+<p></p>
+<p>&lt;TRAP: assignment vs Equality &gt;</p>
+<p></p>
+<p>The environment section (top-right corner) displays the values for <strong><em>v</em></strong>,<strong><em>d</em></strong>, and<strong><em> t</em></strong>.&nbsp;</p>
+<p>Try changing the values for <strong><em>d</em></strong> and <strong><em>t</em></strong> (lines 7 and 8) and click "Source" to see how the environment section changes.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="activities debugging" id="p7" title="Lesson Debug">
+<tbody>
+<tr style="height: 26.9333px;">
+<th style="height: 26.9333px;">
+<h2>Instruction: Re-assigning values to variables</h2>
+</th>
+</tr>
+<tr style="height: 18px;">
+<td style="height: 18px;">
+<p>Variables get their namesake from the fact that their values can change.&nbsp;</p>
+<p></p>
+<p>In the code below...</p>
+<p>1) <strong><em>d</em></strong> is assigned the value <strong><em>100</em> </strong>in line 7</p>
+<p>2) <strong><em>d</em></strong> to used to calculate <em><strong>v</strong></em> in line 9</p>
+<p>3) <strong><em>d</em></strong> is assigned a new value, <em><strong>400,</strong> </em>in line 10</p>
+<p></p>
+<p>Run the code to see what happens</p>
+<pre># the next two lines should, for now, be at the top of all your scripts <br />rm(list=ls())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # clean out the environment<br />options(show.error.locations = TRUE)&nbsp; # give line numbers on errors<br /><br /># create three variables: d, t, and v<br /># give d and t values and use them to calculate v<br />d = 100&nbsp; &nbsp;# assign d to be 100<br />t = 20<br />v = d/t   # use d to calculate v<br />d = 400   # re-assigns d to 400 </pre>
+<p>Notice how the value of <strong><em>v</em></strong> remains <strong><em>5</em></strong> even though <strong><em>d</em></strong> changes.&nbsp;</p>
+<p>This is because line 9 assigns the value of <strong><em>d/t</em></strong> to <strong><em>v.&nbsp; </em></strong><em></em>It does not assign the variables.</p>
+<p>&lt;TRAP: Assigning nonexistent values&gt;</p>
+<p></p>
+<p><em><strong>v</strong> </em>will remain <em><strong>5</strong></em> until it is assigned another value.</p>
+<p>So, if you add the line&nbsp; <strong><em>v=d/t</em></strong> at the end of the script, the value of <strong><em>v</em></strong> will reflect the change to <strong><em>d </em></strong></p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="activities debugging" id="p7" title="Lesson Debug">
+<tbody>
+<tr style="height: 19.9px;">
+<th style="height: 19.9px;">
+<h2>Instruction: Variable naming</h2>
+</th>
+</tr>
+<tr style="height: 18px;">
+<td style="height: 18px;">
+<p>The problem with variable names like <strong><em>v</em></strong>, <strong><em>d</em></strong>, and<strong><em> t</em></strong> is that they are not very descriptive.&nbsp; It is good programming practice to give names that are descriptive so that people reading your code can more easily understand what is going on.&nbsp; So, the first step would be to spell the names out, for example: <strong><em>velocity</em></strong>, <strong><em>distance</em></strong>, and <strong><em>time</em></strong>.</p>
+<p><br />However, it is most likely that a program that is solving for velocity will be calculating multiple velocities.&nbsp; Perhaps is it calculating the speed of both a runner and a car.&nbsp; In this case, the variable names should reflect that.&nbsp;</p>
+<h4>Naming Conventions</h4>
+<p>The are two common programming conventions for variables names:</p>
+<p>1) Capitalize the first letter of every word except the first&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; examples: <strong><em>runnerVelocity</em></strong>, <strong><em>runnerDistance</em></strong>, <strong><em>runnerTime</em></strong></p>
+<p>2) Put an underscore (_) between each word</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; examples:&nbsp;<em><strong> runner_velocity, runner_distance, runner_time</strong></em></p>
+<p>&lt;TRAP: Case Counts&gt;</p>
+<p></p>
+<p>For this class I will use the first convention.&nbsp; For your project, please choose one of these conventions.</p>
+<h4>Naming Rules</h4>
+<p>There are also a few rules for naming a variable:</p>
+<p>1) It must start with a letter</p>
+<p>2) It can only contains letters, numbers, the underscore (_), or dash (-)</p>
+<p>3) There can be no spaces in the name</p>
+<p>4) There are system reserved words you cannot use (e.g., if, else, while, TRUE, FALSE, function, next...)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="suplemental extensions" id="p10" title="Lesson Debug">
+<tbody>
+<tr>
+<th>
+<h2>Trap: Assignment vs. Equality</h2>
+</th>
+</tr>
+<tr>
+<td>
+<p>The equal sign ( <strong><em>=</em></strong> ) in programming plays a different role in programming than in Algebra. &nbsp;</p>
+<p>In algebra the equal sign is an equality operator saying that <span style="color: #660000;">the two sides are equivalent to each-other.</span></p>
+<p></p>
+<p>So, in algebra,<em><strong> v = d/t</strong></em> says that <em><strong>v</strong></em> is equivalent to<em><strong> d</strong></em> divided by<em><strong> t</strong></em></p>
+<p></p>
+<p>In programming, the equals sign is an assignment operator and it says that the <span style="color: #660000;">variable on the left side will be assigned the value calculated on the right side</span>.</p>
+<p></p>
+<p>So, in programming, <em><strong>v = d/t</strong></em> says that<em><strong> v</strong></em> will be assigned the calculation of&nbsp; <em><strong>d</strong></em> divided by <em><strong>t</strong></em></p>
+<p><em><strong></strong></em></p>
+<p>These two operation can result in the exact same output but often they will not.</p>
+<h4>Treating the equal sign as an equality operation</h4>
+<p>A very common error in programming is to treat the assignment operator ( <strong><em>=</em> </strong>) as an equality operator.</p>
+<p>The following statements make sense in algebra as <em>equality statements</em> but will cause errors in R.&nbsp;</p>
+<pre>d/2 = 100   # d/2 is not a valid variable -- you cannot "assign" a value to it (d = 100*2 is valid)<br />100 = d     # '100' cannot be assigned the value of 'd' (d = 100 is valid)<br />d/t = v     # d/t is not a valid variable (v = d/t is valid)</pre>
+<p>The error message is displayed in the console (bottom-right corner).&nbsp; The error message given for the above lines is not intuitive.&nbsp;</p>
+<p>Note that the execution of the script stops when an error occurs.&nbsp;</p>
+<p></p>
+<p>In the following example, line 9 contains an error and the lines below it never get executed</p>
+<p></p>
+<p><img src="../../AuxFiles/Pics/Variables%20--%20assn%20error.PNG" alt="Assinment Error" title="Assinment Error" class="flexSize" /></p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="suplemental shortcuts" id="p11" title="Lesson Debug">
+<tbody>
+<tr>
+<th>
+<h2>Trap: Constants in programming</h2>
+</th>
+</tr>
+<tr>
+<td>
+<p>The name "variable" suggests that the value can be changed and this is usually true. However, mathematical constants like <b><i>&pi;</i></b> do not change, but they are still referred to as variables in programming.&nbsp; In other words, there can be a storage location referred to as <em><strong>pi</strong> </em>that contains the numeric value <em><strong>3.1415</strong></em>. These are often, and confusingly, referred to as "constant variables".</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="activities debugging" id="p7" title="Lesson Debug">
+<tbody>
+<tr>
+<th>
+<h2>Trap: Assigning nonexistent variables</h2>
+</th>
+</tr>
+<tr>
+<td>
+<p>The first time you assign a value to a variable a storage container is created and a value is put in it.&nbsp; We call this a declaration (more about declaration in lesson 4). After a variable has been declared, it can be used in calculations and re-assigned values.&nbsp; Before this point, R knows nothing about the variable-- here is an example of using a variable before it is declared.&nbsp; <span style="color: #660000;">Note: the only change in this script was moving the line <em><strong>v=d/t</strong> </em>before the declaration of <em><strong>d</strong></em> and <em><strong>t</strong></em>.&nbsp;<span style="color: #000000;"> </span></span></p>
+<p></p>
+<pre># the next two lines should, for now, be at the top of all your scripts <br />rm(list=ls())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # clean out the environment<br />options(show.error.locations = TRUE)&nbsp; # give line numbers on errors<br /><br /># create three variables: d, t, and v<br /># give d and t values and use them to calculate v<br />v = d/t<br />d = 100&nbsp; &nbsp;<br />t = 20&nbsp; </pre>
+<p><img src="../../AuxFiles/Pics/VAriables%20--%20assn%20error%202.PNG" alt="Assignment error" title="Assignment error" class="flexSize" /></p>
+<p><span style="color: #660000;"><span style="color: #000000;">&nbsp;</span></span></p>
+<p><span style="color: #660000;"><span style="color: #000000;">There is an error in the console window saying "object 'd'&nbsp; not found". The reason for this error is that, on line 7, the script is asked to assign the calculation<em><strong> d/t</strong></em> to the variable <em><strong>v</strong></em> but</span><em><strong> d</strong></em> and<em><strong> t</strong></em> do not exist yet.<br /></span></p>
+<p><span style="color: #660000;"><span style="color: #000000;"></span></span></p>
+<p><span style="color: #660000;"><span style="color: #000000;">Try the following code and see how the error changes. Note: in this code<em><strong> v=d/t</strong></em> is after the declaration of <em><strong>d</strong></em> but before the declaration of <em><strong>t</strong></em>.<br /></span></span></p>
+<p><span style="color: #660000;"><span style="color: #000000;"></span></span></p>
+<pre># the next two lines should, for now, be at the top of all your scripts <br />rm(list=ls())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # clean out the environment<br />options(show.error.locations = TRUE)&nbsp; # give line numbers on errors<br /><br /># create three variables: d, t, and v<br /># give d and t values and use them to calculate v<br />d = 100<br />v = d/t &nbsp;<br />t = 20&nbsp; </pre>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="activities debugging" id="p7" title="Lesson Debug">
+<tbody>
+<tr>
+<th>
+<h2>Trap: Case counts in variable names</h2>
+</th>
+</tr>
+<tr>
+<td>
+<p>In R, as in most scripting language, uppercase and lowercase letters are always seen as different.</p>
+<p>So, <em><strong>runnersTime</strong> </em>and <em><strong>runnerstime </strong></em> are seen as two different variable names by R</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="activities debugging" id="p7" title="Lesson Debug">
+<tbody>
+<tr>
+<th>
+<h2>Extension: the first two lines of code</h2>
+</th>
+</tr>
+<tr>
+<td>
+<p>The following to lines should, for now, be put at the beginning of any script you create</p>
+<pre>rm(list=ls()) <br />options(show.error.locations = TRUE) </pre>
+<p>Line 1 cleans out the environment window each time the script is executed.&nbsp; This will prevent variables from creeping over...</p>
+<p></p>
+<p>Line 2 adds the line number to an error statement in the console</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="activities debugging" id="p7" title="Lesson Debug">
+<tbody>
+<tr>
+<th>
+<h2>Extension: alternate assignment operator</h2>
+</th>
+</tr>
+<tr>
+<td>
+<p>In R there are two assignment operators, the equal sign ( <strong><em>=</em></strong> ) and the arrow ( <strong><em>&lt;-</em></strong> ).&nbsp; The two operators are completely synonymous.</p>
+<p>In all the code above,&nbsp; ( <em><strong>=</strong></em> ) can be replaced with ( <em><strong>&lt;-</strong></em> ) with no change in functionality, as:</p>
+<pre>d &lt;- 100<br />t &lt;- 20<br />v &lt;- d/t</pre>
+<p>You will see a lot of R programs written using the arrow.&nbsp; In this class, I will use the equal sign because that is the standards for most other programming languages (including JavaScript and C)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="application" id="p12" title="Lesson Practice">
+<tbody>
+<tr style="height: 26px;">
+<th style="height: 26px;">
+<h2>Application</h2>
+</th>
+</tr>
+<tr style="height: 21.5333px;">
+<td style="height: 21.5333px;">
+<p>Write a program that calculates the number of fish per day that are caught at two different locations.</p>
+<p></p>
+<p>At the first location, there were 300 fish caught in 15 days.</p>
+<p></p>
+<p>At the second location, there were 1000 fish caught in 20 days.</p>
+<p></p>
+<p>Make sure you give all variables appropriate names that follow one of the naming conventions.&nbsp; Also, make sure all variables, including the answers, can be seen in the environment window.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="application" id="p14" title="Lesson Practice">
+<tbody>
+<tr style="height: 26px;">
+<th style="height: 26px;">
+<h2>Application1</h2>
+</th>
+</tr>
+<tr style="height: 21.5333px;">
+<td style="height: 21.5333px;"></td>
+</tr>
+</tbody>
+</table>
+<table class="application" id="p15" title="Lesson Practice">
+<tbody>
+<tr style="height: 26px;">
+<th style="height: 26px;">
+<h2>Application2</h2>
+</th>
+</tr>
+<tr style="height: 21.5333px;">
+<td style="height: 21.5333px;"></td>
+</tr>
+</tbody>
+</table>
+<table class="application" id="p16" title="Lesson Practice">
+<tbody>
+<tr style="height: 26px;">
+<th style="height: 26px;">
+<h2>Application3</h2>
+</th>
+</tr>
+<tr style="height: 21.5333px;">
+<td style="height: 21.5333px;"></td>
+</tr>
+</tbody>
+</table>
+<table class="application" id="p17" title="Lesson Practice">
+<tbody>
+<tr style="height: 26px;">
+<th style="height: 26px;">
+<h2>Application4</h2>
+</th>
+</tr>
+<tr style="height: 21.5333px;">
+<td style="height: 21.5333px;"></td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p></p>
+<p></p>
+</body>
+</html>

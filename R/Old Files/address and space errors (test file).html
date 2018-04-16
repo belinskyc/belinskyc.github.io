@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/> 
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=MichiganSt-1924513" target="_self">Conditional Operations</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=MichiganSt-1924514" target="_self">Complex Conditionals</a></p>
+<h1 class="title" id="title">If-Else Statements</h1>
+<h2>Purpose</h2>
+<p>- creating "decision points" in a script using if-statements</p>
+<p>- use conditional operations to determine if code will be executed</p>
+<h2>Concepts</h2>
+<h6>dfasdfsadfsdaf</h6>
+<h6>adfgasdgsdfgdsfgdfs</h6>
+<h6>gdsfgdsfgdsfgfdsgfdsg</h6>
+<h6>dfsgdfsgdfsgfdsgfdsg</h6>
+<h6>dsgfdsgfdsgdfsgfdsfgs</h6>
+<h6>gfdsgdsfgfdgdfsgdfdfs</h6>
+<h2>Decision Points</h2>
+<p>In the last lesson we looked at the if() statement and how it changes the flow of a script by creating decision points.&nbsp; The decision point is based on a conditional statement inside the parenthesis <em><strong>( )</strong></em> of the<em><strong> if()</strong></em>.&nbsp; The code inside the curly brackets<em><strong> {&nbsp;&nbsp; }</strong></em> attached to the<em><strong> if()</strong></em> gets executed only if the conditional statement is <em><strong>TRUE</strong></em>.&nbsp;</p>
+<p></p>
+<p>The next step is to execute code if the conditional statement is FALSE.&nbsp; This is done using the <em><strong>if-else</strong> </em>structure.&nbsp;</p>
+<p></p>
+<h6>if (<span style="color: #00ffff;"><em>&lt;some condition is TRUE&gt;</em></span>)</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; # execute the code between these brackets</h6>
+<h6>}</h6>
+<h6>else # <span style="color: #00ffff;"><em>&lt;some condition is FALSE&gt;</em></span></h6>
+<h6><span style="color: #00ffff;"><em>{</em></span></h6>
+<h6><span style="color: #00ffff;"><em> # execute the code between these brackets</em></span></h6>
+<h6><span style="color: #00ffff;"><em>}</em></span></h6>
+<p><span style="color: #000000;"><em></em></span></p>
+<p><span style="color: #000000;">Now if the condition is TRUE, the code in the curly brackets attached to the if() gets executed. If the condition is FALSE, the code in the curly brackets attached to the else gets executed.<br /></span></p>
+<p><span style="color: #000000;"></span></p>
+<p><span class="linkTo" id="link-skip-brackets">Extension: Skipping brackets</span></p>
+<h3>If-else statements and conditional operators</h3>
+<p>Using the same example from last lesson, we will ask the user their age and, this time, will give a response for both a TRUE condition and a FALSE condition.</p>
+<p></p>
+<h6>rm(list=ls())</h6>
+<h6>options(show.error.locations = TRUE)</h6>
+<h6>yourAge = readline("What is your age? ") # but, R will treat this as a string</h6>
+<h6>yourAge = as.numeric(yourAge) # you need to be explicit that this is a number</h6>
+<h6>if(yourAge &lt; 20)&nbsp; # yourAge is greater than 20</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("You are only ", yourAge, "? You have your whole life ahead of you!!")</h6>
+<h6>}</h6>
+<h6>else # yourAge is not greater than 20 (it is less than or equal to 20)</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp;&nbsp; cat("You are quite the grown up!")</h6>
+<h6>}</h6>
+<p></p>
+<p>If you run this script then the message attached to the <em><strong>if()</strong></em> will be given if the age is less than <span style="color: #990000;"><em>but not equal</em> </span>to 20, and nothing is outputted if the age is greater than <span style="color: #990000;"><em>or equal to</em></span> 20.&nbsp;&nbsp;&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-07-ConditionalOps-Age.PNG" alt="Results when user input different ages" title="Results when user input different ages" class="flexSize" /></p>
+<h3>If-Else statements using strings</h3>
+<p>Conditional operators can also be used to compare two string values.&nbsp; Let's change the above script to one that asks the user for a input that is a string.</p>
+<p></p>
+<h6>rm(list=ls())</h6>
+<h6>options(show.error.locations = TRUE)</h6>
+<h6>favCheese = readline("What is your favorite type of cheese? ")&nbsp;</h6>
+<h6>if(favCheese == "Muenster")&nbsp;&nbsp; # favCheese equal to "Muenster"</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("You are a culinary genius!!")</h6>
+<h6>}</h6>
+<address>
+<h6>else&nbsp;&nbsp; # favCheese not equal to "Muenster"</h6>
+<h6>{</h6>
+<h6>&nbsp; cat(favCheese, "?!? You have much to learn!")</h6>
+<h6>}</h6>
+</address>
+<p></p>
+<p>The first message will only be outputted to the console if the user entered "<em><strong>Muenster"</strong> </em>as the answer -- entering "muenster", "meunster", and "Meunster" will result in the second message being displayed.&nbsp; In&nbsp; the next lesson we will look at how to check for misspellings.</p>
+<p></p>
+<p><img src="../Images/R-07-ConditionalOps-Fav-Animal.PNG" alt="Checking the equivalence of two string values" title="Checking the equivalence of two string values" class="flexSize" /></p>
+<p></p>
+<p>Note that the conditions in the above code can be reverse and the code will run exactly the same<em><strong></strong></em></p>
+<p><em><strong></strong></em></p>
+<h6>rm(list=ls())</h6>
+<h6>options(show.error.locations = TRUE)</h6>
+<h6>favCheese = readline("What is your favorite type of cheese? ")&nbsp;</h6>
+<h6>if(favCheese != "Muenster")&nbsp;&nbsp; # favCheese not equal to "Muenster"</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat(favCheese, "?!? You have much to learn!")</h6>
+<h6>}</h6>
+<address>
+<h6>else&nbsp;&nbsp; # favCheese equal to "Muenster"</h6>
+<h6>{</h6>
+<h6>cat("You are a culinary genius!!")</h6>
+<h6>}</h6>
+</address>
+<h2>Adding in more conditions: If-Else-If Structures</h2>
+<p>Using if-else structures, we are limited to two conditions.&nbsp; However, the examples above contains situations that could easily have more than two conditions.&nbsp; For instance, we might want to check more cheese types than just muenster.&nbsp; Perhaps we want to output a message if the user types in "swiss" or "american".&nbsp;</p>
+<p></p>
+<p>In the code above, the else statement is executed in all situations where favCheese is not "Muenster".&nbsp; We can break down the else statement into more cases by using the if-else-if structure.</p>
+<p></p>
+<h6>rm(list=ls())</h6>
+<h6>options(show.error.locations = TRUE)</h6>
+<h6>favCheese = readline("What is your favorite type of cheese? ")&nbsp;</h6>
+<h6>if(favCheese == "Muenster")&nbsp;{&nbsp;</h6>
+<h6>&nbsp;&nbsp; cat("You are a culinary genius!!")</h6>
+<h6>}</h6>
+<address>
+<h6>else if(favCheese == "Swiss") {</h6>
+<h6>cat("!") zxcv</h6>
+<h6>}</h6>
+<address><address>
+<h6>else if(favCheese == "American") {</h6>
+<h6>cat("Is there any real milk in there?")</h6>
+<h6>}</h6>
+<address><address>
+<h6>else if(favCheese == "Gouda") {</h6>
+<h6>cat("So you like the smell of dirty socks?")</h6>
+<h6>}</h6>
+<h6>else{ # all the above options were false</h6>
+<h6>&nbsp;&nbsp; cat(favCheese, "?!? You have much to learn!")</h6>
+<h6>}</h6>
+</address></address></address></address></address>
+<h2>Application</h2>
+<p>Have a user enter 5 values for:</p>
+<p>1) The age of a fish</p>
+<p>2) The location that the fish was caught</p>
+<p></p>
+<p>Give a message for each fish that is less than 5 years old</p>
+<p>Give a message for each fish that was caught in the north port</p>
+<p></p>
+<p>Challenge:</p>
+<p>Find the mean age of only the fish caught in the north port.</p>
+<p></p>
+<p>Clues (ignore this if you really want a challenge!!):</p>
+<p>Declare a variable named <em><strong>totalAge</strong> </em>and set its value to the number <em><strong>0</strong></em></p>
+<p>Declare a variable named <em><strong>numFish</strong> </em>and set its value to the number <em><strong>0</strong></em></p>
+<p></p>
+<p>Add to the <em><strong>totalAge</strong> </em>and <em><strong>numFish</strong> </em>values when you get a fish caught in the north port.</p>
+<p>Remember:&nbsp;&nbsp;</p>
+<p></p>
+<address>val = 12&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # declare and assign a value to val</address><address>val = val + 10&nbsp;&nbsp; # add 10 to val (it will be 22 after this line)</address>
+<h2 class="trap" id="keywords">TRAP: TRUE/FALSE are keywords, T and F are not &lt;might move to a different lesson&gt;</h2>
+<p>The terms <em><strong>TRUE</strong> </em>and <em><strong>FALSE</strong> </em>are reserved <span style="color: #990000;"><em>keywords</em> </span>in R (and most programming languages) -- this means that <em><strong>TRUE</strong> and</em> <em><strong>FALSE </strong></em>cannot be used as variable names in R.&nbsp; You will often see R scripts that use <em><strong>T</strong></em> and <em><strong>F</strong></em> as shortcuts for <em><strong>TRUE</strong> </em>and <em><strong>FALSE</strong></em>.&nbsp; R accepts <em><strong>T</strong></em> and <em><strong>F</strong></em> as shortcuts for <em><strong>TRUE</strong> </em>and <em><strong>FALSE</strong> </em>but <em><strong>T</strong></em> and <em><strong>F</strong></em> are not keywords.&nbsp; This means that someone can assign a value to <em><strong>T</strong></em> and <em><strong>F </strong></em>that override the default <em><strong>TRUE/FALSE</strong></em> values. If this happens, using <em><strong>T</strong></em> or <em><strong>F</strong></em> as shortcuts for <em><strong>TRUE</strong> </em>or <em><strong>FALSE</strong> </em>would produce unexpected results.&nbsp; It is best to stick with the reserved (and protected) keywords <em><strong>TRUE</strong> </em>and <em><strong>FALSE</strong></em>.</p>
+<h2 class="trap" id="string-number">TRAP: String/Number comparisons</h2>
+<p>If you forget to explicitly say that <em><strong>yourAge</strong> </em>is a number, R will still attempt to make a comparison between <em><strong>yourAge</strong> </em>and <em><strong>20</strong> </em>in line 6 in the code below.&nbsp;</p>
+<p></p>
+<address>rm(list=ls())</address><address>options(show.error.locations = TRUE)</address><address></address><address>yourAge = readline("What is your age? ") # but, R will treat this as a string</address><address></address><address>if(yourAge &lt; 20)&nbsp; # check the condition: is yourAge greater than 20?</address><address>{</address><address>&nbsp;&nbsp; # if the condition is TRUE, execute the following</address><address>&nbsp;&nbsp;&nbsp; cat("You have your whole life ahead of you!!")</address><address>}</address>
+<p></p>
+<p>The result seems to work at first if you use values between 1 and 99 but if you look a little deeper, many problems emerge.&nbsp; For instance the values <em><strong>1111</strong></em>, <em><strong>!!</strong></em>, or<em><strong> "hello"</strong> </em>(with the quotes) are all considered to be less than 20.&nbsp; This is because R converts the number <em><strong>20</strong> </em>to a string in order to compare it to the string that was entered by the user (even if the string has only numbers).&nbsp; The rules for determine whether one string is greater than another string is complicated and has to do with the hex-value that represent the string &lt;an EXTENSION??&gt;.</p>
+<p></p>
+<p>Needless to say, this is not the kind of functionality you want.&nbsp; Most other scripting language will give you a warning or an error if you attempt to make a comparison between a number and a string.&nbsp; In R, you just need to be careful about explicitly calling something a number.</p>
+<h2 class="extension" id="skip-brackets">EXTENSION: Skipping brackets in if-else statements</h2>
+<p>You will often see if-else statements with no brackets.&nbsp; This can only be done of<em><span style="color: #990000;"> there is only one line of code</span> </em>attached to the<em><strong> if()</strong> </em>or the <em><strong>else</strong></em>.</p>
+<p></p>
+<address>if(favAnimal == "Llama")</address><address>&nbsp;&nbsp; cat("You are wise beyond your years")</address><address>else</address><address>&nbsp;&nbsp; cat("You still have a lot of room for growth")</address>
+<p></p>
+<p>The code above is equivalent to the code below</p>
+<p></p>
+<address>if(favAnimal == "Llama")</address><address>{</address><address>&nbsp;&nbsp; cat("You are wise beyond your years")</address><address>}</address><address>else</address><address>{</address><address>&nbsp;&nbsp; cat("You still have a lot of room for growth")</address><address>}</address>
+<p></p>
+<p>The only advantage to the first example is that it takes up less space.&nbsp; I generally recommend that you put in brackets even with only one line of code -- it is more explicit and you are often going to later on add more lines of code to the statements.</p>
+</body>
+</html>

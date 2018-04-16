@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=MichiganSt-1924514" target="_self">Multiple Conditions</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=MichiganSt-1934340" target="_self">File Inputs</a></p>
+<h1 class="title" id="title">Iterative Operations</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Perform the same mathematical operations on numerical variables for a specified number of iterations</li>
+<li>Perform the same mathematical operations on numerical variables for a unspecified number of iterations</li>
+<li>Introduce new programming flow control: for()</li>
+</ul>
+<h2>Concepts</h2>
+<p>- need to mention in video that we are learning what looks at first to be the more complicated way of vector manipulation (using for() loops) -- but for loops are a very important concept that are too often hidden in the details.&nbsp; But if you ever want to tweak something or...<br /><em></em></p>
+<h3>Iterating through a vector using for() &lt;move to next lesson&gt;</h3>
+<p><em><strong>for()</strong></em> loops are designed to iterate through a vector values.&nbsp; If we want to output all the high temperatures, we can use <em><strong>for()</strong></em></p>
+<p><em><strong></strong></em></p>
+<h6>rm(list=ls())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br />options(show.error.locations = TRUE)<br /><br />weatherData = read.csv("data/LansingTemps.csv")<br />highTemps = weatherData[ ,1]<br />lowTemps = weatherData[ ,2]<br /><br />for(count in 1:14)<br />{<br />&nbsp; cat("\nHigh temp for day", count, "is", highTemps[count] )<br />}</h6>
+<h2>Repeated Operations</h2>
+<p>One the most common statistical function to perform is the mean of a set of data.&nbsp; The mean is the total value of all the data points divided by the number of data points.&nbsp; For this lesson we are going to deal with data input by the user and in the next lesson, data input from a file.</p>
+<h3>The old way of doing repeated operations</h3>
+<p>In previous lessons if we wanted to ask the user for three values and find the mean of them, we would create three variables to hold the values input by the user.&nbsp; The three input values would be added together and divided by three.</p>
+<p></p>
+<h6>rm(list=ls())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # clean out the environment</h6>
+<h6>options(show.error.locations = TRUE)&nbsp; # give line numbers on errors</h6>
+<h6>&nbsp;</h6>
+<h6>fishAge1 = readline("Enter a value: ") # get input from user - save to dataPoint</h6>
+<h6>fishAge1 = as.numeric(fishAge1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # treat dataPoint as a number</h6>
+<h6>fishAge2 = readline("Enter a value: ") # get input from user - save to dataPoint</h6>
+<h6>fishAge2 = as.numeric(fishAge2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # treat dataPoint as a number</h6>
+<h6>fishAge3 = readline("Enter a value: ") # get input from user - save to dataPoint</h6>
+<h6>fishAge3 = as.numeric(fishAge3)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # treat dataPoint as a number</h6>
+<h6>&nbsp;</h6>
+<h6>mean = (fishAge1 + fishAge2 + fishAge3) / 3</h6>
+<h6>cat("\nThe mean age of the fish is: ", mean)</h6>
+<p></p>
+<p>This example is OK if there are a very small number of values, but becomes incredibly unwieldy with even a moderate number of values.&nbsp; Imagine trying to do the same code with 20 values -- or 1000 values!</p>
+<h3>Indexing values</h3>
+<p>Whenever you have multiple variables with names that differ only by a number (dataPoint1, dataPoint2...), the numbers are most likely index value for a larger set of data.&nbsp; For instance, you might have 20 fishAge values in an excel file.&nbsp; When presented visually in excel you have 20 values in one column.&nbsp; The individual fishAge values can be indexed by the row it is in.</p>
+<p></p>
+<p>In R, there is a similar way to index values using vectors.&nbsp; Like a column in excel, all of the values belongs to the same variable -- in this case, fishAge.&nbsp;</p>
+<p></p>
+<p>So we declare a variable called fishAge but we need to tell R that fishAge is going to be multiple values</p>
+<p>fishAge = vector()</p>
+<p></p>
+<p>And we index fishAge using square brackets ( [ ] ).&nbsp;</p>
+<p></p>
+<h6>rm(list=ls())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # clean out the environment</h6>
+<h6>options(show.error.locations = TRUE)&nbsp; # give line numbers on errors</h6>
+<h6>&nbsp;</h6>
+<h6>fishAge = vector()</h6>
+<h6>fishAge[1] = readline("Enter a value: ") # get input from user - save as first fishAge value</h6>
+<h6>fishAge[2] = readline("Enter a value: ") # get input from user - save as second fishAge value</h6>
+<h6>fishAge[3] = readline("Enter a value: ") # get input from user - save as third fishAge value</h6>
+<h6></h6>
+<h6>fishAge = as.numeric(fishAge)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # treat all fishAge values as numbers</h6>
+<h6>&nbsp;</h6>
+<h6>mean = (fishAge[1] + fishAge[2] + fishAge[3]) / 3</h6>
+<h6>cat("\nThe mean value of the fish ages: ", mean)</h6>
+<p></p>
+<p>Just a side note: we only need to use the as.numeric() command once -- to tell the vector fishAge to treat all its values as numbers.</p>
+<h3>Using index values</h3>
+<p>The first use of vector is that we can use the index number to retrieve a specific value.&nbsp; For instance, the user can retrieve a specific value for the fishAge vector</p>
+<p></p>
+<h6>rm(list=ls())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # clean out the environment</h6>
+<h6>options(show.error.locations = TRUE)&nbsp; # give line numbers on errors</h6>
+<h6>&nbsp;</h6>
+<h6>fishAge = vector()</h6>
+<h6>fishAge[1] = 5</h6>
+<h6>fishAge[2] = 7</h6>
+<h6>fishAge[3] = 9</h6>
+<h6>&nbsp;</h6>
+<h6>index = readline("Which fishAge value would you like to see? ")</h6>
+<h6>index = as.numeric(index)</h6>
+<h6>cat("Fish Age value number", index, "is:", fishAge[index])</h6>
+<p></p>
+<h2>Iterating through multiple indexes</h2>
+<p>While the examples above show some minor advantages of indexing, they still would be unwieldy with any more than a few values.&nbsp; The real advantage to using vectors with indexes is that you can execute the same command multiple times.</p>
+<p></p>
+<p>For example, if you want to get 3 values for fishAge, you can have one readline() command to get all 3 values.</p>
+<p></p>
+<h6>rm(list=ls())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # clean out the environment</h6>
+<h6>options(show.error.locations = TRUE)&nbsp; # give line numbers on errors</h6>
+<h6>&nbsp;</h6>
+<h6>fishAge = vector()</h6>
+<h6>for(index in 1:3)</h6>
+<h6>{</h6>
+<h6>&nbsp; fishAge[index] = readline("Enter a value: ") # get input from user - save as first fishAge value</h6>
+<h6>}</h6>
+<h6></h6>
+<h6>fishAge = as.numeric(fishAge)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # treat all fishAge values as numbers</h6>
+<h6>&nbsp;</h6>
+<h6>mean = (fishAge[1] + fishAge[2] + fishAge[3]) / 3</h6>
+<h6>cat("\nThe mean value of the fish ages: ", mean)</h6>
+<p></p>
+<p>The for()</p>
+<p></p>
+<p>As data comes in we need to update two calculations when solving for the mean: the running total of the data ( <em><strong>runningTotal</strong> </em>) and the number of data points ( <em><strong>numPoints</strong> </em>) received.&nbsp; At the end of the script we will use <em><strong>numPoints</strong> </em>and <em><strong>runningTotal</strong> </em>to find the mean of the data input using the formula:&nbsp; <math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>m</mi><mi>e</mi><mi>a</mi><mi>n</mi><mo>&#160;</mo><mo>&#160;</mo><mo>=</mo><mo>&#160;</mo><mfrac><mrow><mi>r</mi><mi>u</mi><mi>n</mi><mi>n</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>T</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi></mrow><mrow><mi>n</mi><mi>u</mi><mi>m</mi><mi>P</mi><mi>o</mi><mi>i</mi><mi>n</mi><mi>t</mi><mi>s</mi></mrow></mfrac></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mfrac&gt;&lt;mrow&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mi&gt;T&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;/math&gt;"}</annotation></semantics></math>.&nbsp; Before any data comes in, the values for <em><strong>runningTotal</strong> </em>and <em><strong>numPoints</strong> </em>start at zero.&nbsp;</p>
+<p></p>
+<h6>numPoints = 0&nbsp;&nbsp;&nbsp; # running count of input data points</h6>
+<h6>runningTotal = 0 # running addition of input data points</h6>
+<p></p>
+<h3>Get input value from the user</h3>
+<p>Next we ask for input values from the user of the script -- in the next lesson we will get the input values from a file.</p>
+<p></p>
+<h6>dataPoint = readline("Enter a value: ") # get input from user - save to dataPoint</h6>
+<h6>dataPoint = as.numeric(dataPoint)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # treat dataPoint as a number</h6>
+<p></p>
+<h3>Change the stored value to reflect the new data</h3>
+<p>Next we increment the number of points by 1 and add the input value to the running total.&nbsp;</p>
+<p></p>
+<h6>numPoints = numPoints + 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # increase number of data points by one</h6>
+<h6>runningTotal = runningTotal + dataPoint # increase the running total by the data point</h6>
+<p></p>
+<p>At this point in the script we could have just assigned <em><strong>numPoints</strong> </em>the value <em><strong>1</strong></em> and assigned <em><strong>runningTotal</strong> </em>the value of the <em><strong>dataPoint.&nbsp; </strong></em>This only works here because <em><strong>numPoints</strong> </em>and <em><strong>runningTotal</strong> </em>both have values of <em><strong>0.&nbsp;</strong></em> But, we need to create generic assignments that allow for non-zero values for <em><strong>numPoints</strong> </em>and <em><strong>runningTotal&nbsp; </strong><strong>&nbsp;</strong></em></p>
+<p></p>
+<p class="linkTo" id="link-increment-decrement">extension: increment and decrement operators</p>
+<p></p>
+<h3>Ask for more values from the user and update the data</h3>
+<p>Now we repeat the last two steps to get another value from the user, increment the number of points, and add the input value to the running total.</p>
+<p></p>
+<h6>dataPoint = readline("Enter another value: ") # get input from user - save to dataPoint</h6>
+<h6>dataPoint = as.numeric(dataPoint)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # treat dataPoint as a number</h6>
+<h6>numPoints = numPoints + 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # increase number of points by one</h6>
+<h6>runningTotal = runningTotal + dataPoint # increase the running total by the data point</h6>
+<p></p>
+<p>We can repeat these four lines for every value we want to obtain from the user.</p>
+<p></p>
+<h3>Calculate the mean</h3>
+<p>After we get all of the data points from the user we can calculate the mean:&nbsp; <math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>m</mi><mi>e</mi><mi>a</mi><mi>n</mi><mo>&#160;</mo><mo>&#160;</mo><mo>=</mo><mo>&#160;</mo><mfrac><mrow><mi>r</mi><mi>u</mi><mi>n</mi><mi>n</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>T</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi></mrow><mrow><mi>n</mi><mi>u</mi><mi>m</mi><mi>P</mi><mi>o</mi><mi>i</mi><mi>n</mi><mi>t</mi><mi>s</mi></mrow></mfrac></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mfrac&gt;&lt;mrow&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mi&gt;T&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;/math&gt;"}</annotation></semantics></math>.</p>
+<p></p>
+<h6>mean = runningTotal / numPoints</h6>
+<h3>Put code together and add declarations</h3>
+<p>Now we put all of the above code together.&nbsp; In the full script we ask the user for four data points.&nbsp;</p>
+<p></p>
+<h6>rm(list=ls())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # clean out the environment</h6>
+<h6>options(show.error.locations = TRUE)&nbsp; # give line numbers on errors</h6>
+<h6>&nbsp;</h6>
+<h6>### Variable declarations</h6>
+<h6>numPoints = 0&nbsp;&nbsp;&nbsp; # running count of input data points</h6>
+<h6>runningTotal = 0 # running addition of input data points</h6>
+<h6>dataPoint = NULL # variable to hold the data input</h6>
+<h6>mean = NULL &nbsp;&nbsp;&nbsp;&nbsp; # mean value of the data</h6>
+<h6>### End of variable declarations</h6>
+<h6>&nbsp;</h6>
+<h6>dataPoint = readline("Enter a value: ") # get input from user - save to dataPoint</h6>
+<h6>dataPoint = as.numeric(dataPoint)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # treat dataPoint as a number</h6>
+<h6>numPoints = numPoints + 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # increase number of points by one</h6>
+<h6>runningTotal = runningTotal + dataPoint # increase the running total by the data point</h6>
+<h6>&nbsp;</h6>
+<h6>dataPoint = readline("Enter another value: ") # get input from user - save to dataPoint</h6>
+<h6>dataPoint = as.numeric(dataPoint)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # treat dataPoint as a number</h6>
+<h6>numPoints = numPoints + 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # increase number of points by one</h6>
+<h6>runningTotal = runningTotal + dataPoint # increase the running total by the data point</h6>
+<h6>&nbsp;</h6>
+<h6>dataPoint = readline("Enter another value: ") # get input from user - save to dataPoint</h6>
+<h6>dataPoint = as.numeric(dataPoint)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # treat dataPoint as a number</h6>
+<h6>numPoints = numPoints + 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # increase number of points by one</h6>
+<h6>runningTotal = runningTotal + dataPoint # increase the running total by the data point</h6>
+<h6>&nbsp;</h6>
+<h6>dataPoint = readline("Enter another value: ") # get input from user - save to dataPoint</h6>
+<h6>dataPoint = as.numeric(dataPoint)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # treat dataPoint as a number</h6>
+<h6>numPoints = numPoints + 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # increase number of points by one</h6>
+<h6>runningTotal = runningTotal + dataPoint # increase the running total by the data point</h6>
+<h6>&nbsp;</h6>
+<h6>mean = runningTotal / numPoints</h6>
+<h6>cat("\nThe number of data points: ", numPoints)</h6>
+<h6>cat("\nThe total value of the data points: ", runningTotal)</h6>
+<h6>cat("\nThe mean value of the data points: ", mean)</h6>
+<p></p>
+<p>While this script above works, it is unwieldy and just gets worse the more data points you add (imagine coding this for 1000 data points!)</p>
+<h2>Iterative Operation: For</h2>
+<p><span style="color: #000000;">Whenever you see code that repeats itself as these four line did in the script above:</span></p>
+<p><span style="color: #000000;"></span></p>
+<h6>dataPoint = readline("Enter another value: ") # get input from user - save to dataPoint</h6>
+<h6>dataPoint = as.numeric(dataPoint)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # treat dataPoint as a number</h6>
+<h6>numPoints = numPoints + 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # increase number of points by one</h6>
+<h6>runningTotal = runningTotal + dataPoint # increase the running total by the data point</h6>
+<p><span style="color: #000000;"></span></p>
+<p><span style="color: #000000;">It is almost a guarantee that the code needs to go in a loop.&nbsp; R has two types of loops:<em><strong> for()</strong> </em>and <em><strong>while().&nbsp; </strong></em>The rule-of-thumb is that you use <em><strong>for()</strong></em> when you know how many times the loop will run and <em><strong>while()</strong></em> when you do not know how many times the loop is going to run -- we will look at&nbsp; <em><strong>while()</strong></em> in a latter lesson.</span></p>
+<p><span style="color: #000000;"></span></p>
+<p><span style="color: #000000;">In the script above, the user was asked for four input values, so we have a loop that runs four time.&nbsp; Since we know the number of time it will run, we will use a<em><strong> for() </strong></em>loop</span></p>
+<p><span style="color: #000000;"></span></p>
+<h6>rm(list=ls())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # clean out the environment</h6>
+<h6>options(show.error.locations = TRUE)&nbsp; # give line numbers on errors</h6>
+<h6>&nbsp;</h6>
+<h6>### Variable declarations</h6>
+<h6>numPoints = 0&nbsp;&nbsp;&nbsp; # running count of input data points</h6>
+<h6>runningTotal = 0 # running addition of input data points</h6>
+<h6>dataPoint = NULL # variable to hold the data input</h6>
+<h6>mean = NULL &nbsp;&nbsp;&nbsp;&nbsp; # mean value of the data</h6>
+<h6>### End of variable declarations</h6>
+<h6></h6>
+<h6>for(i in 1:4)</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; dataPoint = readline("Enter a value: ") # get input from user - save to dataPoint</h6>
+<h6>&nbsp;&nbsp; dataPoint = as.numeric(dataPoint)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # treat dataPoint as a number</h6>
+<h6>&nbsp;&nbsp; numPoints = numPoints + 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # increase number of points by one</h6>
+<h6>&nbsp;&nbsp; runningTotal = runningTotal + dataPoint # increase the running total by the data point</h6>
+<h6>}</h6>
+<h6>&nbsp;</h6>
+<h6>mean = runningTotal / numPoints</h6>
+<h6>cat("\nThe number of data points: ", numPoints)</h6>
+<h6>cat("\nThe total value of the data points: ", runningTotal)</h6>
+<h6>cat("\nThe mean value of the data points: ", mean)</h6>
+<p><span style="color: #000000;"></span></p>
+<p><span style="color: #000000;">The code above runs exactly like the previous code.&nbsp; Let's look at the <em><strong>for(i in 1:4)</strong></em> statement:</span></p>
+<p></p>
+<p>The only part of <em><strong>for</strong><strong>(i in 1:4)</strong></em> that you need to understand now is that <em><strong>4</strong></em> represents the number of times the loop will iterate (we will learn what the rest of the <em><strong>for()</strong></em> means in a later lesson).&nbsp; Go ahead and change that number and see how the execution of the script changes.</p>
+<p></p>
+<p>Like the <em><strong>if(), </strong></em>the<strong></strong><em><strong> for() </strong></em>has curly brackets (<em><strong> { }</strong> </em>) attached to it.&nbsp; In between the curly brackets is the code attached to the <em><strong>for()</strong></em>, in other words, it is the code that executes each time the<em><strong> for()</strong></em> loop iterates.&nbsp; In the above code, the code between the ( <em><strong>{ }</strong></em> ) iterates four time.</p>
+<p><span style="color: #000000;"></span></p>
+<h3>For where user determines the number</h3>
+<p>We can change the number of times the<em><strong> for()</strong></em> iterates by changing the number 4 to another number.&nbsp; This is the same as hardcoding the iterations but this is only useful if we know beforehand exactly how many data points the user will input.&nbsp;</p>
+<p></p>
+<p>Usually we cannot hardcode the number of iterations beforehand because data sets have varying number of data points.&nbsp; But the data set can have the number of data points and send that information to the script before sending the data.&nbsp; In our case, the user can indicate the number of data points before supplying the data.</p>
+<p></p>
+<h6>rm(list=ls())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # clean out the environment</h6>
+<h6>options(show.error.locations = TRUE)&nbsp; # give line numbers on errors</h6>
+<h6>&nbsp;</h6>
+<h6>### Variable declarations</h6>
+<h6>numPoints = 0&nbsp;&nbsp;&nbsp; # running count of input data points</h6>
+<h6>runningTotal = 0 # running addition of input data points</h6>
+<h6>dataPoint = NULL # variable to hold the data input</h6>
+<h6>mean = NULL &nbsp;&nbsp;&nbsp;&nbsp; # mean value of the data</h6>
+<h6>### End of variable declarations</h6>
+<h6>&nbsp;</h6>
+<h6>numPoints = readline("How many data points do you have? ")</h6>
+<h6>numPoints = as.numeric(numPoints)</h6>
+<h6>&nbsp;</h6>
+<h6>for(i in 1:numPoints)</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; dataPoint = readline("Enter a value: ") # get input from user - save to dataPoint</h6>
+<h6>&nbsp;&nbsp; dataPoint = as.numeric(dataPoint)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # treat dataPoint as a number</h6>
+<h6>&nbsp;&nbsp; #&nbsp; numPoints = numPoints + 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # not needed- the user supplied this value</h6>
+<h6>&nbsp;&nbsp; runningTotal = runningTotal + dataPoint # increase the running total by the data point</h6>
+<h6>}</h6>
+<h6>&nbsp;</h6>
+<h6>mean = runningTotal / numPoints</h6>
+<h6>cat("\nThe number of data points: ", numPoints)</h6>
+<h6>cat("\nThe total value of the data points: ", runningTotal)</h6>
+<h6>cat("\nThe mean value of the data points: ", mean)</h6>
+<p></p>
+<p>In this script, the number of iterations (4) in <em><strong>for( i in 1:</strong></em><em><strong>4</strong><strong> )</strong> </em>was replaced by the value entered by the user and save in <em><strong>numPoints.&nbsp; <br /></strong></em></p>
+<p></p>
+<p><em><strong>for(i in 1:numPoints)&nbsp;</strong></em> states that the code attached to the <em><strong>for()</strong> </em>will iterate <em><strong>numPoints</strong> </em>number of times</p>
+<p></p>
+<h3>Keeping count through the for() iterations</h3>
+<p>In the statement <em><strong>for(i in 1:5), </strong><strong>i</strong></em> is a variable that is assigned a value each time the<em><strong> for()</strong></em> iterates.</p>
+<p></p>
+<p>The initial assigned value of <em><strong>i</strong></em> is <em><strong>1</strong></em></p>
+<p>The final assigned value of <em><strong>i</strong> </em>is <em><strong>5</strong></em></p>
+<p>Each time the <em><strong>for()</strong></em> iterates, the assigned value of <em><strong>i</strong></em> is increased by <em><strong>1</strong></em></p>
+<p></p>
+<p>In this example, <em><strong>1:5</strong></em> represents the start and end values for <em><strong>i.&nbsp; i </strong></em> can also be used in the code-block attached to the <em><strong>for() </strong></em>to give the<em><strong> </strong></em>number of times the <em><strong>for()</strong></em> has iterated<em><strong><br /></strong></em></p>
+<p></p>
+<h6>for(i in 1:5)</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("This is the ", i, " time through the for loop\n");</h6>
+<h6>}</h6>
+<p></p>
+<p></p>
+<p>However, we can use any integer values as a start and end point and the <em><strong>for()</strong></em> will iterate from the start value to the end value.&nbsp;</p>
+<p>For instance, we might want to look at the 173rd through the 186th data points in a data set...</p>
+<p></p>
+<p>In this example, the <em><strong>for()</strong></em> iterates 14 times (from 173 to 186 inclusive).</p>
+<p></p>
+<h6>for(i in 173:186)</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("The " , i, " value is: ??\n");</h6>
+<h6>}</h6>
+<p></p>
+<p></p>
+<p><em><strong>i</strong></em> is the variable name that is commonly used in programming for counted and coordinate values (where algebra commonly uses <em><strong>x</strong></em> and <em><strong>y</strong></em>, programming uses<em><strong> i</strong></em> and <em><strong>j</strong></em>).&nbsp; But any variable name can be used -- in fact, your script would probably be easier to understand with a more descriptive variable name.&nbsp; The following example works exactly the same as the previous example.</p>
+<p></p>
+<h6>for(count in 173:186)</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("The " , count, " value is: ??\n");</h6>
+<h6>}</h6>
+<p></p>
+<p>We can also use the count variable in mathematical equations.&nbsp; The following code finds the first 20 powers of 2.</p>
+<p></p>
+<h6>for(count in 1:20)</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("The " , count, " power of 2 is: ", 2^count, "\n");</h6>
+<h6>}</h6>
+<p></p>
+<p>And negative numbers (and 0) can also be used:</p>
+<p></p>
+<h6>for(count in -10:10)</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("The " , count, " power of 2 is: ", 2^count, "\n");</h6>
+<h6>}</h6>
+<h2 class="application" title="Lesson Practice">Application</h2>
+<p>As always, declare your variables at the top of your script.</p>
+<p></p>
+<p>Write a script that gets temperature data from the user and find an average temperature:</p>
+<p></p>
+<p>A) The temperature data is from May 15th to the 21rd (inclusive of both days) of the month.</p>
+<p>B) Ask the user for the data like this: "What was the temperature on May 15?" -- the day need to be included each time.</p>
+<p>C) Use a <em><strong>for()</strong> </em>to get the data.</p>
+<p>D) Get the average temperature for the seven day period</p>
+<h2>Extension: ending a script caught in an infinite loop</h2>
+<p></p>
+<p></p>
+<p></p>
+<h2>Trap: For loops that do not end</h2>
+<p></p>
+</body>
+</html>

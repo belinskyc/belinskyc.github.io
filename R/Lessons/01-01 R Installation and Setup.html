@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=MichiganSt-1906748" target="_self">Introduction and Syllabus</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=MichiganSt-1906746" target="_self">Variables</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">01-01: R Installation and Setup</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Download, install, and setup R and RStudio, the programs we will use for the rest of class</li>
+<li>Explain the components of RStudio</li>
+<li>Show how commenting works and the importance of commenting</li>
+<li>Choose a color scheme for RStudio</li>
+</ul>
+<h2>Concepts</h2>
+<p></p>
+<h2>Install programs</h2>
+<p>There are two programs you need to install for this class:<strong> R</strong> and <strong>RStudio</strong>.&nbsp; You will be creating scripts in R using RStudio.&nbsp; R is the programming language, RStudio provides a structured environment for the R programming language similar to the way Microsoft Word provides a structured environment for text editing.&nbsp; <em><strong>RStudio</strong> </em>is patterned on other popular programming environments like Microsoft's Visual Studio.</p>
+<h3>Download and Install R</h3>
+<p>First you need to install the <span style="color: #990000;"><em class="hl">desktop version</em></span> of R.&nbsp;</p>
+<p></p>
+<p>The <a href="https://cran.r-project.org/bin/windows/base/" target="_blank" rel="noopener noreferrer">R for Windows download is here</a>. Click on "Download R #.#.# for Windows".</p>
+<p>The <a href="https://cran.r-project.org/bin/macosx/" target="_blank" rel="noopener noreferrer">R for Mac download is here</a>.&nbsp; Click on "R-#.#.#.pkg" on the left side of the page.</p>
+<p></p>
+<p>Open the file you downloaded and use the default installation options</p>
+<p></p>
+<p>And for those of you using Linux -- the&nbsp;<a href="https://cran.r-project.org/bin/linux/" target="_blank" rel="noopener noreferrer">R for Linux download instructions are here.</a>&nbsp;&nbsp;</p>
+<h3>Download and Install RStudio</h3>
+<p>You can <a href="https://www.rstudio.com/products/rstudio/download#download" target="_blank" rel="noopener noreferrer">download the RStudio Installer here.</a> Download the appropriate file for your computer under <span style="color: #990000;"><em>Installers</em><span style="color: #000000;">, open the file,</span></span> and use the default installation options.</p>
+<p></p>
+<p><span class="hl">For Mac users there are some extra complexities:</span></p>
+<ol class="">
+<li>You might be asked to install <strong>Command Line Developer Tools </strong>while installing RStudio.<strong>&nbsp; </strong>Go ahead and install the developer tools.</li>
+<li>The download for RStudio is called <em><strong>RStudio-1.#.###.dmg</strong></em>.&nbsp; Double-clicking the file will open the window below (<em class="figureRef" title="dmg">Fig</em>).<br /><br /><img src="../Images/R-01-01-Install-MAC-DMG-APP.PNG" alt="Opening RStudio DMG file" class="flexSize" />&nbsp;
+<h5 class="" id="dmg">Opening RStudio DMG file<br /><br /></h5>
+</li>
+<li class="">In the RStudio window above (<em class="figureRef" title="dmg">Fig</em>) drag the RStudio file to the Applications folder<span src="../Images/R-01-01-Install-MAC-Unmount.PNG" alt="Unounting the RStudio drive (very important!)" class="flexSize"></span></li>
+<li><span src="../Images/R-01-01-Install-MAC-Unmount.PNG" alt="Unounting the RStudio drive (very important!)" class=""><span style="color: #990000;"><span style="color: #000000;"><strong class="q">Unmount the RStudio device </strong>by clicking the Eject button</span> -</span>- shown below&nbsp;(<em class="figureRef" title="unmount">Fig</em>)<br /><br /><img src="../Images/R-01-01-Install-MAC-Unmount.PNG" alt="Unounting the RStudio drive (very important!)" class="flexSize" /></span><br />
+<h5 class="" id="unmount">Unmounting the RStudio device (very important!)</h5>
+</li>
+</ol>
+<h2>RStudio Basics</h2>
+<p>The picture below (<em class="figureRef" title="opening">Fig</em>) shows RStudio when you first open it up and without a script file. This is a view you will rarely see because you will almost always have a script file opened.</p>
+<p></p>
+<p><img src="../Images/R-01-01-Install-RStudioFirstTime.PNG" alt="First time opening RStudio" class="flexSize" /></p>
+<h5 class="" id="opening">First time opening RStudio</h5>
+<h3>Open your first script file</h3>
+<p>We are going to execute a script that performs a linear regression on fish lengths over a two year period.&nbsp; The code in the script is something you will progressively learn throughout the course -- for now we are executing the script to help you become familiar with the RStudio environment.</p>
+<p></p>
+<p>You will need to download two files.</p>
+<ol>
+<li>the&nbsp;<a href="../Scripts/Intro-linearModel.csv" target="new" class="download">data in a csv file (Intro-linearModel.csv),</a> which represents fish lengths from two consecutive years</li>
+<li>the <a href="../Scripts/Intro-linearModel.R" target="new" class="download">R script file (Intro-linearModel.r)</a>, which executes a linear model using the data in the csv file above</li>
+</ol>
+<p>It does not matter where you save the two files as long as you remember where you put them (the desktop is always a convenient location to save files).</p>
+<p></p>
+<p>Note: You might need to resave the two files because browsers, for security reasons, will save downloaded files as read-only.</p>
+<p></p>
+<p>First you will open the R script file in RStudio.&nbsp; To do this you can either:</p>
+<ul>
+<li>Double-click on the file, <em><strong>Intro-linearModel.R</strong></em> or</li>
+<li>In RStudio click <em><strong>File -&gt; Open File -&gt;</strong></em> and then find&nbsp; <em><strong>Intro-linearModel.R</strong></em> in the file browser and click <em><strong>Open</strong></em>.&nbsp;</li>
+</ul>
+<p></p>
+<p>After opening the script file, you should see something that looks like this (<em class="figureRef" title="first" id="fig-first">Fig</em>) on your screen...</p>
+<p></p>
+<p><img src="../Images/R-01-01-Install-FirstScript.PNG" alt="Opening your first script in RStudio" class="flexSize" /></p>
+<h5 class="" id="first">Opening your first script in RStudio</h5>
+<p></p>
+<p>The four windows in the picture above (<em class="figureRef" title="first" id="fig-first">Fig</em>) are numbered:</p>
+<ol>
+<li><strong>Editor </strong>-- text editor for the opened script files</li>
+<li><strong>Console</strong> -- displays information about the execution of your script file</li>
+<li><strong>Environment </strong>-- displays data points, or variables, from the execution of your script file</li>
+<li><strong>Plots</strong> -- plots produced by the execution of your script file are displayed here</li>
+</ol>
+<p></p>
+<p>Notes:</p>
+<ul>
+<li>The <em><strong>Help</strong></em> tab in the <strong>Plots Window</strong> is something you might find useful.&nbsp; <em class="linkTo" title="help">Extension: The Help Tab</em></li>
+<li>The <strong>Console, Environment, and Plot Windows</strong> have other tabs you can open but we will not be using these tabs for a while.&nbsp;</li>
+</ul>
+<h3>Common buttons used in RStudio</h3>
+<p>The script file you opened is a fully functioning program that takes fish data from a Comma Separated Value (CSV) file, <em><strong>Intro-linearModel.csv</strong></em>, and plots out the data -- the code will be explained later. I am going to use this program to demonstrate a few of the very useful buttons in RStudio.</p>
+<p></p>
+<p>The one button you will use the most is "Source".&nbsp; This is the button that execute your whole script.&nbsp; <em class="linkTo" title="run-source">Extension: Run vs. Source</em></p>
+<p></p>
+<p>Press the <em><strong>Source</strong> </em>button (<em class="figureRef" title="running" id="fig-running">Fig</em>).&nbsp; The program asks you to locate the data file (csv) you just downloaded.&nbsp; Navigate the file browser to the csv file and click <em><strong>Open</strong></em>.</p>
+<p></p>
+<p><img src="../Images/R-01-01-Install-SourcingScript.PNG" alt="Running the script" class="flexSize" /></p>
+<h5 class="" id="running">Running the script</h5>
+<p></p>
+<p>After the script is run:</p>
+<ul>
+<li>The<strong><span class=""> Environment</span><span class=""> Win</span><span class="">dow</span></strong> displays values for the data (variables) in the script (e.g., <em><strong>lengthData</strong></em>, <em><strong>cofficients</strong></em>, <em><strong>residuals</strong></em>).</li>
+<li>The<strong><span class=""> Console Window</span></strong> displays information about the execution of the script along with a summary of the linear model.</li>
+<li>The <strong><span class="">Plot Window</span></strong> displays two plots.&nbsp; You can use the arrow buttons (<em class="figureRef" title="plot" id="fig-plot">Fig</em>) to switch between the plots.</li>
+</ul>
+<p></p>
+<p><img src="../Images/R-01-01-Install-PlotArrows.PNG" alt="" class="fs" /></p>
+<h5 class="" id="plot">Using the arrow keys in the Plot Window</h5>
+<p></p>
+<h3>Cleaning up the RStudio windows</h3>
+<p>There many times where you want to clean up the windows, which can get very crowded with old information.</p>
+<ul>
+<li>To clean the <strong>Environment</strong> and the <strong>Plot Windows</strong>,&nbsp; use the brush button (<em class="figureRef" title="clean" id="fig-clean">Fig</em>).</li>
+<li>To clean the <strong>Console Window</strong>, press Control-L (or Command-L on a Mac) while in the <strong>Console Window.</strong></li>
+</ul>
+<p></p>
+<p><img src="../Images/R-01-01-Install-ClearingWindows.PNG" alt="Cleaning out the windows" class="flexSize" /></p>
+<h5 class="" id="clean">Cleaning out the windows</h5>
+<p></p>
+<p>If you click <em><strong><span style="color: #660000;"><span style="color: #000000;">Source</span> </span></strong></em>again, the <strong>Environment, Plot,</strong> and <strong>Console Windows</strong> will once again be populated with data from the script.</p>
+<h2>Your first programming topic: Commenting</h2>
+<p>We are not going to spend any time on the R code itself in this lesson.&nbsp; But I want to focus on an important feature of all programming languages called <em><span class="hl">commenting</span>.</em>&nbsp; Comments are text in a script that do not get executed -- the text is there to explain to the reader what is happening in the script.&nbsp; In other words, it allows programmers to explain their code within the script file.&nbsp; Notice how the functionality of the script can be generally understood just by reading the comments -- this is the main purpose of commenting.</p>
+<p></p>
+<p>In the R language, comments are created using the number-sign ( <em><strong>#</strong></em> ) key.&nbsp; Any text on the line after the (<em><strong> #</strong></em> ) will be treated by R as a comment and it will not be executed.&nbsp; <span style="color: #990000;"><em class="hl">You are required to make extensive use of comments for your project in this class.</em></span>&nbsp; Aside from being a good practice, it significantly reduces the frustration level of people who are trying to evaluate your work!</p>
+<h2>Color Schemes</h2>
+<p class="">Notice how RStudio uses color to delineate comments (<em class="figureRef" title="comments" id="fig-comments">fig</em>: lines 9,12,15,18,21, etc..).&nbsp; The comments below are in a lighter green whereas most of the other text is in black.</p>
+<p></p>
+<p><img src="../Images/R-01-01-Install-Comments.PNG" alt="Comments in lighter green" class="flexSize" /></p>
+<h5 class="" id="comments">Comments are in the lighter green color</h5>
+<p>I am not a big fan of the default color scheme in RStudio.&nbsp; It does not create enough differentiation between the different components of a script.&nbsp; For instance, comments (red arrows) are in green and quoted items (blue arrows) are in just a slightly different green (<em class="figureRef" title="quote" id="fig-quote">Fig</em>).</p>
+<p></p>
+<p><img src="../Images/R-01-01-Install-CommentsVsQuotes.png" alt="Comment and quote coloring" class="flexSize" /></p>
+<h5 class="" id="quote">The text color for comments and quotes</h5>
+<p></p>
+<p>A good color scheme can really help a programmer by allowing them to quickly identify parts of a script and common errors, like misplaced quotes.&nbsp;</p>
+<p></p>
+<p>RStudio offers many color schemes: to change the color scheme (<em class="figureRef" title="schemes" id="fig-schemes">Fig</em>)</p>
+<ol>
+<li>click on "Tools" in the main menu (circled in <em class="figureRef" title="schemes" id="fig-schemes">Fig</em>)</li>
+<li>choose "Global Options"</li>
+<li>When the "Global Options" window open (in <em class="figureRef" title="schemes" id="fig-schemes">Fig</em>), click on "Appearance"</li>
+</ol>
+<p></p>
+<p><img src="../Images/R-01-01-Install-ColorScheme.PNG" alt="Color Schemes" class="flexSize" /></p>
+<h5 class="" id="schemes">Color schemes for RStudio (note: the Editor font might be different in your window -- that is OK)</h5>
+<p></p>
+<p>The picture above shows the <span style="color: #660000;"><em class="hl">Xcode</em> </span>color scheme (<em class="figureRef" title="schemes" id="fig-schemes">Fig</em>).&nbsp; I prefer <strong>Xcode</strong> because it does a good job differentiating the different aspects of the script. Notice how the comments (in green) are now clearly distinguished from the quotes (in red).</p>
+<p></p>
+<p>You can choose from around 20 themes in the <strong>Editor theme</strong> window and you can change the theme anytime without affecting anything else.</p>
+<p></p>
+<p>If you want to want to use the exact same color scheme that I use in the class, which is a slightly modified Xcode theme, follow the instructions in:</p>
+<p class="linkTo" id="link-color-scheme">Extension: Customize Scheme</p>
+<h3 class="">Adding more color to differentiate output</h3>
+<p>There are a couple more options you can set in RStudio that add more color variation in the <strong>Console Window</strong>.&nbsp; This is very helpful in the long run because it will help you distinguish the different types of output in the <strong>Console Window</strong>.</p>
+<p></p>
+<p>To make these changes go to <em><strong>Tools -&gt; Code -&gt; Display</strong></em> and check the following boxes:</p>
+<ul>
+<li><span class="hl">Show syntax highlighting in console input</span></li>
+<li><span class="hl">Highlight R function calls</span></li>
+</ul>
+<p></p>
+<p><img src="../Images/R-01-01%20Console%20Window%20changes.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="console">Console Window changes</h5>
+<p></p>
+<h2>Stop RStudio from automatically adding matching parenthesis and quotes</h2>
+<p>Finally, a common complaint I have gotten from my students is they hate the way RStudio tries to be "helpful" by automatically adding end parenthesis and end quotes when the user types in a start parenthesis or start quote.&nbsp;</p>
+<p></p>
+<p>You can turn off this feature by going to <em><strong>Tools -&gt; Code&nbsp; -&gt; Editing</strong></em> and <em class="hl">uncheck</em> "Insert matching parens/quotes"</p>
+<p></p>
+<p><img src="../Images/R-01-01%20End%20parens-quotes.PNG" alt="" class="fs" /></p>
+<h5>Stop RStudio from automatically ending your parenthesis and quotes.</h5>
+<h2 class="extension" id="color-scheme">Extension: Install customized color scheme</h2>
+<p>You might have noticed that the Xcode theme in&nbsp; (<em class="figureRef" title="schemes" id="fig-schemes">Fig</em>) is slightly different than the Xcode theme on your computer.&nbsp; Specifically, the <em><strong>if</strong></em>, <em><strong>else</strong></em>, and <em><strong>warning</strong> </em>statements are colored orange as opposed to purple.&nbsp; I did this to differentiate these statements from the output in the console. Unfortunately, this is not an easy thing to change in RStudio.&nbsp;</p>
+<p></p>
+<p>If you would like to use my color scheme, which is the color scheme I will use for the whole class, then you need to:</p>
+<ol>
+<li>choose "XCode" as the color scheme</li>
+<li>download <a href="../Scripts/DA6683C1A9EFEF24EAE992398513B1C4.cache.css" target="_self" class="download">my color scheme file</a></li>
+<li>save my color scheme file to the proper directory (explained below)</li>
+</ol>
+<h3>Saving my color scheme file to the proper directory:</h3>
+<p>Note: the downloaded filename is&nbsp;<strong>DA6683C1A9EFEF24EAE992398513B1C4.cache.css</strong> and the name cannot change.</p>
+<p></p>
+<p><strong>On a Windows computer</strong> (you need to be logged on as an admin of the computer):</p>
+<ol>
+<li>Go to the following folder: <em><strong>C -&gt; Program File -&gt; RStudio -&gt; www -&gt; rstudio</strong></em><br />Or: copy and paste<span class="hl"> C:\Program Files\RStudio\www\rstudio</span> into the top search bar of a File Explorer window</li>
+<li>Copy the file (<em><strong>DA6683</strong></em>...) into the current folder (overwriting the old file)</li>
+<li>If asked: give the administrative privileges.<br /><br /></li>
+</ol>
+<p><img src="../Images/R-01-01%20Color%20Scheme%20File.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="console">Adding the color scheme file to the appropriate folder in Windows</h5>
+<p></p>
+<p><strong>On a Mac</strong> (you need to be logged on as an admin of the computer):</p>
+<ol>
+<li>Go to the <em><strong>Applications</strong> </em>folder</li>
+<li>right-click (or control-click) on the <em><strong>RStudio</strong> </em>application</li>
+<li>choose "Show Package Content"</li>
+<li>Go through the following folders: <em><strong>Content -&gt; Resources -&gt; www -&gt; rstudio</strong></em></li>
+<li>Copy the file (<em><strong>DA6683</strong></em>...) into the current <em><strong>rstudio</strong> </em>folder (overwriting the old file)</li>
+<li>If asked: give the administrative privileges.</li>
+</ol>
+<p></p>
+<p><em><span class="hl">Restart RStudio</span></em> and the color change will take effect -- you will see the added orange color in the code (like <em class="figureRef" title="comments" id="fig-comments">fig</em>)</p>
+<h2 class="extension" id="help">Extension: The Help Tab</h2>
+<p>The Help Tab effectively acts as an online search through the R documentation.&nbsp; So, if you type in "plot" in the search bar and hit enter, the R plot help page from the online documentation will appear.&nbsp; Note: you could have done the same thing by typing "?plot" in the <strong>Console Window.</strong></p>
+<p></p>
+<p><img src="../Images/R-01-01%20Help%20Window.PNG" alt="" class="fs" /></p>
+<h5 class="" id="plotHelp">The R plot help page in the online documentation.</h5>
+<p></p>
+<p>The page that appears in the <strong>Help Window</strong> (<em class="figureRef" title="plotHelp">fig</em>) is this page: <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/plot.html" target="_blank" rel="noopener noreferrer">https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/plot.html</a></p>
+<p></p>
+<p><em class="hl">https://stat.ethz.ch</em> is where the official documentation for R is located.&nbsp; So, you will see this website appear quite often when you do an internet search for something R related.</p>
+<h2 class="extension" id="run-source">Extension: Run vs. Source</h2>
+<p>Technically speaking, the difference between <em><strong>Run</strong> </em>and <em><strong>Source</strong> </em>is:</p>
+<ul>
+<li><em><strong>Source</strong> </em>will execute all the code in a script file.</li>
+<li><em><strong>Run</strong> </em>will execute only the line that the cursor is on or all lines that are highlighted.</li>
+</ul>
+<p></p>
+<p>The real difference lies in a historical discussion of scripting vs. programming, which is a discussion beyond this class.&nbsp; Suffice to say,&nbsp; R was originally intended to be a quick-and-dirty scripting language where users could immediately pull in data and produce a plot or perform statistical analysis.&nbsp; Using this method, an R-user would produce and execute one line of code at a time using the equivalent of the <em><strong>Run</strong> </em>button.</p>
+<p></p>
+<p>As R has grown, the focus has shifted into developing well-structured code that can be easily shared, tweaked, and reused -- similar to a modern programming language like C.&nbsp; Using this method, an R-user would produce a full script and execute it all using the equivalent of the <em><strong>Source</strong> </em>button.&nbsp; This is the method we will be using in this class.</p>
+<p></p>
+<p>RStudio is an open source project that is designed to provide a structured environment for R-users.</p>
+<p></p>
+</body>
+</html>

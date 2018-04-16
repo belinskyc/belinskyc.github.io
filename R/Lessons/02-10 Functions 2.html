@@ -1,0 +1,353 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2067120" target="_self">Plots 2</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2268076" target="_self">Packages</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">02-10: Functions 2</h1>
+<h2>Purpose</h2>
+<ul>
+<li>create a separate file to hold functions</li>
+<li>create a counter function</li>
+<li>use functions saved in a separate file</li>
+</ul>
+<h3>Student-Instructor meeting</h3>
+<p>This is the last lesson in Unit 2, which means it is time to schedule a 20-30 minute meeting with the instructor.&nbsp; Please email the instructor at <a href="mailto:belinsky@msu.edu">belinsky@msu.edu</a> and provide some times that you are available.</p>
+<h2>Concepts</h2>
+<h2>barplot(), boxplot(), hist(), plot() are all functions...</h2>
+<p>Two lessons ago we created our own reusable code, or function, called<em><strong> pythogoras()</strong></em>.&nbsp; In the last lesson, we used built-in functions (<em><strong>hist()</strong></em>, <em><strong>barplot()</strong></em>, etc..) to create various types of plots.&nbsp; Unlike <em><strong>pythagoras()</strong></em>, where the function exists inside your script file, all of the plotting functions exist outside the script file -- and the plotting functions we use are automatically loaded in R and can be called from any script.&nbsp; We can do the same with <em><strong>pythagoras(),</strong></em> or any function that we create.&nbsp; In other words, we can create functions that can be called by a different script.</p>
+<p></p>
+<h2>Creating an external file for functions</h2>
+<p>Functions are like tools in that they are called upon to perform a specific task.&nbsp; It is often useful to create a script that only contains functions -- sort of a toolbox script that performs commonly used tasks that can be called from other scripts.&nbsp;</p>
+<p></p>
+<p>We are going to create a toolbox script, called <em><strong>toolbox</strong><strong>.</strong><strong>r</strong></em>, and start by adding <em><strong>pythagoras()</strong></em> to it.&nbsp; To do this:</p>
+<p>1) In RStudio, create a new script file</p>
+<p>2) Copy and paste the <em><strong>pythagoras()</strong>&nbsp;</em><em> </em>function (below)<em></em> to the new script file</p>
+<p>3) Save the file as&nbsp;<em><strong> toolbox.r</strong></em> inside the <em><strong>script</strong> </em>folder.</p>
+<p></p>
+<h6 class="partial">pythagoras = function(a,b)<br />{<br />&nbsp;&nbsp; c = (a^2 + b^2)^(1/2);<br />&nbsp;&nbsp; return(c);<br />}</h6>
+<p></p>
+<p>If we click <em><strong>Source</strong> </em>on <em><strong>toolbox.r </strong></em>the script does nothing except list the <em><strong>pythagoras()</strong></em> function in the Environment Window. This is because<em><strong> pythagoras()</strong></em> does not do anything until it is called upon.&nbsp; However, R now knows that <em><strong>pythagoras()</strong> </em>is a defined function.</p>
+<p></p>
+<p><img src="../Images/R-02-10%20Creating%20a%20function%20script.PNG" alt="" class="flexSize" /></p>
+<h5>Adding <strong>pythagoras()</strong> to a functions script</h5>
+<p></p>
+<p>Note: We do not include <em><strong>rm(list=ls()) </strong></em>in a functions script.&nbsp; If we did, it would remove all the variables created in the script that called the functions script.</p>
+<h2>Using the functions</h2>
+<p>We want any script file to be able to use the<em><strong> pythagoras()</strong></em> function that is included in <em><strong>toolbox.r</strong></em>.&nbsp; To do this, we just need to put code inside the script file that reads <em><strong>toolbox.r</strong></em>.&nbsp; We can do this using the <em><strong>source()</strong></em> function and the parameter is the location and name of the script file you want to include.</p>
+<p></p>
+<p>This code tells R to include everything in the<em><strong> toolbox.r</strong></em> file (which is in the <em><strong>scripts</strong> </em>folder) in your current script file. Functionally, this is equivalent to running all the code in toolbox.r by manually clicking the Source button when that script is in focus.</p>
+<h6 class="partial">source(x="scripts/toolbox.r");&nbsp; # load script with pythagoras() function</h6>
+<p></p>
+<p>Since everything inside <em><strong>toolbox.r</strong> </em>is now part of this new script, we can call <em><strong>pythagoras()</strong></em> (line 5) <em class="hl">as if pythagoras() existed in our new script</em>.&nbsp; The following script will execute<em><strong> pythagoras()</strong></em> located in<em><strong> toolbox.r</strong> </em>and get a return value, which is assigned to <em><strong>hypoteneuse</strong></em>:</p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE); <br />source(x="scripts/toolbox.r");<br /> <br />hypoteneuse = pythagoras(8,12);</h6>
+<p></p>
+<p><img src="../Images/R-02-10%20Calling%20function.PNG" alt="" class="flexSize" /></p>
+<h5>Calling <strong>pythagoras()</strong> from a separate script</h5>
+<p></p>
+<p>We will be adding more functions to the <em><strong>toolbox.r</strong></em> script file in this lesson and in later lessons.&nbsp;</p>
+<h3>Common source() errors</h3>
+<p id="rstudio_console_output" tabindex="0">A really easy mistake is to name the source file wrong, have the wrong folder name, or the wrong folder path.&nbsp; In all of the cases RStudio will give you a <em class="hl">"No such file or directory"</em> error.&nbsp;</p>
+<p tabindex="0"></p>
+<p tabindex="0">The following code erroneously gives the folder name as "script" instead of "scripts":</p>
+<h6 tabindex="0">rm(list=ls()); options(show.error.locations = TRUE); <br />source("script/toolbox.r");&nbsp; # error here<br /> <br />hypoteneuse = pythagoras(8,12);</h6>
+<p></p>
+<p><img src="../Images/R-02-10%20Error%20opening%20file.PNG" alt="" class="flexSize" /></p>
+<h5>Error calling the source file</h5>
+<h2>Adding to our toolbox: the counter function</h2>
+<p>Now we will add a counter function to <em><strong>toolbox.r</strong></em>.&nbsp; <em><strong>counter()</strong> </em>will count up all the values in a numeric vector that meet a user-specified condition.&nbsp;</p>
+<p></p>
+<p>So counter will be able to do things like:</p>
+<p>a) count all temperature values greater than 40 in the <em><strong>highTempData</strong> </em>vector</p>
+<p>b) count all non-zero precipitation values in the <em><strong>precipData</strong> </em>vector</p>
+<p></p>
+<p>And, just like <em><strong>pythagoras()</strong></em> returns the third side of the right-triangle, <em><strong>counter()</strong></em> will return the count to the caller.&nbsp;</p>
+<h3>Adding counter() to toolbox.r</h3>
+<p>In our first version of this function,<strong></strong><em><strong> counter()</strong> </em>will count the number of values <em>in a vector</em> that are greater than <em>some comparison value</em>.</p>
+<p></p>
+<p>This means there are two parameters for <em><strong>counter()</strong></em> that are <em><span style="color: #990000;">assigned values by the caller</span></em>:</p>
+<p>1) <em><strong>vector</strong></em>: the vector to be searched through</p>
+<p>2) <em><strong>compareVal</strong></em>: the value used for comparison when determining whether each of the elements meets the condition.</p>
+<p></p>
+<p>So, in <em><strong>toolbox.r</strong></em>,&nbsp; we will create a function called <em><strong>counter()</strong></em> that takes two values from the caller</p>
+<h6>counter = function(vector, compareVal)<br />{</h6>
+<h6></h6>
+<h6>}</h6>
+<p></p>
+<p>Remember that <em><strong>vector</strong> </em>and <em><strong>compareVal</strong> </em>are parameters whose <em><span style="color: #990000;">values get assigned by the caller.</span></em></p>
+<h3>Going through each value in the vector</h3>
+<p>The first thing we want the function to do is to go through all the values in the vector that the caller supplied.</p>
+<p></p>
+<p>To do that we need to:</p>
+<ol>
+<li>find the number of values in the vector using <em><strong>length()</strong></em></li>
+<li>create a <em><strong>for()</strong></em> that iterates through each value in the vector</li>
+</ol>
+<p></p>
+<h6>counter = function(vector, compareVal)<br />{</h6>
+<h6>&nbsp; vecLength = length(vector);&nbsp; # get the length of the vector</h6>
+<h6>&nbsp; for(val in 1:vecLength)&nbsp; &nbsp; &nbsp; # go through each value in vector</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp; # counting script will go here</h6>
+<h6>&nbsp; }</h6>
+<h6>}</h6>
+<p></p>
+<p>We get the length of the vector in line 4 by using the <em><strong>length()</strong></em> function:</p>
+<h6 class="partial" title="4">vecLength = length(vector);</h6>
+<p></p>
+<p>and we use the length to give the number of iter:tions -- the sequence <em><strong>1:vecLength</strong></em>.&nbsp; Note: <em><strong>val</strong> </em>will change each iteration through the <em><strong>for()&nbsp;</strong></em> going from <strong>1</strong> to <em><strong>vecLength.</strong></em></p>
+<h6 class="partial" title="5">for(val in 1:vecLength)</h6>
+<p></p>
+<h3>Checking each value</h3>
+<p>The <em><strong>for()</strong></em> will iterate through each vector value, using <em><strong>val </strong></em>as the index.&nbsp; Now we need to check each vector value against <em><strong>compareVal</strong> </em>supplied by the caller.</p>
+<p></p>
+<p>Inside the <em><strong>for()</strong></em>, we check each indexed value to see if it is greater than the value given by the caller</p>
+<p></p>
+<h6>counter = function(vector, compareVal)<br />{</h6>
+<h6>&nbsp; vecLength = length(vector);&nbsp; # get the length of the vector</h6>
+<h6>&nbsp; for(val in 1:vecLength)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # go through each value in vector</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp; # check if the vector value is greater than the compareVal</h6>
+<h6>&nbsp;&nbsp;&nbsp;<span class="hl"> if(vector[val] &gt; compareVal)</span></h6>
+<h6>&nbsp;&nbsp;&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # add one to the count</h6>
+<h6>&nbsp;&nbsp;&nbsp; }</h6>
+<h6>&nbsp; }</h6>
+<h6>}</h6>
+<p></p>
+<h3>Creating a count value</h3>
+<p>The function still does not do anything.&nbsp; We need a way to capture how many times the indexed vector value was greater than the one supplied by the caller.</p>
+<p></p>
+<p>So we need a<em class="hl"> state variable</em> that will hold the count -- we will call it <em><strong>countVal</strong> </em>and initially assign <em><strong>countVal</strong> </em>the value of <strong>0</strong>.</p>
+<h6 class="partial">countVal = 0;</h6>
+<p>If no values in the vector are greater than the <em><strong>compareVal</strong></em>, <em><strong>counter()</strong> </em>will return <em><strong>0</strong></em> to the caller</p>
+<p></p>
+<p><em><strong> countVal</strong> </em>is increased by one each time the following conditional statement is <em><strong>TRUE</strong></em></p>
+<h6 class="partial">if(vector[val] &gt; compareVal)&nbsp;</h6>
+<p></p>
+<p>Increasing <em><strong>countVal</strong> </em>by one is the same as saying <em class="hl">"assign the value <strong>(countVal</strong> + 1) to <strong>countVal</strong>".&nbsp;</em> In R this is:<em><br /></em></p>
+<h6 class="partial">countVal = countVal + 1;&nbsp;&nbsp; # intermediate states for countVal</h6>
+<p></p>
+<p>Putting all the code together:</p>
+<h6>counter = function(vector, compareVal)<br />{</h6>
+<h6>&nbsp; vecLength = length(vector);&nbsp; # get the length of the vector</h6>
+<h6>&nbsp; <span class="hl">countVal = 0;</span> &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; # initialize the count to 0</h6>
+<h6>&nbsp; for(val in 1:vecLength)&nbsp;&nbsp;&nbsp; # go through each value in vector</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp; # check if the vector value is greater than the compareVal</h6>
+<h6>&nbsp;&nbsp;&nbsp; if(vector[val] &gt; compareVal)</h6>
+<h6>&nbsp;&nbsp;&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hl">countVal = countVal + 1</span>; # add one to the count</h6>
+<h6>&nbsp;&nbsp;&nbsp; }</h6>
+<h6>&nbsp; }</h6>
+<h6>}</h6>
+<p></p>
+<h3>Returning the count to the user</h3>
+<p>The last step is to return the final state of <em><strong>countVal</strong> </em>to the caller using the <em><strong>return()</strong></em> function.&nbsp;</p>
+<p></p>
+<h6>counter = function(vector, compareVal)<br />{</h6>
+<h6>&nbsp; vecLength = length(vector);&nbsp; # get the length of the vector</h6>
+<h6>&nbsp; countVal = 0; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; # initialize the count to 0</h6>
+<h6>&nbsp; for(val in 1:vecLength)&nbsp;&nbsp; &nbsp;&nbsp; # go through each value in vector</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp; if(vector[val] &gt; compareVal)</h6>
+<h6>&nbsp;&nbsp;&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; countVal = countVal + 1; # add one to the count</h6>
+<h6>&nbsp;&nbsp;&nbsp; }</h6>
+<h6>&nbsp; }</h6>
+<h6>&nbsp;<span class="hl"> return(countVal);</span>&nbsp; # return the count value to the caller</h6>
+<h6>}</h6>
+<p></p>
+<p>Now your<em><strong> toolbox.r</strong> </em>file should look like this:</p>
+<p></p>
+<h6>pythagoras = function(a,b)<br />{<br />&nbsp;&nbsp; c = (a^2 + b^2)^(1/2);<br />&nbsp;&nbsp; return(c);<br />}</h6>
+<h6>counter = function(vector, compareVal)<br />{</h6>
+<h6>&nbsp; vecLength = length(vector);&nbsp; # get the length of the vector</h6>
+<h6>&nbsp; countVal = 0; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; # initialize the count to 0</h6>
+<h6>&nbsp; for(val in 1:vecLength)&nbsp;&nbsp; &nbsp;&nbsp; # go through each value in vector</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp; if(vector[val] &gt; compareVal)</h6>
+<h6>&nbsp;&nbsp;&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; countVal = countVal + 1; # add one to the count</h6>
+<h6>&nbsp;&nbsp;&nbsp; }</h6>
+<h6>&nbsp; }</h6>
+<h6>&nbsp;<span class="hl"> return(countVal);</span>&nbsp; # return the count value to the caller</h6>
+<h6>}</h6>
+<h2>Calling the function</h2>
+<p>Now we have the <em><strong>counter()</strong> </em>function in<em><strong> toolbox.r</strong></em> and we have included <em><strong>toolbox.r</strong></em> in our external script, we can use <em><strong>counter()</strong> </em>from our new script.&nbsp;</p>
+<p></p>
+<p>The following script makes 3 calls to <em><strong>counter()</strong></em> and assigns the return value to a variable (<em><strong>count1</strong></em>, <em><strong>count2</strong></em>, and <em><strong>count3</strong></em>).</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE); <br />source("scripts/toolbox.r");&nbsp;&nbsp; # load functions from toolbox.r file<br /> <br />weatherData = read.csv("data/LansingWeather3.csv");<br />highTempData = weatherData[ ,"highTemp"];<br />lowTempData = weatherData[ ,"lowTemp"];<br /> <br />count1 = counter(vector = highTempData, compareVal = 50);<br />count2 = counter(vector = highTempData, compareVal = 60);</h6>
+<h6>count3 = counter(lowTempData, 40);</h6>
+<p></p>
+<p>In the Environment Window, you can see that:</p>
+<ul>
+<li>the number of <em><strong>highTempData</strong> </em>values greater than 50 is <em><strong>9</strong></em> (<em><strong>count1</strong></em>)</li>
+<li>the number of <em><strong>highTempData</strong> </em>values greater than 60 is <em><strong>2</strong></em> (<em><strong>count2</strong></em>)</li>
+<li>the number of <em><strong>lowTempData</strong> </em>values greater than 40 is <em><strong>10</strong></em> (<em><strong>count3</strong></em>)</li>
+</ul>
+<p></p>
+<p><img src="../Images/R-02-10%20Calling%20counter%20function.PNG" alt="" class="flexSize" /></p>
+<h5>Calling <strong>counter()</strong> multiple times from an outside script</h5>
+<p></p>
+<p>Note: you can be explicit and use the parameter names in the function call (e.g., <em><strong>count1, count2</strong></em>) or just put the values in the call (e.g., <em><strong>count3</strong></em>).&nbsp; If you just put in the values, make sure you put them in the right order.</p>
+<p></p>
+<h2>Allowing for more conditional operators</h2>
+<p>As of right now,<em><strong> counter()</strong></em> only uses the greater than ( <em><strong>&gt; </strong></em>) conditional operator when comparing the vector values to another value.&nbsp; We want to make the <em><strong>counter()</strong></em> more robust by allowing the user to choose the conditional operator.</p>
+<p></p>
+<p>For the next example we will <strong><em>give </em></strong><em><strong>counter()</strong> </em>the ability to compare vector values with a comparison value using one of three conditional operators: greater than (&gt;),less than (&lt;), or equal to (==).</p>
+<p></p>
+<p>To do this,<span style="color: #990000;"> we need a third parameter in the arguments of <em><strong>counter()</strong></em></span>, which we will call <em><strong>conditionalOp </strong></em>(for<em> condition operator</em>) and we will set the default value for <em><strong>conditionalOp</strong> </em>to greater than (&gt;).&nbsp; So, if the caller does not assign a value to <em><strong>conditionalOp</strong> </em>then the value will be "&gt;".</p>
+<p></p>
+<h6>counter = function(vector, compareVal, <span class="partial hl">conditionalOp="&gt;"</span>)</h6>
+<p></p>
+<p>The code will allow for three values to be assigned to the parameter <em><strong>conditionOp</strong></em>: "&gt;", "&lt;", and "==" and the script needs to check for each of these cases. This is an<em><strong> if-else-if</strong> </em>structure.</p>
+<p></p>
+<p>There are three ways in which the count value will increase by one:</p>
+<ol>
+<li>if <em><strong>conditionalOp</strong> </em>is "&gt;" and the vector's <em><span style="color: #990000;">value is greater than</span></em> <em><strong>compareVal</strong></em></li>
+<li>else if <em><strong>conditionalOp</strong> </em>is "&lt;" and the vector's <em><span style="color: #990000;">value is less than</span></em> <em><strong>compareVal</strong></em></li>
+<li>else if <em><strong>conditionalOp</strong> </em>is "==" and the vector's <em><span style="color: #990000;">value is equal to</span> <strong>compareVal</strong></em></li>
+</ol>
+<p></p>
+<p>Putting the code together (in the <strong>toolbox.r</strong> file):</p>
+<h6>counter = function(vector, compareVal, conditionalOp="&gt;")</h6>
+<h6>{</h6>
+<h6>&nbsp; vecLength = length(vector);&nbsp; # get the length of the vector</h6>
+<h6>&nbsp; countVal = 0; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; # initialize the count to 0</h6>
+<h6>&nbsp; for(val in 1:vecLength)&nbsp; &nbsp; &nbsp; # go through each value in vector</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp; if(<span class="hl">conditionalOp == "&gt;"</span> &amp;&amp; vector[val] <span class="hl">&gt;</span> compareVal)</h6>
+<h6>&nbsp;&nbsp;&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; countVal = countVal + 1; # add one to the count</h6>
+<h6>&nbsp;&nbsp;&nbsp; }</h6>
+<h6>&nbsp;&nbsp;&nbsp; else if(<span class="hl">conditionalOp == "&lt;"</span> &amp;&amp; vector[val] <span class="hl">&lt;</span> compareVal)</h6>
+<h6>&nbsp;&nbsp;&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; countVal = countVal + 1; # add one to the count</h6>
+<h6>&nbsp;&nbsp;&nbsp; }</h6>
+<h6>&nbsp;&nbsp;&nbsp; else if(<span class="hl">conditionalOp == "=="</span> &amp;&amp; vector[val] <span class="hl">==</span> compareVal)</h6>
+<h6>&nbsp;&nbsp;&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; countVal = countVal + 1; # add one to the count</h6>
+<h6>&nbsp;&nbsp;&nbsp; }</h6>
+<h6>&nbsp; }</h6>
+<h6>&nbsp; return(countVal);&nbsp;&nbsp;&nbsp; # return the count value to the caller</h6>
+<h6>}</h6>
+<p></p>
+<p class="linkTo" title="invalid">Extension: Checking for invalid values</p>
+<h2>Calling the updated function</h2>
+<p><em class="hl">Make sure that <strong>toolbox.r</strong> is saved with the updated <strong>counter()!</strong></em> Then open an external script, and copy,paste, and execute the following code:&nbsp;<em class="hl"> </em></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE); <br />source("scripts/toolbox.r");<br /> <br />weatherData = read.csv("data/LansingWeather3.csv");<br />highTempData = weatherData[ ,"highTemp"];<br />lowTempData = weatherData[ ,"lowTemp"];<br /> <br />count1 = counter(vector = lowTempData, compareVal = 40, conditionalOp = "&lt;");</h6>
+<h6>count2 = counter(vector = highTempData, compareVal = 54, conditionalOp = "==");<br />count3 = counter(vector = lowTempData, compareVal = 40);</h6>
+<h6>count4 = counter(vector = highTempData, compareVal = 60);</h6>
+<h6>count5 = counter(lowTempData, 38, "==");</h6>
+<h6>count6 = counter(highTempData, 50, "&gt;");</h6>
+<p></p>
+<p><img src="../Images/R-02-10%20Calling%20passing%20cond%20operator.PNG" alt="" class="flexSize" /></p>
+<h5>Comparing vectors using different conditional operators</h5>
+<p></p>
+<ul>
+<li><em><strong>count1</strong> </em>and <em><strong>count2</strong> </em>explicitly assign values to the three variables (<em><strong>vector</strong></em>, <em><strong>compareVal</strong></em>, and <em><strong>conditionalOp</strong></em>)</li>
+<li><em><strong>count3</strong> </em>and <em><strong>count4</strong> </em>use the&nbsp; default value for <em><strong>conditionalOp</strong> </em>(which is "&gt;")</li>
+<li><em><strong>count5</strong> </em>and <em><strong>count6</strong> </em>pass in the values without the variable name (so, they need to be in order)</li>
+</ul>
+<h2>Application</h2>
+<p>1) Create a function that checks to see if at least one value in a vector is greater than, equal, or less than a given value</p>
+<p>So, like <em><strong>counter()</strong></em>, this function will take in three arguments:</p>
+<ul>
+<li>vector with data</li>
+<li>conditional operator</li>
+<li>comparison value</li>
+</ul>
+<p>But, the function will only return <em><strong>TRUE</strong> </em>or <em><strong>FALSE</strong></em></p>
+<ul>
+<li><em><strong>TRUE</strong> </em>if any value in the vector meets the condition</li>
+<li><em><strong>FALSE</strong> </em>if no values in the vector meet the condition</li>
+</ul>
+<p></p>
+<p>Add the function to <em><strong>toolbox.r</strong></em> and call the function from an outside script</p>
+<p></p>
+<p>hint: set the parameter default to FALSE</p>
+<p></p>
+<p>2) extend the counter function to include three more conditions:</p>
+<ul>
+<li>greater than or equal to (&gt;=)</li>
+<li>less than or equal to (&lt;=)</li>
+<li>not equal to (!=)</li>
+</ul>
+<p></p>
+<p>3) Challenge: Add an error condition to <em><strong>counter()</strong></em> if the caller gives an invalid conditional operator value.&nbsp; Note: this cannot be done by just putting an <em><strong>else</strong> </em>at the end of the <em><strong>if-else-if</strong> </em>structure.&nbsp; </p>
+<h2 class="extension" id="invalid">Extension: Checking for invalid values</h2>
+<p>One situation that can occur when checking for conditional operators is that the caller provided an invalid operator.&nbsp;</p>
+<p></p>
+<p>Let's say we have the situation:</p>
+<ol>
+<li>the valid operators are: <strong>&lt;, &gt;, ==</strong></li>
+<li>the caller gave the operator: <strong>@</strong></li>
+</ol>
+<p></p>
+<p>First, we want to create a conditional statement that checks to see if the operator is invalid.&nbsp; There are two ways to do this.&nbsp; The first is to check to see if the operator is valid and invert the conditional statement using the ( <strong>!</strong> ) operator:</p>
+<h6>if(&nbsp; <em class="hl">!(</em>conditionalOp == "&gt;" || conditionalOp == "&lt;" || conditionalOp != "=="<em class="hl">)</em>&nbsp; )</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("Sorry, ", conditionalOp, " is not a valid operator");</h6>
+<h6>}</h6>
+<p></p>
+<p>The conditional statement first checks the inner parenthesis.&nbsp; The <em><strong>or</strong> </em>operator ( <strong>||</strong> ) means inner parenthesis will be <em><strong>TRUE</strong> </em>if <em><strong>conditionalOp</strong> </em>is any of the three operators given.&nbsp; The <em><strong>not</strong> </em>operator (<strong> !</strong> ) inverts that condition to <strong>FALSE</strong>.&nbsp; This means the code attached to the<em><strong> if()</strong> </em>will be executed only if <em><strong>conditionalOp</strong> </em>is <em><strong>not</strong></em> any of the three.<strong> </strong></p>
+<p></p>
+<p>There is a second way we can write the conditional statement using the <em><strong>and</strong> </em>operator ( <strong>&amp;&amp;</strong> ):</p>
+<h6>if(<em class="hl"></em>conditionalOp <em class="hl">!=</em> "&gt;" <em class="hl">&amp;&amp;</em> conditionalOp <em class="hl">!=</em> "&lt;" <em class="hl">&amp;&amp;</em> conditionalOp <em class="hl">!=</em> "==")</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("Sorry, ", conditionalOp, " is not a valid operator");</h6>
+<h6>}</h6>
+<p>The <em><strong>&amp;&amp;</strong> </em>operator says that all three conditions must be <em><strong>TRUE</strong> </em>in order for the conditional statement to be <em><strong>TRUE</strong></em>.&nbsp; The three conditions all involve the<em><strong> not equal to</strong> </em>operator.&nbsp; So, the conditional statement is <em><strong>TRUE</strong> </em>if <em><strong>conditionalOp</strong> <strong>is not equal</strong> </em>to all the three operators given.</p>
+<p></p>
+<p>In mathematical parlance, the two conditional statements above are <em class="hl">contrapositives</em>.&nbsp; In other words, two things were reversed and the result stays the same.</p>
+<p></p>
+<p>We will often first check for invalid values in an<em><strong> if-else</strong></em> structure.&nbsp; This is because there is no point in making any of the other check if the <em><strong>conditionOp</strong> </em>is not valid.</p>
+<h6>counter = function(vector, compareVal, conditionalOp="&gt;")</h6>
+<h6>{</h6>
+<h6>&nbsp; vecLength = length(vector);&nbsp; # get the length of the vector</h6>
+<h6>&nbsp; countVal = 0; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; # initialize the count to 0</h6>
+<h6>&nbsp; for(val in 1:vecLength)&nbsp; &nbsp; &nbsp; # go through each value in vector</h6>
+<h6>&nbsp; {</h6>
+<h6><em class="hl">&nbsp;&nbsp;&nbsp; if(conditionalOp != "&gt;" &amp;&amp; conditionalOp != "&lt;" &amp;&amp; conditionalOp != "==")</em></h6>
+<h6>&nbsp;&nbsp;&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cat("Sorry, ", conditionalOp, " is not a valid operator");</h6>
+<h6>&nbsp;&nbsp;&nbsp; }</h6>
+<h6>&nbsp;&nbsp;&nbsp; else if(<span class="">conditionalOp == "&gt;"</span> &amp;&amp; vector[val] <span class="">&gt;</span> compareVal)</h6>
+<h6>&nbsp;&nbsp;&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; countVal = countVal + 1; # add one to the count</h6>
+<h6>&nbsp;&nbsp;&nbsp; }</h6>
+<h6>&nbsp;&nbsp;&nbsp; else if(<span class="">conditionalOp == "&lt;"</span> &amp;&amp; vector[val] <span class="">&lt;</span> compareVal)</h6>
+<h6>&nbsp;&nbsp;&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; countVal = countVal + 1; # add one to the count</h6>
+<h6>&nbsp;&nbsp;&nbsp; }</h6>
+<h6>&nbsp;&nbsp;&nbsp; else if(<span class="">conditionalOp == "=="</span> &amp;&amp; vector[val] <span class="">==</span> compareVal)</h6>
+<h6>&nbsp;&nbsp;&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; countVal = countVal + 1; # add one to the count</h6>
+<h6>&nbsp;&nbsp;&nbsp; }</h6>
+<h6>&nbsp; }</h6>
+<h6>&nbsp; return(countVal);&nbsp;&nbsp;&nbsp; # return the count value to the caller</h6>
+<h6>}</h6>
+</body>
+</html>

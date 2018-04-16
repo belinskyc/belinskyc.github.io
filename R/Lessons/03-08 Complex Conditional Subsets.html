@@ -1,0 +1,287 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2268106" target="_self">Conditional Subsets</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: This is the end.</p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">03-08 Complex Conditional Subsets</h1>
+<h2>Purpose</h2>
+<ul>
+<li>index a vector using multiple conditions</li>
+<li>index a string vector using patterns in the string values</li>
+<li>subset a vector using the index vector</li>
+<li>revisit linear regression models and scatterplots</li>
+</ul>
+<h2>Concepts</h2>
+<h2>Gathering data</h2>
+<p><a href="../Scripts/3-8.R" target="_blank" rel="noopener noreferrer" class="download">The script for this lesson is located here.</a></p>
+<p></p>
+<p>Like the last lesson, we are going to use the reformatted Lansing weather data frame and we are going to treat all the columns with string values as strings -- instead of factors.</p>
+<p></p>
+<h6 class="partial">lansing2016Weather = read.csv(file="data/LansingNOAA2016Formatted.csv",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stringsAsFactors = FALSE);</h6>
+<p></p>
+<p>And we are going to save the weather data columns to vectors.&nbsp;</p>
+<p></p>
+<h6 class="partial">date = lansing2016Weather[,"date"];<br />eventData = lansing2016Weather[,"eventData"];<br />avgTemp = lansing2016Weather[,"avgTemp"];<br />tempDept = lansing2016Weather[,"tempDept"]; <br />precipitation = lansing2016Weather[,"precipitation"]; <br />humidity = lansing2016Weather[,"humidity"];<br />barometer = lansing2016Weather[,"barometer"];<br />dewPoint = lansing2016Weather[,"dewPoint"];<br />avgWind = lansing2016Weather[,"avgWind"];<br />maxWind = lansing2016Weather[,"maxWind"]; <br />windDirection = lansing2016Weather[,"windDirection"];<br />sunrise = lansing2016Weather[,"sunrise"];<br />sunset = lansing2016Weather[,"sunset"];</h6>
+<h2>which() to subset vectors</h2>
+<p>As we saw in the last lesson, we can find out which days had an average temperature greater than 80 using the <em><strong>which()</strong></em> function:</p>
+<h6 class="partial">daysOver80 = which(avgTemp &gt; 80);</h6>
+<p></p>
+<p><em><strong>which()</strong></em> produces a vector of index values (<strong>163, 204, 224, 225, 250</strong>) and this vector is saved to the variable <em><strong>daysOver80</strong></em>.&nbsp; The five vector values indicate that there were <strong>5 days</strong> with average temperatures greater than 80 (the 163rd day, the 204th day...).</p>
+<p></p>
+<p><img src="../Images/R-03-08%20one%20condition%20which.PNG" alt="" class="flexSize" /></p>
+<h5>Using <strong>which()</strong> to subset the vector <strong>avgTemp</strong>.</h5>
+<h3>Indexing other vectors</h3>
+<p><em><strong>daysOver80</strong> </em>is a vector of five index values with:</p>
+<ul>
+<li><em><strong>daysOver80</strong></em>[1] = 163</li>
+<li><em><strong>daysOver80</strong></em>[2] = 204</li>
+<li><em><strong>daysOver80</strong></em>[3] = 224</li>
+<li><em><strong>daysOver80</strong></em>[4] = 225</li>
+<li><em><strong>daysOver80</strong></em>[5] = 250</li>
+</ul>
+<p></p>
+<p>We can use the vector <em><strong>daysOver80</strong> </em>to index other vectors and find out more information like:</p>
+<p></p>
+<p>What are the actual dates where the temperatures averaged over 80 degrees?</p>
+<h6 class="partial">datesOver80 = dates[daysOver80];</h6>
+<p><em class="hl">answer: June 11, July 22, August 11, August 12, and September 6</em></p>
+<p></p>
+<p>Or, what was the humidity on the days the temperature averaged over 80 degrees?</p>
+<h6 class="partial">humidityOver80 = humidity[daysOver80];</h6>
+<p><em class="hl">answer: 54%, 65%, 66%, 82%, and 70%</em></p>
+<h3>Simple stats on subset vector</h3>
+<p>We could take this one step further and find the <strong><em>min() </em></strong>and <strong><em>max() </em></strong>humidity for the days the temperatures averaged over 80 degrees.</p>
+<h6 class="partial">minHumOver80 = min(humidity[daysOver80]);</h6>
+<h6>maxHumOver80 = max(humidity[daysOver80]);</h6>
+<p><em class="hl">answers: min=54%, max=82%</em></p>
+<p><em class="hl"></em></p>
+<p><img src="../Images/R-03-08%20using%20subset%20vector.PNG" alt="" class="flexSize" /></p>
+<h5>Use the vector of index values (<strong>daysOver80</strong>) to subset other vectors (<strong>dates</strong> and <strong>humidity</strong>).</h5>
+<h3>Creating index vector with multiple conditions (&amp; and |)</h3>
+<p>Let's find the days that averaged temperatures in the <strong>60s</strong> (so, between <strong>60</strong> and <strong>70</strong>).</p>
+<p></p>
+<p>For<em class="hl"> a single temperature value</em>, we could use an <em><strong>if()</strong></em> with the <em><strong>&amp;&amp;</strong> </em>operator:<strong></strong><em><strong><br /></strong></em></p>
+<h6 class="partial">if(avgTemp &gt; 60 &amp;&amp; avgTemp &lt; 70)</h6>
+<p></p>
+<p>But we have a vector with multiple values.&nbsp; We can make a similar conditional statement using <em><strong>which()</strong></em>, except we use a single <em><strong>&amp;</strong></em> instead of the double <em><strong>&amp;&amp;</strong></em>.&nbsp;</p>
+<p class="linkTo" title="ands">Extension: Difference between &amp; and &amp;&amp;</p>
+<p></p>
+<p>To find temperatures between <strong>60</strong> and <strong>70</strong> using <em><strong>which()</strong></em> we look for <em><strong>avgTemp</strong> </em>greater than <strong>60</strong> and less than <strong>70.&nbsp; <span style="color: #990000;"></span></strong><em> </em>As with the <em><strong>if()</strong></em> conditional statement, we need to explicitly give both conditions.<em><br /></em></p>
+<h6 class="partial">tempsIn60s = which(avgTemp &gt; 60 &amp; avgTemp &lt; 70);</h6>
+<p></p>
+<p><em><strong>tempIn60s</strong> </em>has 56 values (<em class="figureRef" title="temp60s">fig</em>), so there were 56 days that averaged 60 to 70 degrees.&nbsp; The earliest day was day <strong>69</strong> (early March) and the latest was day <strong>306</strong> (early November).</p>
+<p></p>
+<p><img src="../Images/R-03-08%20which%20and%20mult%20conditions.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="temp60s">Using the <strong>&amp;</strong> operator in <strong>which()</strong>.</h5>
+<p></p>
+<p>Now we can use the vector <em><strong>tempsIn60s</strong> </em>to find the average winds for the <strong>56</strong> days with temperature between <strong>60</strong> and <strong>70:</strong></p>
+<h6 class="partial">meanWind60s = mean(avgWind[tempsIn60s]);</h6>
+<p></p>
+<p>or the maximum precipitation for the <strong>56</strong> days with high temperature between <strong>60</strong> and <strong>70:</strong></p>
+<h6 class="partial">maxPrecip60s = max(precipitation[tempsIn60s]);</h6>
+<p></p>
+<p>We can see that (<em class="figureRef" title="temp60stats">fig</em>):</p>
+<ul>
+<li>there were <strong>56</strong> days with <em><strong>avg</strong><strong>Temp </strong></em>values<em> </em>in the <strong>60s</strong></li>
+<li>the average wind speed <em class="hl">for those <strong>56</strong> days</em> was about <strong>7.3mph</strong></li>
+<li>and the maximum precipitation for those <strong>56</strong> days was <strong>1.01 inches</strong>.<br /><br /></li>
+</ul>
+<p><img src="../Images/R-03-08%20subset%20with%20mult%20conditions.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="temp60stats">Using the index vector (<strong>tempsIn60s</strong>) to subset the vectors <strong>avgWind</strong> and <strong>precipitation</strong>.</h5>
+<h2>Linear models using subsetted vectors</h2>
+<p>In the last lesson we initially found that there was no relationship between <strong>avgTemp</strong> and <strong>barometer </strong>(pressure).&nbsp; In this lesson, we will try to find relationships by looking at <em><strong>avgTemp</strong> </em>vs <em><strong>barometer</strong> </em>while considering other factors, like departure from average temperature (<strong>tempDept</strong>).</p>
+<p></p>
+<p><em><strong>tempDept</strong> </em>measures the deviation between the actual temperature and the average temperature.</p>
+<p></p>
+<p>Let's create a vector that holds the indexes for the days that had more than a 15 degree departure from normal (in either the positive and negative direction).&nbsp; So we want <em><strong>tempDept</strong> </em>that is<em class="hl"> less than -15 or greater than 15</em>.&nbsp; This means we need to use the <em><strong>or</strong> </em>(<em><strong> |</strong></em> ) operator.</p>
+<h6 class="partial">highDepartTemp = which(tempDept &lt;&nbsp; -15 | tempDept &gt; 15);</h6>
+<p></p>
+<p><img src="../Images/R-03-08%20subset%20with%20or%20conditions.PNG" alt="" class="flexSize" /></p>
+<h5>Subsetting a vector using <strong>which()</strong> and the <strong>or</strong> ( <strong>|</strong> ) conditional operator.</h5>
+<h3>Set up scatterplot and linear model</h3>
+<p>Next we make a scatterplot of <em><strong>avgTemp </strong></em>vs <em><strong>barometer</strong> </em>on days with high departure temperatures (<em class="figureRef" title="scatterplot">fig</em>):</p>
+<h6 class="partial">plot(formula=avgTemp[highDepart]~barometer[highDepart]);</h6>
+<p></p>
+<p>And make a linear model that indexes temperature and pressure on the days with more than a 15 degree deviation from normal (<em class="figureRef" title="scatterplot">fig</em>):</p>
+<h6 class="partial">model = lm(formula=avgTemp[highDepart]~barometer[highDepart]);</h6>
+<p></p>
+<p>Then we add the regression line from the model to the scatterplot (<em class="figureRef" title="scatterplot">fig</em>):</p>
+<h6 class="partial">abline(model, col="blue");</h6>
+<p></p>
+<p><img src="../Images/R-03-08%20scatterplot.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="scatterplot">Scatterplot of <strong>avgTemp</strong> vs <strong>barometer</strong> on days with abnormal temperatures -- with regression line added</h5>
+<p></p>
+<p>The scatterplot and regression suggest a relationship between <em><strong>avgTemp</strong> </em>and <em><strong>barometer </strong></em> when temperatures deviates by more than 15 degrees from normal.</p>
+<h3>Summarizing the linear model</h3>
+<p>We can print the linear model summary to the Console Window</p>
+<h6 class="partial">print(summary(model));</h6>
+<p></p>
+<p><img src="../Images/R-03-08%20linear%20model%20summary.PNG" alt="" class="flexSize" /></p>
+<h5>Summary of the linear model that suggests a relationship between <strong>avgTemp</strong> and <strong>barometer</strong>.</h5>
+<h3>A second linear model</h3>
+<p>Wind directions plays a big role in weather conditions so we will repeat the analysis with southerly winds (<em><strong>windDirection</strong> </em>between <strong>90</strong> <strong><em>and </em>270</strong> degrees).&nbsp; Note: <strong>0</strong> degrees is due north, <strong>180</strong> degrees is due south.</p>
+<p></p>
+<h6 class="partial">southWinds = which(windDirection &gt; 90 &amp; windDirection &lt; 270);<br />plot(formula=avgTemp[southWinds]~barometer[southWinds]);<br />model2 = lm(formula=avgTemp[southWinds]~barometer[southWinds]);<br />abline(model2, col="blue"); &nbsp;&nbsp; # add the regression line to the plot<br />print(summary(model2)); &nbsp; &nbsp; &nbsp;&nbsp; # summary shows a relationship</h6>
+<p></p>
+<p><img src="../Images/R-03-08%20linear%20model%20summary%20and%20scatterplot.PNG" alt="" class="flexSize" /></p>
+<h5>Summary of linear model showing relationship between <strong>avgTemp</strong> and <strong>barometer</strong> on days with southerly winds</h5>
+<h2>Finding patterns in string value with grep()</h2>
+<p><em><strong>which()</strong></em> works well for subsetting vectors that have numeric values but <em><strong>which()</strong></em> is not equipped to deal flexibly with string values.&nbsp; As we saw in last lesson, <em><strong>eventData</strong></em> has values like: <strong>SN, FG, HZ</strong>, indicating <strong>snow</strong>, <strong>fog</strong>, and <strong>haze</strong> on that day.&nbsp;</p>
+<p></p>
+<p>We can use <em><strong>grep()</strong></em> to find all <strong><em>eventData</em> </strong><em class="hl">values that contain</em><em><strong> SN </strong></em>(snow) (<em class="figureRef" title="precipDays">fig</em>):</p>
+<h6 class="partial">daysWithSnow = grep("SN", eventData);</h6>
+<p></p>
+<p>or use <em><strong>grep()</strong></em> find all <em class="hl"><strong>eventData</strong> values that contain</em> <strong>RN</strong> (rain) (<em class="figureRef" title="precipDays">fig</em>):</p>
+<h6 class="partial">daysWithRain = grep("RN", eventData);</h6>
+<h3>grep() with the | condition</h3>
+<p>And we can use the <em><strong>or</strong></em> (<em><strong> |</strong></em> ) operator to find all values in <em><strong>eventData</strong> </em><em class="hl">that contain either</em> <strong>SN</strong> or <strong>RN </strong>(<em class="figureRef" title="precipDays">fig</em>):</p>
+<h6 class="partial">daysWithPrecip = grep("RN|SN", eventData);</h6>
+<p></p>
+<p>There are <strong>124</strong> days with only rain, <strong>65</strong> with only snow, and <strong>179</strong> days with rain <em><strong>or</strong> </em>snow.&nbsp;</p>
+<p><strong>124</strong> + <strong>65</strong> = <strong>189</strong>, so there are <strong>10</strong> days (<strong>189-179</strong>) that had <em><strong>both</strong> </em>rain <em><strong>and</strong> </em>snow.</p>
+<p></p>
+<p><img src="../Images/R-03-08%20grep%20and%20or%20condition.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="precipDays">Using the or ( <strong>|</strong> ) condition within a<strong> grep()</strong>.</h5>
+<p></p>
+<p>We can return days with rain or snow using <em><strong>grep()</strong></em> (the<strong> |</strong> operator) but we cannot use<em><strong> grep()</strong></em> to return days with <em><strong>both</strong> </em>rain <em><strong>and</strong> </em>snow (the <em><strong>&amp;</strong> </em>operator)</p>
+<h6 class="partial">daysWithRainAndSnow1 = grep("RN&amp;SN", eventData);&nbsp; # this does not work!</h6>
+<p></p>
+<p>The reason for this requires a lengthy explanation of how <em><strong>grep()</strong> </em>(and regular expressions, in general) are executed.</p>
+<h3>An alternative to &amp; when using grep()</h3>
+<p>We have:</p>
+<ul>
+<li><em><strong>daysWithSnow:</strong></em> the indexes of all days with snow, and</li>
+<li><em><strong>daysWithRain:</strong></em> the indexes of all days with rain.&nbsp;</li>
+</ul>
+<p></p>
+<p>What we want is the <em class="hl">index values that are in both </em><strong><em>daysWithRain </em></strong><em class="hl">and </em><strong><em>daysWithSnow</em></strong>.</p>
+<p></p>
+<p>Luckily, there is a function for that called <em><strong>intersect()</strong></em>.&nbsp; <em><strong>intersect(</strong></em>) produces a vector of values that occur in both vectors.</p>
+<h6 class="partial">daysWithRainAndSnow2 = intersect(daysWithRain, daysWithSnow);</h6>
+<p></p>
+<p><em><strong>daysWithRainAndSnow2</strong> </em>has <strong>10</strong> values, representing the <strong>10</strong> values in <em><strong>eventData</strong> </em>that had both <em><strong>RN</strong> </em>(rain) and <em><strong>SN</strong> </em>(snow).</p>
+<p></p>
+<p><img src="../Images/R-03-08%20grep%20and%20intersect.PNG" alt="" class="flexSize" /></p>
+<h5>Using <strong>intersect()</strong> to find values that occur in two vectors.</h5>
+<p></p>
+<p class="linkTo" title="union">Extension: <em><strong>union()</strong> </em>-- sister function to <em><strong>intersect()</strong></em></p>
+<h2>Multiple conditions on multiple variables</h2>
+<p>Similar to <em><strong>if()</strong></em>, we can use <em><strong>which()</strong></em> to look at <em class="hl">multiple conditions on multiple variables</em>.&nbsp; The trick is to make sure you have the parentheses correct, because parentheses determine the order of operations.</p>
+<p></p>
+<p><em><strong>abnormalTempHighWind</strong> </em>gives the index of values where there were strong winds (greater than <strong>15mph</strong>) and the temperature deviated more than <strong>10</strong> degrees from average.</p>
+<h6 class="partial">abnormalTempHighWind = which( (avgWind &gt; 15) &amp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (tempDept &lt; -10 | tempDept &gt; 10 ) );</h6>
+<p class="partial"></p>
+<p><em><strong>chillyLightRain</strong> </em>gives the index for temperature values between <strong>40</strong> <strong><em>and </em>50</strong> degrees where there was a light precipitation (between <strong>0.1</strong> <strong><em>and </em>0.2</strong> inches)</p>
+<h6 class="partial">chillyLightRain = which( (avgTemp &gt; 40 &amp; avgTemp &lt; 50) &amp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; (precipitation &gt; 0.1 &amp; precipitation &lt; 0.2 ));</h6>
+<p><em><strong></strong></em></p>
+<p>We see there are:</p>
+<ul>
+<li><strong>9</strong> windy days with temperatures deviating more than 10 degrees from average and</li>
+<li><strong>3</strong> days that were chilly with light rain.</li>
+</ul>
+<p><em><strong></strong></em></p>
+<p><img src="../Images/R-03-08%20which%20mult%20cond%20mult%20variables.PNG" alt="" class="flexSize" /></p>
+<h5>Using <strong>which()</strong> with multiple conditions on multiple variables</h5>
+<h3>Using the index vector to subset another vector</h3>
+<p>Let's get the actual dates for the conditions above.</p>
+<p></p>
+<p>We can use the subset vectors to find the dates for <em><strong>abnormalTempHighWind</strong> </em>and <em><strong>chillyLightRain:</strong> </em></p>
+<h6 class="partial">dates1 = date[abnormalTempHighWind];</h6>
+<h6>dates2 = date[chillyLightRain];</h6>
+<p></p>
+<p>And we will print this information to the Console Window.&nbsp; Note:<em><strong> cat()</strong></em> is easier to use than <em><strong>print()</strong></em> for printing out string-only content.</p>
+<h6 class="partial">cat("Abnormal temps and high winds:\n");<br />print(dates1);<br />cat("\nChilly days and light rain:\n");<br />print(dates2);</h6>
+<p></p>
+<p><img src="../Images/R-03-08%20mult%20cond%20mult%20variables.PNG" alt="" class="flexSize" /></p>
+<h5>Printing out the results of subsetting vectors</h5>
+<h2>Application</h2>
+<p>Use the data from<em><strong> LansingNOAA2016Formatted.csv</strong></em> for this application.</p>
+<p></p>
+<p>1) Using <em><strong>grep()</strong></em>, create a vector with indices for every day in the months of February and March.</p>
+<p>hint: all December values are in the form <strong>12-##</strong>, all November values are in the form <strong>11-##...</strong></p>
+<p></p>
+<p>2) Find the number of days the maximum wind speed was high (greater than 40) and for these days give:</p>
+<p>&nbsp;&nbsp; - the date</p>
+<p>&nbsp;&nbsp; - the amount of precipitation</p>
+<p>&nbsp;&nbsp; - the maximum wind speed</p>
+<p></p>
+<p>3) Print out the dates that have</p>
+<p>&nbsp; - northerly winds (less than 90 degrees or greater than 270 degrees)</p>
+<p>&nbsp; - northerly winds and precipitation greater than 0.5 inches</p>
+<p></p>
+<p>4) Does <em><strong>hoursOfSun</strong> </em>(from last lesson's application) always correlate with temperature?</p>
+<p>&nbsp; - Make a scatterplot of <em><strong>avgTemp</strong> </em>vs <em><strong>HoursOfSun</strong> </em>for every two months (6 in all)</p>
+<p>&nbsp; - Create a linear models of <em><strong>avgTemp</strong> </em>vs <em><strong>hoursOfSun</strong> </em>for every two months (6 in all)&nbsp;</p>
+<p>&nbsp; - Add the regression lines to the scatterplots</p>
+<p></p>
+<h2 class="extension" id="ands">Extension: Differences between &amp; and &amp;&amp;</h2>
+<p>Note: everything in this extension is also true for the differences between <strong>|</strong> and <strong>||</strong>.</p>
+<p></p>
+<p>If you are comparing single values then <em><strong>&amp;</strong></em> and <em><strong>&amp;&amp;</strong> </em>will always function exactly the same so:</p>
+<h6 class="p">testNum = 4</h6>
+<h6></h6>
+<h6>if(testNum &gt; 3 <em class="hl">&amp;&amp;</em> testNum &lt; 7)&nbsp; # evaluates to TRUE</h6>
+<h6>{</h6>
+<h6>&nbsp; # do something here</h6>
+<h6>}</h6>
+<h6></h6>
+<h6>if(testNum &gt; 3 <em class="hl">&amp;</em> testNum &lt; 7) &nbsp; # also evaluates to TRUE</h6>
+<h6>{</h6>
+<h6>&nbsp; # do something here</h6>
+<h6>}</h6>
+<p></p>
+<p>Most R programmers will use <em><strong>&amp;</strong></em> in these circumstances.&nbsp; For this class, I chose to use <em><strong>&amp;&amp;</strong></em> because <em class="hl">in most other programming languages you need to use <strong>&amp;&amp;</strong></em> when you are comparing single values.&nbsp; However, you could go back to lessons 1-9 and 1-10 and replace every <em><strong>&amp;&amp;</strong> </em>with <em><strong>&amp;</strong></em> and nothing will functionally change.</p>
+<p></p>
+<p>When dealing with vectors in R, <em><strong>&amp;</strong></em> and <em><strong>&amp;&amp;</strong></em> will function differently.&nbsp; <em><strong>&amp;&amp;</strong></em> checks to see if <em class="hl">every value in the vector meets the condition</em> and produces one <strong>TRUE</strong> or <strong>FALSE</strong> statement whereas<em><strong> &amp;</strong></em> <em class="hl">checks each value individually</em> and produces a <em><strong>TRUE/FALSE</strong></em> statement for each value.</p>
+<p></p>
+<p>Let's look at an example using the vector <em><strong>ages = c(2,7,3,9,6,3,5):</strong></em></p>
+<p><em><strong><img src="../Images/R-03-08%20single%20and%20double%20ANDS.PNG" alt="" class="fs" /></strong></em></p>
+<h5 class="" id="ands"><em></em>Comparing <strong>&amp;</strong> to <strong>&amp;&amp;</strong> in conditional statements with vectors.</h5>
+<p></p>
+<p>In the Console Window we see that <em><strong>(age &gt; 2 &amp; age &lt; 6)</strong></em> produces seven values, representing each value of the <em><strong>ages</strong> </em>vector.&nbsp; Since the 3<sup>rd</sup>, 6<sup>th</sup>, and 7<sup>th</sup> values in <em><strong>ages</strong> </em>are between <strong>2</strong> and <strong>6</strong>, the&nbsp;3<sup>rd</sup>, 6<sup>th</sup>, and 7<sup>th</sup> values are <strong>TRUE</strong>, the rest are <strong>FALSE</strong>.</p>
+<p></p>
+<p><em><strong>(age &gt; 2 &amp;&amp; age &lt; 6) </strong></em>produces one <strong>FALSE</strong> value because all the values in <em class="hl"><strong>ages</strong> do not meet the condition of being between 2 and 6</em>.</p>
+<p></p>
+<p><em><strong>(age &gt; -100 &amp;&amp; age &lt; 100) </strong></em>produces one <strong>TRUE</strong> value because all the values in <em class="hl"><strong>ages</strong> do meet the condition of being between -100 and 100</em>.</p>
+<p></p>
+<p>Note: In most other programming language, <em><strong>&amp;</strong></em> functions differently -- it is a <em class="hl">bitwise operator</em>, which is an advanced topic.</p>
+<h2 class="extension" id="union">Extension: union(), the sister to intersect()</h2>
+<p><strong>intersect()</strong> on two vectors returns the values that are represented in <em class="hl">both vectors</em>,</p>
+<p><em><strong>union()</strong> </em>on two vectors returns the values that are represented in <em class="hl">either vector.</em></p>
+<p></p>
+<p>So, if:</p>
+<h6 class="p">aVector = c(3, 4, 5, 6, 7);<br />bVector = c(6, 7, 8, 9, 10);</h6>
+<p></p>
+<p>then:</p>
+<h6 class="p">intersect(aVector, bVector);</h6>
+<p>returns a vector with the values <strong>6</strong> and <strong>7</strong>, because <strong>6</strong> and<strong> 7</strong> occurred in both <em><strong>aVector</strong> </em>and <em><strong>bVector</strong></em></p>
+<p></p>
+<p>and:</p>
+<h6 class="p">union(aVector, bVector);</h6>
+<p>returns a vector with the values <strong>3,4,5,6,7,8,9,10</strong> -- or all the values that occur in either <em><strong>aVector</strong> </em>or <em><strong>bVector</strong></em></p>
+<p></p>
+<p><img src="../Images/R-03-08%20intersct-union.PNG" alt="" class="fs" /></p>
+<h5>The intersection and union of two vectors.</h5>
+</body>
+</html>

@@ -1,0 +1,249 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2028087" target="_self">Vectors and Data Frames</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2028089" target="_self">Functions 1</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">02-07: Plots 1</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Create a scatter plot and a line plot</li>
+<li>Adding lines to a plot</li>
+<li>Style the plot and change axis ranges</li>
+<li>Include a legend </li>
+</ul>
+<h2>Concepts</h2>
+<h2>A New Data Frame</h2>
+<p>For this lesson we will be using an expanded weather data set that includes <em><strong>dayOfYear</strong></em> and <em><strong>humidity</strong></em>. <em><strong>dayOfYear</strong> </em>assigns a numerical value for each day of the year from 1-365 (or 366 on a leap year).&nbsp; Copy the data below and save it as <em><strong>LansingWeather3.csv</strong> </em>in your <em><strong>data</strong> </em>folder.</p>
+<p></p>
+<h6 class="text">date,dayOfYear,highTemp, lowTemp, precipitation,humidity<br />27-Mar,86,57,45,0.01,88<br />28-Mar,87,50,43,0.005,87<br />29-Mar,88,54,42,0.04,80<br />30-Mar,89,40,38,1.11,74<br />31-Mar,90,39,37,0.12,67<br />1-Apr,91,58,45,0,84<br />2-Apr,92,60,46,0.005,89<br />3-Apr,93,53,50,0.49,59<br />4-Apr,94,55,48,0.45,55<br />5-Apr,95,44,40,0.3,72<br />6-Apr,96,39,36,1.13,82<br />7-Apr,97,53,43,0.004,83<br />8-Apr,98,61,45,0,87<br />9-Apr,99,75,63,0,58</h6>
+<h2>Your first plot</h2>
+<p>We will first plot a time series of the high temperatures from the data above.</p>
+<p></p>
+<p>The R function we will use is<em><strong> plot()</strong> </em>and there are many parameters you can include that control the plot's properties and appearance.&nbsp; There are numerous ways in which you can modify the plot and we will learn some of these in this and future lessons.</p>
+<p></p>
+<p>For now we will simply add the vector <em><strong>highTempData</strong></em> as a parameter to <em><strong>plot()</strong></em>.</p>
+<p></p>
+<h6 class="">rm(list=ls()); options(show.error.locations = TRUE);<br />&nbsp; <br />weatherData = read.csv("data/LansingWeather3.csv");<br />highTempData = weatherData[ ,"highTemp"];<br />&nbsp;</h6>
+<h6>plot(highTempData);</h6>
+<p></p>
+<p><img src="../Images/R-02-07%20Scatterplot%20high%20temp.PNG" alt="" class="flexSize" /></p>
+<h5>Scatterplot of the high temperature from <strong>weatherData</strong></h5>
+<p></p>
+<p>In the Plot Window, we see a scatterplot of the high temperature values plotted against the high temperature's vector index.&nbsp;</p>
+<p></p>
+<p>The plot can be resized by dragging the gray area surrounding the Plot Window.&nbsp; <em class="linkTo" title="full-size">Extension: Full-sized window for plots.</em></p>
+<p></p>
+<p>You can also use the <em><strong>Export</strong> </em>button to save the plot as an image, a PDF, or to the clipboard (to be pasted to a document).</p>
+<p></p>
+<p class="linkTo" title="error">Trap: A very common, and very unintuitive, plot error</p>
+<h3>Plotting X and Y variables</h3>
+<p>The plot above just plots the high temperature vs. the index number of the values. Instead of plotting against the index number, we can plot the high temperature against the <em><strong>dayOfYear</strong></em>.&nbsp;&nbsp; The <em><strong>dayOfYear</strong> </em> value for March 27 (the first day in the data) is 86.&nbsp; Note: we use <em><strong>dayOfYear</strong> </em> instead of <em><strong>date</strong> </em>because <em><strong>date</strong> </em>(e.g., <strong>2-Apr</strong>) contains non-numeric values.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />weatherData = read.csv("data/LansingWeather3.csv");<br />highTempData = weatherData[ ,"highTemp"];</h6>
+<h6>dateData = weatherData[ ,"dayOfYear"];</h6>
+<h6></h6>
+<h6>plot(formula=highTempData~dateData);&nbsp; # plot(y~x)</h6>
+<p></p>
+<p>In the last line of the script:</p>
+<h6 class="p">plot(formula=highTempData~dateData);</h6>
+<p><em><strong>highTempData</strong> </em>are the dependent values (y) and <em><strong>dateData</strong> </em>are the independent values (x)</p>
+<p></p>
+<p>The line can also be written in this form -- <em><strong>plot(x, y)</strong></em></p>
+<h6 class="partial">plot(x=dateData, y=highTempData);</h6>
+<p></p>
+<p><img src="../Images/R-02-07%20Scatterplot%202%20var.PNG" alt="" class="flexSize" /></p>
+<h5>Plotting high temperature vs. the day-of-year</h5>
+<p></p>
+<p>Note that the Plot Window stores all the previous plots and the plots can be cycled through by clicking the arrow buttons.&nbsp; You can use the brush button to remove all of the plots.</p>
+<p></p>
+<h3>Plotting lines</h3>
+<p>If we want to connect the points -- in other words, we want a line graph, we need to add an parameter to <em><strong>plot()</strong></em> called <em><strong>type</strong></em>. Note: the points are connected according to their order in the vector.<span style="color: #990000;"><em> </em></span></p>
+<p><span style="color: #990000;"><em></em></span></p>
+<p>the parameter<strong></strong><em><strong> type</strong> </em>can have the following values:</p>
+<ul>
+<li><strong>"p"</strong>: points only</li>
+<li><strong>"l"</strong>: line only</li>
+<li><strong>"o"</strong>: points and lines</li>
+<li><strong>"n"</strong>: neither points nor lines (empty plot)</li>
+</ul>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />weatherData = read.csv("data/LansingWeather3.csv");<br />highTempData = weatherData[ ,"highTemp"];</h6>
+<h6>dateData = weatherData[ ,"dayOfYear"];</h6>
+<h6></h6>
+<h6>plot(highTempData~dateData,<span style="color: #ffff00;"></span> <span class="hl">type = "o"</span>);</h6>
+<p></p>
+<p><span style="color: #990000;"><em>Don't forget to put a comma between the parameters in<strong> plot().</strong></em></span></p>
+<p></p>
+<p><img src="../Images/R-02-07%20Scatterplot%20lines%20and%20points.PNG" alt="" class="flexSize" /></p>
+<h5>Connecting the points on a scatterplot.</h5>
+<p></p>
+<h3>Graph labels and title</h3>
+<p>The default labels for the axes are the names of the variables used in the plot (e.g., <em><strong>dateData</strong> </em>and <em><strong>highTempData</strong></em>) and the default for the title is blank. We can edit the labels using the parameters <em><strong>xlab</strong> </em>and <em><strong>ylab</strong> </em>and add a title using the parameter <em><strong>main</strong></em>.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />weatherData = read.csv("data/LansingWeather3.csv");<br />highTempData = weatherData[ ,"highTemp"];<br />dateData = weatherData[ ,"dayOfYear"];<br /> <br />plot(highTempData~dateData, type = "o"<span style="color: #ffff00;">,</span><br /><span class="hl">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; main="Lansing high temperatures",</span></h6>
+<h6><span class="hl">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xlab="Day of Year",</span><br /><span class="hl">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ylab="temperature (F)")</span>;</h6>
+<p><span style="color: #000000;">Note, I split the function <em><strong>plot()</strong></em> into multiple lines to make it easier to see each of the parameters.<br /></span></p>
+<p><em><span style="color: #990000;"></span></em></p>
+<p><img src="../Images/R-02-07%20Scatterplot%20labels.PNG" alt="" class="flexSize" /></p>
+<h5>Adding labels to the axes and a title to the plot.</h5>
+<h2>Adding a second plot</h2>
+<p>The next step is to add another set of values to the plot -- specifically the low temperature data.&nbsp; We cannot use <em><strong>plot()</strong></em> to add the low temperature data because <em><strong>plot()</strong></em> creates a new plot so<strong> </strong><em class="hl"><strong>plot()</strong> cannot be used to append data to an existing plot</em>.</p>
+<p></p>
+<p>Instead we use the function <em><strong>points().&nbsp; </strong></em><em><strong>points()</strong></em> appends data to the current plot and the parameters for <em><strong>points()</strong></em> are almost the same as <em><strong>plot() </strong></em>-- including <em><strong>type</strong></em>="o" to connect the points.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />weatherData = read.csv("data/LansingWeather3.csv");<br />highTempData = weatherData[ ,"highTemp"];</h6>
+<h6>lowTempData = weatherData[ ,"lowTemp"];<br />dateData = weatherData[ ,"dayOfYear"];<br /> <br />plot(highTempData~dateData, type = "o"<span class="" style="color: #ffff00;">,</span><br /><span class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; main="Lansing high temperatures",</span></h6>
+<h6><span class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xlab="Day Of Year",</span><br /><span class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ylab="temperature (F)")</span>;</h6>
+<h6></h6>
+<h6><span class="hl">points(lowTempData~dateData, type="o");</span></h6>
+<p></p>
+<p><img src="../Images/R-02-07%202%20plots.PNG" alt="" class="flexSize" /></p>
+<h5>Plotting out both the high and low temperatures on one plot.</h5>
+<h3>Changing the limits of the axes</h3>
+<p>The low temperatures were added to the plot but some of the points are off the plot.&nbsp; This is because the y-axis was not adjusted to accommodate the new values; the original y-axis limits were based on the minimum and maximum from the <em><strong>highTempData</strong> </em>(approximately 40 to 75), but the limits do not adjust when new points are added, even if the points go beyond the y-axis limits.</p>
+<p></p>
+<p>We need to change the y-axis limits in the original <em><strong>plot()</strong></em> to accommodate the new temperature values.&nbsp; The parameters for changing the axis limits are <em><strong>xlim</strong> </em>and <em><strong>ylim</strong></em>.&nbsp; In this case, we only need to change the <em><strong>ylim</strong> </em>parameter.&nbsp; To change to <em><strong>ylim</strong> </em>parameter, we set <em><strong>ylim</strong> </em>to a vector of two values:&nbsp; <em><strong>ylim</strong> </em>= <em><strong>c(min, max)</strong></em>.&nbsp; In this case we will use 30 and 80.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />weatherData = read.csv("data/LansingWeather3.csv");<br />highTempData = weatherData[ ,"highTemp"];</h6>
+<h6>lowTempData = weatherData[ ,"lowTemp"];<br />dateData = weatherData[ ,"dayOfYear"];<br /> <br />plot(highTempData~dateData, type = "o"<span class="">,</span><br /><span class="hl">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ylim=c(30,80),</span></h6>
+<h6><span class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; main="Lansing high temperatures",</span></h6>
+<h6><span class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xlab="Day Of Year",</span><br /><span class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ylab="temperature (F)")</span>;</h6>
+<h6></h6>
+<h6>points(lowTempData~dateData, type="o");</h6>
+<p></p>
+<p>Note that the y-axis now goes from 30 to 80 due to assigning values to the parameter <em><strong>ylim.</strong></em></p>
+<p></p>
+<p><img src="../Images/R-02-07%20Y%20Axis%20Limits.PNG" alt="" class="flexSize" /></p>
+<h5>Changing the y-axis limits on a plot to accommodate new values</h5>
+<h3>Changing the color of the plots</h3>
+<p>We now have two lines and it would be nice to distinguish them.&nbsp; We are going to make the first plot blue and the second plot red using the <em><strong>col</strong> </em>parameter.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />weatherData = read.csv("data/LansingWeather3.csv");<br />highTempData = weatherData[ ,"highTemp"];<br />dateData = weatherData[ ,"dayOfYear"];<br /> <br />plot(highTempData~dateData, type = "o", <span class="hl">col="red",</span><br /><span class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ylim=c(30,80),</span></h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; main="Lansing high temperatures",</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xlab="Day Of Year",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ylab="temperature (F)");</h6>
+<h6></h6>
+<h6>points(lowTempData~dateData, type="o", <span class="hl">col="blue");</span></h6>
+<p></p>
+<p><img src="../Images/R-02-07%20Changing%20plot%20color.PNG" alt="" class="flexSize" /></p>
+<h5>Changing the color of the lines in a plot</h5>
+<h2>Adding a legend</h2>
+<p>Lastly, we would like a way to annotate the different lines and the best way is to use a legend.&nbsp; In R the function to add a legend to a plot is <em><strong>legend()</strong></em>.&nbsp; <em><strong>legend()</strong></em>, like <em><strong>plot()</strong></em> and <em><strong>points()</strong></em> has numerous properties that can be modified.&nbsp; We can find the help page for <em><strong>legend</strong> </em>by switching to the Help tab in the Plot Window and typing "legend" in the search bar (<em class="figureRef" title="legend">fig</em>).</p>
+<p></p>
+<p><img src="../Images/R-02-07%20Legned%20help.PNG" alt="" class="fs" /></p>
+<h5 class="" id="legend">Searching for "legend" in the Help Window.</h5>
+<p></p>
+<p>For this example we are only going to use the parameters that are needed to get the legend up and functional.&nbsp; They are:</p>
+<ul>
+<li><em><strong>x</strong></em>: set the position of the legend</li>
+<li><em><strong>legend</strong></em>: labels in the legend</li>
+<li><em><strong>lty</strong></em>: line type (needed to put lines in the legend)</li>
+<li><em><strong>pch</strong></em>: point character (needed to put points in the legend)</li>
+<li><em><strong>col</strong></em>: color</li>
+</ul>
+<p></p>
+<p>Note: R does not provide the most intuitive parameter names!</p>
+<p></p>
+<p>We will start by positioning the legend and putting the labels in:</p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />weatherData = read.csv("data/LansingWeather3.csv");<br />highTempData = weatherData[ ,"highTemp"];<br />lowTempData = weatherData[ ,"lowTemp"];<br />dateData = weatherData[ ,"dayOfYear"];<br /> <br />plot(highTempData~dateData, type = "o", col="red",<br />ylim=c(30,80),<br />main="Lansing temperatures", <br />xlab="Day of Year",<br />ylab="temperature (F)");<br /> <br />points(lowTempData~dateData, type="o", col="blue");<br /> <br /><span class="hl">legend(x="topleft", &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> &nbsp; &nbsp; # position<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hl">legend=c("High Temp", "Low Temp")</span>); # labels</h6>
+<p><em><strong></strong></em></p>
+<p>Here we position the legend in the top-left corner:</p>
+<h6><span class="partial">x="topleft"</span></h6>
+<p><strong></strong>There are nine values you can use for position: "topleft", "topright", "top, "center", "right", "left", "bottomleft", and "bottomright".</p>
+<p></p>
+<p>The labels</p>
+<h6><span class="partial">legend=c("High Temp", "Low Temp")</span></h6>
+<p>are put in a vector and R recognizes each value in the vector ("High Temp", "Low Temp) as a separate label.</p>
+<p></p>
+<p><em><strong><img src="../Images/R-02-07%20Legend.PNG" alt="" class="flexSize" /></strong></em></p>
+<h5>Legend placed in the plot</h5>
+<p></p>
+<p>Now we want to put lines and points in the legend that look like the lines and points in the plot.</p>
+<p><em><strong></strong></em></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />weatherData = read.csv("data/LansingWeather3.csv");<br />highTempData = weatherData[ ,"highTemp"];<br />lowTempData = weatherData[ ,"lowTemp"];<br />dateData = weatherData[ ,"dayOfYear"];<br /> <br />plot(highTempData~dateData, type = "o", col="red",<br />ylim=c(30,80),<br />main="Lansing temperatures", <br />xlab="Day Of Year",<br />ylab="temperature (F)");<br /> <br />points(lowTempData~dateData, type="o", col="blue");<br /> <br /><span class=""><span class="">legend(</span>x="topleft", &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span> &nbsp; &nbsp; # position<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="">legend=c("High Temp", "Low Temp"),</span> # labels<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hl">lty=c(1,1),</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; # line type<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hl"> pch=c(1,1),</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; # point type<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hl"> col=c("red","blue")</span>); &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; # colors</h6>
+<p><em><strong></strong></em></p>
+<p><em><strong>lty</strong> </em>and <em><strong>pch</strong> </em>need to have values if you want a line and/or a point next to the label.&nbsp;</p>
+<h6 class="partial">lty = c(1,1),</h6>
+<h6>pch = c(1,1)</h6>
+<p>means we will use the first line type (solid) and the first point type (open circle) for both the <strong>HighTemp</strong> and <strong>LowTemp</strong> labels.&nbsp;</p>
+<p></p>
+<p>If we wanted to use the 3rd line type for High Temp and the 5th line type for Low Temp we would use:</p>
+<h6 class="p">lty = c(3, 5)</h6>
+<p></p>
+<p>You can change the numbers and see how the lines and points change.&nbsp; A complete list of line and point types can be found at <a href="http://www.statmethods.net/advgraphs/parameters.html">http://www.statmethods.net/advgraphs/parameters.html</a>.&nbsp; Scroll down to the Plotting Symbols and Lines section of the webpage.</p>
+<p></p>
+<h6 class="partial">col = c("red", "blue")</h6>
+<p>mean the <em><strong>highTemp</strong> </em>lines and points are red and the <em><strong>lowTemp</strong> </em>lines and points are blue</p>
+<p></p>
+<p><img src="../Images/R-02-07%20Full%20Legend.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="high-low-plot">Legend added with lines and points</h5>
+<h2>Application</h2>
+<p>A) Produce a plot of <em><strong>precipitation</strong> </em>vs <em><strong>humidity</strong> </em>using the data from <strong>LansingWeather3.csv</strong></p>
+<p>- label the axes: humidity (%) and precipitation (inches)</p>
+<p>- title the plot: Precipitation vs. Humidity</p>
+<p>- make the plot points-only (no lines)</p>
+<p></p>
+<p>B) Add a <em><strong>changeInTemp</strong> </em>vector to the <em><strong>highTemp</strong> </em>and <em><strong>lowTemp</strong> </em>plot created earlier in the lesson (<em class="figureRef" title="high-low-plot">fig</em>)</p>
+<p>- <em><strong>changeInTemp</strong> </em>is <em><strong>highTemp</strong> </em>minus <em><strong>lowTemp</strong></em></p>
+<p>- adjust the axis so all points from all three plots can be seen</p>
+<p>- add <em><strong>changeInTemp</strong> </em>to the legend</p>
+<p>- make the color of the <em><strong>changeInTemp</strong> </em>line purple in the plot and the legend</p>
+<p>Note: The legend will probably cover part of the plot -- we will deal with this is the next plotting lesson.</p>
+<p></p>
+<h2 class="trap" id="error">Trap: A very common plot error</h2>
+<p>If you have plots in your script then a common error in RStudio is:&nbsp;</p>
+<p id="rstudio_console_output" tabindex="0"><em class="hl">Error in plot.new() (from &lt;some file&gt;.R##) : figure margins too large</em></p>
+<p tabindex="0"><em class="hl"></em></p>
+<p tabindex="0"><img src="../Images/R-02-07%20figure%20margin%20error.PNG" alt="" class="fs" /></p>
+<h5 tabindex="0">Figure margin too large error.</h5>
+<p></p>
+<p tabindex="0"><strong>This is not an error in your script!</strong></p>
+<p tabindex="0"></p>
+<p tabindex="0">The error occurs because the RStudio Plot Window is too small to hold the plot.&nbsp; Technically speaking, the error is saying that the figure margins on your plot are larger than the Plot Window.</p>
+<p tabindex="0"></p>
+<p tabindex="0">To fix the problem, just make the Plot Window larger.</p>
+<p tabindex="0"></p>
+<p tabindex="0"><img src="../Images/R-02-07%20figure%20margin%20error%20fixed.PNG" alt="" class="fs" /></p>
+<h5 tabindex="0">Increased Plot Window size and the error goes away.</h5>
+<p></p>
+<p>Note: Just like with any error, all code after the error will not be executed.&nbsp; So, if your script is 100 lines long and you are plotting something on line 10, then lines 11-100 will not be executed.</p>
+<p></p>
+<p>One possible workaround for this error is described below in <em class="linkTo" title="full-size">Extension: Full-sized window for plots.</em></p>
+<h2 class="extension" id="full-size">Extension: Full-sized window for plots</h2>
+<p>The Plot Window in RStudio can often be too small or cumbersome for our needs.&nbsp; Sometimes it is easier to open up a separate window the holds any plots created in the script.</p>
+<p></p>
+<p>We can do that by adding to the script:</p>
+<h6 class="p">windows();&nbsp; # if this is a windows machine</h6>
+<p></p>
+<p>or</p>
+<h6 class="p">quartz(); &nbsp; # if this is a MAC machine</h6>
+<p></p>
+<p>Note: These functions must be executed before the plots in your script.</p>
+<p></p>
+<p><img src="../Images/R-02-07%20Plot%20Window.PNG" alt="" class="fs" /></p>
+<h5>Opening plots in a separate window using <strong>windows()</strong>.</h5>
+<p></p>
+<p></p>
+<p tabindex="0"></p>
+</body>
+</html>

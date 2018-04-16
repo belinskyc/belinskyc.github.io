@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=MichiganSt-1906752" target="_self">Debugging</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=MichiganSt-1914887" target="_self">Outputs</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">01-05: Strings and Inputs</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Introduce string variable</li>
+<li>Discuss differences between numeric and string variables</li>
+<li>Assign input from the user to a variable.</li>
+<li>Convert string values to&nbsp; numeric values.</li>
+</ul>
+<h2>Concepts</h2>
+<h2>String variable types</h2>
+<p>Up to this point, we have only used numeric variables (e.g., fish's length or weight, a person's speed or kinetic energy).&nbsp; The main attribute of numeric variables is that mathematical operations can be performed on them.&nbsp; However, there are many variables that contain values that are not numeric.&nbsp;</p>
+<p></p>
+<p>Some of these variables are often called <em class="hl">categorical variables</em> and could include the location where a fish was caught, the gender of a fish, or the species of fish. &nbsp; In programming, these are often called <em class="hl">string variables</em> and the values assigned to them are put in quotes:</p>
+<p></p>
+<h6 class="partial">fishLocation = "SouthPort"</h6>
+<h6>fishSpecies = "Guppy"</h6>
+<h6>fishGender = "Male"</h6>
+<p></p>
+<p class="linkTo" title="string-char">Extension: Strings vs. characters</p>
+<h3>Common errors when dealing with string variables:</h3>
+<p>Probably the two most common errors when using strings in R is:</p>
+<ol>
+<li>Using mathematics operators on the string</li>
+<li>Forgetting quotes when assigning a string value</li>
+</ol>
+<h4>Using mathematics operators</h4>
+<h6># moved these two lines to one line -- still runs the same</h6>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>fishSpecies = "Guppy";&nbsp; # could also use single quotes: 'Guppy'</h6>
+<h6>totalValue = fishSpecies + 10; # error</h6>
+<p></p>
+<p>The above script tells R to store the string value "Guppy" in the variable named <em><strong>fishSpecies</strong></em>.&nbsp; Since R knows <em><strong>fishSpecies</strong> </em>is a string, R does not permit the use of mathematics operations and will give an error.&nbsp; The error provided is:<span style="color: #000000;"> "</span><span class="GGHFMYIBGOB  ace_constant ace_language" style="color: #c800a4;"><span style="color: #000000;"><em class="hl">non-numeric argument to binary operator</em>" (<em class="figureRef" title="math-error">Fig</em>), an awkward sounding error that means you need to use numbers if you are going to perform a numeric (binary) operation.</span></span></p>
+<p></p>
+<p><img src="../Images/R-01-05%20Math%20Op%20on%20string.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="math-error">Using a mathematics operations on a string -- error</h5>
+<h4>Forgetting quotes when assigning a string value</h4>
+<p>If you forget to put quotes around the value assigned to the string variable -- for example:</p>
+<p></p>
+<h6># moved these two lines to one line -- still runs the same<br />rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />fishSpecies = Guppy;&nbsp;&nbsp; # error -- need quotes</h6>
+<p></p>
+<p>You will get the error: "<span class="GGHFMYIBGOB  ace_constant ace_language" style="color: #c800a4;">object 'Guppy' not found"</span> (<em class="figureRef" title="quotes">Fig</em>).</p>
+<p></p>
+<p>This is because R thinks that <em><strong>Guppy </strong></em>is a variable name and the variable named <em><strong>Guppy </strong></em>does not exist in this script.</p>
+<p></p>
+<p><img src="../Images/R-01-05%20no%20quote%20for%20string.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="quotes">Forgetting quotes around the value of a string variable</h5>
+<h2>Inputs</h2>
+<p>Most data used in a script are not hardcoded in the script.&nbsp; Many data variables are input from an external source like a csv file or a database.&nbsp; We will talk about file inputs in a later lesson.&nbsp; For now we are going to get input values from a simpler source -- the person running your script.&nbsp;</p>
+<p></p>
+<p>The code to get input from the user is:&nbsp; <em><strong>readline() </strong></em>-- and the parameter inside the parentheses is the message you want to display in the Console Window for the user.&nbsp; <em class="linkTo" title="functions">Extension: functions (and parameters)</em><strong></strong><em><strong><br /></strong></em></p>
+<p><em><strong></strong></em></p>
+<h6># moved these two lines to one line -- still runs the same</h6>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>readline("What is your name? ");</h6>
+<p></p>
+<p>When you execute the script, the text "What's your name? " appears in the Console Window along with a prompt cursor that is waiting for input from the user (<em class="figureRef" title="user-input">Fig</em>).&nbsp;</p>
+<p></p>
+<p>Click inside the Console Window and type your name at the prompt and hit enter.</p>
+<p></p>
+<p><img src="../Images/R-01-05%20input%20without%20save.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="user-input">Prompting input from the user.</h5>
+<p></p>
+<p>After you your name and hit enter, the script finishes executing but the Environment Window is empty (<em class="figureRef" title="user-input">fig</em>).&nbsp; In other words, the script did not remember the value typed in by the user.&nbsp;</p>
+<h3>Remembering (storing) input values</h3>
+<p>In programming, values are only stored if you specifically instruct the script to remember the value -- and this is done by assigning the value to a variable.&nbsp; The following script assigns the value typed in by the user to the variable named <em><strong>yourName</strong></em>.</p>
+<p></p>
+<h6># moved these two lines to one line -- still runs the same</h6>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6><em class="hl">yourName</em> = readline("What's your name? ");</h6>
+<p></p>
+<p>When your execute the script, the variable named <em><strong>yourName</strong> </em>with the value you entered is placed in the Environment Window (<em class="figureRef" title="saving">Fig</em>).</p>
+<p></p>
+<p><img src="../Images/R-01-05%20input%20with%20save.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="saving">Saving input value to a variable</h5>
+<p></p>
+<p class="linkTo" id="link-input-breakpoint">Extension: Inputs act like breakpoints</p>
+<p></p>
+<p>Notice that the value for <em><strong>yourName</strong> </em>is put in quotes.&nbsp; This is because <em><strong>yourName</strong> </em>is a variable with a string value.&nbsp;</p>
+<h3>Storing a string input value</h3>
+<p>Let's add a second prompt for more information from the user -- this time asking for height, a numeric value.</p>
+<p></p>
+<h6># moved these two lines to one line -- still runs the same</h6>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>yourName = readline("What's your name? ");</h6>
+<h6>yourHeight = readline("What is your height in inches? ");</h6>
+<p></p>
+<p><img src="../Images/R-01-05%20input%20numbers%20to%20string.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="number-string">Numeric input still treated by R as a string</h5>
+<p></p>
+<p>The script prompts you twice and stores the values you type in the variables <em><strong>yourName</strong> </em>and <em><strong>yourHeight </strong></em>respectively, but both variables are treated as strings (<em class="figureRef" title="number-string">Fig</em>) -- note that <em><strong>yourHeight</strong> </em>has the value <em><strong>"70"</strong></em>.&nbsp;</p>
+<p></p>
+<p>The function <em><strong>readline()</strong></em> always assumes that the input is coming in from the user is a string -- R sees <em><strong>"70"</strong></em> as the character <em><strong>"</strong><strong>7"</strong></em> followed by the character <em><strong>"</strong><strong>0"</strong></em><em><strong></strong></em>.&nbsp; In other words a variable with a value <em><strong>"70"</strong></em> is a string whose characters all happen to be numbers.&nbsp; A variable with a value <em><strong>70</strong></em> is a number.&nbsp; This means you cannot perform mathematical operations on the variable <em><strong>yourHeight</strong> (</em>even though it looks like a number) since it technically is a string.</p>
+<p></p>
+<p><img src="../Images/R-01-05%20input%20numbers%20to%20string%20math%20error.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="string-math-error">Error performing a mathematics operation on a string -- even if it looks like a number</h5>
+<p></p>
+<p class="linkTo" id="link-math-op-string">Trap: Mathematical operations on string values</p>
+<h3>Storing a numeric input value</h3>
+<p>If you want R to treat a variable as a number instead of a string, you need to instruct R to treat the variable as a number.&nbsp; You can do this using the <em><strong>as.numeric()</strong> </em>function on line 6 below.</p>
+<p></p>
+<h6># moved these two lines to one line -- still runs the same</h6>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6 style="counter-reset: line;">yourName = readline("What's your name? ");</h6>
+<h6 style="counter-reset: line;">yourHeight = readline("What is your height in inches? ");</h6>
+<h6 style="counter-reset: line;">yourHeight = as.numeric(yourHeight);</h6>
+<p></p>
+<p>Line 7 first finds the value of the statement <em><strong>as.numeric(yourHeight)</strong></em>, which is the number <em><strong>70</strong></em>,&nbsp; and then the assignment operator on line 6 tells R to save the value <em><strong>70</strong> </em>to the variable <em><strong>yourHeight</strong></em>.&nbsp;&nbsp;</p>
+<p><em></em></p>
+<p>So, line 7 changes the value of <em><strong>yourHeight</strong> </em>from <em><strong>"70"</strong></em> to <em><strong>70</strong></em>.<em><strong></strong></em></p>
+<p></p>
+<p><em><strong>yourHeight</strong> </em>now has the numeric value <em><strong>70 </strong></em>(<em class="figureRef" title="convert">fig</em>) <em><strong></strong></em>and you can now perform mathematical operations on it.</p>
+<p></p>
+<p><img src="../Images/R-01-05%20convert%20string%20to%20number.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="convert">String converted to number and used in a mathematical operation</h5>
+<h2>Application</h2>
+<p>Create a script that finds the mean of five temperature measurements from one location -- the five measurements and the location are given by the user (so the user inputs 6 values).<br /><br /></p>
+<p>1) The script will ask the user for the location of the temperature measurements (e.g., Lansing, New York...).</p>
+<p>2) The script will ask the user for the five temperature measurements.</p>
+<p>3) The script will calculate the mean value of the five temperature measurements and save it as a variable.<span><br /></span></p>
+<h2 class="trap" id="input-breakpoint">Extension: Inputs act like breakpoints</h2>
+<p>When a script asks for an input from the user, the script is stopped at that line of code until it gets the input.&nbsp; So the following script will be stopped at line 4 until the user enters in their name and again at line 5 until the user enters in their height.&nbsp; The input acts like a breakpoint in the script.&nbsp;</p>
+<p></p>
+<h6># moved these two lines to one line -- still runs the same</h6>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>yourName = readline("What's your name? ");</h6>
+<h6>yourHeight = readline("What is your height in inches? ");</h6>
+<p></p>
+<p>This can cause some interesting issues if a person tries to (re)<span style="color: #990000;"><em>Source</em> </span>the script while the script is waiting for an input as highlight in the following figure (<em class="figureRef" title="happens">fig</em>).</p>
+<p></p>
+<h2 class="trap" id="source-input">Trap: Sourcing script while waiting for input</h2>
+<p><img src="../Images/R-01-05%20sourcing%20confusion.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="happens">What happens when you hit source when R is expecting a user input</h5>
+<p></p>
+<p>What happens here was:</p>
+<ol>
+<li>The user clicked <em><span class="hl">Source</span></em></li>
+<li>The user answered "<span style="color: #990000;"><em class="hl">Charlie</em></span>" to the first question</li>
+<li>The user clicked <span style="color: #990000;"><em class="hl">Source </em><span style="color: #000000;">again</span></span> while the script was waiting for the second question to be answered.</li>
+</ol>
+<p></p>
+<p>The script was still running when the user asked to execute the script again.&nbsp; So, the original script was still waiting for an input.&nbsp; The input the original script received was the<em><span class="hl"> Console Windows</span> </em>description of the action the user just implemented -- the second source command: <span style="color: #990000;"><em class="hl">source('~/.active-rstudio-document')</em></span>, which the script mistook for an input to the second question and assigned it to the variable <span style="color: #990000;"><em class="hl">yourHeight</em></span>.</p>
+<p></p>
+<p>Basically, the message here is be careful and try not to re-source a script that is already running.&nbsp; One way out of this is to hit the escape key (esc).</p>
+<h2 class="trap" id="math-op-string">Trap: Mathematical operations on string values</h2>
+<p>Let's try a mathematical operation on <em><strong>yourHeight</strong> </em>(line 7), a string value that has numbers the R treats as characters:</p>
+<p></p>
+<h6># moved these two lines to one line -- still runs the same<br />rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>yourName = readline("What is your name? ");<br />yourHeight = readline("What is your height in inches? ");<br />myHeight = yourHeight + 10;</h6>
+<p style="counter-reset: line 5;"></p>
+<p><img src="../Images/R-01-05%20trap%20math%20string.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="math-op">Mathematical operation on a string -- error</h5>
+<p></p>
+<p>The error you get for using a mathematical operation on the string&nbsp; <em><strong>yourHeight</strong></em> is "<span class="hl">non-numeric argument to binary operator</span>" (<em class="figureRef" title="math-op">fig</em>).&nbsp; As a default, R treats any input from <em><strong>readline()</strong> </em>as a string -- even if the input only contains numbers.</p>
+<p></p>
+<p>One way to fix this is to force R to treat <em><strong>yourHeight</strong> </em>as a number by changing line 7 to:</p>
+<h6 class="partial" title="7">myHeight = as.numeric(yourHeight) + 10;</h6>
+<p></p>
+<h2 class="extension" id="string-char">Extension: Strings vs. characters</h2>
+<p>These two terms are often conflated in R, and programming in general.&nbsp; String variables are variables that consist of any number of characters.&nbsp; The characters can be anything from letters, to symbols, or numbers -- in any combination.&nbsp;&nbsp;&nbsp; Many programming languages, including C, have both character variables (only one character) and string variables (one or more characters).</p>
+<p></p>
+<p>R does not functionally distinguish between single character and multiple character variables.&nbsp; But, you will often see these variables referred to as both strings and characters -- just know that, in R's case, they are the same thing.</p>
+<h2 class="extension" id="functions">Extension: functions (and parameters)</h2>
+<p>A lot of the functionality (pun intended) in a programming language lies in functions.&nbsp; Functions are repeatable procedures that perform a certain task -- and there are numerous functions in R.&nbsp; What is special about functions is that they only get executed when called upon from inside a script. <em><strong>readline()</strong></em> is a function, which means that somewhere in the deep, dark recesses of R there is a codeblock that is called <em><strong>readline()</strong></em> and that codeblock gets executed when you invoke <em><strong>readline()</strong></em> in your script.</p>
+<p></p>
+<p>The majority of functions take some sort of input.&nbsp; The input for<em><strong> readline()</strong></em> is the prompt you give to the user and it is put in the parenthesis.&nbsp; These inputs are called parameters.&nbsp; In this case,<em><strong> readline()</strong> </em>takes as input one parameter called <em><strong>prompt</strong></em> <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/readline.html" target="_blank" rel="noopener noreferrer">as shown on the help page for <em><strong>readline()</strong></em></a>.&nbsp; It is good practice to put the parameter name in the function so that instead of:<em> </em></p>
+<h6 class="p">readline("Enter your name");</h6>
+<p></p>
+<p>you have</p>
+<h6 class="p">readline(prompt="Enter your name");</h6>
+<p></p>
+<p>Both the above lines of code do the same thing.&nbsp; We will be talking much more about functions and parameters in future lessons.</p>
+<p></p>
+<p>Other functions used in this lesson -- the parentheses are the giveaway:</p>
+<ul>
+<li><em><strong>rm()</strong></em></li>
+<li><em><strong>options()</strong></em></li>
+<li><em><strong>as.numeric()</strong></em></li>
+</ul>
+</body>
+</html>

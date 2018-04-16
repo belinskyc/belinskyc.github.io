@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=michiganstate-2074491" target="_self">Packages</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: Factors</p>
+<h1 class="title" id="title">03-06 ANOVAs</h1>
+<h2>Purpose</h2>
+<h2 class="partial">Concepts</h2>
+<p>-</p>
+<p></p>
+<h2>Comparing temperature vectors</h2>
+<p>For this lesson we will be working with the high temperature data from January in six different years (just like lesson 3-?).</p>
+<p></p>
+<h6>Jan1997Temps = getSummarizedWeather(station_id="LANS", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="1997-01-01", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "1997-01-31");<br /> Jan2001Temps = getSummarizedWeather(station_id="LANS", <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; start_date="2001-01-01", <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; end_date = "2001-01-31");<br /> Jan2005Temps = getSummarizedWeather(station_id="LANS", <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; start_date="2005-01-01", <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "2005-01-31");<br /> Jan2009Temps = getSummarizedWeather(station_id="LANS", <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="2009-01-01", <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "2009-01-31");<br /> Jan2013Temps = getSummarizedWeather(station_id="LANS", <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="2013-01-01", <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; end_date = "2013-01-31");<br /> Jan2017Temps = getSummarizedWeather(station_id="LANS", <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; start_date="2017-01-01", <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; end_date = "2017-01-31");<br /> <br />Jan97Max = Jan1997Temps[,"Max_TemperatureF"];<br /> Jan01Max = Jan2001Temps[,"Max_TemperatureF"];<br /> Jan05Max = Jan2005Temps[,"Max_TemperatureF"];<br /> Jan09Max = Jan2009Temps[,"Max_TemperatureF"];<br /> Jan13Max = Jan2013Temps[,"Max_TemperatureF"];<br /> Jan17Max = Jan2017Temps[,"Max_TemperatureF"];</h6>
+<p></p>
+<h3>Creating a boxplot of the data</h3>
+<p>The first thing we will do is create a boxplot for all six January temperature vectors</p>
+<p></p>
+<h6 class="partial">boxplot(Jan97Max, Jan01Max, Jan05Max, Jan09Max, Jan13Max, Jan17Max);</h6>
+<p></p>
+<p>The boxplots suggest that the six months are all pretty similar except maybe the last month, which has a low mean value compared to the rest.</p>
+<p></p>
+<p><img src="../Images/R-03-06%20Boxplot.PNG" alt="" class="flexSize" /></p>
+<h5>Boxplot of January temperatures</h5>
+<p></p>
+<p>It would be nice to label the years on the x-axis.&nbsp; We can do this using the names parameter and assigning to it a vector with the six years.</p>
+<p></p>
+<h6 class="partial">boxplot(Jan97Max, Jan01Max, Jan05Max, Jan09Max, Jan13Max, Jan17Max,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; names=c(1997,2001,2005,2009,2013,2017) );</h6>
+<p></p>
+<p><img src="../Images/R-03-06%20Labelled%20Boxplot.PNG" alt="" class="flexSize" /></p>
+<h5>Labelled boxplot of January temperatures</h5>
+<p></p>
+<h2>Create a data frame for all the temperature values</h2>
+<p>We want to perform an ANOVA on the six months but we cannot just pass in six vectors as a parameter in R.&nbsp; Instead, we need to create a data frame from the six vectors.&nbsp; The data frame will consists of 2 columns representing the vectors temperature and year.&nbsp; Each vector will have 31*6 = 186 rows -- it will look like this:</p>
+<p></p>
+<table>
+<tbody>
+<tr>
+<td>temperature</td>
+<td>year</td>
+</tr>
+<tr>
+<td></td>
+<td>1997</td>
+</tr>
+<tr>
+<td></td>
+<td>1997</td>
+</tr>
+<tr>
+<td></td>
+<td>1997</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td></td>
+<td>2017</td>
+</tr>
+<tr>
+<td></td>
+<td>2017</td>
+</tr>
+<tr>
+<td></td>
+<td>2017</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<h3>Combine temperature vector into one large vector</h3>
+<p>The first step is to combine the six temperature vectors into one vector, which we will call <em><strong>JanTemps</strong></em>.&nbsp;</p>
+<p></p>
+<h6 class="partial">JanTemps = c(Jan97Max, Jan01Max, Jan05Max, Jan09Max, Jan13Max, Jan17Max);</h6>
+<p></p>
+<p>We also need a second vector that matches the first vector to represent the years.&nbsp; In this case, the first 31 values in <em><strong>JanTemps</strong> </em>are from 1997, the second 31 values are from 2001, the third 31 values are from 2005, and so on.</p>
+<p></p>
+<p>So, we need to create a vector that has 31*6 = 186 values with 31 of each yearly value.</p>
+<p></p>
+<h3>the repeat function: rep()</h3>
+<p>A shortcut to creating the year vector is to use the <em><strong>rep()</strong></em> function.&nbsp; <em><strong>rep()</strong> </em>takes two parameters: the string or number you want to repeat and the number of time you want to repeat it.</p>
+<p></p>
+<p>We will test<em><strong> rep()</strong></em> in the Console Window. Note tyhe Console Window can be used to test out code that you do not necessarily want in your main script.</p>
+<p></p>
+<p>The following <em><strong>rep()</strong></em> commands will repeat "<em>llama</em>" 5 times and <em>8754</em> 9 times</p>
+<h6 class="partial">rep("llama", 5);&nbsp; # create a vector with 5 "llama"</h6>
+<h6>rep(8754, 9);&nbsp;&nbsp;&nbsp;&nbsp;</h6>
+<p></p>
+<p>We can also use<em><strong> rep()</strong> </em>to create a vector of vectors.&nbsp; In this case, we are combining 4 "<em>a</em>", 5 "<em>b</em>", and 2 "<em>c</em>" into one vector.</p>
+<h6 id="rstudio_console_output" class="partial" tabindex="0">c(rep("a", 4), rep("b", 5), rep("c", 2));</h6>
+<p></p>
+<p><img src="../Images/R-03-06%20Repeat.PNG" alt="" class="flexSize" /></p>
+<h5>Using the rep() function to repeat values</h5>
+<p></p>
+<h3>creating the year vector</h3>
+<p>So, to create a vector with 31 <em>1997</em>, 31 <em>2001</em>, 31 <em>2005</em>... we repeat the six different years 31 times using <em><strong>rep()</strong></em></p>
+<h6 class="partial">JanYears = c( rep(1997, 31), rep(2001, 31), rep(2005, 31),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rep(2009, 31), rep(2013, 31), rep(2017, 31) );</h6>
+<p></p>
+<p><img src="../Images/R-03-06%20Repeat%20January%20Yearas.PNG" alt="" class="flexSize" /></p>
+<h5>Creating a vector to represent the year the temperature was taken</h5>
+<p></p>
+<h3>Combine temperature and year vectors into a data frame</h3>
+<p>We want to create a data frame with the temperature and year vectors called <em><strong>JanDF</strong></em></p>
+<h6>JanDF = data.frame(JanTemps, JanYears);</h6>
+<p></p>
+<p><img src="../Images/R-03-06%20Data%20Frame%20from%20vectors.PNG" alt="" class="flexSize" /></p>
+<h5>Data frame with 186 rows and 2 columns (temperature and year)</h5>
+<p></p>
+<p>We can perform the exact same monthly temperature boxplot as before on the data frame but the parameters are different...</p>
+<h6>boxplot(JanTemps~JanYears, data=JanDF);</h6>
+<p>This mean we are going to do a boxplot of <em><strong>JanTemps</strong> </em>vs <em><strong>JanYears</strong></em>, which are columns in the data frame, <em><strong>JanDF</strong></em>. <em><strong></strong></em><em><strong></strong></em></p>
+<p><em><strong></strong></em></p>
+<p><em><strong><img src="../Images/R-03-06%20Data%20Frame%20and%20boxplot.PNG" alt="" class="flexSize" /></strong></em></p>
+<h5>Boxplot of the data from the January temps data frame</h5>
+<h2>Performing an ANOVA</h2>
+<p>To perform an ANOVA on the data frame using the function <em><strong>aov()</strong></em>-- in other words, we are going to check whether the 6 different months of January temperatures are from the same distribution.&nbsp; The parameters for<em><strong> aov()</strong></em> are the same as <em><strong>boxplot()</strong></em>.&nbsp; We are going to perform the ANOVA using data from <em><strong>JanDF</strong></em>.&nbsp; Specifically we are going to perform an ANOVA&nbsp; on the <em><strong>JanTemps</strong> </em>column sorting it using the <em><strong>JanYears</strong> </em>column.</p>
+<p></p>
+<h6>JanAnova = aov(JanTemps~JanYears, data= JanDF);<br /> print(summary(JanAnova));</h6>
+<p></p>
+<p>We store the results of the ANOVA in the list variable<strong></strong><em><strong> JanAnova, </strong></em>but as you can see in the Environment Window, <em><strong>JanAnova</strong> </em>is hard to read.&nbsp; We use <em><strong>print(summary()) </strong></em>to display a readable version of the important statistical information from the ANOVA.</p>
+<p></p>
+<p><img src="../Images/R-03-06%20ANOVA%20on%20whole%20DF.PNG" alt="" class="flexSize" /></p>
+<h5>ANOVA on all 6 Januaries</h5>
+<p></p>
+<p>The results of the ANOVA show that the probability of the monthly temperatures coming from the same distribution are 0.00012, meaning we would reject the hypothesis that the monthly temperatures are from the same distribution.</p>
+<h3>histogram on the residuals</h3>
+<p>We can perform a histogram on the residuals of the ANOVA to show the we have not violated normality assumptions.</p>
+<h6>hist(residuals(JanAnova));</h6>
+<p></p>
+<p><img src="../Images/R-03-06%20Residual%20Histogram.PNG" alt="" class="flexSize" /></p>
+<h5>Histogram of the residuals from the ANOVA</h5>
+<p></p>
+<h2>Subsetting the data frame</h2>
+<p>Now we want to perform an ANOVA on a partial set of the months as opposed to the months from all six years.&nbsp; In this case we will perform an ANOVA on the years 2001, 2005, and 2009.</p>
+<p></p>
+<p>First we need a vector which represents the subsetted vector for the years 1997, 2001, and 2013.&nbsp; The code below creates a vector, <em><strong>Jan97_01_13</strong></em>, that contains the indexes of all values in the column <em><strong>JanYears</strong></em> that equal 1997, 2001, or 2013</p>
+<h6>Jan97_01_13 = which(JanDF[,"JanYears"] == 1997 | JanDF[,2] == 2001 | JanDF[,2] == 2013);</h6>
+<p></p>
+<p><em><strong>Jan97_01_13</strong> </em>is a vector with 31*3 = 93 values that hold the index for temperatures in the years 1997, 2001, and 2013.&nbsp; Notice the break between 62 and 125.&nbsp; This is because 63 through 124 represent values in the years 2005 and 2009 which are not included.</p>
+<p></p>
+<p><img src="../Images/R-03-06%20Subsetting%20DataFrame.PNG" alt="" class="flexSize" /></p>
+<h5>Creating a vector that subsets the data frame for 1997, 2001, and 2013</h5>
+<p></p>
+<h3>Perform ANOVA on subsetted Data Frame</h3>
+<p>Now we going to perform an ANOVA using the vector, <em><strong>Jan97_01_13</strong></em> to subset the data frame <em><strong>JanDF.&nbsp; </strong></em></p>
+<p></p>
+<p><em><strong>data = JanDF[Jan97_01_13, ] </strong></em> says we are going to take data from the rows numbers given by <em><strong>Jan97_01_13.&nbsp; </strong></em></p>
+<h6>Jan97_01_13Anova = aov(JanTemps~JanYears, data=JanDF[Jan97_01_13, ]);</h6>
+<p></p>
+<p>And we will print out the summary of the ANOVA, stored in the list variable <em><strong>Jan97_01_13Anova</strong></em></p>
+<p></p>
+<h6>print(summary(Jan97_01_13Anova));</h6>
+<p></p>
+<p>In this case, the ANOVA show that the probability of the monthly temperatures coming from the same distribution are 0.323, meaning we would not reject the hypothesis that the monthly temperatures are from the same distribution.</p>
+<p></p>
+<p><img src="../Images/R-03-06%20ANOVA%20on%20partial%20DF.PNG" alt="" class="flexSize" /></p>
+<h5>ANOVA on three Januarys</h5>
+<p></p>
+<p></p>
+<h2>Application</h2>
+<p>1)</p>
+</body>
+</html>

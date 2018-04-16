@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=michiganstate-2100656" target="_self">Matrices</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=michiganstate-2117895" target="_self">Conditional Subsetting</a></p>
+<h1 class="title" id="title">03-02 Linear Regressions</h1>
+<h2>Purpose</h2>
+<p>- create a matrix of temperatures from January of different years</p>
+<p>- use a T-Test to compare various January temperatures</p>
+<h2>Concepts</h2>
+<p>- print vs print(summary)</p>
+<h2>The matrix</h2>
+<p><a href="../Scripts/3-2%20Final.R" target="_new" download="">The script for this lesson is here.</a></p>
+<p></p>
+<p>In this lesson we are going to look at a year's worth of weather data and try to find relationships between conditions (e.g, humidity and precipitation) using linear modelling.</p>
+<p></p>
+<p>First we need to include the weatherData library and make a request for all the weather data (using <em><strong>opt_all_columns</strong></em> =<strong> </strong><em><strong>TRUE</strong></em>) from 2016:</p>
+<p></p>
+<h6>library("weatherData");<br /> <br />lansingWeather = getSummarizedWeather(station_id="LANS", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; opt_all_columns=TRUE,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="2016-01-01", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "2016-12-31");</h6>
+<p></p>
+<p>Next we are going to pull out 8 columns (representing 8 different weather measurements) from the <em><strong>lansingWeather</strong> </em>data frame.&nbsp;</p>
+<p></p>
+<h6>windDirection = lansingWeather[,"WindDirDegrees"];<br />maxTemp = lansingWeather[,"Max_TemperatureF"];<br />visibility = lansingWeather[,"Mean_VisibilityMiles"];<br />humidity = lansingWeather[,"Mean_Humidity"];<br />barometer = lansingWeather[,"Mean_Sea_Level_PressureIn"];<br />dewPoint = lansingWeather[,"MeanDew_PointF"];<br />precipitation = lansingWeather[,"PrecipitationIn"];<br />cloudCover = lansingWeather[,"CloudCover"];<br />maxWind = lansingWeather[,"Max_Wind_SpeedMPH"];</h6>
+<p></p>
+<h2>Scatterplots</h2>
+<p>Without using any statistics, we can use scatterplots between to see if there is a relationship between variables.&nbsp; The following code does a scatterplot of humidity (vertical) vs. maximum temperature(horizontal).</p>
+<p></p>
+<h6>plot(humidity~maxTemp);</h6>
+<p></p>
+<p><img src="../Images/R-03-02%20Scatterplot%20-%20plain.PNG" alt="" class="flexSize" /></p>
+<h5>Humidity vs maxTemp scatterplot without any modification</h5>
+<p></p>
+<p class="linkTo" title="margins">Trap: figure margins too large</p>
+<p></p>
+<p>We can change some parameters to customize the plot:</p>
+<ul>
+<li><em><strong>xlab, ylab</strong></em>: text on the x-axis, y-axis</li>
+<li><em><strong>main</strong></em>: title</li>
+<li><em><strong>pch</strong></em>: type of point -- <a href="http://www.endmemo.com/program/R/pchsymbols.php" target="_blank" rel="noopener noreferrer">click here for a detailed list of pch types</a></li>
+<li><em><strong>col</strong></em>: color of the points</li>
+<li><em><strong>cex</strong></em>: scaler for the points (so 0.7 mean the point is scaled to 70% of original size)</li>
+</ul>
+<p></p>
+<h6>plot(humidity~maxTemp,</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp; xlab="Maximum Temperature (F)", ylab="Humidity (%)",</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp; main="Humidity vs Maximum Temperature",</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp; pch=4, col="blue", cex=0.7,&nbsp; );</h6>
+<p></p>
+<p><img src="../Images/R-03-02%20Scatterplot%20-%20styled.PNG" alt="" class="flexSize" /></p>
+<h5>Humidity vs maxTemp scatterplot with parameters changed</h5>
+<p></p>
+<p class="linkTo" title="colorize">Extension: Colorizing the points</p>
+<p class="linkTo" title="numbering">Extension: Numbering the points</p>
+<h2>Multiple scatterplots using pairs()</h2>
+<p>Sometimes it is really convenient to look at the relationship of multiple variables at once. In R this can be done using the <em><strong>pairs()</strong> </em>function.&nbsp; <em><strong>pairs()</strong></em> takes multiple vectors as input and outputs a scatterplot for each possible pair of vectors.&nbsp; The following code produces a plot of all six possible combinations of precipitation, maxTemp, and humidity.</p>
+<p></p>
+<h6>pairs(~precipitation+maxTemp+humidity);</h6>
+<p></p>
+<p>The plots above the diagonal give the same information at the plots below the diagonal except the axes are reversed.</p>
+<p></p>
+<p><img src="../Images/R-03-02%20Multiple%20Scatterplots.PNG" alt="" class="flexSize" /></p>
+<h5>Multiple scatterplots -- red text added outside of R</h5>
+<p></p>
+<h3>Even more pairs()</h3>
+<p>We can go even crazier and compare seven different variables</p>
+<p></p>
+<h6>pairs(~precipitation+maxTemp+maxWind+humidity+barometer+dewPoint+windDirection);</h6>
+<p></p>
+<p>The plots seem to show a strong relationship between <em><strong>maxTemp</strong> </em>and <em><strong>dewPoint</strong></em>.&nbsp; The two plots highlighted both represent a comparison between <em><strong>maxTemp</strong> </em>and <em><strong>dewPoint</strong></em>.&nbsp; The top plot has <em><strong>maxTemp</strong> </em>on the y-axis, the bottom plot has <em><strong>dewPoint</strong> </em>on the y-axis.</p>
+<p></p>
+<p><img src="../Images/R-03-02%20Seven%20Scatterplots.PNG" alt="" class="flexSize" /></p>
+<h5>Scatterplot comparing seven different vectors.</h5>
+<p></p>
+<h2>Linear Models</h2>
+<p>Taking a closer look at the <em><strong>maxTemp-</strong></em><em><strong>dewPoint</strong> </em>scatterplot seems to confirm a relationship:</p>
+<p></p>
+<h6>plot(maxTemp~dewPoint);</h6>
+<p></p>
+<p><img src="../Images/R-03-02%20maxTemp%20vs%20dewPoint.PNG" alt="" class="flexSize" /></p>
+<h5>maxTemp vs dewPoint scatterplot</h5>
+<p></p>
+<p>But we want to quantify the relationship and we can do that by performing a linear model between <em><strong>maxTemp</strong> </em>and <em><strong>dewPoint</strong></em>.</p>
+<p></p>
+<p>In R the function <em><strong>lm()</strong></em> performs a linear model.&nbsp; When a linear model is performed, a bunch of data is generated.&nbsp; The data generated is in the form of a list.&nbsp; We will assign the list to the variable named <em><strong>model1</strong></em>.</p>
+<p></p>
+<h6>model1 = lm(maxTemp~dewPoint);</h6>
+<p></p>
+<p>In the Environment Window, the list variable <em><strong>model1</strong> </em>looks like this:</p>
+<p></p>
+<p><img src="../Images/R-03-02%20List%20in%20Environment%20Window.PNG" alt="" class="flexSize" /></p>
+<h5>List variable in the Environment Window</h5>
+<p></p>
+<p>This is not especially helpful.&nbsp; Luckily, R has functions that can supply and summarize the important information.</p>
+<h3>Detailed information about the regression</h3>
+<p>The following code uses two functions, <em><strong>summary()</strong></em> and <em><strong>print()</strong></em>,&nbsp; to send useful information about the linear model to the Console Window.&nbsp;</p>
+<p></p>
+<h6>model1 = lm(maxTemp~dewPoint);<br /> print(summary(model1));</h6>
+<p></p>
+<p>The above code:</p>
+<p>1) summarizes the information in the variable <em><strong>model1</strong></em></p>
+<p>2) print the summary to the Console Window</p>
+<p></p>
+<p>This is called nesting functions, with <em><strong>summary()</strong> </em>nested inside <em><strong>print()</strong></em>.&nbsp; In other words, <em><strong>summary()</strong></em> is executed first and the results of <em><strong>summary()</strong> </em>are sent to the function <em><strong>print()</strong></em>.</p>
+<p></p>
+<p><img src="../Images/R-03-02%20Linear%20Model%20Summary.PNG" alt="" class="flexSize" /></p>
+<h5>Information about the linear model in the Console Window</h5>
+<p></p>
+<p>The intercept, 14.67, gives the point where the regression line crossed the y-axis and the number beneath, 1.08, gives the slope of the line.&nbsp; Both of these values can be verified using a regression line <em class="figureRef" title="line">fig</em>.</p>
+<h3>Adding the regression line to the scatterplot</h3>
+<p>The<em><strong> abline()</strong></em> function can read information from the the summary of the linear model, <em><strong>model1</strong></em>, and add the relationship to the scatterplot.</p>
+<p></p>
+<h6>abline(model1, col="blue");</h6>
+<p></p>
+<p>The code above put a line in the scatterplot that has the x-axis intercept (14.76) and slope (1.08) given by the linear model.</p>
+<p></p>
+<p><img src="../Images/R-03-02%20regression%20line.PNG" alt="" class="flexSize" title="line" /></p>
+<h5>Regression line added to maxTemp vs highTemp scatterplot using abline()</h5>
+<h2>Conflating factors in a linear regression</h2>
+<p>We are going to do a second regression between barometric pressure and high temperature.&nbsp; Like last we will:</p>
+<p>1) produce a scatterplot of maxTemp vs barometer</p>
+<p>2) create a model using lm()</p>
+<p>3) summarize the model in the Console&nbsp; Window</p>
+<p>4) add the regression line from the model to the scatterplot</p>
+<p></p>
+<h6>plot(maxTemp~barometer);<br /> model2 = lm(maxTemp~barometer);<br />print(summary(model2));</h6>
+<h6>abline(model2 , col="blue");</h6>
+<p></p>
+<p>The summary of the linear model suggests there is no significant relationship between temperature and pressure (p=0.1178).</p>
+<p></p>
+<p><img src="../Images/R-03-02%20linear%20model%20-%20not%20significant.PNG" alt="" class="flexSize" /></p>
+<h5>Linear model showing no significant relationship between temperature and pressure</h5>
+<p></p>
+<p>While there seems to be no relationship between <em><strong>maxTemp</strong> </em>and <em><strong>barometer</strong></em>, we will find out in the next lesson that we can tease out a relationship if we look at other conflating variables-- in this case, wind direction.</p>
+<h2>Application</h2>
+<p>Does wind speed correlate to any other weather variable?&nbsp;</p>
+<p>- create scatterplots between wind speed and other variables</p>
+<p>- place regression lines on the scatterplots</p>
+<p>- perform linear models between wind speed and at least three other variables.</p>
+<p>- print to Console and explain the summary of the linear models</p>
+<p></p>
+<h2 class="trap" id="margins">Trap: figure margins too large</h2>
+<p id="rstudio_console_output" tabindex="0">A common, and somewhat not very intuitive, error you will get when executing your script that produces plots is:<span style="color: #990000;"><em> figure margins too large</em></span></p>
+<p tabindex="0"><span style="color: #990000;"><em></em></span></p>
+<p tabindex="0"><span style="color: #990000;"><em><img src="../Images/R-03-02%20figure%20margins%20too%20large.PNG" alt="" class="flexSize" /></em></span></p>
+<h5 tabindex="0"><span style="color: #990000;"></span>Figure margins too large error</h5>
+<p></p>
+<p>This error often has nothing to do with your script.&nbsp; Rather, the issue is that your plot window is too small to hold the plot you are trying to display.&nbsp; To fix this issue you just need to increase the size of the plot window.</p>
+<p></p>
+<h2 class="extension" id="colorize">Extension: Colorizing the points on a plot</h2>
+<p>On the <em><strong>humidity</strong> </em>vs. <em><strong>maxTemp</strong> </em>plot, we have 366 point representing each day of the year but the plot tell you nothing about the days.&nbsp; We can add information about the points by controlling their color.</p>
+<p></p>
+<p>The colors give a hint as to what day the point represents. In the plot below, yellow points represent early days in the year (e.g., January, February), red points represent middle days (e.g., June, July), and blue color represent later days (e.g., November, December).&nbsp; There is a spectrum so days in March and April are orangish and days in September and October are purpleish.</p>
+<p></p>
+<p><img src="../Images/R-03-02%20Color%20ramp%20%20points.PNG" alt="" class="flexSize" /></p>
+<h5>Adding color to the points to represent information about days.</h5>
+<p></p>
+<p>The first step is to create a color scheme that goes from yellow to red to blue.&nbsp; We do that using the function<em><strong> colorRampPalette().</strong></em></p>
+<p><em><strong></strong></em></p>
+<h6>colorByDay=colorRampPalette(c("yellow", "red", "blue"));</h6>
+<p></p>
+<p><em><strong>colorByDay</strong> </em>is technically a function that holds information about a yellow-red-blue color scheme.&nbsp; <em><strong>colorByDay</strong> </em>can be used as the color value in a plot:</p>
+<p></p>
+<h6>plot(humidity~maxTemp,<br />&nbsp;&nbsp; &nbsp; xlab="Maximum Temperature (F)", ylab="Humidity (%)",<br />&nbsp;&nbsp;&nbsp;&nbsp; main="Humidity vs Maximum Temperature",<br />&nbsp;&nbsp;&nbsp;&nbsp; pch=4, <span style="color: #ffff00;">col=colorByDay(366)</span>, cex=0.7 );</h6>
+<p></p>
+<p><em><strong>colorByDay</strong> </em>is a function expecting a value.&nbsp; The value is the number of color iteration you want.&nbsp; Since I have 366 points, I want to use 366 color in the yellow-red-blue color scheme.&nbsp; This means that there are 366 different color where color 1 is yellow, 366 is blue, and halfway in between, 183, is red.&nbsp; All color in between are calculated.</p>
+<p></p>
+<p>You can use as many color as you want in the <em><strong>colorRampPalette.&nbsp; </strong></em>R will create a spectrum using whatever and however many colors you choose.</p>
+<p><em><strong></strong></em></p>
+<h2 class="extension" id="numbering">Extension: Using text instead of points</h2>
+<p>We can add more information to the scatterplot by replacing the points on the plot with text.&nbsp; In this case, the text will represent the days number (1 though 366).</p>
+<p></p>
+<p>The first thing we need to do is take out the points.&nbsp; We do that by setting <em><strong>type</strong> </em>to "n". &nbsp;</p>
+<h6>plot(humidity~maxTemp, <span style="color: #ffff00;">type="n"</span>,<br />&nbsp;&nbsp; &nbsp; xlab="Maximum Temperature (F)", ylab="Humidity (%)",<br />&nbsp;&nbsp;&nbsp;&nbsp; main="Humidity vs Maximum Temperature" );</h6>
+<p></p>
+<p>This creates an empty plot.&nbsp; We need to "manually" add points to the plot.&nbsp; But, instead of points, we are going to add number that represent the 366 days.&nbsp; So 1 is Jan 1, 2 is Jan 2, etc..</p>
+<p></p>
+<p>We use the <em><strong>text()</strong></em> function to add text points to the scatterplot</p>
+<h6>text(humidity~maxTemp, labels=1:366, cex= 0.7, col=colorByDay(366));</h6>
+<p></p>
+<p><em><strong>text()</strong></em> uses many of the parameters as <em><strong>plot()</strong></em>.&nbsp; <em><strong>cex</strong> </em>is the size of text points, <em><strong>col</strong> </em>uses the color scheme from the previous extension.</p>
+<p><em><strong>labels</strong> </em>set the text starting with 1 and going up to 366</p>
+<p></p>
+<p><img src="../Images/R-03-02%20Color%20ramp%20--%20text.PNG" alt="" class="flexSize" /></p>
+<h5>Using text as points in a scatterplot</h5>
+<p></p>
+<p>Lastly, if you want to make the scatterplot bigger, then you can use the Zoom button (highlighted).&nbsp; Zoom will open the scatterplot in a new window and you can resize it to your full screen.</p>
+</body>
+</html>

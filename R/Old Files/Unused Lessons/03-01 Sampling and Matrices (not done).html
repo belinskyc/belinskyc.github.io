@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=michiganstate-2074491" target="_self">Packages</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=michiganstate-2114885" target="_self">Linear Regressions</a></p>
+<h1 class="title" id="title">03-01 Matrices and T-Tests</h1>
+<h2>Purpose</h2>
+<p>- create a matrix of temperatures from January of different years</p>
+<p>- use a T-Test to compare various January temperatures</p>
+<p>- &lt;check the max vs mean&gt;</p>
+<p>- &lt;JanTempMat vs JanTempMatrix&gt;</p>
+<h2>Concepts</h2>
+<p></p>
+<h2>The matrix</h2>
+<p>In the previous lesson, we got weather data from NOAA and put it into a Data Frame.&nbsp; A data frame is a 2D data structure that contains multiple vectors of equal length.&nbsp; In this case the vectors represent different weather measurements like high temperature, cloud cover, or precipitation.&nbsp; The rows of a data frame represent the instances of each vector -- in the case of our weather data, the rows represent days.&nbsp;</p>
+<p></p>
+<p>In this lesson, we will introduce the <em>matrix</em>, which is like a data frame except that all columns have the same type of value. A data frame can have strings in one column (e.g., weather condition) and numbers in another column (e.g., high temperature) whereas <span style="color: #990000;"><em>all vectors in a matrix must be of one type</em></span>.</p>
+<p></p>
+<p>One advantage to putting data in a matrix is that R can perform statistical operations faster on a matrix than on a data frame -- this becomes noticeable as your data set gets larger.&nbsp; Another advantage is that R can perform statistical and mathematical operation on rows of a matrix, columns of a matrix, or the whole matrix.&nbsp; A data frame can only perform these operation on the columns because R assumes that the data frames contains variables of different types.</p>
+<h2>Converting a vector into a matrix</h2>
+<p>A matrix is essentially a vector with two dimensions.&nbsp; In fact, you can take a 1D vector and make it in to a 2D matrix using the function <em><strong>matrix().</strong></em>&nbsp;</p>
+<p></p>
+<p>Let's start with a vector that has 6 numbers in it:</p>
+<p></p>
+<h6 class="partial">c(1:6) # this vector has 6 values: 1,2,3,4,5,6</h6>
+<p></p>
+<p>The <em><strong>matrix()</strong></em> function, <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/matrix.html" target="_blank" rel="noopener noreferrer">which can be found on this page</a>, takes three arguments:</p>
+<p>1) <em><strong>data</strong></em>: the vector you want to turn in to a&nbsp; basic matrix</p>
+<p>2) <em><strong>nrow</strong></em>: the number of rows you want the matrix to have</p>
+<p>3) <em><strong>ncol</strong></em>: the number of columns you want the matrix to have</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br /> myMatrix1 = matrix( data=c(1:6), nrow=3, ncol=2 );</h6>
+<p></p>
+<p class="linkTo" title="parameters">Extension: Ways to set parameters in a function</p>
+<p></p>
+<p></p>
+<p>We have declared a matrix that has 3 rows and 2 columns.&nbsp; In the Environment Window, this is specified by <em><strong>int[1:3, 1:2]</strong></em> -- which says that <em><strong>myMatrix1</strong> </em>is a two dimensional variable that consists of integers and has 3 rows and 2 columns.</p>
+<p></p>
+<p><img src="../Images/R-03-01%20first%20matrix.PNG" alt="" class="flexSize" /></p>
+<p></p>
+<p>If you double-click on <em><strong>myMatrix1</strong> </em>in the Environment Window, the visual representation of the matrix will appear in the Main Window.</p>
+<p></p>
+<p><img src="../Images/R-03-01%20first%20matrix%20-%20visual.PNG" alt="" class="flexSize" /></p>
+<h5>Visual representation of the matrix in the Main Window</h5>
+<p></p>
+<h3>Filling columns first, then rows</h3>
+<p>When filling up a matrix, R will by default fill up the rows in a column first, then move on to the next column. This is because the parameter <em><strong>byrow</strong> </em>is set by default to <em><strong>FALSE</strong></em>.&nbsp; If you set <em><strong>byrow</strong> </em>= <em><strong>TRUE </strong></em>then R will fill up the columns in a row first, then move to the next row.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br /> myMatrix1 = matrix( data=c(1:6), nrow=3, ncol=2, byrow=TRUE );</h6>
+<p></p>
+<p><img src="../Images/R-03-01%20matrix%20byrow%20true.PNG" alt="" class="flexSize" /></p>
+<p>Filling the matrix by row instead of by column</p>
+<h2>More matrix examples</h2>
+<p>The following script creates six matrices, the output for each matrix is described below.</p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br /> myMatrix1 = matrix(c(1:6), nrow=3, ncol=2); <br /> myMatrix2 = matrix(c(1:6), nrow=2, ncol=3); <br /> <br /> myMatrix3 = matrix(c(1:8), nrow=4); <br /> myMatrix4 = matrix(c(1:10), ncol=5); <br /> <br /> myMatrix5 = matrix(c(1:10), nrow=2, ncol=4);</h6>
+<h6>myMatrix6 = matrix(c(1:7), nrow=3);</h6>
+<p></p>
+<p><em><strong>myMatrix1</strong> </em>is the same as the previous example -- it has 3 rows and 2 columns:</p>
+<table>
+<tbody>
+<tr>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr>
+<td>2</td>
+<td>5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p><em><strong>myMatrix2</strong> </em>changes the number of rows to 2 and number of columns to 3:</p>
+<table>
+<tbody>
+<tr>
+<td>1</td>
+<td>3</td>
+<td>5</td>
+</tr>
+<tr>
+<td>2</td>
+<td>4</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p><em><strong>myMatrix3 </strong></em>only sets <em><strong>nrow</strong></em>-- and not<strong> </strong><em><strong>ncol.</strong></em>&nbsp; R will calculate the number of columns if only the number of rows is provided (e.g., <em><strong>myMatrix3</strong></em>).</p>
+<p><em><strong>myMatrix3</strong> looks like:</em></p>
+<table>
+<tbody>
+<tr>
+<td>1</td>
+<td>5</td>
+</tr>
+<tr>
+<td>2</td>
+<td>6</td>
+</tr>
+<tr>
+<td>3</td>
+<td>7</td>
+</tr>
+<tr>
+<td>4</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p><em><strong>myMatrix4 </strong></em>only sets <em><strong>ncol</strong></em>-- and not<strong> </strong><em><strong>nrow.</strong></em>&nbsp; R will calculate the number of rows if only the number of columns is provided.</p>
+<p><em><strong>myMatrix4</strong> looks like:</em> <em><strong></strong></em></p>
+<table>
+<tbody>
+<tr>
+<td>1</td>
+<td>3</td>
+<td>5</td>
+<td>7</td>
+<td>9</td>
+</tr>
+<tr>
+<td>2</td>
+<td>4</td>
+<td>6</td>
+<td>8</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p id="rstudio_console_output" tabindex="0"><em><strong>myMatrix5</strong> </em>has more values (10) than cells (2*4 = 8).&nbsp; R will cut off the values in the vector (9 and 10) that do not fit in the matrix.&nbsp;</p>
+<p tabindex="0"><em><strong>myMatrix5</strong> </em>looks like:<span style="color: #990000;"><br /></span></p>
+<table>
+<tbody>
+<tr>
+<td>1</td>
+<td>3</td>
+<td>5</td>
+<td>7</td>
+</tr>
+<tr>
+<td>2</td>
+<td>4</td>
+<td>6</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<p tabindex="0"></p>
+<p id="rstudio_console_output" tabindex="0"><em><strong>myMatrix6</strong> </em>has less values (4) than cells (2*5 =10). R will repeat the values (in this case: 1,2,3,4) in the vector until the matrix is filled up.</p>
+<p tabindex="0"><em><strong>myMatrix6</strong> </em>looks like:</p>
+<table>
+<tbody>
+<tr>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p tabindex="0"></p>
+<p tabindex="0">If the matrix size does not match the length of the vector (e.g., <em><strong>myMatrix5</strong> </em>and <em><strong>myMatrix6</strong></em>) you will get a warning like this:</p>
+<p id="rstudio_console_output" tabindex="0"><span style="color: #990000;">data length [#] is not a sub-multiple or multiple of the number of columns [#]<br /></span></p>
+<p tabindex="0"><span style="color: #990000;"></span></p>
+<p tabindex="0"><span style="color: #990000;"><img src="../Images/R-03-01%20multiple%20matrices.PNG" alt="" class="flexSize" /></span></p>
+<h5 tabindex="0"><span class="">Multiple matrices example</span></h5>
+<h2>Gathering temperature data into a matrix</h2>
+<p><span style="color: #990000;">Note: The script for this lesson gets quite large so instead of showing the whole script with each example, I will just show the newest part of the script. <a href="../Scripts/3-1%20Final.R" target="_new" download=""> The full script for the rest of this lesson can be found here</a>.<br /></span></p>
+<p></p>
+<p>Like last lesson we are going to gather weather data using the <em><strong>weatherData</strong> </em>package.&nbsp; In the background, the functions in the <em><strong>weatherData</strong> </em>package link to the NOAA website and the website sends the requested weather information which gets returned to the caller.&nbsp;</p>
+<p></p>
+<p>Let's get weather information for January 1997, which is the earliest year you can get data from.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6># include the weatherData package in this script</h6>
+<h6>library("weatherData");&nbsp;</h6>
+<h6></h6>
+<h6>Jan1997Temps = getSummarizedWeather(station_id="LANS", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="1997-01-01", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "1997-01-31");</h6>
+<p></p>
+<p>We assigned values to three parameters in <em><strong>getSummarizedWeather()</strong></em>: <em><strong>station_id</strong></em> (Lansing), <em><strong>start_date</strong></em> (1/1/97), and <em><strong>end_date</strong></em> (1/31/97).&nbsp; Since we did not set <em><strong>opt_all_columns</strong></em> to <em><strong>TRUE</strong> </em>like we did in the last lesson, the only values returned to us by <em><strong>getSummarizedWeather()</strong></em> are the dates and the minimum, maximum, and mean temperatures.</p>
+<p></p>
+<p><img src="../Images/R-03-01%20January%201997%20temps.PNG" alt="" class="flexSize" /></p>
+<h5>One month's worth of temperature data using the weatherData package</h5>
+<h3>Save temperature data to a vector</h3>
+<p>Next we will save the daily maximum temperature values from January 1997 to a vector</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6>library("weatherData");</h6>
+<h6></h6>
+<h6>Jan1997Temps = getSummarizedWeather(station_id="LANS", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="1997-01-01", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "1997-01-31");</h6>
+<h6></h6>
+<h6># could also use Jan1997Temps[,2] since max temps are in the 2nd column</h6>
+<h6>Jan97Max = Jan1997Temps[,"Max_TemperatureF"];</h6>
+<p></p>
+<p><img src="../Images/R-03-01%20one%20month%20of%20max%20temps.PNG" alt="" class="flexSize" /></p>
+<h5>Assigning values from the maximum temperature column in the data frame to a vector</h5>
+<p></p>
+<p>Our goal is to create a matrix that has the daily maximum temperature values for the month of January for six different years (1997, 2001, 2005, 2009, 2013, 2017), which will look something like this:</p>
+<p></p>
+<table>
+<tbody>
+<tr>
+<td></td>
+<td>Jan 1997</td>
+<td>Jan 2001</td>
+<td>Jan 2005</td>
+<td>Jan 2009</td>
+<td>Jan 2013</td>
+<td>Jan 2017</td>
+</tr>
+<tr>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>...</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>31</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<h3>Saving multiple months of data to multiple vectors</h3>
+<p>First we need to get the temperature data for the five other years (2001,2005...), which we can do by repeating the code to set the January 1997 temperatures to a vector -- just make sure you change the variable names and dates that you are setting in <em><strong>getSummarizedWeather()</strong></em></p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> library("weatherData"); <br /> <br /> Jan1997Temps = getSummarizedWeather(station_id="LANS",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="1997-01-01",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "1997-01-31");</h6>
+<h6>Jan2001Temps = getSummarizedWeather(station_id="LANS",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="2001-01-01",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "2001-01-31");</h6>
+<h6>Jan2005Temps = getSummarizedWeather(station_id="LANS",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="2005-01-01",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "2005-01-31");</h6>
+<h6>Jan2009Temps = getSummarizedWeather(station_id="LANS",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="2009-01-01",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "2009-01-31");</h6>
+<h6>Jan2013Temps = getSummarizedWeather(station_id="LANS",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="2013-01-01",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "2013-01-31");</h6>
+<h6>Jan2017Temps = getSummarizedWeather(station_id="LANS",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="2017-01-01",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "2017-01-31");</h6>
+<h6></h6>
+<h6>Jan97Max = Jan1997Temps[,"Max_TemperatureF"]; <br />Jan01Max = Jan2001Temps[,"Max_TemperatureF"]; <br />Jan05Max = Jan2005Temps[,"Max_TemperatureF"]; <br />Jan09Max = Jan2009Temps[,"Max_TemperatureF"]; <br />Jan13Max = Jan2013Temps[,"Max_TemperatureF"]; <br />Jan17Max = Jan2017Temps[,"Max_TemperatureF"];</h6>
+<p></p>
+<p>In the Environment Window you now have six Data Frames representing the weather data for each January and there are six vectors representing the maximum temperature for the six Januaries.</p>
+<p></p>
+<p><img src="../Images/R-03-01%20six%20month%20temp%20vectors.PNG" alt="" class="flexSize" /></p>
+<h5>Saving the January 1997, 2001, 2005, 2009, 2103, and 2017 maximum temperatures to vectors</h5>
+<p></p>
+<h2>Creating the matrix</h2>
+<p>A matrix is multiple vectors of the same type put together into a 2D structure.&nbsp; We have 6 vectors, each holding daily maximum temperature data that we will put into a matrix.</p>
+<p></p>
+<p>First we will combine the 6 vectors into one giant vector called <em><strong>JanTemps</strong> </em>using <em><strong>c()</strong></em>.&nbsp; We previously used<em><strong> c()</strong></em> to combine single variables into a vector but <em><strong>c()</strong></em> can also be used to combine vectors into a larger vector.&nbsp;</p>
+<p></p>
+<p>The vector, <em><strong>J</strong><strong><em>a</em>nTemps,</strong> </em>will have 31*6 = 186 values.&nbsp;Note that order is important -- you want the matrix to be ordered by year.</p>
+<h6>JanTemps = c(Jan97Max, Jan01Max, Jan05Max,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Jan09Max, Jan13Max, Jan17Max);</h6>
+<p></p>
+<p>Then we will create a matrix out of <em><strong>JanTemps</strong> </em>using the <em><strong>matrix()</strong></em> function and setting the number of rows and columns to match the number of days in a month (31) and the number of years of data (6).</p>
+<h6>JanTempMatrix = matrix(JanTemps, nrow=31, ncol=6);&nbsp;</h6>
+<p></p>
+<p><img src="../Images/R-03-01%20temp%20matrix.PNG" alt="" class="flexSize" /></p>
+<h5>Creating a matrix from the 6 months of maximum temperatures.</h5>
+<p></p>
+<p>Now let's view <em><strong>JanTempMatrix</strong> </em>in the Main Window by double-clicking <em><strong>JanTempMatrix</strong> </em>in the Environment Window</p>
+<p></p>
+<p><img src="../Images/R-03-01%20viewing%20temp%20matrix.PNG" alt="" class="flexSize" /></p>
+<h5>The January temperature matrix</h5>
+<p></p>
+<h2>Statistics on matrix values</h2>
+<p>The advantage of a matrix over a data frame is that mathematical and statistical operations can be performed on rows in the matrix, columns in the matrix, or on the matrix as a whole.&nbsp;</p>
+<p></p>
+<h6># find mean of the whole matrix<br /> meanAllTemp = mean(JanTempMatrix);<br /> <br /> # find mean of January 2005 (the third column)<br /> meanJan2005 = mean(JanTempMatrix[,3]);<br /> <br /> # find mean of all January 17th (the 17th row)<br /> meanJan17 = mean(JanTempMatrix[17,]);</h6>
+<p></p>
+<p>The above code:</p>
+<p>1) Finds the mean of the whole matrix (so, the mean of all 186 January temperatures)</p>
+<p>2) Finds the mean temperature in the month of January 2005 (the third column in the matrix)</p>
+<p>3) Finds the mean temperature on January 17th for all months (the 17th row in the matrix)</p>
+<p></p>
+<p><img src="../Images/R-03-01%20mean%20temperatures.PNG" alt="" class="flexSize" /></p>
+<h5>Finding the mean of (a) all temperatures, (b) all days in Jan 2005, (c) Jan 17th for the 6 years</h5>
+<h3>Performing a mean across all columns (years)</h3>
+<p>We are going to find the mean for all six months of January. The columns in <em><strong>JanTempMatrix </strong></em>each hold one Januaries worth of maximum temperatures<em>.</em> So we want to find the mean value for each column in the matrix.</p>
+<p></p>
+<p>We need to save the mean values to a vector.&nbsp; To do this, we create a variable, <em><strong>monthlyMean,</strong> </em>as a vector that initially has no values.</p>
+<h6 class="partial">monthlyMean = c(); # a vector that holds all the yearly mean temp values</h6>
+<p></p>
+<p>Then we will use a <em><strong>for()</strong></em> to iterate through the 6 columns (years).&nbsp; In this case, <em><strong>i</strong></em> is the name of the iteration variable.</p>
+<h6>for(i in 1:6) <br /> {</h6>
+<h6>}</h6>
+<p></p>
+<p>In the codeblock attached to the <em><strong>for(), </strong></em>we get the mean value of the temperature in the indexed column: <span style="color: #990000;"><em>mean(JanTempMatrix[,i]).</em></span></p>
+<p><span style="color: #990000;"></span><span style="color: #990000;"></span>We then assign the mean value to the <em><strong>monthlyMean</strong> </em>vector: <em><span style="color: #990000;">monthlyMean[i]</span></em></p>
+<h6>monthlyMean = c();</h6>
+<h6><br /> for(i in 1:6) <br /> {</h6>
+<h6>&nbsp; # get the mean of all values in column i and save it to monthlyMean[i]<br />&nbsp; monthlyMean[i] = mean(JanTempMatrix[,i]);<br /> }</h6>
+<p></p>
+<p>After executing the <em><strong>for()</strong></em>:</p>
+<p><em><strong>monthlyMean</strong></em>[1] is equal to the mean of Jan 1997 (column 1),</p>
+<p><em><strong>monthlyMean</strong></em>[2] is equal to the mean of Jan 2001 (column 2),</p>
+<p><em><strong>monthlyMean</strong></em>[3] is equal to the mean of Jan 2005 (column 3),</p>
+<p><em><strong>monthlyMean</strong></em>[4] is equal to the mean of Jan 2009 (column 4),</p>
+<p><em><strong>monthlyMean</strong></em>[5] is equal to the mean of Jan 2013 (column 5),</p>
+<p><em><strong>monthlyMean</strong></em>[6] is equal to the mean of Jan 2017 (column 6).</p>
+<p></p>
+<p><img src="../Images/R-03-01%20all%20months%20mean.PNG" alt="" class="flexSize" /></p>
+<h5>Getting the mean temperature for each month using a for()</h5>
+<p></p>
+<h3>Performing a mean across all rows (days)</h3>
+<p>We can do the same thing across all rows to find the average temperature for each day in January across the years.&nbsp;</p>
+<p>We need to iterate the <em><strong>for()</strong></em> 31 times, and change the subset operation from</p>
+<h6 class="partial">mean(JanTempMatrix<span style="color: #ffff00;">[,i]</span>);&nbsp;&nbsp; # get all values from column i</h6>
+<p>to</p>
+<h6 class="partial">mean(JanTempMatrix<span style="color: #ffff00;">[i,]</span>);&nbsp;&nbsp; # get all values from row i</h6>
+<p></p>
+<h6>dailyMean = c();</h6>
+<h6><br /> for(i in 1:31) <br /> {</h6>
+<h6>&nbsp; # get the mean of all values in row i and save it to dailyMean[i]<br />&nbsp; dailyMean[i] = mean(JanTempMatrix[i,]);<br /> }</h6>
+<p></p>
+<p><img src="../Images/R-03-01%20all%20days%20mean.PNG" alt="" class="flexSize" /></p>
+<h5>Getting the mean temperature for each day in January using <em><strong>for()</strong></em></h5>
+<h2>Comparing means using a t-test</h2>
+<p>In statistics, a t-test is used to determine if the mean from two different sets of values are statistically the same.&nbsp; In R we can perform a t-test using the <em><strong>t.test()</strong></em> function.</p>
+<p></p>
+<p>We are going to compare the means from January 1997 and January 2017.&nbsp; In <em><strong>JanTempMatrix</strong></em>, January 1996 is column 1 and January 2017 is column 6.&nbsp; To perform a t-test between these two years, we call <em><strong>t.test()</strong></em> and pass in the two columns representing the temperatures for Jan 1997 and Jan 2017.</p>
+<p></p>
+<h6># compare the mean values of Jan 1997 and Jan 2017<br /> Jan97_17 = t.test(Jan97Max, Jan17Max);</h6>
+<p></p>
+<p>In the Environment Window, <em><strong>Jan97_17</strong> </em>is described as a "List of 9". &nbsp; Lists are something we will talk about in future lesson.&nbsp; For now, we don't want to see all of the information in <em><strong>Jan97_17</strong></em>, we just want to see a summary of it.&nbsp; To do that we use the function <em><strong>print().</strong></em></p>
+<p><em><strong></strong></em></p>
+<h6># compare the mean values of Jan 1997 and Jan 2017<br /> Jan97_17 = t.test(Jan97Max, Jan17Max);</h6>
+<h6><br /> print(Jan97_17);</h6>
+<p></p>
+<p><img src="../Images/R-03-01%20t-test.PNG" alt="" class="flexSize" /></p>
+<h5>Performing a t-test and printing the summary of the t-test</h5>
+<p></p>
+<p>In the summary of the t-test it is stated that</p>
+<p>1) The mean of <em><strong>x</strong></em> (Jan 1997) is 38.35 and the mean of <em><strong>y</strong></em> (Jan 2017) is 32.32</p>
+<p>2) The chances of that x and y are statistically the same is 0.073% (from the p-value of 0.0007351)</p>
+<p>3) We are 95% sure that the means of x and y have a difference between 2.64 and 9.42</p>
+<p>4) We would reject the null hypothesis that the means of x and y are equal in favor of&nbsp; the alternative hypothesis (the means are not equal)</p>
+<p></p>
+<h3>A second t-test</h3>
+<p></p>
+<h6># compare the means from Jan 2005 (col 3) and Jan (col 4) using a t-test<br /> Jan05_09 = t.test(Jan05Max, Jan09Max);<br /> <br /> # print out a summary of the t-test<br /> print(Jan05_09);</h6>
+<p></p>
+<p><img src="../Images/R-03-01%20second%20t-test.PNG" alt="" class="flexSize" /></p>
+<h5>Performing a second t-test and printing the summary of the t-test &lt;redo this picture&gt;</h5>
+<p></p>
+<p>In the summary of the t-test it is stated that</p>
+<p>1) The mean of <em><strong>x</strong></em> (Jan 2005) is 35.19 and the mean of <em><strong>y</strong></em> (Jan 2009) is 34.35</p>
+<p>2) The chances of the means of x and y being statistically the same is 57.65% (from the p-value of 0.5765)</p>
+<p>3) We are 95% sure that the means of x and y have a difference between -2.16 and 3.84</p>
+<p>4) We would not reject the null hypothesis that the means of x and y are equal</p>
+<h2>Application</h2>
+<ol>
+<li>Make 12 calls to weatherData -- each getting one month of weather in 2015 (use opt_all_column = TRUE, we will need the precipitation)</li>
+<li>Create a vector for each of the 12 month</li>
+<li>Assign the &lt;maximum precipitation&gt; for the month from the weatherData to each of the 12 vectors</li>
+<li>Each vector must be the same size.&nbsp; Since some months have less than 31 days, assign the value NA to the days that do not exist.<br />So, the February vector will have three NA values:<br />&nbsp;&nbsp;&nbsp; FebTemp[29] = NA;<br />&nbsp;&nbsp;&nbsp; FebTemp[30] = NA;<br />&nbsp;&nbsp;&nbsp; FebTemp[31] = NA;</li>
+<li>Create a 31 row and 12 column matrix that has all the precipitation values from the 12 monthly vectors</li>
+<li>&nbsp;Find<br />- the total rainfall for the year<br />- the day with the highest rainfall<br />- the month with the highest rainfall</li>
+<li>Using a t-test find which consecutive months (e.g., June-July or September-October) do not have statistically similar rainfall &lt;none?&gt;</li>
+</ol>
+<p></p>
+<h2 class="extension" id="parameters">Extension -- Setting parameters in matrix()</h2>
+<p><em><strong>matrix()</strong></em> has five parameters (data, nrow, nol, byrow, dimnames) that can be set:</p>
+<p><span style="color: #990000;"><em>matrix(data = NA, nrow = 1, ncol = 1, byrow = FALSE, dimnames = NULL)</em></span></p>
+<p></p>
+<p>But every parameter has a default value assigned to it.&nbsp; So you could called the function matrix and pass no parameters:</p>
+<h6>myMatrix = matrix();&nbsp; # this would create an empty matrix</h6>
+<p></p>
+<p>If you want to create a three row byu two column matrix with the numbers 1,2,3,4,5,6 you could be explicit and use the parameter names</p>
+<h6>myMatrix1 = matrix( data = c(1:6), nrow = 3, ncol = 2 );</h6>
+<p></p>
+<p>Or, you could take the names out as long as you keep the parameters in the same order:</p>
+<h6>myMatrix1 = matrix( c(1:6), 3, 2 );</h6>
+<p></p>
+<p>Or, you could leave some names in -- this is probably the most common way you will see this line of code written:</p>
+<h6>myMatrix1 = matrix( c(1:6), nrow = 3 , ncol = 2 );</h6>
+<p></p>
+<p>Or, you could keep the names and change the order</p>
+<h6>myMatrix1 = matrix( ncol = 2, nrow = 3, data = c(1:6) );</h6>
+<p></p>
+<p>The four lines of code above will do the exact same thing.&nbsp;</p>
+<div aria-hidden="true" style="position: fixed; top: 0px; width: 100px; height: 100px; overflow: hidden; opacity: 0; left: -100000px;" class="ephox-sloth-bin ephox-sloth-bin_54503001811499709077844" contenteditable="true">
+<h6>rm(list=ls()); options(show.error.locations = TRUE); <br /> library("weatherData");&nbsp; # include the weatherData package in this script</h6>
+<h6>Jan1997Temps = getSummarizedWeather(station_id="LANS", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="1997-01-01", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "1997-01-31");</h6>
+</div>
+</body>
+</html>

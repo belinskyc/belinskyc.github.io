@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<!--
+		- ``headers with invisible text
+		- move images to next page on print
+		- set page size to 11"x8.5"
+		- ``inline and block tables
+		- ``take lesson links out of float when page sized < 800px
+		- ``align table to top
+	-->
+	<meta charset="UTF-8"/>
+	<title>Printer Test</title>
+<link rel="stylesheet" href="../CSS/module.css">
+<style type="text/css">
+
+	</style>
+</head>
+<body>
+<h1>Links to previous and Next Lessons</h1>
+<table class="lessonLink" id="previousLesson" title="link to previous lesson">
+<tbody>
+<tr>
+<td>Previously: Outputting Variables</td>
+</tr>
+</tbody>
+</table>
+<table class="lessonLink" id="nextLesson" title="link to next lesson">
+<tbody>
+<tr style="height: 16.8333px;">
+<td style="width: 245px; height: 16.8333px;"><a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=MichiganSt-1749168" target="_self">Up Next: Conditional Expressions</a></td>
+</tr>
+</tbody>
+</table>
+<table class="title" id="title" title="title of current lesson">
+<tbody>
+<tr>
+<td>Random Values and User Inputs</td>
+</tr>
+</tbody>
+</table>
+<table class="purpose" id="purpose" title="Purpose of the lesson">
+<tbody>
+<tr>
+<td class="purpose">
+<p><strong>Purpose:</strong></p>
+<p>In the previous two modules we looked at different ways to get input values and store these values as a variable [link], and we looked at the six different types of conditional expressions using conditional operators [link]. In this module we will create conditional statements in R that evaluate conditional expressions and output text if the statement is true.&nbsp; Write a conditional statement in R and execute commands if the statement is true</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="concept" id="concept" title="Lesson Concepts">
+<tbody>
+<tr>
+<td>
+<p><strong>Concept:</strong></p>
+<p>Conditional Statements &lt;BigPic comparison with other types of expressions- put in last module&gt; are essentially decision points (road signs) within a program that determine the direction of the program.&nbsp; Conditional statements ask a binary question/ with a binary answer yes(true)/no(false) questions like, "Is this fish above 100g?&nbsp; Is the fish male?&nbsp; Did the fish get caught in the fall?".&nbsp; These statements are evaluated by the program and then code is executed based on the answer.&nbsp; The code can be as simple as outputting text to the screen or as complex as &lt;putting this particular fish into a cluster&gt;.</p>
+<p>picture of fish on scale</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="examples" id="example" title="Lesson Examples">
+<tbody>
+<tr style="height: 16px;">
+<td style="height: 16px; width: 899px;">
+<p><strong>Examples: <br /><br /></strong></p>
+<p><span style="font-weight: 400;">In the last module we developed conditional statements for the four following question. </span></p>
+<ul>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Is the fish&rsquo;s weight greater than 100 grams? (fishWeight &gt; 100)</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Was the fish caught during the nighttime? (timeCaught == &ldquo;nighttime&rdquo;)</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Did the fish get caught outside the month of April (monthCaught != 4)</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Was the fish caught in 2012 or before (yearCaught &lt;= 2012)</span></li>
+</ul>
+<p><span style="font-weight: 400;">Now we will put these statements into R code...</span></p>
+<p><span style="font-weight: 400;">The basic structure of an if statement is:</span></p>
+<p><span style="font-weight: 400; color: #701600;">if (#statement to check)<br />{<br /># execute the code between the bracket {} if statement is true&nbsp;&nbsp;&nbsp;&nbsp; <br />}<br /></span><br /><span style="font-weight: 400; color: #701600;">&nbsp; -- next module we will show you what to do if statement is false</span></p>
+<p><span style="font-weight: 400; color: #701600;"><span style="color: #16290a;"></span></span></p>
+<p><span style="font-weight: 400; color: #701600;"><span style="color: #16290a;">Now we will put those four statements into if structures:<br />- no code is executed in the statement is false... next time <br /></span></span></p>
+<p><b>if</b><span style="font-weight: 400;"> (fishWeight &gt; </span><span style="font-weight: 400;">100</span><span style="font-weight: 400;">)</span><span style="font-weight: 400;">&nbsp; # Is the fish's weight &gt; 100 grams?<br /></span><span style="font-weight: 400;">{</span><span style="font-weight: 400;"><br /></span><span style="font-weight: 400;"> &nbsp;output(&ldquo;It is greater&rdquo;)</span><span style="font-weight: 400;">&nbsp; # yes, the weight of the fish is greater than 100 grams<br /></span><span style="font-weight: 400;">}</span><span style="font-weight: 400;"><br /></span><span style="font-weight: 400;"><br /></span><b>if</b><span style="font-weight: 400;"> (timeCaught == </span><span style="font-weight: 400;">"nightTime"</span><span style="font-weight: 400;">)&nbsp; </span><span style="font-weight: 400;"># Was the fish caught at night?<br />{</span><span style="font-weight: 400;"><br /></span><span style="font-weight: 400;">output("Fish caught at night")&nbsp; # yes, the fish was caught at night<br /></span><span style="font-weight: 400;">}</span><span style="font-weight: 400;"><br /></span><span style="font-weight: 400;"><br /></span><b>if</b><span style="font-weight: 400;"> (monthCaught != </span><span style="font-weight: 400;">4</span><span style="font-weight: 400;">)</span><span style="font-weight: 400;">&nbsp; # Was the fish not caught in April?<br /></span><span style="font-weight: 400;">{</span><span style="font-weight: 400;"><br /></span><span style="font-weight: 400;"> &nbsp;</span><span style="font-weight: 400;">output("Fish caught in April")&nbsp; # yes, the fish was not caught in April<br /></span></p>
+<p><span style="font-weight: 400;">}</span><span style="font-weight: 400;"><br /></span><span style="font-weight: 400;"><br /></span><b>if</b><span style="font-weight: 400;"> (yearCaught &lt;= </span><span style="font-weight: 400;">2012</span><span style="font-weight: 400;">)&nbsp; </span><span style="font-weight: 400;"># Was the fish caught on or before 2012?<br />{</span><span style="font-weight: 400;"><br /></span><span style="font-weight: 400;">&nbsp;<span style="font-weight: 400;">output("Fish caught before 2012")&nbsp; # yes, the fish was caught before 2012</span><br />}</span></p>
+<p><span style="font-weight: 400;">-- extend to six examples for each cond.</span></p>
+<p><strong></strong></p>
+</td>
+</tr>
+<tr style="height: 16px;">
+<td style="height: 16px; width: 899px;">
+<p><strong></strong><strong>Trap: == vs = &lt;open in new page&gt;</strong><strong><br /></strong>Extension: What happens if you put= instead of == &lt;open new page&gt;<br />Shortcut: you might see no brackets if only one line.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="debug" id="debug" title="Lesson Debug">
+<tbody>
+<tr>
+<td>
+<p><strong>Debugging:</strong></p>
+<p>Show what happens when you go line-by-line through an if statement and the answer is "yes".&nbsp; Also, show what happens if the answer is "no".<br /><br /><br /></p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="practice" id="practice" title="Lesson Practice">
+<tbody>
+<tr>
+<td>
+<p><strong>Lesson Practice:</strong></p>
+<p><span style="font-weight: 400;">Code the following situations</span></p>
+<ul>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Is the fish five year or younger (there are two possible answers)?</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Did the fish get caught from the &ldquo;south&rdquo; port (there are two possible answers)?</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Was the number of fish caught greater than 200?</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Was the fish&rsquo;s height anything other than 15 inches?</span></li>
+</ul>
+<p><span style="font-weight: 400;">Answers are here &lt;link&gt;.</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="application" id="application" title="Lesson Application to Project">
+<tbody>
+<tr>
+<td>
+<p><strong>Application:</strong></p>
+<p>For you project come up with yes/no questions and put them in the format of an if statement.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+</body>
+</html>

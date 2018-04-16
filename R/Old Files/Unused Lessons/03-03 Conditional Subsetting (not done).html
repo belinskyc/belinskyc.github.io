@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="03-02%20Factors%20and%20Lists.html" target="_self">Linear Regressions</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: Factors</p>
+<h1 class="title" id="title">03-03 Conditional Subsetting</h1>
+<h2>Purpose</h2>
+<p>- get a subset of a vector based on a condition</p>
+<p>- save vectors to a list</p>
+<p>- revisit linear regression with subsetting</p>
+<p></p>
+<h2>Concepts</h2>
+<p>-</p>
+<h2>A condition commands for vectors: which</h2>
+<p>In the last lesson we found that there was no significant relationship between barometric pressure and high temperature for the year 2016.&nbsp; However, there is a conflating variable in the data that is hiding a relationship -- wind direction.&nbsp; We want to do a&nbsp; temperature vs barometric pressure linear regression while factoring in the wind direction.&nbsp; This can be done using a <em><strong>for()</strong> </em>loop with a nested <em><strong>if()</strong></em>, but R has a function specifically design for this situation called <em><strong>which().</strong></em></p>
+<p></p>
+<h3>which() -- conditional statements for vectors</h3>
+<p><em><strong>which()</strong> </em>answers the question: Which of the values in this vector meet a specified condition?</p>
+<p></p>
+<p>For instance the question could be:</p>
+<ol>
+<li>Which of the following vector values<span style="color: #990000;"> (-2, 3, 7, 0, 10, 9)</span> are greater than 4?&nbsp; <br />Answer: <span style="color: #990000;"><em><strong>(3, 5, 6) </strong></em></span><em><strong></strong></em></li>
+<li>Which of the following vector values<span style="color: #990000;"> ("Swiss", "Muenster", "American", "Muenster")</span> are equal to "Muenster"?<br />Answer: <span style="color: #990000;"><em><strong>(2, 4)</strong></em></span></li>
+</ol>
+<p></p>
+<p>The answer to the question is in the form of a vector that contains the indexes of the values in the vector that met the condition.</p>
+<p>In question 1 the <span style="color: #990000;">3rd, 5th, and 6th</span> values in the vector were greater than 4.&nbsp;</p>
+<p>In question 2 the <span style="color: #990000;">2nd</span> and <span style="color: #990000;">4th</span> value was equal to "Muenster".</p>
+<p></p>
+<p>The following script has two vectors (<em><strong>ages, animals</strong></em>) and four <em><strong>which()</strong></em> conditions<strong><em>.</em></strong><em><strong></strong></em></p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE); <br /> <br /> ages = c(2,7,3,9,6,3,5);<br /> animals = c("llama", "alpaca", "goat", "llama", "guanaco");<br /> <br /> index1 = which(ages &gt; 4);<br /> index2 = which(ages &lt; 4);<br /> <br /> index3 = which(animals == "llama");<br /> index4 = which(animals != "llama");</h6>
+<p></p>
+<p><em><strong>which()</strong></em> outputs a vector of indexed values that meet the condition in parenthesis.&nbsp; This vector is saved to the variables<em><strong> index1, index2, index3, and index4. <br /></strong></em></p>
+<p><em></em>So, <em><strong>index1</strong> </em>holds the indexes for the values in the vector <em><strong>ages</strong> </em>that are greater than 4</p>
+<p><em><strong>index3</strong> </em>holds the indexes for the values in the vector <em><strong>animals</strong> </em>that are equal to "Llama"</p>
+<p><em><strong></strong></em></p>
+<p><em><strong><img src="../Images/R%2003-03%20which%20conditions.PNG" alt="" class="flexSize" /></strong></em></p>
+<h5><em></em>Using which() to check all values in a vector against a condition</h5>
+<p></p>
+<h2>Using which() on weather data</h2>
+<p>For the rest of the lesson, we are going to use the script located here &lt;link&gt;</p>
+<p></p>
+<p>Like last lesson, we are going to use the <em><strong>weatherData</strong> </em>package to get weather information for Lansing in 2016.</p>
+<p></p>
+<h6>library("weatherData");</h6>
+<h6></h6>
+<h6>lansingWeather = getSummarizedWeather(station_id="LANS", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; opt_all_columns=TRUE,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="2016-01-01", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "2016-12-31");</h6>
+<p></p>
+<p>And we are going to save multiple weather data columns to vectors</p>
+<p></p>
+<h6>dates = lansingWeather[,"Date"];<br /> eventData = lansingWeather[,"Events"];<br /> windDirection = lansingWeather[,"WindDirDegrees"];<br /> maxTemp = lansingWeather[,"Max_TemperatureF"];<br /> visibility = lansingWeather[,"Mean_VisibilityMiles"];<br /> humidity = lansingWeather[,"Mean_Humidity"];<br /> barometer = lansingWeather[,"Mean_Sea_Level_PressureIn"];<br /> dewPoint = lansingWeather[,"MeanDew_PointF"];<br /> precipitation = lansingWeather[,"PrecipitationIn"];<br /> cloudCover = lansingWeather[,"CloudCover"];<br /> maxWind = lansingWeather[,"Max_Wind_SpeedMPH"];</h6>
+<p></p>
+<h3>Checking for values within the vector using for()</h3>
+<p>The vector <em><strong>eventData</strong> </em>contains information about the type of weather that occurred during that day (e.g., Fog, Snow, Rain, etc..).&nbsp; If we want to find out which days were foggy we could use a <em><strong>for()</strong></em> to iterate through all 366 values and check each value to see if it is equal to fog:</p>
+<p></p>
+<h6>foggyDays1 = c();</h6>
+<h6>for(i in 1:366)</h6>
+<h6>{</h6>
+<h6>&nbsp; if(eventData[i] == "Fog")</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp; &nbsp; foggyDays1 = c(foggyDays1, i);</h6>
+<h6>&nbsp; }</h6>
+<h6>}</h6>
+<p></p>
+<p>The line of code:</p>
+<h6 class="partial">foggyDays1 = c(foggyDays1, i);</h6>
+<p>adds the index value<em><strong> i</strong></em> to the end of the vector <em><strong>foggyDays1</strong></em></p>
+<p></p>
+<p><img src="../Images/R%2003-03%20conditions%20with%20for%20if.PNG" alt="" class="flexSize" />&nbsp;</p>
+<h5>Finding foggy days using for() and if()</h5>
+<p></p>
+<p>At the end of the script, the vector <em><strong>foggyDays1</strong> </em>holds the indexes for the values in <em><strong>eventData</strong> </em>that are equal to "Fog", of which there are 6.</p>
+<h3>Checking for values within the vector using which()</h3>
+<p>While it is important to understand how the above code works, there is a much easier way in R to get the values in <em><strong>eventData</strong> </em>that are equal to "Fog"</p>
+<p></p>
+<h6 class="partial">foggyDays2 = which(eventData == "Fog");</h6>
+<p></p>
+<p>The above code will:</p>
+<p>1) Iterate through each value in the vector eventData</p>
+<p>2) Check if the value is equal to "Fog"</p>
+<p>3) Create a vector that has the indexes of all the values in the vector equal to "Fog"</p>
+<p>4) Save that vector to <em><strong>foggyDays2</strong></em></p>
+<p></p>
+<p><img src="../Images/R%2003-03%20equal%20condition%20with%20which.PNG" alt="" class="flexSize" /></p>
+<h5>Finding foggy days using which()</h5>
+<p></p>
+<p>Looking at either <em><strong>foggyDays1</strong> </em>or <em><strong>foggyDays2</strong></em>, we see that the 24th, 33rd, 256th, 267th, 348th, and 357th days were foggy.&nbsp; Technically, these were the days that were only foggy.&nbsp; If you look at <em><strong>eventData</strong> </em>you will see days that had a combination of conditions (e.g., "Fog-Rain" or "Fog-Snow") that were not counted in the script above.</p>
+<h2>Using the indexed value from the which()</h2>
+<p>Our next step is to use the vector of indexed values produced by the script above<em><strong></strong> </em>to index another vector.&nbsp;</p>
+<p></p>
+<p>For example: Give the maximum temperature and humidity on days that it was foggy</p>
+<h6>foggyDayTemps = maxTemp[foggyDays2];<br /> foggyDayWinds = maxWinds[foggyDays2];</h6>
+<p></p>
+<p>since<span style="color: #990000;"> <em><strong>foggyDays2</strong> </em>= c(24, 33, 256, 267, 348, 357)...</span></p>
+<p><span style="color: #990000;"></span></p>
+<p><em><strong>maxTemp</strong></em>[<span style="color: #990000;"><em><strong>foggyDays2</strong></em></span>] is equivalent to <em><strong>maxTemp</strong></em>[<span style="color: #990000;"><em><strong>c(24, 33, 256, 267, 348, 357)</strong></em></span>];</p>
+<p>This gives the temperature on the 24th, 33rd, 256th, 267th, 348th, and 357th days</p>
+<p></p>
+<p><em><strong>maxWind</strong></em>[<span style="color: #990000;"><em><strong>foggyDays2</strong></em></span>] is equivalent to <em><strong>maxWind</strong></em>[<span style="color: #990000;"><em><strong>c(24, 33, 256, 267, 348, 357)</strong></em></span>];</p>
+<p>This gives the winds on the 24th, 33rd, 256th, 267th, 348th, and 357th days</p>
+<p></p>
+<p><img src="../Images/R%2003-03%20using%20which%20index%20values1.PNG" alt="" class="flexSize" /></p>
+<h5>Subsetting the temperature and wind vectors by foggy days</h5>
+<p></p>
+<p>So the maximum temperatures on the 6 foggy days were: (39, 50, 84, 69, 41, 46)</p>
+<p>and the maximum winds on the 6 foggy days were: ( 7, 9, 9, 11, 5, 7)</p>
+<h2>plotting the subsetted vectors</h2>
+<p>We are going to produce two plot:&nbsp;</p>
+<p>1) humidity vs maximum temperature on days without precipitation (precipitation == 0.00)</p>
+<p>2) humidity vs maximum temperatures on days with a lot of precipitation (precipitation &gt; 1.00).</p>
+<p></p>
+<p>First we need to create vectors that hold the days that have no precipitation and those that have hard rain.&nbsp; Note: it is good practice to put in the decimal (1.00 as opposed to 1) to show to the reader that this is a whole number -- we just happen to be using an integer for comparison.</p>
+<h6>daysNoPrecip = which(precipitation == 0.00);&nbsp;&nbsp; # no precipitation days</h6>
+<h6>daysHardPrecip = which(precipitation &gt; 1.00);&nbsp; # hard precipitation days</h6>
+<p></p>
+<p><img src="../Images/R%2003-03%20subset%20for%20precip.PNG" alt="" class="flexSize" /></p>
+<h5>Creating vector that index days based on precipitation amounts</h5>
+<p></p>
+<p>We see in the above script that there were 173 days without any precipitation and 6 days with precipitation more than 1 inch.</p>
+<p></p>
+<p>Next we are going to plot a subset of <em><strong>maxTemp</strong> </em>and <em><strong>humidity.&nbsp;</strong></em> We are only plotting <em><strong>maxTemp</strong> </em>vs <em><strong>humidity</strong> </em>on the 173 days where there was no precipitation<strong>.</strong><em><strong><br /></strong></em></p>
+<h6>plot(maxTemp[daysNoPrecip], humidity[daysNoPrecip]);</h6>
+<p></p>
+<p><img src="../Images/R%2003-03%20subset%20plot%20--%20no%20precip.PNG" alt="" class="flexSize" /></p>
+<h5>Plot of maxTemp vs humidity on days with no precipitation</h5>
+<p></p>
+<p>Another plot of <em><strong>maxTemp</strong> </em>and <em><strong>humidity</strong> </em>-- this time we are only plotting the 6 days that had 1 inch or more of precipitation</p>
+<h6>plot(maxTemp[daysHardPrecip], humidity[daysHardPrecip]);</h6>
+<p></p>
+<p><img src="../Images/R%2003-03%20subset%20plot%20--%20hard%20precip.PNG" alt="" class="flexSize" /></p>
+<h5>Plot of maxTemp vs humidity on days with 1 inch or more of precipitation</h5>
+<h2>Outputting value to the console</h2>
+<p>Sometimes we want to do is print out information about a subsetted vector.&nbsp; In this case we will print out to the Console Window the dates that were sunny or mostly sunny.&nbsp; The&nbsp; information for how sunny a day is is in the vector <em><strong>cloudCover</strong> </em>and anything less than 3 mean it was at least mostly sunny.</p>
+<p></p>
+<h6>sunnyDays = which(cloudCover &lt; 3);</h6>
+<p></p>
+<p><em><strong>sunnyDays</strong> </em>in a vector with 38 values (representing the 38 days that were sunny or mostly sunny).&nbsp;</p>
+<p></p>
+<p>We can use the vector <em><strong>sunnyDays</strong> </em>as an index for the <em><strong>dates</strong> </em>vector to get the actual dates.&nbsp;</p>
+<h6>sunnyDates = dates[sunnyDays];<br /> print(sunnyDates);</h6>
+<p></p>
+<p><img src="../Images/R%2003-03%20print%20subset%20vector%20to%20console.PNG" alt="" class="flexSize" /></p>
+<h5>Printing out the subsetted sunny dates to the Console Window</h5>
+<p></p>
+<p>What is printed to the Console Window is the 38 dates that were sunny or mostly sunny.&nbsp; Note: EST is Eastern Standard Time and EDT is Eastern Daylight Time.</p>
+<h2>Multiple Conditions (the &amp; operator)</h2>
+<p>Just like in <em><strong>if()</strong></em>, we can combine conditions by using <em><strong>&amp;</strong></em> and<em><strong> |</strong></em>.&nbsp; &lt;&nbsp; Extension: Difference between &amp;, &amp;&amp; and&nbsp; |, ||&nbsp; &gt;</p>
+<p></p>
+<p>So we can index the <em><strong>maxTemp</strong> </em>values that are between 60 and 70 by saying we want all <em><strong>maxTemp</strong> </em>that are both <span style="color: #990000;">greater than 60 <em><strong>and</strong> </em>less than 70</span></p>
+<h6>tempsIn60s = which(maxTemp &gt; 60 &amp; maxTemp &lt; 70)</h6>
+<p></p>
+<p>Then we can find the mean humidity for days with high temperature between 60 and 70</p>
+<h6>meanHum60s = mean(humidity[tempsIn60s]);</h6>
+<p></p>
+<p>or the maximum precipitation for days with high temperature between 60 and 70</p>
+<h6>maxPrecip60s = max(precipitation[tempsIn60s]);</h6>
+<p></p>
+<p>We can see that there were 57 days with <em><strong>maxTemp </strong></em>values<em> </em>in the 60s, the average humidity for those days was 70.49, and the maximum precipitation for those days was 1.65 inches.</p>
+<p></p>
+<p><img src="../Images/R%2003-03%20multiple%20conditions%20-%20and.PNG" alt="" class="flexSize" /></p>
+<h5>Using multiple conditions and which() to subset a vector</h5>
+<p></p>
+<h2>Back to the linear model</h2>
+<p>In the last lesson we initially found that there was no relationship between temperature and pressure.&nbsp; However, we see a relationship if we look with at <em><strong>maxTemp</strong> </em>vs <em><strong>barometer</strong> </em>with wind direction as a factor.</p>
+<p></p>
+<p>We start by indexing <em><strong>windDirection</strong> </em>for days that had northerly winds (numbers are in degree with 0 degrees being due north, 180 is due south).&nbsp; We want all days in which the wind direction was <span style="color: #990000;">less than 90 degrees <strong><em>or</em></strong> greater than 270 degrees.&nbsp; </span></p>
+<h6>northWindDays = which(windDirection &lt; 90 | windDirection &gt; 270);</h6>
+<p></p>
+<p>Then we make a scatterplot of <em><strong>maxTemp</strong> </em>vs barometer on days with northerly winds.</p>
+<h6>plot(maxTemp[northWindDays ]~barometer[northWindDays ]);</h6>
+<p></p>
+<p>and make a linear model that indexes temperature and pressures only on the northerly winds days.</p>
+<h6>model = lm(maxTemp[northWindDays ]~barometer[northWindDays ]);</h6>
+<p></p>
+<p>We add the regression line from the model to the scatterplot</p>
+<h6>abline(model, col="blue"); # add the regression line to the plot</h6>
+<p></p>
+<p>And print the linear model summary to the Console Window</p>
+<h6>print(summary(model)); # summary shows a relationship</h6>
+<p></p>
+<p><img src="../Images/R%2003-03%20linear%20model%20-plot.PNG" alt="" class="flexSize" /></p>
+<h5>Plot of maxTemp vs barometer for days with a northerly wind -- regression line added</h5>
+<p></p>
+<p><img src="../Images/R%2003-03%20linear%20model%20-summary.PNG" alt="" class="flexSize" /></p>
+<h5>Summary of linear model showing relationship between maxTemp and barometer on days with northerly winds</h5>
+<p></p>
+<h2>Multiple conditions on multiple variables</h2>
+<p>And, like with<em><strong> if(</strong></em>), we can create situation that look and multiple conditions on multiple variables.&nbsp; The biggest issue is to make sure you have the parentheses, which determine the order of operations,correct.</p>
+<p></p>
+<h6>windyWithPrecip = which( (maxWind &gt; 20) &amp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (eventData == "Snow" | eventData == "Rain-Snow" | eventData == "Rain") );<br /> chillyLightRain = which( (maxTemp &gt; 40 &amp; maxTemp &lt; 50) &amp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (precipitation &gt; 0.1 &amp; precipitation &lt; 0.2 ));</h6>
+<p></p>
+<p><em><strong>windyWithPrecip</strong> </em><strong></strong>gives the days where there were strong winds (greater than 20mph) and there was rain, snow, or a combination of rain and snow.</p>
+<p><em><strong>chillyLightRain</strong> </em>gives the days between 40 and 50 degrees where there was a light precipitation (between 0.1 and 0.2 inches)</p>
+<p></p>
+<p>Then we will print to the Console Window the dates in which the above conditions occurred</p>
+<h6>cat("Windy days with precipitation:\n");<br /> print(dates[windyWithPrecip]);<br /> cat("\nChilly days with light rain:\n");<br /> print(dates[chillyLightRain]);</h6>
+<p></p>
+<p>Executing the script above shows that there are 11 windy days with precipitation and 2 days that were chilly with light rain.</p>
+<p></p>
+<p><img src="../Images/R%2003-03%20multiple%20conditions%20on%20mult%20vars.PNG" alt="" class="flexSize" /></p>
+<h5>Using which() with multiple conditions on multiple variables</h5>
+<h2>Application</h2>
+<p>1) Perform a linear regression on <em><strong>maxTemp</strong></em> vs <em><strong>barometer</strong> </em>where the winds are from the south (<em><strong>windDirection</strong> </em>between 90 and 270 degrees)</p>
+<p></p>
+<p>2) Find the number of days the humidity was high (greater than 90%) and for these days give:</p>
+<p>&nbsp;&nbsp; - the date</p>
+<p>&nbsp;&nbsp; - the amount of precipitation</p>
+<p>&nbsp;&nbsp; - the maximum wind speed</p>
+<p></p>
+<p>3) Linear regression on....</p>
+</body>
+</html>

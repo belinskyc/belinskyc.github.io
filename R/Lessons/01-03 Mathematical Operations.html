@@ -1,0 +1,264 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=MML_HTMLorMML
+"></script>
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=MichiganSt-1906746" target="_self">Variables</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=MichiganSt-1906752" target="_self">Debugging</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">01-03: Mathematical Operations</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Perform mathematical operations, including powers, on numerical variables</li>
+<li>Explicit use of multiplication symbols in formulas</li>
+<li>Convert algebraic formulas to programming formulas</li>
+<li>Use parentheses to establish order of operations for formulas</li>
+</ul>
+<h2>Concepts</h2>
+<h2>Putting a formula in code</h2>
+<p>Once again we will calculate <em><strong>velocity</strong> </em>using <em><strong>distance</strong> </em>and <em><strong>time</strong> </em>except we will now use the full version of the <em><strong>velocity</strong></em> formula which looks at the <em><span class="hl">changes in distance and time</span></em> as opposed to absolute distance and time.&nbsp;</p>
+<p></p>
+<p>The full velocity formula is (subscript <em><strong>i</strong></em> means "initial", subscript <em><strong>f</strong> </em>means "final"):</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>v</mi><mo>=</mo><mo>&#160;</mo><mfrac><mrow><msub><mi>d</mi><mi>f</mi></msub><mo>-</mo><msub><mi>d</mi><mi>i</mi></msub></mrow><mrow><msub><mi>t</mi><mi>f</mi></msub><mo>&#160;</mo><mo>-</mo><mo>&#160;</mo><msub><mi>t</mi><mi>i</mi></msub></mrow></mfrac></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mfrac&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;/math&gt;"}</annotation></semantics></math>&nbsp;&nbsp; (If <strong><em>t<sub>i</sub></em></strong> and <em><strong>d<sub>i</sub> </strong></em>are zero then you get the formula we used in Lesson 1-2: <math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>v</mi><mo>&#160;</mo><mo>=</mo><mo>&#160;</mo><mfrac><mi>d</mi><mi>t</mi></mfrac></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mfrac&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;/mfrac&gt;&lt;/math&gt;"}</annotation></semantics></math>)</p>
+<p></p>
+<p>We are going to code this formula but there are a couple of issues:</p>
+<ol>
+<li>fractions are "stacked" -- but in scripts, equations can only be read left to right (similar to formulas in Excel)</li>
+<li>variable names have subscript characters (e.g., <strong><em>t<sub>i</sub></em></strong>) and subscript and superscript characters are not allowed in script</li>
+</ol>
+<h3>Unstacking formulas</h3>
+<p>The velocity formula above is read in two dimensions.&nbsp; In other words, you read it both left-to-right and, because of the fraction, up-and-down.&nbsp; In script, everything goes left-to-right so you only have one dimension to work with.&nbsp; Before we code the formula, <em class="hl">we need to rewrite the formula to something we can put on one line</em> that maintains the same order-of-operations.</p>
+<p></p>
+<p>In order to do this, we need to first group the items in the numerator and denominator by putting them in parenthesis:</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>v</mi><mo>=</mo><mo>&#160;</mo><mfrac><mrow><mo>(</mo><msub><mi>d</mi><mi>f</mi></msub><mo>-</mo><msub><mi>d</mi><mi>i</mi></msub><mo>)</mo></mrow><mrow><mo>(</mo><msub><mi>t</mi><mi>f</mi></msub><mo>&#160;</mo><mo>-</mo><mo>&#160;</mo><msub><mi>t</mi><mi>i</mi></msub><mo>)</mo></mrow></mfrac></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mfrac&gt;&lt;mrow&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>And then pull out the fraction between the numerator and denominator and replace it with a division sign:</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>v</mi><mo>=</mo><mo>(</mo><msub><mi>d</mi><mi>f</mi></msub><mo>&#160;</mo><mo>-</mo><mo>&#160;</mo><msub><mi>d</mi><mi>i</mi></msub><mo>)</mo><mo>&#160;</mo><mo>/</mo><mo>(</mo><msub><mi>t</mi><mi>f</mi></msub><mo>&#160;</mo><mo>-</mo><mo>&#160;</mo><msub><mi>t</mi><mi>i</mi></msub><mo>)</mo></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>Now the formula is all on one line but the symbols need to be replaced with valid variable names that do not have subscripts:</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>v</mi><mi>e</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo>=</mo><mo>(</mo><mi>f</mi><mi>i</mi><mi>n</mi><mi>a</mi><mi>l</mi><mi>D</mi><mi>i</mi><mi>s</mi><mi>t</mi><mo>&#160;</mo><mo>-</mo><mo>&#160;</mo><mi>i</mi><mi>n</mi><mi>i</mi><mi>t</mi><mi>D</mi><mi>i</mi><mi>s</mi><mi>t</mi><mo>)</mo><mo>&#160;</mo><mo>/</mo><mo>(</mo><mi>f</mi><mi>i</mi><mi>n</mi><mi>a</mi><mi>l</mi><mi>T</mi><mi>i</mi><mi>m</mi><mi>e</mi><mo>&#160;</mo><mo>-</mo><mo>&#160;</mo><mi>i</mi><mi>n</mi><mi>i</mi><mi>t</mi><mi>T</mi><mi>i</mi><mi>m</mi><mi>e</mi><mo>)</mo></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;D&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;D&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;T&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;T&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>This is now a valid line of code in R -- assuming all variables on the right have assigned values.</p>
+<p></p>
+<h6 class="partial">velocity = (finalDist - initDist) / (finalTime - initTime);</h6>
+<p></p>
+<p><span style="color: #000000;">The line of code above says that velocity <span class=""><em class="hl">will be assigned</em> the value equal to the calculations on the right side of the equation.</span></span></p>
+<h3>Variable naming error</h3>
+<p><span style="color: #660000;"><span style="color: #000000;">Here is the full script calculating velocity with a small error on line 7:</span></span></p>
+<h6>rm(list=ls()); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # clean out the environment</h6>
+<h6>options(show.error.locations = TRUE);&nbsp; # give line numbers on errors</h6>
+<h6>&nbsp;</h6>
+<h6>finalDistance = 100;</h6>
+<h6>initDistance = 50;</h6>
+<h6>finaltime = 20;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # error on this line</h6>
+<h6>initTime = 15;</h6>
+<h6>velocity = (finalDistance - initDistance) / (finalTime - initTime);</h6>
+<p><span style="color: #660000;"><span style="color: #000000;"></span></span></p>
+<p><span style="color: #660000;"><span style="color: #000000;">Every variable on the right side of the equation on line 9 must be given a value before-hand --&nbsp; otherwise you will get the pesky "<em class="hl">Object not found</em>" error as shown in the image below (<em class="figureRef" title="notFound">Fig</em>)</span></span></p>
+<p><span style="color: #660000;"><span style="color: #000000;"></span></span></p>
+<p><span style="color: #660000;"><span style="color: #000000;"><img src="../Images/R-01-03%20naming%20error.PNG" alt="" class="flexSize" /></span></span></p>
+<h5 class="" id="notFound">Object not found because the variable name does not exist (it is misspelled).</h5>
+<p></p>
+<p>Note: any spelling error will cause the&nbsp;"<em class="hl">Object not found</em>" error.&nbsp; In this case I "spelled" the variable name wrong by changing the case of the <strong><em><span style="color: #990000;">T</span></em></strong>.&nbsp; <strong><span class="hl">finaltime</span> </strong>is not the same as <strong><span class="hl">finalTime.</span></strong><span style="color: #000000;"><br /></span></p>
+<p><span style="color: #000000;"></span></p>
+<p><span style="color: #000000;">Here is the working code:</span></p>
+<h6>rm(list=ls()); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # clean out the environment</h6>
+<h6>options(show.error.locations = TRUE);&nbsp; # give line numbers on errors</h6>
+<h6>&nbsp;</h6>
+<h6>finalDistance = 100;</h6>
+<h6>initDistance = 50;</h6>
+<h6>finalTime = 20;</h6>
+<h6>initTime = 15;</h6>
+<h6>velocity = (finalDistance - initDistance) / (finalTime - initTime);</h6>
+<p></p>
+<p><img src="../Images/R-01-03%20naming%20error%20corrected.PNG" alt="" class="flexSize" /></p>
+<h5>Misspelled variable name corrected -- script now calculates <strong>velocity</strong>.</h5>
+<h2>Powers and multiplication</h2>
+<p>We will look at one more formula that relates <em><strong>kinetic energy</strong></em> to <em><strong>mass</strong> </em>and <em><strong>velocity</strong></em>:</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><msub><mi>E</mi><mi>k</mi></msub><mo>&#160;</mo><mo>=</mo><mo>&#160;</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>m</mi><msup><mi>v</mi><mn>2</mn></msup></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msub&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mfrac&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p>There are two new issues with coding this formula:</p>
+<ol>
+<li>the square function is a superscript -- you cannot use superscript characters in R</li>
+<li>the implicit multiplication -- we know that values on the right-side are being multiplied but there is no multiplication sign</li>
+</ol>
+<p></p>
+<h3>Dealing with parenthesis and multiplication</h3>
+<p>So let's first pull the <em><strong>one-half</strong> </em>out of fraction form and into division form:</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><msub><mi>E</mi><mi>k</mi></msub><mo>&#xA0;</mo><mo>=</mo><mo>&#xA0;</mo><mn>1</mn><mo>/</mo><mn>2</mn><mi>m</mi><msup><mi>v</mi><mn>2</mn></msup></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msub&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p>We need to be more explicit because this formula could be misinterpreted by the reader as&nbsp;<math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><msub><mi>E</mi><mrow><mi>k</mi><mo>&#xA0;</mo></mrow></msub><mo>=</mo><mo>&#xA0;</mo><mn>1</mn><mo>/</mo><mo>(</mo><mn>2</mn><mi>m</mi><msup><mi>v</mi><mn>2</mn></msup><mo>)</mo></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msub&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/math&gt;"}</annotation></semantics></math> so we need to put the one-half in parenthesis:</p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><msub><mi>E</mi><mi>k</mi></msub><mo>&#160;</mo><mo>=</mo><mo>&#160;</mo><mo>(</mo><mn>1</mn><mo>/</mo><mn>2</mn><mo>)</mo><mi>m</mi><msup><mi>v</mi><mn>2</mn></msup></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msub&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>Next we will explicitly put in the multiplication symbols -- a necessity in programming:</p>
+<p class="linkTo" title="forgetting"><em></em></p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><msub><mi>E</mi><mi>k</mi></msub><mo>&#160;</mo><mo>=</mo><mo>&#160;</mo><mo>(</mo><mn>1</mn><mo>/</mo><mn>2</mn><mo>)</mo><mo>*</mo><mi>m</mi><mo>*</mo><msup><mi>v</mi><mn>2</mn></msup></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msub&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;msup&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p><em class="linkTo" title="forgetting">Trap: Forgetting multiplication symbol</em></p>
+<p><em></em></p>
+<p>And then change the symbols to script-friendly variable names:</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>k</mi><mi>i</mi><mi>n</mi><mi>e</mi><mi>t</mi><mi>i</mi><mi>c</mi><mi>E</mi><mi>n</mi><mi>e</mi><mi>r</mi><mi>g</mi><mi>y</mi><mo>&#160;</mo><mo>=</mo><mo>&#160;</mo><mo>(</mo><mn>1</mn><mo>/</mo><mn>2</mn><mo>)</mo><mo>*</mo><mi>m</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>*</mo><mi>v</mi><mi>e</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>t</mi><msup><mi>y</mi><mn>2</mn></msup></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<h3>Dealing with powers</h3>
+<p>We still have to deal with the square power.&nbsp; The easiest way is to just multiply by a second velocity:</p>
+<h6 class="partial"># this does work but it is not pretty</h6>
+<h6>kineticEnergy = (1/2)*mass*velocity*velocity;&nbsp;</h6>
+<p></p>
+<p>However, the above solution is useless for powers in root form (e.g., square roots, cube roots). We want a more robust solution that works for all powers and roots.&nbsp; In R we use the ( <em><strong>^</strong></em> ) symbol to represent a power:</p>
+<h6 class="partial"># much more robust solution</h6>
+<h6>kineticEnergy = (1/2)*mass*velocity^2;</h6>
+<p></p>
+<p>While the above works correctly, it is often helpful to be explicit and add parenthesis around the value or values that are getting raised to the power:</p>
+<h6 class="partial"># more explicit solution</h6>
+<h6>kineticEnergy = (1/2)*mass*(velocity)^2;</h6>
+<p></p>
+<h2>The power operator ( ^ )</h2>
+<p>The (<em><strong> ^</strong> </em>) operator works for all powers including square roots, cubed roots, and mixed powers (e.g., raising to the 3/2 or 5/3).&nbsp;</p>
+<p>Let's rearrange the <em><strong>kinetic energy</strong></em> formula to solve for <em><strong>velocity</strong></em>,<span style="color: #990000;"><em> which requires a <span class="hl" style="color: #990000;">squa</span>re root</em></span></p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>v</mi><mo>=</mo><mo>&#160;</mo><msqrt><mfrac><mrow><mn>2</mn><msub><mi>E</mi><mi>k</mi></msub></mrow><mi>m</mi></mfrac></msqrt></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;msqrt&gt;&lt;mfrac&gt;&lt;mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;msub&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;/mfrac&gt;&lt;/msqrt&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p>To put the above formula into a script form, we need to:</p>
+<p></p>
+<p>1) Put the numerator and denominator on one line by taking out the fraction and replacing it with a division sign.</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>v</mi><mo>=</mo><mo>&#160;</mo><msqrt><mstyle displaystyle="false"><mo>(</mo><mn>2</mn><msub><mi>E</mi><mi>k</mi></msub><mo>&#160;</mo><mo>/</mo><mo>&#160;</mo><mi>m</mi><mo>)</mo></mstyle></msqrt></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;msqrt&gt;&lt;mstyle displaystyle=&quot;false&quot;&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;msub&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mstyle&gt;&lt;/msqrt&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>2) Be explicit and put in multiplication symbols.</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>v</mi><mo>=</mo><mo>&#160;</mo><msqrt><mstyle displaystyle="false"><mo>(</mo><mn>2</mn><mo>*</mo><msub><mi>E</mi><mi>k</mi></msub><mo>&#160;</mo><mo>/</mo><mo>&#160;</mo><mi>m</mi><mo>)</mo></mstyle></msqrt></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;msqrt&gt;&lt;mstyle displaystyle=&quot;false&quot;&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mstyle&gt;&lt;/msqrt&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>3) Spell the formula out using script-friendly variable names:</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>v</mi><mi>e</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo>=</mo><mo>&#160;</mo><msqrt><mstyle displaystyle="false"><mo>(</mo><mn>2</mn><mo>*</mo><mi>k</mi><mi>i</mi><mi>n</mi><mi>e</mi><mi>t</mi><mi>i</mi><mi>c</mi><mi>E</mi><mi>n</mi><mi>e</mi><mi>r</mi><mi>g</mi><mi>y</mi><mo>&#160;</mo><mo>/</mo><mo>&#160;</mo><mi>m</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>)</mo></mstyle></msqrt></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;msqrt&gt;&lt;mstyle displaystyle=&quot;false&quot;&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mstyle&gt;&lt;/msqrt&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>4) Use the power operator ( <em><strong>^</strong></em> ) to square root the whole formula.&nbsp; Square rooting something is the same as saying "raise it to the 1/2 power".&nbsp; Since we are square rooting a function of multiple variables, we need to put the whole formula in parenthesis.</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>v</mi><mi>e</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo>=</mo><mo>&#160;</mo><msup><mfenced><mrow><mn>2</mn><mo>*</mo><mi>k</mi><mi>i</mi><mi>n</mi><mi>e</mi><mi>t</mi><mi>i</mi><mi>c</mi><mi>E</mi><mi>n</mi><mi>e</mi><mi>r</mi><mi>g</mi><mi>y</mi><mo>/</mo><mi>m</mi><mi>a</mi><mi>s</mi><mi>s</mi></mrow></mfenced><mrow><mn>1</mn><mo>/</mo><mn>2</mn></mrow></msup></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;msup&gt;&lt;mfenced&gt;&lt;mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;/mrow&gt;&lt;/mfenced&gt;&lt;mrow&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>So we have this in R:</p>
+<h6>rm(list=ls()); # clean out the environment<br />options(show.error.locations = TRUE); # give line numbers on errors<br /> <br />kineticEnergy = 50;<br />mass = 5;<br />velocity = (2*kineticEnergy / mass)^1/2; # still a problem here!</h6>
+<p></p>
+<p><img src="../Images/R-01-03%20power-parenthesis%20error.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="powerissue">Incorrect answer for <strong>velocity</strong> because the power is missing parentheses</h5>
+<p></p>
+<p>The Environment Window (<em class="figureRef" title="powerissue">fig</em>) shows that <em><strong>v</strong></em> is, unexpectedly, <em><strong>10</strong></em>.&nbsp; This is because of the order-of-operations. Instead of raising the<em><strong> (2*kineticEnergy/mass)</strong></em> to the <em><strong>1/2</strong></em> power, the above code raised <em><strong>(2*kineticEnergy/mass)</strong></em> to the <em><strong>first</strong> <strong>(1)</strong> </em>power and then divided everything by <em><strong>2</strong></em>.&nbsp; We need to be more explicit and put the <em><strong>1/2</strong></em> in parenthesis.</p>
+<p></p>
+<p class="linkTo" title="square-root">Extension: Alternate way to compute square roots</p>
+<p></p>
+<h6>rm(list=ls()); # clean out the environment<br />options(show.error.locations = TRUE); # give line numbers on errors<br /> <br />kineticEnergy = 50;<br />mass = 5;<br />velocity = (2*kineticEnergy / mass)^(1/2); # now we are good!</h6>
+<p></p>
+<p><img src="../Images/R-01-03%20KE%20corrected.PNG" alt="" class="flexSize" /></p>
+<h5 class="">Correct answer for <strong>velocity</strong></h5>
+<p></p>
+<p>This style will work for all powers and roots:</p>
+<h6>rm(list=ls()); # clean out the environment<br />options(show.error.locations = TRUE); # give line numbers on errors<br /> <br />kineticEnergy = 50;<br />mass = 5;</h6>
+<h6></h6>
+<h6 class="">test1 = (2*kineticEnergy / mass)^(1/3);&nbsp; # third root</h6>
+<h6>test2 = (2*kineticEnergy / mass)^(5); &nbsp;&nbsp; # fifth power</h6>
+<h6>test3 = (2*kineticEnergy / mass)^(5/3);&nbsp; # mixed root and power</h6>
+<h6>test4 = (2*kineticEnergy / mass)^(3.17); # decimal power</h6>
+<p></p>
+<p><img src="../Images/R-01-03%20test%20powers.PNG" alt="" class="flexSize" /></p>
+<h5>Testing different powers in R</h5>
+<h2 class="application" title="Lesson Practice">Application</h2>
+<p>For the following five fish length values (in centimeters): 25, 26, 20, 22, 32:</p>
+<p></p>
+<p>A) Calculate the (a) mean, (b) variance, and (c) standard deviation of the five values</p>
+<p></p>
+<p>B) Make sure the 5 values, their mean, their variance, and their standard deviation appear in the Environment Window after the script is executed.</p>
+<p></p>
+<p><a href="http://davidmlane.com/hyperstat/A16252.html" target="_blank" rel="noopener noreferrer">Visit this page if you need a reminder about how to calculate mean, variance and standard deviation </a></p>
+<p></p>
+<p>Note: there are quicker ways to solve for mean, variance, and standard deviation in R, which we will learn later.</p>
+<p></p>
+<p class="linkTo" title="units">Trap: Units, or lack thereof, in programming</p>
+<h2 class="trap" id="forgetting">Traps: Forgetting Multiplication Symbol</h2>
+<p>Let's say you are solving for kinetic energy:</p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><msub><mi>E</mi><mi>k</mi></msub><mo>&#160;</mo><mo>=</mo><mo>&#160;</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>m</mi><msup><mi>v</mi><mn>2</mn></msup></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msub&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mfrac&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p>And you have a value for velocity (<em><strong>v</strong></em>) and mass (<em><strong>m</strong></em>)</p>
+<h6>rm(list=ls()); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # clean out the environment</h6>
+<h6>options(show.error.locations = TRUE);&nbsp; # give line numbers on errors</h6>
+<h6></h6>
+<h6>m = 100;</h6>
+<h6>v = 10;</h6>
+<h6>KE = ????;</h6>
+<p></p>
+<p>If you make line 7:</p>
+<h6 class="partial" title="7">KE = 1/2*mv^2;</h6>
+<p></p>
+<p>Then you will get the error: "<em class="hl">object 'mv' not found</em>" in the Console Window because R does not realize you want to multiply the variables <em><strong>m</strong></em> and <em><strong>v</strong></em>, it thinks you are trying to use a variable named <em><strong>mv</strong></em>, but the variable <em><strong>mv</strong> </em>does not exist.</p>
+<p></p>
+<p>If you make line 7:</p>
+<h6 class="partial" title="7">KE = (1/2)m*v^2;&nbsp; # same error arises if you do 1/2m*v^2</h6>
+<p style="counter-reset: line 5;"></p>
+<p>you will get the error: "<em class="hl">unexpected symbol</em>" (<em class="figureRef" title="unexpected">Fig</em>) and the Console Window will point to the <em><strong>m</strong></em></p>
+<p><em><strong></strong></em></p>
+<p><em><strong><img src="../Images/R-01-03%20unexpected%20symbol.PNG" alt="" class="flexSize" /></strong></em></p>
+<h5 class="" id="unexpected">Unexpected symbol error</h5>
+<p></p>
+<p>In this case, R is expecting an operation after <strong>(1/2)</strong> that is represented by a symbol<em><strong></strong></em>.&nbsp; <em><strong>m</strong></em>&nbsp;is a variable, not a symbol, hence the error.</p>
+<h2 class="extension" id="square-root">Extension: Alternate way to compute square roots</h2>
+<p>In R, a square root can be computed by raising something to the one-half power:</p>
+<h6 class="partial"># the generic way to compute powers and roots</h6>
+<h6>velocity = (2*kineticEnergy / mass)^(1/2);</h6>
+<p></p>
+<p>There is also an explicit R function that calculates a square root:</p>
+<h6 class="partial"># the standard way to do powers and roots</h6>
+<h6>velocity = sqrt(2*kineticEnergy / mass);&nbsp;</h6>
+<p></p>
+<p>This works and you will see this method in R scripts.&nbsp; However, this method only works for the case of square root so I prefer using the ( <em><strong>^</strong></em> ) operator, since it works for all power and root operations.</p>
+<h2 class="trap" id="units">Trap: Units, or lack thereof, in programming</h2>
+<p>One problem that crops up quite often in programming is that none of the numbers used in calculations have units.&nbsp; So we often have lines of code without any mention of units like this:</p>
+<p></p>
+<h6># find an average of the following three weights</h6>
+<h6>weight1 = 175;</h6>
+<h6>weight2 = 200;</h6>
+<h6>weight3 = 210;</h6>
+<h6></h6>
+<h6>aveWeight = (weight1 + weight2 + weight3) / 3;</h6>
+<p></p>
+<p>And if we add units to the number...</p>
+<h6># find an average of the following three weights</h6>
+<h6>weight1 = 175lb;&nbsp; # causes "unexpected symbol" error</h6>
+<h6>weight2 = 200lb;</h6>
+<h6>weight3 = 210lb;</h6>
+<h6></h6>
+<h6>aveWeight = (weight1 + weight2 + weight3) / 3;</h6>
+<p></p>
+<p>We get the error <em class="hl">"unexpected symbol"</em> on line 3 because R is expecting some sort of operation after the number <strong>175</strong> and <strong>lb</strong> is not a valid operation.&nbsp; Lines 4 and 5 would also cause an <em class="hl">"unexpected symbol"</em> error but R ceases executing at the first error.</p>
+<p></p>
+<p>It is best to mention the units somewhere in the comments especially if your script is large or others are using your script.</p>
+<h6># find an average of the following three weights (all in pounds)</h6>
+<h6>weight1 = 175;</h6>
+<h6>weight2 = 200;</h6>
+<h6>weight3 = 210;</h6>
+<h6></h6>
+<h6>aveWeight = (weight1 + weight2 + weight3) / 3;</h6>
+<p></p>
+<p>Otherwise, you risk a situation like the <a href="https://en.wikipedia.org/wiki/Mars_Climate_Orbiter" target="_blank" rel="noopener noreferrer">Mars Climate Orbiter</a> crash, which could have easily been avoided with proper comments.</p>
+</body>
+</html>

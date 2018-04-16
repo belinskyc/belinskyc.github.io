@@ -1,0 +1,310 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2268076" target="_self">Packages</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2268082" target="_self">Matrices</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">03-02 Data Frame Manipulation</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Load data frame from a CSV and save data frame to a CSV</li>
+<li>Reshape a data frame</li>
+<li>Perform conversion and formulas on multiple column of a data frame</li>
+<li>Rename column headers</li>
+</ul>
+<h2>Concepts<em><br /></em></h2>
+<h2>A script for this lesson</h2>
+<p><a href="../Scripts/3-2.R" target="_self" class="download">The script that contains all of the code for this lesson can be found here</a>.&nbsp; This lesson, and all subsequent lessons, will not contain embedded scripts that you copy/paste.&nbsp; Instead the lessons will have the full, downloadable script linked at the beginning and the lesson will go through the linked script in order.&nbsp;</p>
+<p></p>
+<p>If the NOAA/NCDC website is down, <a href="../Scripts/lesson3-2NOAAData.rdata" target="_self" class="download">you will need to download this rdata file</a>, which contains the weather data for this lesson.&nbsp; Save this file to your <em><strong>data</strong> </em>folder in the<em><strong> R Root</strong></em> directory.&nbsp; The script file for this lesson has instructions on how to adapt the script for the rdata file.</p>
+<h3>Commenting/ uncommenting multiple lines</h3>
+<p>Since the linked script above follows the lesson in order, you probably want to comment out the whole script and remove the comments as you go through the lesson so that you can see the progression of the lesson. In RStudio, you can comment lines by (<em class="figureRef" title="commenting">fig</em>):</p>
+<ol>
+<li>highlighting the lines you want to comment</li>
+<li>clicking <em><strong>Code -&gt; Comment/Uncomment Lines</strong></em> or <em><strong>Control-Shift-C</strong></em> (<em><strong>Command-Shift-C</strong> </em>on a MAC).&nbsp;&nbsp;</li>
+</ol>
+<p></p>
+<p>Just<em class="hl"> make sure you don't comment the curly bracket ( <strong>}</strong> )</em> at the end of your code.&nbsp;</p>
+<p></p>
+<p>You can uncomment lines using the same technique (<em class="figureRef" title="commenting">fig</em>) or by deleting the comments symbols (<em><strong> #</strong></em> ) at the beginning of the line.</p>
+<p></p>
+<p><video title="Commenting and uncommenting blocks of code in RStudio" controls="controls" height="300" width="400">
+	<source src="../Videos/03-02b%20Commenting-Uncommenting.mp4" type="video/mp4" />
+</video></p>
+<h5 class="" id="commenting">(Video) Commenting and uncommenting blocks of code in RStudio.</h5>
+<h2>Getting the weather data</h2>
+<p><a href="/d2l/le/content/457124/viewContent/5445992/View?l1=3&amp;l2=1" target="_blank" rel="noopener noreferrer">Like last lesson</a>, we are going to link to <em><strong>toolbox.r</strong></em> to get the token and use the library <em><strong>rnoaa</strong> </em>to connect to the NOAA/NCDC database.&nbsp; We will also use the library <em><strong>reshape2</strong> </em>to manipulate the data frame that comes back from the NOAA/NCDC database.</p>
+<p></p>
+<h6 class="partial">source("scripts/toolbox.r");<br />library(rnoaa);<br />library(reshape2);</h6>
+<p></p>
+<p>Like last lesson we will call the NOAA/NCDC database using <em><strong>ncdc() </strong></em>and get weather data from the Lansing station for January 2016.&nbsp;</p>
+<p></p>
+<h6 class="partial">lansingWeather = ncdc(datasetid="GHCND", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; datatypeid=c("TMAX", "TAVG", "TMIN", "PRCP", <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; "SNOW", "AWND", "WDF2", "WSF2", <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; "WT01", "WT09"),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stationid="GHCND:USW00014836", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; startdate = "2016-01-01", enddate ="2016-01-31",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; token=myToken,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; limit=400 );</h6>
+<p></p>
+<p class="linkTo" title="datatypeids">Extension: The four-digit data type ids</p>
+<p></p>
+<p>Next, we are going to extract the data frame, <em><strong>data</strong></em>, from the list we got from NOAA/NCDC, <em><strong>lansingWeather</strong></em>.</p>
+<h6 class="partial">lansingWeatherDF = lansingWeather[["data"]];</h6>
+<h2>Reshaping a data frame</h2>
+<p>The data frame <em><strong>lansingWeatherDF</strong> </em>is not in a very readable format.&nbsp; This will often happen when you get data from a big database.&nbsp; The database is just throwing data at you -- it is your job to format the data in a useful way.</p>
+<p></p>
+<p>In the data frame, every weather measurement from every day has its own row.&nbsp; So, there are 10 rows with the date <strong>01-02</strong> and each row has a different weather type (<strong>TMAX, TMIN, TAVG</strong>, ...).</p>
+<p><img src="../Images/R-03-02%20Data%20Frame%20in%20wrong%20format.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="orig-data">Data frame that needs serious formatting.</h5>
+<h3>The data frame we want</h3>
+<p>We would like the data to look like this (partial table, values are from <em><strong>lansingWeatherDF</strong></em>):</p>
+<table style="width: 336px;">
+<tbody>
+<tr>
+<td style="width: 32px;"></td>
+<td style="width: 53px;"><strong>minTemp</strong></td>
+<td style="width: 51px;"><strong>avgTemp</strong></td>
+<td style="width: 55px;"><strong>maxTemp</strong></td>
+<td style="width: 10px;"><strong>&nbsp;...&nbsp;</strong></td>
+<td style="width: 35px;"><strong>Precip</strong></td>
+</tr>
+<tr>
+<td style="width: 32px;"><strong>Jan1</strong></td>
+<td style="width: 53px;">24</td>
+<td style="width: 51px;">26</td>
+<td style="width: 55px;">29</td>
+<td style="width: 10px;">...</td>
+<td style="width: 35px;">0.04</td>
+</tr>
+<tr>
+<td style="width: 32px;"><strong>Jan2</strong></td>
+<td style="width: 53px;">28</td>
+<td style="width: 51px;">32</td>
+<td style="width: 55px;">35</td>
+<td style="width: 10px;">...</td>
+<td style="width: 35px;">0</td>
+</tr>
+<tr>
+<td style="width: 32px;"><strong>Jan3</strong></td>
+<td style="width: 53px;">25</td>
+<td style="width: 51px;">29</td>
+<td style="width: 55px;">33</td>
+<td style="width: 10px;">...</td>
+<td style="width: 35px;">T</td>
+</tr>
+<tr>
+<td style="width: 32px;"><strong>...</strong></td>
+<td style="width: 53px;">...</td>
+<td style="width: 51px;">...</td>
+<td style="width: 55px;">...</td>
+<td style="width: 10px;">...</td>
+<td style="width: 35px;">...</td>
+</tr>
+<tr>
+<td style="width: 32px;"><strong>Jan31</strong></td>
+<td style="width: 53px;">33</td>
+<td style="width: 51px;">44</td>
+<td style="width: 55px;">49</td>
+<td style="width: 10px;">...</td>
+<td style="width: 35px;">0</td>
+</tr>
+</tbody>
+</table>
+<p><em></em></p>
+<p>In other words we want:</p>
+<ol>
+<li>unique <em>dates</em> on each row</li>
+<li>unique <em>weather types</em> on each column</li>
+<li>values for<em> weather types</em> for each <em>date</em> populating the cells</li>
+</ol>
+<p><em></em></p>
+<p>The first thing to notice is that there are really only three columns in the data frame (<em class="figureRef" title="orig-data">fig</em>) that are useful to us: <strong>date</strong>, <strong>datatype</strong>, and <strong>value</strong>.<em></em></p>
+<p><em></em></p>
+<p>So, what we want is to:</p>
+<ol>
+<li>make each unique <em><strong>date</strong> </em>(31 in all)<em> </em>a row</li>
+<li>make each unique<em> <strong>datatype</strong> </em>(10 in all) a column</li>
+<li>populated the table cells with the information in the <em><strong>value</strong> </em>column<em>.&nbsp; </em></li>
+</ol>
+<h3>Compressing and reshaping data</h3>
+<p>This is where we use the <strong>reshape2</strong> package.</p>
+<p></p>
+<p><a href="https://cran.r-project.org/web/packages/reshape2/reshape2.pdf" target="_blank" rel="noopener noreferrer">Information about the <strong>reshape2</strong> package</a> can be found here.&nbsp; We are going to use the <em><strong>dcast()</strong></em> function on pages 2 and 3.&nbsp; There are many parameters to <em><strong>dcast()</strong> </em>but we are only concerned with three of the parameters:</p>
+<p></p>
+<ol>
+<li><em><strong>data</strong></em>: the data frame we are reshaping, which is <em><strong>lansingWeatherDF</strong></em></li>
+<li><em><strong>formula</strong></em>: defines the <em><strong>x-axis</strong> </em>and <em><strong>y-axis</strong></em> of the reshaped data frame<br />
+<ul>
+<li>formula takes the form <em><strong>y-axis ~ x-axis.</strong></em></li>
+<li>In this case we want <em><strong>dataype</strong> </em>on the <em><strong>y-axis</strong></em> and <em><strong>dates</strong> </em>on the <em><strong>x-axis</strong></em></li>
+<li>So the formula is: <em><strong class="hl">date ~ datatype</strong></em></li>
+</ul>
+</li>
+<li><em><strong>value.var</strong></em>: determines which column populates the rest of the reshaped data frame -- the column that holds the values in <em><strong>lansingWeatherDF</strong> </em>is named <em><strong>value</strong></em></li>
+<ul>
+<li><em><strong></strong></em><em><strong>value</strong> </em>is in quotes in the formula because <em><strong>value</strong> </em>is a column header, <em class="hl">not a variable</em></li>
+</ul>
+</ol>
+<p></p>
+<h6 class="partial">lansingWeatherRS = dcast(data = lansingWeatherDF, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; formula = date ~ datatype, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; value.var = "value");</h6>
+<p></p>
+<p>The reshaped data frame gets saved to the variable <em><strong>lansingWeatherRS</strong> </em>and looks like this...</p>
+<p></p>
+<p><img src="../Images/R-03-02%20REshaped%20data%20frame.PNG" alt="" class="flexSize" /></p>
+<h5>Lansing weather data frame after reshaping.</h5>
+<p></p>
+<p class="linkTo" title="samename">Extension: functions with the same name</p>
+<h2>Manipulating the data frame</h2>
+<p>Now that we have the data frame shaped the way we want, we can make other manipulations to the data.</p>
+<h3>Reordering the columns</h3>
+<p>We can reorder the columns by following these steps:</p>
+<ol>
+<li>get the columns from the data frame in the order we want</li>
+<li>save the columns back to the same data frame variable, which effectively overwrites the variable using the new column order</li>
+</ol>
+<p></p>
+<p>This is conceptually very similar to saying:</p>
+<h6 class="partial">count = count + 1;</h6>
+<p>In R, this means add one to the value of <em><strong>count</strong> </em>and then save the answer to <em><strong>count.</strong></em></p>
+<p><em><strong></strong></em></p>
+<p><em></em>To reorder the columns we add the code:</p>
+<h6 class="partial">lansingWeatherRS = lansingWeatherRS[,c(1,3,4,5,6,7,2,8,9,10,11)];</h6>
+<p></p>
+<p>The code above says we will:</p>
+<ol>
+<li>get the columns from <em><strong>lansingWeatherRS</strong> </em>in this order: 1,3,4,5,6,7,2,8,9,10,11 (right side)</li>
+<li>save this column order back to <em><strong>lansingWeatherRS</strong></em> (left side).<strong> <br /></strong><em><strong><br /></strong></em></li>
+</ol>
+<p>Effectively, we moved column 2, which was <em><strong>AWND,</strong> </em>to column 7 and shifted the columns in between.</p>
+<p></p>
+<p><img src="../Images/R-03-02%20Shifting%20Column.PNG" alt="" class="flexSize" /></p>
+<h5>Shifting the Average Wind (<strong>AWND</strong>) column.</h5>
+<h3>Formatting the data</h3>
+<p>There are still many issues with the data that we will deal with.&nbsp; The first is that most of the values in the table are in tenths of a unit.&nbsp; This is done so that all the number can appear as integers in the data table, which is not what we want.&nbsp; So, a <em><strong>TMAX</strong> </em>of <strong>-88</strong> really means <strong>-8.8</strong> degree Celsius and a <em><strong>PRCP</strong> </em>of <strong>135</strong> means <strong>13.5</strong> millimeters.</p>
+<p></p>
+<p>The columns that are presented in tenths of a unit are:<strong> PRCP, SNOW, TAVG, TMAX, TMIN, AWND</strong>, and <strong>WSF2</strong> -- or column numbers 2,3,4,5,6,7, and 9</p>
+<p></p>
+<p>We want to divide every value in these column by 10 so that the values are in standard units.</p>
+<p></p>
+<p>The following code takes all the values in columns 2,3,4,5,6,7,9 in <em><strong>lansingWeatherRS</strong></em>, divides the values by 10, and save the results back to the same columns in <em><strong>lansingWeatherRS</strong></em>.</p>
+<h6 class="partial">lansingWeatherRS[,c(2,3,4,5,6,7,9)] = lansingWeatherRS[,c(2,3,4,5,6,7,9)]/10;</h6>
+<p></p>
+<p>as a shortcut, you can use the sequence 2:7 to replace 2,3,4,5,6,7</p>
+<p></p>
+<h6 class="partial">lansingWeatherRS[,c(2:7,9)] = lansingWeatherRS[,c(2:7,9)]/10;</h6>
+<p></p>
+<p><img src="../Images/R-03-02%20Change%20from%20tenths%20to%20zero.PNG" alt="" class="flexSize" /></p>
+<h5>Changing from tenths of a unit to standard units.</h5>
+<h3>Conversions</h3>
+<p>The temperature values look much more sensible now but the temperatures are in Celsius and I am used to Fahrenheit (apologies to scientists and every country outside the United States -- this is just being used as an example).&nbsp; So, I would like to convert every value in <strong>TAVG, TMIN</strong>, and <strong>TMAX</strong> from Celsius to Fahrenheit.</p>
+<p></p>
+<p>The conversion is:&nbsp;<strong> FahrenheitTemp =&nbsp; (9/5) * CelsiusTemp +32</strong></p>
+<p>and we want to convert the values in columns 4, 5, and 6 <em class="hl">from all rows</em>.&nbsp;</p>
+<p></p>
+<h6 class="partial">lansingWeatherRS[,c(4:6)] = (9/5) * lansingWeatherRS[,c(4:6)] + 32;</h6>
+<p></p>
+<p>Like before, we are performing a mathematical operation on all values in columns 4, 5, and 6 on <em><strong>lansingWeatherRS</strong> </em>and saving the results back to columns 4, 5, and 6 of <em><strong>lansingWeatherRS</strong></em>.</p>
+<p></p>
+<p><img src="../Images/R-03-02%20Temperature%20Conversion.PNG" alt="" class="flexSize" /></p>
+<h5>Converting temperature columns from Celsius to Fahrenheit (most scientists are cringing...).&nbsp;</h5>
+<h3>Rounding Values</h3>
+<p>I really have no need for 2 decimal places in the temperature value.&nbsp; I want just 1 decimal place.&nbsp; So, I will use the <em><strong>round()</strong></em> function to round all of the values in the temperature columns (4, 5, and 6) to one decimal place.&nbsp;</p>
+<p></p>
+<p>The parameters for <em><strong>round()</strong> </em>are:</p>
+<ul>
+<li><em><strong>x:</strong></em> the values to round</li>
+<li><em><strong>digits</strong></em>: where you want to round relative to the decimal point (negative numbers means go left of decimal)</li>
+</ul>
+<p></p>
+<h6 class="partial">lansingWeatherRS[,4:6] = round(x=lansingWeatherRS[,c(4,6)],digits=1);</h6>
+<p></p>
+<p><img src="../Images/R-03-02%20Rounding.PNG" alt="" class="flexSize" /></p>
+<h5>Rounding temperature values using <strong>round()</strong>.</h5>
+<h3>Getting a substring</h3>
+<p>I really don't want all the time information given in the <em><strong>date</strong> </em>column (column 1).&nbsp; I really only need the two digit month and day, which is the <em class="hl">6th through the 10th characters</em> of each value.&nbsp; I can use the function <em><strong>substr()</strong> <strong></strong></em>to pull out a portion of the string value and save that portion back to the column.</p>
+<p></p>
+<p>2016-<strong class="hl">01-02</strong>T00:00:00</p>
+<p>2016-<strong class="hl">01-14</strong>T00:00:00</p>
+<p>2016-<strong class="hl">01-26</strong>T00:00:00</p>
+<p></p>
+<p><em><strong>substr()</strong> </em>has three parameters that we are going to assign value to:</p>
+<ul>
+<li><em><strong>x</strong></em>: the values that we want to subset</li>
+<li><em><strong>start</strong></em>: the position we want the substring to start at</li>
+<li><em><strong>end</strong></em>: the position that we want the substring to end at</li>
+</ul>
+<p></p>
+<h6 class="partial">lansingWeatherRS[,1] = substr(x=lansingWeatherRS[,1], start=6, stop=10);</h6>
+<p></p>
+<p><img src="../Images/R-03-02%20Subsetting%20Strings.PNG" alt="" class="flexSize" /></p>
+<h5>Subset strings in the <strong>date</strong> column.</h5>
+<h3>Changing column names</h3>
+<p>Lastly, some of the column have names that mean absolutely nothing to me, specifically column 10 (<strong>WT01</strong>) and column 11 (<strong>WT09</strong>).&nbsp; I would like to change the names to something more informative.</p>
+<p></p>
+<p><strong>WT01</strong> indicates if there was fog on that day, <strong>WT09</strong> indicates if there was blowing snow on that day.</p>
+<p></p>
+<p>We can use the function<em><strong> colnames()</strong> </em>to change the column names.&nbsp; The only parameter we need to use is <em><strong>x</strong></em>, which is the data frame.&nbsp; However, we don't want to change every column name so we need to index the columns 10 and 11.&nbsp;</p>
+<p></p>
+<h6 class="partial">colnames(x=lansingWeatherRS)[10] = "Fog";<br />colnames(x=lansingWeatherRS)[11] = "BSnow";</h6>
+<p></p>
+<p>The above code changes column 10's name to "Fog" and column 11's name to "BSnow"</p>
+<p></p>
+<p><img src="../Images/R-03-02%20Change%20Coolumn%20Names.PNG" alt="" class="flexSize" /></p>
+<h5>Changing the column names in the data frame.</h5>
+<h2>Saving the reformatted data frame</h2>
+<p>Our data frame is now in a clean and usable form.&nbsp; We don't want to have to go through this every time we use this data so let's save the reformatted data frame to a CSV file.&nbsp; That way, we can just open up the CSV file and go right to the formatted data.</p>
+<p></p>
+<p>We will use <em><strong>write.csv()</strong></em> to write the data frame to a CSV file.&nbsp; The parameters are:</p>
+<ul>
+<li><em><strong>x</strong></em>: the data frame to write</li>
+<li><em><strong>file</strong></em>: the file to write the data frame to</li>
+</ul>
+<p></p>
+<h6 class="partial">write.csv(x=lansingWeatherRS, file="data/formattedLansingWeather.csv");</h6>
+<p></p>
+<p>The above code will create a file named <em><strong>formattedLansingWeather.csv</strong></em> in the <em><strong>data</strong> </em>folder inside your<em><strong> R Root</strong></em> directory.&nbsp; <em><strong>formattedLansingWeather.csv</strong></em> can be opened by any R script and saved as a data frame (which we will do next lesson).</p>
+<h2>Application</h2>
+<p>From last lesson:</p>
+<ol>
+<li>Get the following data for December2016 in Lansing, MI:&nbsp; <strong>PRCP, SNOW, TAVG, TMAX, TMIN</strong></li>
+<li>Save the data frame (<em><strong>data</strong></em>) from the list to a variable named <em><strong>lansingDecWeather</strong></em></li>
+</ol>
+<p></p>
+<p>Now manipulate the data frame:</p>
+<ol>
+<li>&nbsp;Reshape the data frame so <em><strong>date</strong> </em>is on the x-axis (rows) and <em><strong>datatype</strong> </em>is on the y-axis (columns)</li>
+<li>&nbsp;Rearrange the columns to this order: <strong>date, TMIN, TMAX, TAVG, PRCP, SNOW</strong></li>
+<li>&nbsp;Rename the temperature columns to:&nbsp; <strong>minTemp, maxTemp, avgTemp</strong></li>
+<li>&nbsp;Divide all 5 data columns by 10 to get the values out of tenths of a unit.</li>
+<li>Convert the <strong>PRCP</strong> and <strong>SNOW</strong> columns from mm to inches (25 millimeters equals 1 inch)</li>
+<li>Substring the date column so that the dates look like this: <strong>16-12-02 </strong></li>
+<li>Find the mean, standard deviation, and variance for the <em><strong>maxTemp</strong> </em>and <em><strong>minTemp</strong> </em>columns (use the <em><strong>mean()</strong></em>, <em><strong>sd()</strong></em>, and <em><strong>var()</strong></em> functions)</li>
+<li>Challenge: Add a column to <em><strong>lansingDecWeather</strong> </em>called <em><strong>c</strong><strong>hangeTemp</strong></em>.&nbsp; This column will hold the high temperature minus the low temperature for each day.&nbsp; Look at Unit 2, Lesson 5 for help.</li>
+</ol>
+<h2 class="extension" id="datatypeids">Extension: The four digit data type ids</h2>
+<p>The weather information we are getting in this lesson comes from the <span data-bind="text: description">Global Historical Climate Network Database</span> (GHCND), which is operated by NOAA/NCDC.&nbsp; <a href="https://www1.ncdc.noaa.gov/pub/data/cdo/documentation/GHCND_documentation.pdf" target="_blank" rel="noopener noreferrer">The documentation for the GHCND is here</a>.&nbsp; All the possible weather information collected in the GHCND is given on page 5, including the four-digit <em>data type id</em> for each (e.g., TMIN is minimum temperature, AWND is average wind).&nbsp; Note: each weather station collects a different set of information, so not every <em>data type id</em> is valid for a specific weather station.</p>
+<h2 class="extension" id="samename">Extension: Functions with the same name</h2>
+<p>According to the Comprehensive R Archive Network (CRAN), there are over 12000 packages.&nbsp; This means that, inevitably, packages will reuse a name for a function.&nbsp; Or, perhaps you have created a function that has the same name as a function in a package.&nbsp; There are rules for how R determines which function gets executed if there are multiple functions with the same name, but it is easier to avoid the issue.&nbsp; You can do that by putting the package name in front of the function.</p>
+<p></p>
+<p>So, instead of making a call to<em><strong> dcast()</strong></em>, which is in the <em><strong>reshape2</strong> </em>package (and, hopefully is unique):</p>
+<h6 class="p">lansingWeatherRS = <em class="hl">dcast</em>(data = lansingWeatherDF, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; formula = date ~ datatype, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; value.var = "value");</h6>
+<p></p>
+<p>We could be more explicit and specifically call <em><strong>dcast()</strong></em> from <em><strong>reshape2</strong></em>.&nbsp; This is done by giving the package name and two semicolons:</p>
+<h6 class="p">lansingWeatherRS =<em class="hl"> reshape2::dcast</em>(data = lansingWeatherDF, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; formula = date ~ datatype, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; value.var = "value");</h6>
+</body>
+</html>

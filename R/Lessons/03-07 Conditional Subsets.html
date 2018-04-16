@@ -1,0 +1,302 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2268103" target="_self">Linear Regressions</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2268107" target="_self">Complex Conditional Subsets</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">03-07 Conditional Subsets</h1>
+<h2>Purpose</h2>
+<ul>
+<li>create conditional statements to evaluate the values in a vector</li>
+<li>use Regular Expression to find patterns in string variables</li>
+<li>get the index of vector values that meet a condition</li>
+<li>use indexing to subset another vector</li>
+<li>plot values from a subset index</li>
+</ul>
+<h2>Concepts</h2>
+<h2>A conditional command for vectors: which()</h2>
+<p>In the last lesson we found no significant relationship between barometric pressure and high temperature for the year 2016.&nbsp; However, there might be a conflating variable in the data that is hiding a relationship (e.g., humidity).&nbsp; We want to do a temperature vs barometric pressure linear regression factoring in other conditions like humidity.&nbsp;</p>
+<p></p>
+<p>What this means is that we only want to look at temperature vs. pressure on days where humidity meets a certain condition (i.e., a subset).</p>
+<h3>Subsetting with for() and if()</h3>
+<p>Our first task is to find which humidity values meet a condition.&nbsp; We could do this using a <em><strong>for()</strong> </em>with an embedded<em><strong> if()</strong></em>:</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6>humidity = c(12,67,34,88,49,40);</h6>
+<h6></h6>
+<h6>humiditySubset = c();<br /><br /></h6>
+<h6># Go through each value in the humidity vector<br />for(i in 1:length(humidity))<br />{<br />&nbsp;&nbsp; if(humidity[i] &gt; 50) # if the value is greater than 50<br />&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp; humiditySubset = c(humiditySubset, i); # add i to the vector<br />&nbsp;&nbsp; }<br />}</h6>
+<p></p>
+<p><em><strong>humiditySubset</strong> </em>has the values <strong>2</strong> and <strong>4</strong>.&nbsp; This means the <strong>2<sup>nd</sup> </strong>and <strong>4<sup>th</sup></strong> values of <em><strong>humidity</strong> </em>met the condition of being <em class="hl">greater than 50. </em><em class="hl"><br /></em></p>
+<p></p>
+<p><img src="../Images/R-03-07%20Subset%20with%20for%20and%20if.PNG" alt="" class="fs" /></p>
+<h5>Getting a subset vector of indices using<strong> for()</strong> and<strong> if()</strong>.&nbsp; We will describe how to use these indices in section 6.</h5>
+<h3>Subsetting with which()</h3>
+<p>Or, the subset can be done much more succinctly with a <em><strong>which():</strong></em></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>humidity = c(12,67,34,88,49,40);</h6>
+<h6></h6>
+<h6>humiditySubset = which(humidity &gt; 50);</h6>
+<p></p>
+<p><em><strong>humiditySubset</strong> </em>once again has the values <strong>2</strong> and <strong>4.</strong></p>
+<p></p>
+<p><img src="../Images/R-03-07%20Subset%20with%20which.PNG" alt="" class="fs" /></p>
+<h5>Getting a subset vector using <strong>which()</strong>.</h5>
+<p></p>
+<p>For the rest of this lesson, we will focus on using <em><strong>which()</strong></em> to create subset vectors.&nbsp; <a href="../Scripts/3-7.R" target="_self">The script for the rest of this lesson is located here.</a></p>
+<h2>which() -- conditional statements for vectors</h2>
+<p><em><strong>which()</strong> </em>answers the question: Which of the values in this vector meet a specified condition? And the answer to the <em><strong>which()</strong></em> is presented as a <em class="hl">vector of index values</em> representing the values in the vector where the condition is <em><strong>TRUE</strong></em>.</p>
+<p></p>
+<p>For instance the question could be:</p>
+<ol>
+<li>Which of the following vector values<em><span class="hl"> c(-2, 3, <strong>7</strong>, 0, <strong>10</strong>, <strong>9</strong>)</span></em> are greater than 4?&nbsp; <br />Answer: <strong class="hl">c(3, 5, 6) </strong><span class=""><strong> </strong><br />In other words, </span>the <span class="hl">3rd, 5th, and 6th</span> values (7, 10, 9) in the vector are greater than 4. <span style="color: #990000;"><em><strong></strong></em></span><em><strong></strong></em></li>
+<li>Which of the following vector values<em><span class="hl"> c("Swiss",<strong> "Muenster"</strong>, "American", <strong>"Muenster"</strong>)</span></em> are equal to "Muenster"?<br />Answer: <strong class="hl">c(2, 4)</strong> <strong><span class="hl"></span></strong><em class="hl"><span style="color: #990000;"><strong><br /></strong></span></em><span class="">In other words, the <em class="hl"> 2nd</em> and <em class="hl">4th</em> value are equal to "Muenster".</span><span style="color: #990000;"><strong></strong></span><em class="hl"><span style="color: #990000;"><strong><br /></strong></span></em></li>
+</ol>
+<p></p>
+<p>The following script has two vectors (<em><strong>ages, animals</strong></em>) and four <em><strong>which()</strong></em> conditions that check the two vectors<em>. </em><em><strong></strong></em><em><strong></strong></em></p>
+<p></p>
+<h6 class="partial">ages = c(2,7,3,9,6,3,5);<br />animals = c("llama", "alpaca", "goat", "llama", "guanaco");<br /> <br />index1 = which(ages &gt; 4);&nbsp; # holds index of ages greater than 4<br />index2 = which(ages &lt; 4);&nbsp; # holds index of ages less than 4<br /> <br />index3 = which(animals == "llama"); # holds index of animals that are "llama"<br />index4 = which(animals != "llama"); # holds index of animals that are not "llama"</h6>
+<p></p>
+<p><em> </em><em><strong>which()</strong></em> outputs a vector of indexed values that meet the condition in parenthesis.&nbsp; This vector is saved to the variables<em><strong> index1, index2, index3, and index4. </strong></em></p>
+<p><em><strong></strong></em></p>
+<p><img src="../Images/R-03-07%20which%20conditions.PNG" alt="" class="flexSize" /></p>
+<h5><em></em>Using <strong>which()</strong> to check all values in a vector against a condition</h5>
+<p></p>
+<p><em class="linkTo" title="TFvector">Extension: The TRUE/FALSE vector</em></p>
+<h2>Using which() on weather data</h2>
+<p>For the rest of this lesson, we are going to use the reformatted Lansing weather data frame from last lesson.</p>
+<p></p>
+<h6 class="partial">lansing2016Weather = read.csv(file="data/LansingNOAA2016Formatted.csv",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stringsAsFactors = FALSE);</h6>
+<p></p>
+<p>And we are going to save the weather data columns to vectors.&nbsp;</p>
+<p></p>
+<h6 class="partial">date = lansing2016Weather[,"date"];<br />eventData = lansing2016Weather[,"eventData"];<br />avgTemp = lansing2016Weather[,"avgTemp"];<br />tempDept = lansing2016Weather[,"tempDept"];</h6>
+<h6 class="partial">precipitation = lansing2016Weather[,"precipitation"];</h6>
+<h6 class="partial">humidity = lansing2016Weather[,"humidity"];</h6>
+<h6 class="partial">barometer = lansing2016Weather[,"barometer"];</h6>
+<h6 class="partial">dewPoint = lansing2016Weather[,"dewPoint"];</h6>
+<h6 class="partial">avgWind = lansing2016Weather[,"avgWind"];</h6>
+<h6 class="partial">maxWind = lansing2016Weather[,"maxWind"];</h6>
+<h6 class="partial">windDirection = lansing2016Weather[,"windDirection"];</h6>
+<h6 class="partial">sunrise = lansing2016Weather[,"sunrise"];</h6>
+<h6 class="partial">sunset = lansing2016Weather[,"sunset"];</h6>
+<p></p>
+<p><img src="../Images/R-03-07%20Vectors%20From%20Data%20Frame.PNG" alt="" class="flexSize" /></p>
+<h5>The <strong>13</strong> vectors from the Lansing weather data frame.</h5>
+<p></p>
+<p class="linkTo" title="data-frame-vector">Extension: Using data frame columns instead of vector</p>
+<h3>Identifying indices in weather data.</h3>
+<p>The vector <em><strong>eventData</strong> </em>contains information about the type of weather that occurred during that day (e.g., Fog, Snow, Rain, etc.).&nbsp; If we want to find out which days were snowy we could use a <em><strong>for()</strong></em> to iterate through all 366 values and check each value to see if it is equal to snow ("SN").&nbsp;</p>
+<p></p>
+<p>First we need to create a vector that will hold all the index values that contain "SN".&nbsp; Note: we do not know at this point how long this vector is going to be.</p>
+<h6 class="partial">snowyDays1 = c();</h6>
+<p></p>
+<p>Then we iterate through all 366 values in <em><strong>eventData</strong></em> and use a conditional statement to see if each indexed value is equal to "SN"</p>
+<h6 class="partial">for(i in 1:366)</h6>
+<h6>{</h6>
+<h6>&nbsp; if(eventData[i] == "SN")</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp; &nbsp; snowyDays1 = c(snowOnlyDays1, i);</h6>
+<h6>&nbsp; }</h6>
+<h6>}</h6>
+<p><em><strong></strong></em></p>
+<p></p>
+<p><img src="../Images/R-03-07%20For%20with%20subsetting%20condition.PNG" alt="" class="flexSize" /></p>
+<h5>Finding, and indexing, snowy days using<strong> for()</strong> and<strong> if()</strong></h5>
+<p></p>
+<p>At the end of the script, the vector <em><strong>snowyDays1</strong> </em>holds the indexes for the values in <em><strong>eventData</strong> </em>that are equal to "SN", of which there are 11.</p>
+<h3>Identifying values using which()</h3>
+<p>Or, we could get the values in <em><strong>eventData</strong> </em>that are equal to "SN" using <em><strong>which()</strong></em>:</p>
+<h6 class="partial">snowyDays2 = which(eventData == "SN");</h6>
+<p></p>
+<p>The above code will:</p>
+<ol>
+<li>Iterate through each value in the vector <em><strong>eventData</strong></em></li>
+<li>Check if the value is equal to "SN"</li>
+<li>Create a vector that has the indices of all the values in the vector equal to "SN"</li>
+<li>Save that vector to <em><strong>snowyDays2</strong></em></li>
+</ol>
+<p></p>
+<p><img src="../Images/R-03-07%20Which.PNG" alt="" class="flexSize" /></p>
+<h5>Finding, and indexing, snowy days using <strong>which()</strong></h5>
+<p></p>
+<p>Looking at either <em><strong>snowyDays1</strong> </em>or<strong><em> snowy</em></strong><em><strong>Days2</strong></em>, we see that there were 11 days that had snow&nbsp; -- and the days are identical.</p>
+<h2>Using the indexed value generated by which()</h2>
+<p>Our next step is to use the vector of indexed values (<em><strong>snowyDays2</strong></em>) <em></em>to index other vectors like <em><strong>avgTemp</strong> </em>and <em><strong>avgWind</strong></em>.&nbsp;</p>
+<p></p>
+<p>Let's find the average temperature and wind speed on days that it was snowy</p>
+<h6 class="partial">snowyDayTemps = avgTemp[snowyDays2];<br />snowyDayWinds = avgWind[snowyDays2];</h6>
+<p>since<span style="color: #990000;"><em><strong> <span style="color: #000000;">snowyDays2 </span></strong></em><span style="color: #000000;">=</span></span> <strong class="hl">c(3, 16, 17, 29, 39, 45, 136, 351, 354, 364, 365)</strong></p>
+<p><span style="color: #990000;"><span style="color: #000000;"></span><br /></span></p>
+<p><em><strong>avgTemp</strong></em>[<em><strong>snowyDays2</strong></em>] is equivalent to <em><strong>avgTemp</strong></em>[<strong class="hl">c(3, 16, 17, 29, 39, 45, 136, 351, 354, 364, 365)</strong>];</p>
+<p>This gives the temperature on the 11 days indexed in the <em><strong>snowyDays2</strong> </em>vector</p>
+<p></p>
+<p><em><strong>avgWind</strong></em>[<em><strong>snowyDays2</strong></em>] is equivalent to <em><strong>maxWind</strong></em>[<strong class="hl">c(3, 16, 17, 29, 39, 45, 136, 351, 354, 364, 365)</strong>];</p>
+<p>This gives the winds on the 11 days indexed in the <em><strong>snowyDays2</strong></em> vector</p>
+<p></p>
+<p><img src="../Images/R-03-07%20Using%20vectors%20of%20indexes.PNG" alt="" class="flexSize" /></p>
+<h5>Subsetting the temperature and wind vectors using the snowy day index vector</h5>
+<p></p>
+<p>So the average temperatures on the 11 snowy days were: <strong>(29, 30, 18, 24, 34, 9, 40, 12, 11, 34, 28)</strong></p>
+<p>and the average wind on the 11 snowy days were: <strong>(10.0, 13.8, 15.5, 10.7, 6.8, 8.1, 10.9, 9.4, 11.5, 16.7, 14.0)</strong></p>
+<h2>Finding patterns within strings</h2>
+<p>But I lived in Lansing and I guarantee you that there were more than 11 days last year with snow so something is wrong here...</p>
+<p></p>
+<p>If we take a look at the <em><strong>eventData</strong> </em>vector in the Console Window (by typing "eventData"), we can see that "SN" is in many more than 11 values.&nbsp; But, <em><strong>eventData</strong> </em>gives every weather condition that happened on those days.&nbsp; On the 3rd and 16th day, there was just snow but on the first day there was both snow (SN) and mist (BR) and on the 14th day there was snow, mist, and haze (HZ).</p>
+<p></p>
+<p><img src="../Images/R-03-07%20Event%20Data%20Vector.PNG" alt="" class="flexSize" /></p>
+<h5>The <strong>eventData</strong> vector.</h5>
+<p></p>
+<p>The conditional statement we used with <em><strong>which()</strong></em> only checks for values that are <em class="hl">exclusively "SN"</em>.&nbsp; We really want <em class="hl">every value that contains "SN"</em>.&nbsp; This cannot be easily done using <em><strong>which()</strong></em> but it can be done easily using <em><strong>grep()</strong><strong>.&nbsp; grep() </strong></em>is a powerful tool that allows one to find patterns of all sorts of complexity within a string.&nbsp; We are going to use <em><strong>grep()</strong></em> to find the substring ("SN") contained within a vector of string values (<em><strong>eventData</strong></em>).</p>
+<p></p>
+<h6 class="partial">snowyDays3 = grep("SN", eventData);</h6>
+<p></p>
+<p><em><strong>grep(),</strong></em><strong>&nbsp;</strong>like <em><strong>which(</strong><strong>)</strong></em>, <em></em>produces a vector of the index values that meets the condition (i.e., index of which <em><strong>eventData</strong> </em>values contain "SN").</p>
+<p></p>
+<p><img src="../Images/R-03-07%20Grepping%20Vectors.PNG" alt="" class="flexSize" /></p>
+<h5>Using <strong>grep()</strong> to find all days that had snow.</h5>
+<h3>A quick grep() example</h3>
+<p><em><strong>grep()</strong></em> is a very powerful tool for finding patterns within strings (the process is known as Regular Expressions, which could be a class on its own).&nbsp; We are only using the most basic functionality in <em><strong>grep()</strong></em> which is finding a substring within a string.</p>
+<p></p>
+<p>So if we have the vector:</p>
+<h6 class="p">testVector = c("one fish", "two fish", "one llama", "two llama",</h6>
+<h6 class="p">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "red fish", "blue fish")</h6>
+<p><em><strong></strong></em></p>
+<p><em><strong>grep()</strong></em> return the indices of the vectors value that contain the substring specified</p>
+<p></p>
+<h6 class="p">test1 = grep("two", testVector); &nbsp; # test1 equals 2,4</h6>
+<h6>test2 = grep("lla", testVector); &nbsp; # test2 equals 3,4</h6>
+<h6>test3 = grep("fish", testVector);&nbsp; # test3 equals 1,2,5,6</h6>
+<p></p>
+<h3>Subsetting vectors</h3>
+<p><em><strong>snowyDays3</strong></em> is a vector with 65 indexed values, representing the 65 days in Lansing that any snow fell.&nbsp; In the Console Window (<em class="figureRef" title="subset">fig</em>), we use <em><strong>snowyDays3</strong> </em>to index the vectors <em><strong>avgTemp</strong> </em>and <em><strong>avgWind</strong></em>.&nbsp; This gives us the temperatures and the winds for the 65 days that it snowed.</p>
+<p>&nbsp;</p>
+<p><img src="../Images/R-03-07%20Subset%20vectors.PNG" alt="" class="fs" /></p>
+<h5 class="" id="subset"><strong>avgTemp</strong> and <strong>avgWind</strong> values subsetted by <strong>snowyDays3</strong>.</h5>
+<h3>Statistics on subsetted vectors</h3>
+<p>Maybe we want to know some statistical information like the minimum temperature of the 65 snow days or the mean wind speed of the 65 days.&nbsp; We can use the<em><strong> min()</strong></em> and <em><strong>mean()</strong> </em>functions on the subsetted data.</p>
+<p></p>
+<h6 class="partial">snowDaysMinTemp = min(x=avgTemp[snowyDays3]);<br />snowDaysMeanWind = mean(x=avgWind[snowyDays3]);</h6>
+<p></p>
+<p>Running this code shows that the minimum average temperature on snowy days was <strong>9</strong> (degrees Fahrenheit) and the mean average wind on snowy days was <strong>10.9</strong> (miles/hour).</p>
+<p></p>
+<p><img src="../Images/R-03-07%20Functions%20on%20subset%20vectors.PNG" alt="" class="flexSize" /></p>
+<h5>Using subsetted vectors in functions <strong>min()</strong> and <strong>mean()</strong>.</h5>
+<h2>Plotting subsetted vectors</h2>
+<p>We are going to produce two plots:&nbsp;</p>
+<ol>
+<li>humidity vs average temperature on days without precipitation (<em><strong>precipitation</strong> </em>== <strong>0.00</strong>)</li>
+<li>humidity vs average temperatures on days with a lot of precipitation (<em><strong>precipitation</strong> </em>&gt; <strong>1.00</strong>).</li>
+</ol>
+<p></p>
+<p>First we need to create vectors that hold the days that have no precipitation and those that have hard rain.&nbsp;</p>
+<p></p>
+<p>Note: it is good practice to put in the decimal (<strong>1.00</strong> as opposed to <strong>1</strong>) to indicate that it is a real number -- the number just happens to have a value the looks like an integer.</p>
+<p></p>
+<h6 class="partial">daysNoPrecip = which(precipitation == 0.00);&nbsp;&nbsp; # no precipitation days</h6>
+<h6>daysHighPrecip = which(precipitation &gt; 1.00);&nbsp; # high precipitation days</h6>
+<p></p>
+<p><img src="../Images/R-03-07%20Subset%20by%20precipitation.PNG" alt="" class="flexSize" /></p>
+<h5>Creating vector indices of days based on precipitation amounts</h5>
+<p></p>
+<p>We see in the above script that there were <strong>167</strong> days without any precipitation and <strong>8</strong> days with precipitation more than 1 inch.</p>
+<p></p>
+<p>Next we are going to plot a subset of <em><strong>avgTemp </strong></em>and <em><strong>humidity </strong></em>-- the subset being the <strong>167</strong> days where there was no precipitation<strong>.</strong><em><strong><br /></strong></em></p>
+<h6 class="partial">plot(x=avgTemp[daysNoPrecip], y=humidity[daysNoPrecip]);</h6>
+<p></p>
+<p><img src="../Images/R-03-07%20temp%20v%20humidity%20-%20no%20precip.PNG" alt="" class="flexSize" /></p>
+<h5>Plot of <strong>avgTemp</strong> vs <strong>humidity</strong> on days with no precipitation</h5>
+<p></p>
+<p>Another plot of <em><strong>avgTemp </strong></em>and <em><strong>humidity</strong> </em>-- this time we are only plotting the 6 days that had 1 inch or more of precipitation</p>
+<h6 class="partial">plot(x=avgTemp[daysHighPrecip], y=humidity[daysHighPrecip]);</h6>
+<p></p>
+<p><img src="../Images/R-03-07%20temp%20v%20humidity%20-%20high%20precip.PNG" alt="" class="flexSize" /></p>
+<h5>Plot of <strong>avgTemp</strong> vs <strong>humidity</strong> on days with 1 inch or more of precipitation</h5>
+<h2>Outputting values to the console</h2>
+<p>We can also output information about a vector as opposed to looking at it in the Environment Window.&nbsp; In this case we will print out to the Console Window the index for the days that had really strong winds (<em><strong>maxWind</strong> </em>&gt; <strong>45</strong>).&nbsp;</p>
+<p></p>
+<h6 class="partial">windyDayIndex = which(maxWind &gt; 45);</h6>
+<p></p>
+<p><em><strong>windyDayIndex</strong> </em>is a vector with 7 values (representing the 7 days that had winds greater than <strong>45mph</strong>).&nbsp;</p>
+<p></p>
+<p>We can use the vector <em><strong>windyDayIndex</strong> </em>as an index for the <em><strong>dates</strong> </em>vector to get the actual dates that had really strong winds.&nbsp;</p>
+<h6 class="partial">windyDays = dates[windyDayIndex];<br />print(windyDays);</h6>
+<p></p>
+<p>So we see that<em><strong> 2-19, 2-29, 3-16, 7-8, 7-12, 11-29, </strong></em>and<strong> </strong><em><strong>12-26</strong></em> were the dates that had winds greater than<strong> 45mph</strong>.</p>
+<p></p>
+<p><img src="../Images/R-03-07%20windy%20day%20dates.PNG" alt="" class="flexSize" /></p>
+<h5>Printing out the subsetted windy dates to the Console Window</h5>
+<h2>Application</h2>
+<p>We will be using the data from <em><strong>LansingNOAA2016Formatted.csv</strong></em>, created in the last lesson.</p>
+<p></p>
+<p>1) create a vector called <em><strong>hoursOfSun</strong> </em>that is the <em><strong>sunset</strong> </em>times minus the <em><strong>sunrise</strong> </em>times (like last lesson, you might need to first convert <em><strong>sunset</strong> </em>and <em><strong>sunrise</strong> </em>times).</p>
+<p></p>
+<p>2) Find the average temperature for days that have less than 10 hours of sun (so, an average of the averages).</p>
+<p></p>
+<p>3) Find the average temperature for days that have more than 14 hours of sun.</p>
+<p></p>
+<p>4) Find the number of days the humidity was high (greater than 90%) and for these days output to the Console Window:</p>
+<p>&nbsp;&nbsp; - the date</p>
+<p>&nbsp;&nbsp; - the amount of precipitation</p>
+<p>&nbsp;&nbsp; - the maximum wind speed</p>
+<p></p>
+<p>5) Find the dates that were hazy with other conditions (like snowy, windy, etc) and find the dates that were exclusively hazy (HZ).&nbsp;</p>
+<h2 class="extension" id="data-frame-vector">Extension: Data frame columns instead of vectors</h2>
+<p>The line of code:</p>
+<h6 class="p">humidity = lansing2016Weather[,"humidity"];</h6>
+<p>saves all the values from the column "humidity" in the data frame <em><strong>lansing2016Weather</strong></em> to the vector <em><strong>humidity</strong></em>.</p>
+<p></p>
+<p>We then could use <em><strong>humidity</strong> </em>to find which days had high humidity</p>
+<h6 class="p">highHumidity = which(humidity &gt; 80);&nbsp; # days with high humidity</h6>
+<p></p>
+<p>But we could do the exact same thing with the column from the data frame</p>
+<h6 class="p">highHumidity = which(lansing2016Weather[,"humidity"] &gt; 80);</h6>
+<p></p>
+<p>While we can use both <em><strong>humidity</strong> </em>and <em><strong>lansing2016Weather[,"humidity"] </strong></em>in the <em><strong>which()</strong></em>, there are two advantages to using <em><strong>humidity</strong></em></p>
+<ol>
+<li>The code is easier to read</li>
+<li>We can modify <em><strong>humidity</strong> </em>without modifying the data frame, <em><strong>lansing2016Weather</strong></em></li>
+</ol>
+<h2 class="extension" id="TFvector">Extension: The TRUE/FALSE vector</h2>
+<p>Let's take another look at the<em><strong> which()</strong></em> code:</p>
+<h6 class="p">ages = c(2,7,3,9,6,3,5);<br />animals = c("llama", "alpaca", "goat", "llama", "guanaco");<br /> <br />index1 = which(ages &gt; 4);&nbsp; # holds index of ages greater than 4<br />index2 = which(ages &lt; 4);&nbsp; # holds index of ages less than 4<br /> <br />index3 = which(animals == "llama"); # holds index of animals that are "llama"<br />index4 = which(animals != "llama"); # holds index of animals that are not "llama"</h6>
+<p></p>
+<p>There is an in between step that we skipped over here.&nbsp; Each <em><strong>which()</strong> </em>has a conditional statement inside.&nbsp; That conditional statement gets evaluated by R first, and then <em><strong>which()</strong></em> is performed on the answer to the conditional statement.&nbsp; Using the Console Window, let's look at how the conditional statement get evaluated by R:</p>
+<p></p>
+<p><img src="../Images/R-03-07%20TF%20Vector.PNG" alt="" class="fs" /></p>
+<h5 class="" id="tfvector">Looking at TRUE/FALSE vectors for conditional statements on a vector</h5>
+<p></p>
+<p>Each conditional statement produces a vector that has the same length as the number of values in the vector (<em class="figureRef" title="tfvector">fig</em>).&nbsp; The vector has only two vales: <strong>TRUE</strong> and <strong>FALSE</strong>.&nbsp; The <strong>TRUE</strong> and <strong>FALSE</strong> values match the index of the values in the original index.</p>
+<p></p>
+<p>So if:</p>
+<h6 class="p">ages = c(2,7,3,9,6,3,5);</h6>
+<p>then:</p>
+<p><em><strong>(ages </strong></em><strong>&gt; 4)</strong>&nbsp; is evaluated as:&nbsp; <strong>c(FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, TRUE)</strong></p>
+<p></p>
+<p>This indicates that the <strong>2<sup>nd</sup></strong>,<strong> 4<sup>th</sup></strong>, <strong>5<sup>th</sup></strong>, and <strong>7<sup>th</sup> </strong>values of the vector <em><strong>ages</strong> </em>are greater than <strong>4</strong></p>
+<p></p>
+<p><em><strong>which()</strong> </em>takes the <strong>TRUE/FALSE</strong> index and outputs the indices of the <em><strong>TRUE</strong> </em>values</p>
+<h6 class="p">which(ages &gt; 4);&nbsp;&nbsp; # This evaluates to c(2, 4, 5, 7)</h6>
+</body>
+</html>

@@ -1,0 +1,291 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2028085" target="_self">Sequences and For Loops</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2231928" target="_self">Vectors Operations and NA</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">02-04: Iterations and State Variables</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Get length of a vector</li>
+<li>Using a <strong>for()</strong> to perform iterative operations on a vector</li>
+<li>Embedding if() within a for()</li>
+<li>Using Boolean statements</li>
+</ul>
+<h2>Concepts</h2>
+<h2>Adding values in a vector</h2>
+<p class="">For loops can be used to find information about a vector.&nbsp; Some examples are:</p>
+<ul>
+<li>Find the high value in a vector</li>
+<li>Find the sum of a vector</li>
+<li>Find the mean of a vector</li>
+<li>Determine whether a certain value is an element of a vector</li>
+</ul>
+<p></p>
+<p class=""><em><strong>for()</strong></em> loops are powerful because they can scale to any amount of data easily.&nbsp; The challenge is that a <em><strong>for()</strong></em> cycles through the values in a vector iteratively -- in other words, <em class="hl">the values in the vector are presented one at a time instead of together as a group</em>.&nbsp; This means that intermediate results, what I call the <em class="hl">running total</em>, need to be saved.&nbsp; This is shown in the next example.</p>
+<h3>Iterative addition</h3>
+<p>Let's say we have a vector with 4 temperature values:<strong> 52, 47, 60, 56</strong> and we want to add the four values together.&nbsp; On paper, we would just add the four values in a single step: <strong>52+47+60+56 = 215</strong> -- but this is not how a <em><strong>for()</strong></em> operates.&nbsp; A <em><strong>for()</strong> </em>views values in a vector <em class="hl">one at a time</em>.&nbsp; So, instead of adding four values at once, <em class="hl">you are adding one value to a running total four times</em>.&nbsp;</p>
+<p></p>
+<p>The process of iteratively adding four values in a vector using a <em><strong>for()</strong></em> is:</p>
+<ol>
+<li>Create a value that stores the<em class="hl"> running total</em> -- set it to <strong>0</strong></li>
+<li>Add the first value (<strong>52</strong>) to the running total (0 + 52 = <strong>52</strong>)</li>
+<li><strong><em></em></strong>Add the second value (<strong>47</strong>) to the running total (52 + 47 = <strong>99</strong>)</li>
+<li>Add the third value (<strong>60</strong>) to the running total (99 + 60 = <strong>159</strong>)</li>
+<li>Add the fourth value (<strong>56</strong>) to the running total (159 + 56 = <strong>215</strong> -- this is the final value)</li>
+</ol>
+<p></p>
+<p>The code looks like this:</p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />tempValues = c(52,47,60,56); # vector that holds the four temperature values <br /><br />runningTotal = 0; # state variable (initialized outside the loop)</h6>
+<h6>lengthVector = length(tempValues);</h6>
+<h6><br /># execute the codeblock using the sequence 1-2-3-4<br />for(i in 1:lengthVector)<br />{</h6>
+<h6>&nbsp; # iteratively add the values from tempValues to the state variable, runningTotal<br />&nbsp; runningTotal = runningTotal + tempValues[i];&nbsp; <br />}</h6>
+<p></p>
+<p><img src="../Images/R-02-04%20Running%20Total.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="iterativeCode">Adding the values in a vector iteratively.</h5>
+<p></p>
+<p>We will break down the code in <em class="figureRef" title="iterativeCode">fig</em> into four parts:</p>
+<ol>
+<li>Declare a <em class="hl">state variable</em> and set it to <strong>0&nbsp; </strong><em></em>(line 6)</li>
+<li>Get the length of the vector so you can create a sequence (line 7)</li>
+<li>Create a <em><strong>for()</strong></em> using the sequence (line 10)</li>
+<li>Iterate through the codeblock attached to the <em><strong>for()</strong></em> and add the values in the vector to the state variable one at a time (line 13)<em><strong></strong></em></li>
+</ol>
+<p></p>
+<p>Note: We are using the vector created in line 4, <em><strong>tempValues</strong></em> with hardcoded values:</p>
+<h6 class="p" title="4">tempValues = c(52,47,60,56); # vector that holds the four temperature values</h6>
+<p>but the vector can come from anywhere, including a data frame column.</p>
+<h3>The state variable</h3>
+<p>We need a way to save information through each iteration of the <em><strong>for()</strong></em>.&nbsp; In this case the information is the running total of the addition of vector values.&nbsp; To do this we use a state variable, which we call <em><strong>runningTotal</strong></em>.&nbsp;</p>
+<p></p>
+<h6 class="p">runningTotal = 0; # state variable (initialized outside the loop)</h6>
+<p></p>
+<p>The state variable:</p>
+<ul>
+<li>is declared before the <em><strong>for()</strong> </em>to its initial state</li>
+<li>has intermediate states that are updated during the iterations of the <em><strong>for()</strong></em></li>
+<li>has a final state -- or the value after the <em><strong>for()</strong> </em>has finished all its iterations</li>
+</ul>
+<p></p>
+<p>At this point we just need to know the initial state of <em><strong>runningTotal.</strong></em>&nbsp; The initial state is <em class="hl">the value before any values are added</em>.&nbsp; In other words, the initial state of <em><strong>runningTotal</strong> </em>is <strong>0</strong>.</p>
+<p><em class="linkTo" title="no-initial-state">Trap: Not setting the initial state</em></p>
+<p><em class="linkTo" title="init-in-for">Trap: Setting the initial state inside the <strong>for()</strong></em></p>
+<h3>Getting the length of a vector</h3>
+<p>The length of the vector is the same as the number of values in the vector.&nbsp; In this case, we know we have a vector of length <strong>4</strong> -- in other words, the vector has<strong> 4</strong> elements.&nbsp; However, we often do not know the length of a vector before-hand especially when we are dealing with data from an external source.</p>
+<p></p>
+<p>In R, it is easy to find how many values you have in a vector using the function<em><strong> length()</strong></em>.&nbsp;&nbsp;</p>
+<p></p>
+<h6 class="p">lengthVector = length(x=tempValues);&nbsp;&nbsp; # the length of the vector</h6>
+<p><em><strong></strong></em></p>
+<p><em><strong>length() </strong></em>returns the number of values in the vector <em><strong>x</strong></em> -- in this case<strong></strong>, <em><strong>x =</strong></em><strong> </strong><em><strong>tempValues. <br /></strong></em></p>
+<p><em><strong></strong></em></p>
+<p><em><strong>lengthVector</strong> </em>is assigned the value 4.&nbsp; Note: the "L" (<em class="figureRef" title="vecLength">fig</em>) just says the value is a "long integer" -- it can be ignored.</p>
+<p></p>
+<p><img src="../Images/R-02-04%20Vector%20length.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="vecLength">Getting the length of a vector.</h5>
+<h3>Creating a sequence to be used in the for()</h3>
+<p>The length of the vector can be used to create the sequence for the <em><strong>for()</strong></em>.</p>
+<p></p>
+<p>The sequence tells the <em><strong>for()</strong></em> how to iterate and we want the <em><strong>for()</strong></em> to iterate through all of the values in the sequence vector (e.g., 1,2,...).&nbsp; In this case, there are four values so we want the sequence to be <strong>1,2,3,4</strong> or (<strong>1:4) </strong>or, more generically, so that it work with any sized vector: (<strong>1:<em>lengthVector).</em></strong></p>
+<p><strong><em></em></strong></p>
+<h6 class="p">for(i in 1:lengthVector)<br />{</h6>
+<h6>&nbsp; # add vector values here<br />}</h6>
+<p></p>
+<p>So, the <em><strong>for()</strong></em> will iterate <strong>4</strong> times (<em><strong>lengthVector</strong></em>) and<em><strong> i</strong></em> will sequentially take the values<strong> 1</strong> through<strong> 4</strong>.&nbsp; Note: <em><strong>i</strong></em> is often used as the name of the iteration variable in a <em><strong>for()</strong></em>.&nbsp;</p>
+<h3>Iterate through the for()</h3>
+<p>The line of code:</p>
+<h6 class="p" title="13">runningTotal = runningTotal + tempValues[i];</h6>
+<p>changes the state of <em><strong>runningTotal</strong> </em>each time the<em><strong> for()</strong></em> iterates.</p>
+<p></p>
+<p><em><strong>tempValues</strong> </em>has four values: <strong>52, 47, 60, 56</strong>:</p>
+<ul>
+<li><em><strong>tempValues</strong></em>[1] = <strong>52</strong></li>
+<li><em><strong>tempValues</strong></em>[2] = <strong>47</strong></li>
+<li><em><strong>tempValues</strong></em>[3] = <strong>60</strong></li>
+<li><em><strong>tempValues</strong></em>[4] = <strong>56</strong></li>
+</ul>
+<p>and<em><strong> i</strong></em> iteratively goes <strong>1, 2, 3, 4.&nbsp; </strong></p>
+<p><strong><br /></strong>This means <em><strong class="hl">tempValues[i]</strong></em> iteratively progresses: <em><strong>tempValues</strong></em>[1]<em><strong>, tempValues</strong></em>[2]<em><strong>, tempValues</strong></em>[3]<strong></strong><em><strong>, </strong></em>and<strong> </strong><em><strong>tempValues</strong></em>[4]</p>
+<p></p>
+<p><em><strong>runningTotal</strong> </em>starts at <strong>0</strong> and through the four iterations, the values from <em><strong>tempValues</strong> </em>get added to it:</p>
+<p style="padding-left: 30px;">iteration 1...&nbsp;<strong> </strong><em><strong>runningTotal</strong> </em>= 0 + 52 = <strong>52</strong><br />iteration 2...<strong></strong><em><strong>&nbsp; runningTotal</strong> </em>= 52 + 47 = <strong>99</strong><br />iteration 3...&nbsp;<strong><em> runningTotal</em> </strong>= 99 + 60 =<strong> 159</strong><br />iteration 4...&nbsp;<strong><em> runningTotal</em> </strong>= 159 + 56 = <strong>215</strong></p>
+<p></p>
+<p>The final state of <em><strong>runningTotal</strong> </em>is <em><strong>215.</strong></em></p>
+<p><em></em></p>
+<h3>Output all states of the state variable</h3>
+<p>The above example shows the initial state of <em><strong>runningTotal</strong> </em>is <strong>0&nbsp;</strong> and the final state of <em><strong>runningTotal</strong> </em>is<em> </em><strong>215</strong>.&nbsp; Let's add some Console Window outputs to show the intermediate states.&nbsp; Note: "<strong>\t</strong>" is an instruction to tab, much like "<strong>\n</strong>" in an instruction to go to the next line.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />tempValues = c(52,47,60,56); # vector that holds the temperature values<br />lengthVector = length(tempValues);<br /> <br />runningTotal = 0; # state variable<br /> <br /># execute the codeblock using the sequence 1-2-3-4<br />for(i in 1:lengthVector)<br />{</h6>
+<h6>&nbsp; cat("Running Total before iteration", i, "=", runningTotal); <br />&nbsp; runningTotal = runningTotal + tempValues[i];<br />&nbsp; cat("\t\tAfter iteration", i, "=", runningTotal, "\n");<br />}</h6>
+<p></p>
+<p>Now we can see the intermediate states of 52, 99, and 159 for <em><strong>runningTotal</strong></em>.&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-02-04%20Running%20total%20though%20iterations.PNG" alt="" class="flexSize" /></p>
+<h5>Output the intermediate states of the vector addition.</h5>
+<h3>Finding the mean value using length()</h3>
+<p>Right now we have the sum of the values in <em><strong>tempValues</strong></em> and we can use the sum to find the mean -- all we need in the number of values in <em><strong>tempValues</strong></em>. But we already got this value in line 5 using <em><strong>length().</strong></em> &nbsp; <em><strong>lengthVector</strong> </em>is the same as the number of values and we just need to divide <em><strong>runningTotal</strong> </em>by <em><strong>lengthVector&nbsp;</strong></em>to get the mean.&nbsp; We just need to make sure we do this <em class="hl">after the<strong> for()</strong> finished all its iterations.<strong> </strong></em></p>
+<p></p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />tempValues = c(52,47,60,56); # vector that holds the temperature values<br />lengthVector = length(tempValues);<br /> <br />runningTotal = 0; # state variable<br /> <br /># execute the codeblock using the sequence 1-2-3-4<br />for(i in 1:lengthVector)<br />{<br />&nbsp; runningTotal = runningTotal + tempValues[i];<br />}<br /> <br />meanValue = runningTotal / lengthVector; # solve for the mean</h6>
+<p></p>
+<p>The mean value is <em><strong>runningTotal</strong></em>/<em><strong>lengthVector</strong> </em>=&nbsp; <strong>215/4</strong> = <em><strong>53.75</strong></em>.</p>
+<p></p>
+<p><img src="../Images/R-02-04%20Getting%20mean%20of%20vector.PNG" alt="" class="flexSize" /></p>
+<h5>Getting the mean from the final value of the state variable and the vector length.</h5>
+<p></p>
+<h2>Finding the maximum value</h2>
+<p>Another example where we can use a <em><strong>for()</strong></em> with a state variable is finding the maximum value in a vector.&nbsp; Again, we are only using a vector with four values, but the technique works with vectors that have any number of values and whether or not the number of values in the vector is known before-hand.</p>
+<p></p>
+<p>The state variable in this example is named <em><strong>currentHighTemp</strong></em>.</p>
+<h3>Initial state</h3>
+<p class="" style="margin: 0in 0.7pt 0.75pt 18.95pt; text-indent: -0.5pt; line-height: 112%; font-size: 10.5pt; font-family: 'Arial', sans-serif; color: black;">The initial state of <em><strong>currentHighTemp</strong> </em>should be a value that is known to exist in the set.&nbsp; The best value to use is the first value in the vector we are checking, or <em><strong>tempValue</strong></em>[1].&nbsp; If we used a number that was not already in the vector and happened to be larger than any of the vector values we could mistakenly assign the initial state as the final high temperature.</p>
+<h3>Intermediate states</h3>
+<p>The <em><strong>for()</strong></em>, through each iteration, will check the other values in <em><strong>tempValues</strong></em> and change <em><strong>currentHighTemp</strong></em> whenever a new high value is found creating the intermediate values of <em><strong>currentHighTemp.</strong></em></p>
+<h3>Final state</h3>
+<p>The final state of <em><strong>currentHighTemp</strong> </em>is whatever value it has after all the iteration of the <em><strong>for()</strong></em> have executed.</p>
+<h3>Code</h3>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />tempValues = c(52,47,60,56); # vector that holds the temperature values<br />lengthVector = length(tempValues);<br /> <br />currentHighTemp = tempValues[1]; &nbsp; &nbsp; &nbsp; # state variable (initial)<br /> <br />for(i in 1:lengthVector)<br />{<br />&nbsp; if(tempValues[i] &gt; currentHighTemp)<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; currentHighTemp = tempValues[i];&nbsp;&nbsp; # state variable (intermediate)<br />&nbsp; }<br />}</h6>
+<p></p>
+<p>We can see that the <em class="hl">final state</em> of <em><strong>currentHighTemp</strong> </em>is <em><strong>60</strong></em>,&nbsp; which is the high temperature in the vector.&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-02-04%20High%20Value%20in%20vector.PNG" alt="" class="flexSize" /></p>
+<h5>Finding the maximum value in a vector.</h5>
+<p></p>
+<h3>Code with intermediate state output</h3>
+<p>Now let's add some<em><strong> cat()</strong></em> statements to better show what is happening each time the <em><strong>for()</strong></em> iterates.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />tempValues = c(52,47,60,56); # vector that holds the temperature values<br />lengthVector = length(tempValues);<br /> <br />currentHighTemp = tempValues[1]; &nbsp; &nbsp; &nbsp; # state variable (initial)<br /> <br />for(i in 1:lengthVector)<br />{<br />&nbsp; cat("\nChecking high temp,", currentHighTemp, ", against", tempValues[i], "\n");<br />&nbsp; if(tempValues[i] &gt; currentHighTemp)<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; cat(tempValues[i], "is greater, updating high temp\n");<br />&nbsp;&nbsp;&nbsp; currentHighTemp = tempValues[i];&nbsp;&nbsp; # state variable (intermediate)<br />&nbsp; }<br />}</h6>
+<p></p>
+<p><em><strong>currentHighTemp </strong> </em>is initialized to the first value (<em><strong>52</strong></em>) in <em><strong>tempValues</strong></em>.&nbsp; <em><strong>currentHighTemp </strong></em>is checked against <strong>47</strong> in the first iteration, <strong>60</strong> in the second iteration, and <strong>52</strong> in the third iteration.&nbsp; <em><strong>currentHighTemp</strong> </em>only changes in the second iteration to 60 so the final state of&nbsp; <em><strong>currentHighTemp </strong> </em>is 60 (shown in Environment Window).</p>
+<p></p>
+<p><img src="../Images/R-02-04%20Finding%20high%20value%20-%20verbose.PNG" alt="" class="flexSize" /></p>
+<h5>The state variable (the vector maximum) only changes in the second iteration of the <strong>for()</strong>.</h5>
+<p></p>
+<p class="linkTo" title="sequence-2">Extension: could have started the sequence at 2</p>
+<h2>Boolean variables as state variables</h2>
+<p>In our last example we will use a Boolean variable as a state variable.&nbsp; A Boolean variable can only take two values: <em><strong>TRUE</strong> </em>and <em><strong>FALSE</strong></em>.&nbsp; We can use a Boolean variable to ask a yes/no question about a vector like: is there a temperature less than 50?</p>
+<p></p>
+<p>In this example, the state variable is named <em><strong>tempLessThan50</strong> </em></p>
+<p></p>
+<p>We assume there are no values less than 50 <em class="hl">until proven otherwise</em>, so the initial state of <em><strong>tempLessThan50</strong> </em>is <em><strong>FALSE</strong></em>.</p>
+<p></p>
+<p>Then we need to check each value in <em><strong>tempValues</strong></em>.&nbsp; If any of the values are less than 50, we change <em><strong>tempLessThan50</strong> </em> to <em><strong>TRUE</strong></em>.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />tempValues = c(52,47,60,56); # vector that holds the temperature values<br />lengthVector = length(tempValues);<br /> <br />tempLessThan50 = FALSE; # state/Boolean variable (outside loop)<br /> <br />for(i in 1:lengthVector) <br />{<br />&nbsp; if(tempValues[i] &lt; 50) # Is this temp less than 50<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; tempLessThan50 = TRUE; # set state to TRUE<br />&nbsp; }<br />}</h6>
+<p></p>
+<p>The final state of <em><strong>tempLessThan50</strong> </em>is <em><strong>TRUE</strong> </em>because the second value in <em><strong>tempValues</strong> </em>is less than <strong>50</strong>.</p>
+<p></p>
+<p><img src="../Images/R-02-04%20Boolean%20State%20Variable.PNG" alt="" class="flexSize" /></p>
+<h5>Using a Boolean variable as a state variable.</h5>
+<p></p>
+<p class="linkTo" title="breaking">Extension: breaking out of for() loops</p>
+<h3>Boolean state that does not change</h3>
+<p>If we run the same code but check for values under 40 instead of 50:</p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />tempValues = c(52,47,60,56); # vector that holds the temperature values<br />lengthVector = length(tempValues);<br /> <br />tempLessThan40 = FALSE; # state/Boolean variable (outside loop)<br /> <br />for(i in 1:lengthVector) <br />{<br />&nbsp; if(tempValues[i] &lt; 40) # Is this temp less than 40<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; tempLessThan40 = TRUE; # set state to TRUE<br />&nbsp; }<br />}</h6>
+<p></p>
+<p>We see the final state of <em><strong>tempLessThan40</strong> </em>is <em><strong>FALSE</strong></em>.&nbsp; In other words, it never changed through all the iterations of the<em><strong> for()</strong></em> because there were no values less than 40.</p>
+<p></p>
+<p><img src="../Images/R-02-04%20Boolean%20state%20variable2.PNG" alt="" class="fs" /></p>
+<h5>The Boolean variable's initial and final state are both <strong>FALSE</strong>.</h5>
+<p></p>
+<h2 class="application" title="Lesson Practice">Application</h2>
+<p>1) Use a <em><strong>for()</strong></em> to find the minimum, maximum , and mean value in the following vector: <strong>c(94, 102, 89, 105, 78, 85)</strong>.&nbsp; Find the length of the vector using <em><strong>length(). &nbsp;</strong> </em><span style="font-size: 10.5pt; line-height: 112%; font-family: 'Arial', sans-serif; color: black;">H</span><span class="">int:</span><span class=""> you can find each of these within the same loop if you set three state variables before the loop begins.</span></p>
+<p></p>
+<p>Note: You can do the above using multiple <strong><em><span style="text-decoration: underline;">for()</span></em></strong> loops or, as a challenge, with only 1 <em><strong>for()</strong></em> loop.</p>
+<p>2) Use a<em><strong> for()</strong></em> and Boolean variables to check the vector <strong>c(94, 102, 89, 105, 78, 85)</strong> to see if there are values:</p>
+<p>&nbsp; a) greater that <strong>100</strong></p>
+<p>b) less than <strong>70</strong></p>
+<p>c) equal to <strong>78</strong></p>
+<p>d) equal to <strong>87</strong></p>
+<p></p>
+<h2 class="extension" id="breaking">Extension: breaking out of loops</h2>
+<p>Notice that the codeblock attached to the <em><strong>for()</strong></em> will only set <em><strong>tempLessThan50</strong> </em>to <em><strong>TRUE</strong></em>.&nbsp; So once <em><strong>tempLessThan50</strong> </em>is <em><strong>TRUE</strong></em>, there is no way it can be turned back to <em><strong>FALSE</strong> </em>(which makes sense given the context).&nbsp; This also means that once it is <em><strong>TRUE</strong></em>, you are really just killing electrons (and wasting time!) if you continue to check values.&nbsp; This might not matter for 4 values but it probably matters for 10,000 values.</p>
+<p></p>
+<p>We can stop the execution of a <em><strong>for()</strong></em> loop using the <em><strong>break</strong> </em>statement.&nbsp;</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />tempValues = c(52,47,60,56); # vector that holds the temperature values<br />lengthVector = length(tempValues);<br /> <br />tempLessThan50 = FALSE; # state/Boolean variable<br /> <br />for(i in 1:lengthVector) <br />{<br />&nbsp; if(tempValues[i] &lt; 50) # Is this temp less than 50<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; tempLessThan50 = TRUE; # set state to TRUE<br />&nbsp;&nbsp;&nbsp; break; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; # break out of the for loop<br />&nbsp; }<br />}</h6>
+<p></p>
+<p>Notice that the value of <em><strong>i</strong></em> is<strong> 2</strong> (<em class="figureRef" title="break">fig</em>) because that is when the <em><strong>break</strong> </em>occurred meaning the <em><strong>for()</strong></em> iterated only twice.&nbsp; Without the <em><strong>break</strong></em>, the <em><strong>for()</strong></em> would iterate <em><strong>4</strong></em> times and <em><strong>i</strong></em> would have a value of <strong>4</strong>.&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-02-04%20Breaking%20a%20for%20loop.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="break">Breaking out of a<strong> for()</strong> loop using <strong>break</strong>.</h5>
+<p></p>
+<h2 class="trap" id="no-initial-state">Trap: Not setting the initial state of a state variable</h2>
+<p>If we do not initialize the state of a state variable...</p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />tempValues = c(52,47,60,56); # vector that holds the four temperature values<br /><br />runningTotal = NULL; # declare state variable but don't initialize it</h6>
+<h6>lengthVector = length(tempValues);</h6>
+<h6><br /># execute the codeblock using the sequence 1-2-3-4<br />for(i in 1:lengthVector)<br />{</h6>
+<h6>&nbsp; # iteratively add the values from tempValues to the state variable, runningTotal<br />&nbsp; runningTotal = runningTotal + tempValues[i];&nbsp; <br />}</h6>
+<p></p>
+<p>Then the final value of <em><strong>runningTotal</strong> </em>is <strong>numeric (empty)</strong></p>
+<p></p>
+<p><img src="../Images/R-02-04%20no%20init%20state%20variable.PNG" alt="" class="fs" /></p>
+<h5>Forgetting to initialize the value of the state variable.</h5>
+<p></p>
+<p>The reason runningTotal does not have a value after executing the script is because of line 13:</p>
+<h6 class="p" title="13">&nbsp; runningTotal = runningTotal + tempValues[i];&nbsp;</h6>
+<p></p>
+<p>On the right side <em><strong>runningTotal</strong> </em>is <em><strong>NULL</strong> </em>and, in R, when you add <em><strong>NULL</strong> </em>to any number the answer is still <em><strong>NULL</strong></em>.&nbsp; <strong>numeric(empty)</strong> is sort of the same as saying "numeric NULL".</p>
+<p></p>
+<h2 class="trap" id="init-in-for">Trap: Setting the initial state of a state variable inside a for()</h2>
+<p>If we accidentally initialize the state variable inside the <em><strong>for()</strong></em>...</p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />tempValues = c(52,47,60,56); # vector that holds the four temperature values<br /><br />lengthVector = length(tempValues);</h6>
+<h6><br /># execute the codeblock using the sequence 1-2-3-4<br />for(i in 1:lengthVector)<br />{</h6>
+<h6>&nbsp; runningTotal = 0; # initialize state variable to 0<br />&nbsp; runningTotal = runningTotal + tempValues[i];&nbsp; <br />}</h6>
+<p></p>
+<p>Then the final value of <em><strong>runningTotal</strong> </em>is the last value in <em><strong>tempValues</strong></em>, which is <strong>56</strong>.</p>
+<p></p>
+<p><img src="../Images/R-02-04%20init%20state%20variable%20in%20for.PNG" alt="" class="fs" /></p>
+<h5>Initializing the state variable inside the <strong>for()</strong> loop.</h5>
+<p></p>
+<p>This happens because you are resetting the value of <em><strong>runningTotal</strong> </em>to <strong>0</strong> every time the <em><strong>for()</strong></em> iterates.&nbsp; In other words, the intermediate states are destroyed and the final value of <em><strong>runningTotal</strong> </em>will just be <strong>0</strong> + the last value.</p>
+<h2 class="extension" id="sequence-2">Extension: Sequence could start with 2</h2>
+<p>Since we initialized the state variable to the first value in the vector, we could have started the sequence at <strong>2</strong> instead of<strong> 1</strong>. In other words, <em class="hl">we don't need to check the first value against the first value</em>.</p>
+<p></p>
+<div>
+<h6 title="">rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>tempValues = c(52,47,60,56); # vector that holds the temperature values</h6>
+<h6>lengthVector = length(tempValues);</h6>
+<h6></h6>
+<h6>currentHighTemp = tempValues[1]; &nbsp; &nbsp; &nbsp; # state variable (initial)</h6>
+<h6></h6>
+<h6>for(i in 2:lengthVector)&nbsp; # start sequence at 2 instead of 1</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("\nChecking high temp,", currentHighTemp, ", against", tempValues[i], "\n");</h6>
+<h6>&nbsp; if(tempValues[i] &gt; currentHighTemp)</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp; cat(tempValues[i], "is greater, updating high temp\n");</h6>
+<h6>&nbsp;&nbsp;&nbsp; currentHighTemp = tempValues[i];&nbsp;&nbsp; # state variable (intermediate)</h6>
+<h6>&nbsp; }</h6>
+<h6>}</h6>
+<p></p>
+<p>The script executes with the same result.</p>
+<p></p>
+<p><img src="../Images/R-02-04%20sequence%20change.PNG" alt="" class="fs" /></p>
+<h5>Starting the sequence in the <strong>for()</strong> at <strong>2</strong> instead of <strong>1</strong>.</h5>
+<p></p>
+<p>The only real harm of starting the sequence at 1 is that an extra sequence is executed unnecessarily and a few electrons are inconvenienced.</p>
+</div>
+</body>
+</html>

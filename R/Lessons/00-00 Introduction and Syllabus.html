@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously:</p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=MichiganSt-1906747" target="_self">R Installation and Setup</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">Introduction and Syllabus</h1>
+<h2>Welcome to R Fundamentals for Research</h2>
+<p>The purpose of this class is to introduce students to the principles of programming using the R and RStudio software packages.&nbsp; R and RStudio are powerful and versatile data analysis packages that are freely available. The R community is extensive and is constantly developing new tools that rival and, in many cases, surpass commercial statistical software and graphing packages.&nbsp; This class is designed for students new to programming.&nbsp; While the class focus is on programming in R and RStudio, the programming skills taught are designed so that students can transfer their skills to other programming platforms like ADMB or C.</p>
+<p></p>
+<p><strong>R Fundamentals for Research</strong> is self-paced but students are expected to complete the class within six months. The amount of material in the class is about the same as a three credit, one semester class.&nbsp; There are no regularly scheduled office hours but you can email or call the instructor to ask questions or set up a meeting.&nbsp; All contacts will receive a response within one business day.</p>
+<h3>Instructor</h3>
+<p><strong>Charlie Belinsky&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<ul>
+<li>belinsky@msu.edu</li>
+<li>517-432-5087<br /><br /></li>
+</ul>
+<p><strong><img src="../Images/BELINSKY_Photo.jpg" alt="Charlie" title="Charlie" width="184" height="184" /></strong></p>
+<p><strong></strong></p>
+<p><strong>About me...</strong></p>
+<p>I started my career as a Software Engineer for Motorola in Arizona where I developed software for military radios. From there I became a high school teacher in Port Huron, MI where I taught Computer Science, Web Design, and Physical Science. After that, I worked as an Instructional Designer for the College of Education at MSU where my main project was developing the hybrid graduate program. I currently work at the QFC where my primary job is developing the online classes, including this one.&nbsp; In my free time you will often find me with a backpack deep in a forest or, as my picture testifies to, hanging out by a glacier in the Canadian Rockies.</p>
+<h3>Technical Support</h3>
+<p>You can contact me, Charlie, regarding technical issues.&nbsp;</p>
+<p></p>
+<p>MSU also offers <a href="https://tech.msu.edu/support/help/" target="_blank" rel="noopener noreferrer"><strong>24 hour technical support</strong></a> for students. This support includes hardware, software, and D2L.</p>
+<ul>
+<li>517-432-6200 or 844-678-6200 (toll free)</li>
+<li>email: ithelp@msu.edu</li>
+<li>Make sure you have your MSU ID or MSU Community ID when communicating with support.</li>
+<li>Remember your <em class="hl">MSU Community ID is the email you log into class with</em> if you don't have an MSU email.</li>
+</ul>
+<h3>Requirements</h3>
+<p>Students should be familiar with basic statistical concepts and tests that one would find in an introductory statistics class (like linear regressions and ANOVAs).&nbsp; All material for this course is online -- no textbooks are required.</p>
+<h3>Tech requirements</h3>
+<p><strong>Hardware:</strong>&nbsp; Any Windows 7, 8, 10, Mac, or Linux machine -- preferably with a webcam and microphone for videoconferencing.&nbsp; Any computer built since 2010 can handle all the hardware and software requirements of this class.</p>
+<p></p>
+<p><strong>Browser:</strong> <a href="https://www.mozilla.org/firefox/" target="_blank" rel="noopener noreferrer">Firefox is recommended</a>.&nbsp; You can use any browser to view, navigate, and complete the whole course but some of the advanced navigation features can only be used in Firefox.&nbsp;</p>
+<p></p>
+<p><strong>Videoconferencing</strong>: We use <a href="http://zoom.us" target="_blank" rel="noopener noreferrer">Zoom </a>for our videoconference meetings.&nbsp; The meeting link will be emailed to you prior to the meeting.&nbsp; It is recommend that you download and test your camera and microphone on Zoom before attending an instructor meeting.&nbsp; The easiest way to to this is to go to the <a href="https://zoom.us/test" target="_blank" rel="noopener noreferrer">Zoom test page</a>.&nbsp; Note: the test page will download Zoom for you.</p>
+<p></p>
+<p><em class="hl">To test your hardware in Zoom</em>, open Zoom and click <em><strong>Settings</strong> </em>in the <strong>Account Window</strong> (right side- <em class="figureRef" title="zoom">Fig</em>) and the <strong>Settings Window</strong> will open (left side- <em class="figureRef" title="zoom">Fig</em>).&nbsp; Go to the <em><strong>Audio</strong> </em>and <em><strong>Video</strong> </em>tabs to test your microphone, speakers, and webcam.&nbsp; Note: If you are using a MAC, the view is different but the buttons are the same.</p>
+<p></p>
+<p><img src="../Images/R-00-00%20Zoom.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="zoom">Testing the audio and video in Zoom (click on picture to resize).</h5>
+<h3>Downloading material for the class</h3>
+<p>All material used in the class is available in the <em><strong>Downloads</strong> </em>section of the home page and can be used offline including:</p>
+<ul>
+<li>script and data files used in the lessons -- also linked in relevant lessons</li>
+<li>answers to all the lesson applications, including common programming mistakes</li>
+</ul>
+<h2>Class Structure</h2>
+<p>The course has 28 lessons divided into three units: <strong>Basic Programming</strong>,<strong> Data Programming</strong>, and <strong>Statistical Programming</strong></p>
+<p></p>
+<ol>
+<li><strong>Basic Programming</strong>: basic programming structures and operations like variables, inputs, outputs, mathematical operations, if-else structures, and conditional operations.<br />
+<ul>
+<li><strong>1-1 R-Installation:</strong> Installing and setting up R and RStudio.</li>
+<li><strong>1-2 Variables:</strong> Discussion of the different types of variables, variable naming conventions, assigning values to variables, changing values.</li>
+<li><strong>1-3 Mathematical Operations:</strong> Mathematical operations on numeric variables, power operations, algebraic formulas in R</li>
+<li><strong>1-4 Debugging:</strong> Using the built-in debugger to find and fix errors in your code.</li>
+<li><strong>1-5 Strings and Inputs:</strong> Get information from the user and store as a variable, differences between string and numeric variables.</li>
+<li><strong>1-6 Outputs:</strong> Output information to the console, mixed string and numeric outputs.</li>
+<li><strong>1-7 Conditional Operators</strong>: Executing code based on a condition, <em><strong>if()</strong> </em>statements, the six conditional operators.</li>
+<li><strong>1-8 If-Else Statements: </strong>Checking multiple conditions on a variable, creating error conditions.</li>
+<li><strong>1-9 Multiple Conditions:</strong> Checking complex conditions on a variable using conditional operators &amp;&amp; and ||.</li>
+<li><strong>1-10 Multiple Conditions on Multiple Variables:</strong> More complex conditions, using parentheses to separate conditions.<br /><br /></li>
+</ul>
+</li>
+<li><strong>Data Programming</strong>: data programming structures and operations like file inputs, vectors, subset operations, for loops, functions, and plotting.</li>
+<ul>
+<li><strong>2-1 File Inputs:</strong> Creating data files, saving data to a data frame, creating working directories.</li>
+<li><strong>2-2 Subset Operations:</strong> Accessing individual data points from a data frame, subset a data frame by name and index.</li>
+<li><strong>2-3 Sequences and For Loops:</strong> Iterating through vectors using a sequence and a for loop.&nbsp;</li>
+<li><strong>2-4 Iterations and State Variables:</strong> Using Boolean (true/false) variables, mathematical iterations on a vector using a for loop.</li>
+<li><strong>2-5 Vector Operations and NA:</strong> Mathematical operations on vectors, summarize basic statistical information from vectors, handling missing data.</li>
+<li><strong>2-6 Vectors and Data Frames</strong>: Creating and subsetting vectors, adding vectors to a data frame, manipulating data frames.</li>
+<li><strong>2-7 Plotting:</strong> Scatter plots, line plots, styling plots, adding legends.</li>
+<li><strong>2-8 Functions:</strong> Creating your own function, adding and using parameters and return values in functions.</li>
+<li><strong>2-9 Plotting 2:</strong> Histograms, bar plots, and boxplots.</li>
+<li><strong>2-10 Functions 2:</strong> Creating a functions script file, default parameter values, for loops and conditional statements within functions.<br /><br /></li>
+</ul>
+<li><strong>Statistical Programming</strong>: reshaping data, sampling, inferential statistics, conditional subsets.</li>
+<ul>
+<li><strong>3-1 Packages:</strong> Including packages in your script, getting weather data from NOAA/NCDC database.</li>
+<li><strong>3-2 Data Frame Manipulation:</strong> Formatting and reshaping data, getting substrings, mathematical operations on columns of data frames.</li>
+<li><strong>3-3 Matrices:</strong> Manipulating vectors, mathematical and statistical operations on reshaped vectors.</li>
+<li><strong>3-4 T-tests and ANOVAS:</strong> Comparing means from the weather data using t-tests and ANOVA, boxplots and histograms.</li>
+<li><strong>3-5 Sampling</strong>: Random samples, sampling for a normal distribution, creating repeatable pseudo-random values using seed values.</li>
+<li><strong>3-6 Linear Regressions:</strong> Scatterplots, scatterplot matrices, linear modeling, fitting linear models.</li>
+<li><strong>3-7 Conditional Subsetting:</strong> Subsetting weather data to examine complex relationships.</li>
+<li><strong>3-8 Multiple Condition Subsets</strong>: Complex subsetting of data, performing linear regressions on subset data.</li>
+</ul>
+</ol>
+<p></p>
+<p>Most lessons have an <em><strong>Application</strong> </em>section at the end that will ask you to apply what you learned in the lesson in your own script.&nbsp; The applications are self-assessments only and the answers are provided in the <em><strong>Downloads</strong> </em>section on the home page for the class..&nbsp; The only evaluation for this course is the <em><strong>Class Project.</strong></em></p>
+<h3>Class Project</h3>
+<p>The only product that will be evaluated on your class project.&nbsp; Your class project is to use the skills taught in this class with your own data.&nbsp; The class project is meant to be an ongoing assignment that you update as you learn the skills taught in the lessons.&nbsp; If you do not have your own data you can find a dataset online -- there are many datasets that are freely available online<a href="https://vincentarelbundock.github.io/Rdatasets/datasets.html" target="_blank" rel="noopener noreferrer"> including hundreds at this website</a>.&nbsp;&nbsp;&nbsp; <a href="../Class%20Project/Class%20Project%20Rubric.docx" target="_blank" rel="noopener noreferrer" class="download">More information and the rubric for the class project is here</a>.</p>
+<h3>Meetings with instructor</h3>
+<p>During the class, there are three planned student-instructor meetings:</p>
+<ol>
+<li>At the beginning of class</li>
+<li>Soon after you complete first unit and</li>
+<li>Soon after you complete the second unit.&nbsp;</li>
+</ol>
+<p></p>
+<p>In the last lesson of the 1st and 2nd unit, you will be asked to email the instructor to set up a meeting. The main purpose of these meetings is to discuss the class project.&nbsp; These meetings are generally between 20 and 30 minutes.&nbsp; Additional meetings can always be requested by the student.</p>
+<h2>Lesson structure</h2>
+<p>All lessons have the following structure:</p>
+<ul>
+<li><strong>Purpose</strong>: Objectives of the lesson.</li>
+<li><strong>Concept Video</strong>: 1-2 minute video that connects the lesson to previous lessons and reinforces the trickier concepts.</li>
+<ul>
+<li><em class="hl">Concept Videos have not yet been implemented in this class.</em></li>
+</ul>
+<li><strong>Content</strong>: The material for the lesson.</li>
+<li><strong>Application</strong>: Practice using the skills taught in the lesson -- answers, and common mistakes, are provided in <em><strong>Downloads</strong> </em>section of home page.</li>
+<li><strong>Extensions (some lessons)</strong>: Optional content that is related to, but goes beyond, the lesson's objectives.</li>
+<li><strong>Traps (some lessons)</strong>: Optional content that captures some of the common issues students have with the lesson's objectives.</li>
+</ul>
+<h3><span class="">Resizing Pictures</span></h3>
+<p>Most pictures in the course can be resized so that the picture is out of your way when you don't need to view it.&nbsp; Clicking on the picture toggles it between the minimized and maximized states (<em class="figureRef" title="toggle">fig</em>).</p>
+<p></p>
+<p><img src="../Images/R-00-00%20Tahq%20Falls.jpg" alt="" class="fs" /></p>
+<h5 class="" id="toggle">Test picture to toggle (Tahquamenon Falls, Michigan)</h5>
+<h3><span class="">Extensions and Traps</span></h3>
+<p class="">There are links to <em><strong>Extensions</strong> </em>and <em><strong>Traps</strong> </em>within the Content area of the lesson.&nbsp; Clicking on the appropriate link takes you directly to the <em><strong>Extension</strong> </em>or <em><strong>Trap.</strong></em> At the end of the <em><strong>Extension</strong> </em>or <em><strong>Trap</strong></em>, another link will appear that takes you back to the original location in the lesson.&nbsp;<em class="linkTo" title="test"> Extension: testing the extension link</em>.</p>
+<h3><span class="">Printing lessons and saving to PDF</span></h3>
+<p>You can print any lesson or save it as a PDF by clicking on the <em><strong>Print</strong> </em>link at the top of every lesson (and this syllabus).&nbsp; This will bring up a print dialog (<em class="figureRef" title="pdf">fig</em>) and you can print the lesson to a printer.&nbsp; On most machines, you can also choose a PDF device as a printer -- this will save the lesson as a PDF document.&nbsp;</p>
+<p></p>
+<p>Note: Using your browser's print feature instead on the <em><strong>Print</strong> </em>link will print out the whole webpage instead of just the lesson.</p>
+<h4>Print-to-PDF Software</h4>
+<p>If you are using Windows 7 or 8 you might not have a PDF device and you will need to download Print-to-PDF software. You can see if you have a PDF device by going to the print options in any program and see if any of the devices have "PDF" in their name (<em class="figureRef" title="pdf">fig</em>).&nbsp; If you don't have a PDF device, then I recommend you install&nbsp;<a href="http://www.cutepdf.com/products/cutepdf/writer.asp" target="_blank" rel="noopener noreferrer">CutePDF </a>(direct link to the <a href="http://cutepdf.com/download/CuteWriter.exe" target="_blank" rel="noopener noreferrer">file download</a>).&nbsp; CutePDF is simple print-to-PDF software that does not try to install any extra software on your computer. <em class="linkTo" title="offers">Trap: Bloatware<br /></em></p>
+<p></p>
+<p><img src="../Images/R-00-00%20PDF%20Printers.PNG" alt="" class="fs" /></p>
+<h5 class="" id="pdf">This author has four PDF devices (that is three more than you need!)</h5>
+<h3><span class="">Right-click features</span></h3>
+<p>If you right-click anywhere on the page of any lesson (<em class="figureRef" title="ff">fig</em>), including this one (try it!), you are given options to:</p>
+<ol>
+<li>print the lesson (same as the lesson's <em><strong>Print</strong> </em>link)</li>
+<li>maximize all pictures</li>
+<li>minimize all pictures</li>
+<li>edit page (for admins only)</li>
+<li>page map (link to any section of the page -- currently only works using Firefox)</li>
+</ol>
+<p></p>
+<p><img src="../Images/R-00-00%20Right%20click%20menu.PNG" alt="" class="flexSize" /></p>
+<h5 id="ff">The right-click menu -- this view is from Firefox .</h5>
+<h3><span class="">Codeblocks</span></h3>
+<p>Double-clicking on a codeblock will select all the text in the codeblock -- you can then copy and paste it into RStudio.&nbsp;</p>
+<div>
+<h6># the next two lines should be at the top of all your scripts</h6>
+<h6>rm(list=ls());&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
+<h6>options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6># create three variables: d, t, and v</h6>
+<h6># give d and t values and use them to calculate v</h6>
+<h6>d = 100;</h6>
+<h6>t = 20;</h6>
+<h6>v = d/t;</h6>
+</div>
+<h5 class="" id="fullCode">Double clicking on the codeblock selects all the text (code is from lesson 1-2).</h5>
+<p></p>
+<p>Stand-alone code (i.e., can be copied to RStudio and executed as is) is colored blue (<em class="figureRef" title="fullCode">fig</em>).&nbsp;</p>
+<p>Partial code is colored green (<em class="figureRef" title="partialCode">fig</em>).</p>
+<h6 class="partial" title="6"># create three variables: d, t, and v</h6>
+<h6># give d and t values and use them to calculate v</h6>
+<h6>d = 100;</h6>
+<h6>t = 20;</h6>
+<h6>v = d/t;</h6>
+<h5 class="" id="partialCode">Partial code (i.e., meant to be added to a script -- not meant to be executed by itself).</h5>
+<h2>Personal statement from Charlie</h2>
+<p>The biggest thing that is lost when you move a class from a face-to-face environment to an online environment is the daily interaction between between the instructor and the students.&nbsp; These interactions provide invaluable informal feedback for the instructor and, I would argue, are the main tool that an instructor uses to make improvements to their class.&nbsp; It is impossible to replicate this in an online class but I ask that you help me out and make an effort to communicate to me the little things.&nbsp; This could mean technical nags like content not appearing properly or pages loading too slowly, lesson content that is unclear, grammar and spelling issues, or scripts that does not work or work in a way that you do not understand.&nbsp;</p>
+<p></p>
+<p>Thank you for reading and taking this into consideration.&nbsp; In the end, it is the interactions between an instructor and the students that make a class great.&nbsp;</p>
+<p></p>
+<p>Now on to the stuff I have to put in a syllabus...</p>
+<h2>Disclaimers and Loose Ends</h2>
+<h3>Student Responsibilities</h3>
+<ul>
+<li>Students are expected to regularly check the <em><strong>Announcements</strong> </em>section on the home page for the class and the email address associated with their MSU ID/ MSU Community ID for new information regarding the class.</li>
+<li>Students are expected to ask questions if they are having problems with an application or their class project.</li>
+<li>Students are expected to monitor their progress in order to complete the course work on time.</li>
+<li>Students are expected to contact either the instructor or MSU regarding technical issues that are interfering with the class.</li>
+<li>Students are expected to follow the <a href="https://ombud.msu.edu/academic-integrity/student-faq.html" target="_blank" rel="noopener noreferrer">MSU&rsquo;s academic integrity policy</a>.</li>
+<li>Please notify the instructor regarding issues with the class website and lessons.</li>
+</ul>
+<h3>Academic Integrity (summarized)</h3>
+<p>Written or other work which a student submits in a course, shall be the product of his/her own efforts. Plagiarism, cheating, and all other forms of academic dishonesty are prohibited. Students are expected to adhere to the ethical and professional standards associated with their programs and academic courses. All applicable portions of Michigan State&rsquo;s Policy on Academic Integrity apply to non-credit courses. Copies of the Policy on Academic Integrity may be accessed at <a href="https://www.msu.edu/unit/ombud/honestylinks.html">https://www.msu.edu/unit/ombud/honestylinks.html.</a></p>
+<h3>Instructor Responsibilities</h3>
+<ul>
+<li>Instructor will be available for assistance for requested virtual office hours (through Zoom).</li>
+<li>Instructor will respond to emails from students within 1 business day.&nbsp; Potential for delayed responses (e.g., instructor is on vacation) will be posted on the front page of the course.</li>
+<li>Changes to the course will be posted in the <em><strong>Announcements</strong> </em>section of the home page for the class.</li>
+</ul>
+<h3>Attendance</h3>
+<p>You are expected to log in to the class at least once a week. Logging in allows you to stay updated and see new announcements.</p>
+<h3>Participation</h3>
+<p>Please note that not all course lessons are the same length and the later ones tend to involve more work. Our goals with regard to participation/progress are to (a) keep you engaged in the course, (b) enhance the overall learning environment by promoting student-teacher communication, and (c) avoid a last minute time crunch for everyone involved. <em class="hl">We will not be sympathetic or make allowances for your failure on course tasks or deadlines that result from not seeing announcements because you had not accessed the course for an extended period, and had not told us you would be away from the internet.</em></p>
+<h3>ADA Statement</h3>
+<ul>
+<li>MSU provides students with disabilities reasonable accommodations to participate in educational programs, activities, or services. Students with disabilities requiring accommodations to participate in class activities or meet course requirements should contact the instructor as early as possible.</li>
+<li>For students needing accommodations for disabilities, please contact your instructor and The Resource Center for Persons with Disabilities at Michigan State University at 517-353-9642.</li>
+</ul>
+<h2 class="trap" id="offers">Trap: Bloatware</h2>
+<p>Adobe Acrobat, like most free software you download, attempts to bundle itself with software you most likely do not need nor want (i.e., bloatware).&nbsp; Make sure you take some time to read the optional offers whenever you download software. This author would argue that the main reason computers "slow" down over time is because of extra software that users unwittingly install.</p>
+<p></p>
+<p><img src="../Images/R-00-00%20Offers.PNG" alt="" class="fs" /></p>
+<h5>Three offers from Adobe that you neither need nor want -- this author recommends you uncheck them all.</h5>
+<h2 class="extension" id="test">Extension: Testing the extension link.</h2>
+<p>Hi, and welcome to the test <em><strong>Extension</strong></em>.&nbsp; If you clicked on the <em><strong>Extension</strong> </em>link to get here then a new link should have appeared just below this text and that link takes you back to your original location in this lesson.&nbsp; The link will disappear after you click on it.&nbsp;</p>
+<p></p>
+<p>If you just scrolled down to this point then, congratulations, you have reached the end of the document.</p>
+</body>
+</html>

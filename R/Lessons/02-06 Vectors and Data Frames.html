@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2231928" target="_self">Vector Operations and NA</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2028088" target="_self">Plots 1</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">02-06: Vectors and Data Frames</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Creating vectors</li>
+<li>Adding vectors to a data frame</li>
+<li>Rearranging data frames</li>
+<li>Saving data frame to a CSV file</li>
+</ul>
+<h2>Concepts</h2>
+<h2>Creating your own vector</h2>
+<p>In previous lessons, we pulled out a column from a data frame and saved that column to a vector such as <em><strong>highTempData</strong> </em>or <em><strong>lowTempData</strong></em>.&nbsp; There are also many situations where we want to create our own vector from scratch.&nbsp; For instance, we might want to add a humidity column to the data frame.</p>
+<p></p>
+<p>In R, a vector is a variable that has multiple associated values.&nbsp; If you want to declare a variable as a vector as opposed to a single value, you use the <em><strong>c()</strong></em> function.&nbsp; The values for the vector are put inside the parentheses of <em><strong>c()&nbsp;</strong></em> and separated using commas.</p>
+<p></p>
+<p>In the following code, we declare four different vector variables and assign values to them.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6><br />vectorVar1 = c(5, 10, 20, 4, 12, 7, 2);</h6>
+<h6>vectorVar2 = c(-5.2, 7.3, 0.2, 21, -1.235);</h6>
+<h6>vectorVar3 = c("llama", "goat", "alpaca", "guanaco");</h6>
+<h6>vectorVar4 = c(7, "llama", 3, "alpaca");</h6>
+<p></p>
+<p><img src="../Images/R-02-06%20Vector%20Variables.PNG" alt="" class="flexSize" id="vector" /></p>
+<h5>Creating four vector variables and assigning values to them</h5>
+<p></p>
+<p>In the Environment Window, you can see three of the properties of the vectors</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; <em><strong>type</strong></em>: either string (chr) or numeric (num)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; <em><strong>length</strong></em>: given by the second number in (1:x)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; <em><strong>values</strong></em>: numbers or strings (in quotes)</p>
+<p></p>
+<p>All values in a vector must be of the same data type so if there are mixed strings and numbers in a vector, all the numbers will be converted to strings.<span style="color: #990000;"></span> Notice that for the 4th vector, R converted the numbers <em><strong>7</strong> </em>and <em><strong>3</strong></em> into strings -- so 7 became "7" and 3 became "3".&nbsp;</p>
+<p></p>
+<h3>Subsetting vectors</h3>
+<p>We can subset these vectors just like in previous lessons using the subset ( [ ] ) operator:</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>vectorVar1 = c(5, 10, 20, 4, 12, 7, 2);<br />vectorVar2 = c(-5.2, 7.3, 0.2, 21, -1.235);<br />vectorVar3 = c("llama", "goat", "alpaca", "guanaco");<br />vectorVar4 = c(7, "llama", 3, "alpaca");</h6>
+<h6></h6>
+<h6>cat("3rd value of the 1st vector:", <span class="hl">vectorVar1[3]</span>, "\n");<br />cat("2nd value of the 4th vector:",<span class="hl"> vectorVar4[2]</span>, "\n");<br />cat("5th value of the 2nd vector:", <span class="hl">vectorVar2[5]</span>, "\n");</h6>
+<p></p>
+<p><img src="../Images/R-02-06%20Vector%20Subsetting.PNG" alt="" class="flexSize" id="subset" /></p>
+<h5>Subsetting the vector variables we created</h5>
+<p></p>
+<h2>&nbsp;Manipulating data frames</h2>
+<p>In a previous lesson we calculated the values for the vector <em><strong>changeInTemp</strong></em>, the difference between the high temperature and low temperature for each day.</p>
+<p></p>
+<p>Now let's say we want to add the <em><strong>changeInTemp</strong> </em>vector to the CSV file.&nbsp; We would first need to save the <em><strong>changeInTemp</strong> </em>vector to the <em><strong>weatherData</strong> </em>data frame and then write the data frame to a CSV file.</p>
+<h3>Add a vector to a data frame</h3>
+<p>In R,we can use the subsetting operator ( [ ] ) to add a vector to a data frame.&nbsp; The following script adds the <em><strong>changeInTemp</strong> </em>vector to the <em><strong>weatherData</strong> </em>data frame.&nbsp;</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>weatherData = read.csv("data/LansingWeather2.csv");<br />highTempData = weatherData[,2];<br />lowTempData = weatherData[,3];<br />changeInTemp = c(); # declare a vector variable</h6>
+<h6>&nbsp;</h6>
+<h6>for(day in 1:length(highTempData))<br />{<br />&nbsp;&nbsp; changeInTemp[day] = highTempData[day] - lowTempData[day];<br />}</h6>
+<h6></h6>
+<h6># add vector to data frame -- give it the name "deltaTemp"<br /><span class="hl">weatherData[,"deltaTemp"] = changeInTemp;</span></h6>
+<p></p>
+<p>The line</p>
+<h6><span class="p">weatherData[,"deltaTemp"] = changeInTemp;</span></h6>
+<p>looks for a column header named "deltaTemp" and adds the values of the vector <em><strong>changeInTemp</strong> </em>to the column.&nbsp; Since "deltaTemp" does not exist, R adds a column to the data frame, gives it the header "deltaTemp", and adds the values from <em><strong>changeInTemp</strong> </em>to the column.&nbsp; If "deltaTemp" already existed, then the values would be overwritten with the values from <em><strong>changeInTemp</strong></em>.</p>
+<p></p>
+<p><img src="../Images/R-02-06%20Adding%20a%20Vector.PNG" alt="" class="flexSize" id="addvector" /></p>
+<h5>Adding the <strong>changeInTemp</strong> vector to the <strong>weatherData</strong> data frame</h5>
+<p></p>
+<p>Note: <em><strong>weatherData</strong> </em>now has 5 variables (instead of 4).</p>
+<p></p>
+<p>Double clicking on <em><strong>weatherData</strong> </em>in the Environment Window displays the data in the Main Window.&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-02-06%20New%20DF.PNG" alt="" class="flexSize" id="new" /></p>
+<h5>The <strong>weatherData</strong> data frame after <strong>changeInTemp</strong> vector is added.</h5>
+<p></p>
+<h3>Adding vectors of the wrong size</h3>
+<p>You can create your own vector, put in values and add it to the data frame.&nbsp; One thing to note is that the length of the vector must be the same as the number of rows in the data frame.&nbsp; Luckily, R gives you a pretty convenient error if the length of your vector is incorrect.&nbsp; Let's try this by incorrectly adding an average humidity vector of a different length to <em><strong>weatherData</strong></em>.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>weatherData = read.csv("data/LansingWeather2.csv");</h6>
+<h6></h6>
+<h6># vector with 16 values in it<br />aveHumidity = c(88,87,80,74,67,84,89,59,55,72,82,83,87,58,48,41);</h6>
+<h6>weatherData[,"Humidity"] = aveHumidity;</h6>
+<p></p>
+<p>Note: the error state there are 16 values instead of the expected 14.</p>
+<p></p>
+<p><img src="../Images/R-02-06%20Adding%20a%20Vector-%20wrong%20size.PNG" alt="" class="flexSize" /></p>
+<h5>Putting a vector of wrong size in a data frame</h5>
+<p></p>
+<p>Let's take off the last two values in <em><strong>aveHumidity</strong> </em>to make it the right size vector to fit in <em><strong>weatherData</strong></em>.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>weatherData = read.csv("data/LansingWeather2.csv");<br />aveHumidity = c(88,87,80,74,67,84,89,59,55,72,82,83,87,58);</h6>
+<h6>weatherData[,"humidity"] = aveHumidity;</h6>
+<p></p>
+<p>In the Environment Window, we see that the vector <em><strong>aveHumidity</strong> </em>has been added to <em><strong>weatherData </strong></em>with the column header "humidity"</p>
+<p></p>
+<p><img src="../Images/R-02-06%20Adding%20manual%20Vector.PNG" alt="" class="flexSize" /></p>
+<h5>Adding a vector to <strong>weatherData</strong></h5>
+<p></p>
+<p>Double clicking on <em><strong>weatherData</strong> </em>and we see the updated data frame in the Main Window with "humidity" added</p>
+<p><img src="../Images/R-02-06%20humidity%20added.PNG" alt="" class="flexSize" /></p>
+<h5>Viewing the complete <strong>weatherData</strong> data frame</h5>
+<h3>Rearranging columns in the data frame</h3>
+<p><em><strong>weatherData</strong> </em>now has 5 column variables with "humidity" added to the end of the data frame.&nbsp; However, we might not want "humidity" as the last column in the data frame. Or, for that matter, we might want to change the order of multiple columns in <em><strong>weatherData</strong></em>.</p>
+<p></p>
+<p>We can rearrange the columns in a data frame however we wish by using <em><strong>c()</strong></em> inside the subsetting operation ( <em><strong>[ ]</strong></em> ).</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>weatherData = read.csv("data/LansingWeather2.csv");<br />aveHumidity = c(88,87,80,74,67,84,89,59,55,72,82,83,87,58);</h6>
+<h6>weatherData[,"humidity"] = aveHumidity;</h6>
+<h6>&nbsp;</h6>
+<h6>newWeatherData = weatherData[ ,c(1,5,4,2,3)];</h6>
+<p></p>
+<p>There is a lot going on in the last line of the script.&nbsp; On the right side we are subsetting <em><strong>weatherData</strong> </em>by its columns.&nbsp;</p>
+<p><em><strong>weatherData</strong></em>[ , c(1,5,4,2,3)] says to gather the columns in this particular order: 1,5,4,2,3</p>
+<p></p>
+<p>We assigned the new column arrangement to <em><strong>newW</strong><strong><em>e</em>atherData</strong></em><strong>.</strong><em> </em></p>
+<p></p>
+<p><img src="../Images/R-02-06%20Data%20Frame%20rearranged.PNG" alt="" class="flexSize" /></p>
+<h5>Rearrange the columns of a data frame</h5>
+<p></p>
+<p>We could have also saved the rearranged column back to the same data frame, so the last line of the script would look like:</p>
+<h6 class="p">weatherData = weatherData[ ,c(1,5,4,2,3)];</h6>
+<p></p>
+<p>This line will overwrite <em><strong>weatherData</strong> </em>and replace it with the new column arrangement.</p>
+<h3>Removing columns</h3>
+<p>We can also use this technique to delete a column by not including the columns we don't want.&nbsp; So, if we do not want the precipitation column, we just avoid including precipitation's column number, which is 4</p>
+<p></p>
+<h6 class="p">newWeatherData = weatherData[ ,c(1,2,5,3)];</h6>
+<p></p>
+<p>Now we will have a new data frame that has only four columns: <strong>date</strong>, <strong>humidity</strong>, <strong>highTemp</strong>, and <strong>lowTemp</strong> -- <strong>precipitation</strong> is gone.</p>
+<p></p>
+<p><img src="../Images/R-02-06%20Data%20Frame%20remove%20column.PNG" alt="" class="flexSize" /></p>
+<h5>Rearranging and removing columns from a data frame</h5>
+<p></p>
+<h2>Saving the data frame to a CSV file</h2>
+<p>Lastly, we might want to save a permanent copy of the data frame we created in the R script.&nbsp; To save the new data frame to a CSV file we use the command: <em><strong>write.csv() </strong></em>with the parameters:</p>
+<ol>
+<li><em><strong>x</strong></em>: the data frame to save (in this case, <em><strong>newWeatherData</strong></em>)</li>
+<li><em><strong>file</strong></em>: the file name to save it as (in this case, <strong>LansingWeather3.csv</strong>) -- make sure the file name is in quotes</li>
+</ol>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>weatherData = read.csv("data/LansingWeather2.csv");<br />aveHumidity = c(88,87,80,74,67,84,89,59,55,72,82,83,87,58);</h6>
+<h6>weatherData[,"humidity"] = aveHumidity;</h6>
+<h6>&nbsp;</h6>
+<h6># weatherData with humidity added and rearranged column</h6>
+<h6>newWeatherData = weatherData[ ,c(1,5,4,2,3)];</h6>
+<h6><span class="hl">write.csv(x=newWeatherData, file="data/LansingWeather3.csv");</span></h6>
+<p></p>
+<p>The above code saves <em><strong>newWeatherData</strong> </em>as <em><strong>LansingWeather3.csv</strong></em> in the data folder inside your working directory (which we set to be the <em><strong>R Root</strong></em> folder).&nbsp; After you execute the script above, you should notice that there is a new file called <strong><em>LansingWeather3.csv</em></strong> in the <em><strong>data</strong> </em>folder.&nbsp; This new csv file can be opened in excel or in any text editor (including RStudio).</p>
+<p></p>
+<p>Note: it is (too) easy to overwrite files using the script above.&nbsp; If the last line has been:</p>
+<h6 class="p">write.csv(x=newWeatherData, file="data/LansingWeather2.csv");</h6>
+<p>then the file <em><strong>LansingWeather2.csv</strong></em> would have been overwritten without any warning.</p>
+<p></p>
+<h2>Application</h2>
+<p>A) Add both the <em><strong>changeInTemp</strong> </em>and <em><strong>humidity</strong> </em>vectors to the <em><strong>weatherData</strong> </em>data frame (the <strong>data/lansingWeather2.csv </strong>version).</p>
+<p></p>
+<p>B) Rearrange the <em><strong>weatherData</strong> </em>data frame so that the columns are in this order</p>
+<p>1) date</p>
+<p>2) lowTemp</p>
+<p>3) change in temp</p>
+<p>4) highTemp</p>
+<p>5) humidity</p>
+<p>6) precipitation</p>
+<p></p>
+<p>C) Remove the <em><strong>highTemp</strong> </em>column and save the data to another data frame</p>
+<p></p>
+<p>D) Save the data frame from (C) to a new CSV file</p>
+<p></p>
+<p></p>
+</body>
+</html>

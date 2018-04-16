@@ -1,0 +1,319 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=MichiganSt-1980313" target="_self">Subset Operations</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2231640" target="_self">Iterations and State Variables</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">02-03: Sequences and For Loops</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Create various types of sequences</li>
+<li>Use sequences to iterate through a for()</li>
+<li>Use sequences to index a vector inside a for()</li>
+</ul>
+<h2>Concepts</h2>
+<h2>Iteration (i.e., executing code multiple times)</h2>
+<p><em></em>Programmers often want to execute, or iterate through, similar code multiple times.&nbsp; The most simplistic example is a counter.&nbsp; If you wanted your script to count from 1 to 5, you could simply output the numbers one to five in order:</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>cat("count is ", 1, "\n");</h6>
+<h6>cat("count is ", 2, "\n");</h6>
+<h6>cat("count is ", 3, "\n");</h6>
+<h6>cat("count is ", 4, "\n");</h6>
+<h6>cat("count is ", 5, "\n");</h6>
+<p></p>
+<p><img src="../Images/R-02-03%20Output%205%20numbers.png" alt="" class="fs" /></p>
+<h5 class="caption" id="count">Output numbers <strong>1</strong> through <strong>5</strong></h5>
+<p></p>
+<p>Or, perhaps you want to output the first five values from a column in a data frame (in this case, the first five temperatures from the <em><strong>highTemp</strong> </em>column in the <em><strong>weatherData</strong> </em>data frame).&nbsp; Remember: <em><strong>weatherData[3,"highTemp"]</strong> </em>references the<strong> third</strong> value in the <em><strong>highTemp</strong> </em>column.</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>weatherData = read.csv("data/LansingWeather2.csv");</h6>
+<h6></h6>
+<h6>cat("1st temp is ", weatherData[1, "highTemp"], "\n");</h6>
+<h6>cat("2nd temp is ", weatherData[2, "highTemp"], "\n");</h6>
+<h6>cat("3rd temp is ", weatherData[3, "highTemp"], "\n");</h6>
+<h6>cat("4th temp is ", weatherData[4, "highTemp"], "\n");</h6>
+<h6>cat("5th temp is ", weatherData[5, "highTemp"], "\n");</h6>
+<p></p>
+<p><img src="../Images/R-02-03%20First%205%20of%20vector.PNG" alt="" class="flexSize" /></p>
+<h5>Output the first five temperatures in the <strong>highTemp</strong> column of <strong>weatherData</strong>.</h5>
+<p></p>
+<p>While this works, you can see that this would get ugly quick if you wanted to count to 100 or get the first 100 values of a data frame column.&nbsp; And this method is completely impractical for 1000 or 1,000,000 values.&nbsp; Using programming functions we can reduce this above code to just a few lines no matter how high the count is.</p>
+<p></p>
+<p class="linkTo" title="string-factor">Trap: string and factors in data frames</p>
+<h2>Iterating through a codeblock</h2>
+<p>The two scripts above execute basically the same code 5 times -- with one small exception.&nbsp; In the count code the <em><span class="hl">count number</span></em> changes, and in the <em><strong>weatherData</strong></em> code the <em><span class="hl">vector's index number</span></em> changes.&nbsp; In both examples, both the count number and index number iterate sequentially from 1 to 5.</p>
+<p></p>
+<p>We can reduce the code by instructing R to iterate through a codeblock using the sequence 1 to 5.&nbsp; This is done using a <strong><em>for()</em></strong><em> </em><em></em>loop.<em><strong></strong></em></p>
+<p><strong><em></em></strong></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>weatherData = read.csv("data/LansingWeather2.csv");</h6>
+<h6></h6>
+<h6>for(seqVal in 1:5)&nbsp; # run the attached codeblock sequentially from 1 to 5</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("the count is", seqVal, "\n");</h6>
+<h6>&nbsp; cat("Temp ", seqVal, " is ", weatherData[seqVal, "highTemp"], "\n");</h6>
+<h6>}</h6>
+<p></p>
+<p>The code above outputs the values 1 through 5 and the first five values of the <em><strong>highTemp</strong> </em>column -- just like the previous two scripts.</p>
+<p></p>
+<p><img src="../Images/R-02-03%20For%20with%20simple%20sequence.PNG" alt="" class="flexSize" /></p>
+<h5>Using a<strong> for()</strong> to output a sequence of value and vectors.</h5>
+<p></p>
+<p>There is a whole lot going on in the script and we will go through each part in this lesson and the next lesson but, in a nutshell:</p>
+<ol>
+<li><em><strong>for()</strong></em> will execute the codeblock attached to it (with curly brackets: <em><strong>{ }</strong></em> ) multiple times.&nbsp;</li>
+<li>The number of times the codeblock is executed is determined by the sequence (in this case <strong>1:5</strong>, which is the same as <strong>1</strong> through <strong>5</strong>).</li>
+<li>At the start of the iteration, the sequence value (1, 2, 3, 4, or 5) is saved to a variable (in this case: <em><strong>seqVal</strong></em>) each time the codeblock is executed (i.e., the value of <em><strong>seqVal</strong> </em>changes each iteration).</li>
+<li>In line 9, <em><strong>seqVal</strong> </em>is used as an index value to subset the <em><strong>weatherData</strong> </em>data frame.</li>
+</ol>
+<p></p>
+<h3>Sequences</h3>
+<p>In the script above,<em><strong> 1:5</strong></em> creates a sequence that <em>starts at <strong>1</strong></em>, <em>ends at <strong>5</strong></em>, and <em>increases by <strong>1</strong></em></p>
+<p>So, <em><strong>1:5</strong></em> is a sequence with 5 values: <em><strong>1, 2, 3, 4, and 5</strong></em>. This is the same as<strong> c(1, 2, 3, 4, 5).</strong></p>
+<p></p>
+<p>We can create a sequence using any two numbers -- including negative numbers:</p>
+<p><em><strong>1:7</strong></em> is a sequence with 7 values: <em><strong>1, 2, 3, 4, 5, 6, and 7</strong></em></p>
+<p><em><strong>4307:4310</strong></em> is a sequence with 4 values <em><strong>4307, 4308, 4309, and 4310</strong></em></p>
+<p><em><strong>-5:2</strong></em> is a sequence with 8 values: <em><strong>-5, -4, -3, -2, -1, 0, 1, 2</strong></em></p>
+<p></p>
+<p>The sequence can also go backwards:</p>
+<p><em><strong>5:1</strong></em> is a sequence with 5 values: <em><strong>5, 4, 3, 2, 1</strong></em></p>
+<p><em><strong>13:8</strong></em> is a sequence with 6 values: <em><strong>13, 12, 11, 10, 9, 8<br /></strong></em></p>
+<p></p>
+<p>Let's replace the sequence <em><strong>1:5</strong></em> in the script above with the sequence <em><strong>13:8</strong></em></p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>weatherData = read.csv("data/LansingWeather2.csv");</h6>
+<h6></h6>
+<h6>for(seqVal in 13:8)&nbsp; # run the attached codeblock sequentially from 13 down to 8</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("the count is", seqVal, "\n");</h6>
+<h6>&nbsp; cat("Temp ", seqVal, " is ", weatherData[seqVal, "highTemp"], "\n");</h6>
+<h6>}</h6>
+<p></p>
+<p>The script now outputs the count values 13 down to 8 and the script outputs 13th value in the <em><strong>highTemp</strong> </em>column down to the 8th value in the <em><strong>highTemp</strong> </em>column</p>
+<p></p>
+<p><img src="../Images/R-02-03%20For%20with%20backward%20sequence.PNG" alt="" class="flexSize" /></p>
+<h5>Going backwards through a sequence using a <strong>for()</strong></h5>
+<h3>The sequence variable</h3>
+<p>The real power in a<em><strong> for()</strong></em> is the sequence variable that is declared inside the parentheses -- in this case, <em><strong>seqVal</strong></em>.&nbsp; The name of the variable is completely up to the programmer.&nbsp; For historical reasons, programmers often use the names<em><strong> i</strong></em> and <em><strong>j</strong> </em>for the sequence variable.</p>
+<p></p>
+<p>The line</p>
+<h6 class="partial">for(seqVal in 13:8)</h6>
+<p>says that the codeblock attached to the <em><strong>for()</strong></em> will be executed 6 times, representing the 6 different values that the variable <em><strong>seqVal</strong> </em>will take, which are given by the sequence <em><strong>13:8</strong></em>.</p>
+<p></p>
+<p>In other words, <span style="color: #990000;"><em><strong>seqVal</strong> </em>is assigned a new value from the sequence <em><strong>13:8</strong></em></span> each of the six times the codeblock attached to the <em><strong>for() </strong></em>is iterated.</p>
+<p>So after the <strong>first</strong> iteration, <em><strong>seqVal</strong> </em>will be <strong>13</strong></p>
+<p>after the <strong>second</strong> iteration, <em><strong>seqVal</strong> </em>will be <strong>12</strong>,</p>
+<p>after the <strong>third</strong> iteration, <em><strong>seqVal</strong> </em>will be <strong>11</strong>...</p>
+<p></p>
+<p>Again, the variable name inside the <em><strong>for()</strong></em> is up to us and it is probably nice to give it a name that makes sense in context.&nbsp; In this case, I will call the sequence variable <em><strong>dayNum </strong></em>because I want information for the<strong> 4th</strong> through <strong>8th</strong> days in the <em><strong>weatherData</strong> </em>data frame.</p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>weatherData = read.csv("data/LansingWeather2.csv");</h6>
+<h6></h6>
+<h6>for(dayNum in 4:8)&nbsp; # run the attached codeblock sequentially from 4 to 8</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("On day", dayNum, "the high temp was",</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; weatherData[dayNum, "highTemp"], "\n");</h6>
+<h6>}</h6>
+<p></p>
+<p><img src="../Images/R-02-03%20sequence%20variable.PNG" alt="" class="flexSize" /></p>
+<h5>The <strong>for()</strong> changes the value of the sequence variable each time it executes the codeblock</h5>
+<p></p>
+<h2>More complex sequences</h2>
+<p>The sequences we have use so far either go up by 1</p>
+<h6 class="partial">4:8 # goes through sequence 4,5,6,7,8</h6>
+<p>or down by 1</p>
+<h6 class="partial">13:8 # goes through sequence 13,12,11,10,9,8</h6>
+<p></p>
+<p>We can create evenly spaced sequences that increment by numbers other than <strong>1</strong> using the <em><strong>seq()</strong></em> function.</p>
+<p></p>
+<p><em><strong>seq()</strong></em> takes three parameters:</p>
+<ul>
+<li><em><strong>from</strong></em>: the start value</li>
+<li><em><strong>to</strong></em>: the end value</li>
+<li><em><strong>by</strong></em>: the increment value</li>
+</ul>
+<h6 class="partial">seq(from=1, to=10, by=2); &nbsp; # start at 1, go to 10, increment by 2</h6>
+<p></p>
+<p>We can also go down by using a negative number as the increment:</p>
+<h6 class="partial">seq(from=13, to=5, by=-3);&nbsp; # start at 13, go down to 5, increment by -3</h6>
+<p></p>
+<p>Let's use the sequences above to look at our weather data:</p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>weatherData = read.csv("data/LansingWeather2.csv");</h6>
+<h6>&nbsp;</h6>
+<h6>cat("First sequence: 1 to 10 by 2\n");</h6>
+<h6>for(dayNum in seq(from=1, to=10, by=2))&nbsp; # go from 1 to 10 by 2</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("On day", dayNum, "the high temp was",</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; weatherData[dayNum, "highTemp"], "\n");</h6>
+<h6>}</h6>
+<h6>&nbsp;</h6>
+<h6>cat("\nSecond sequence: 13 to 5 by -3\n");</h6>
+<h6>for(dayNum in seq(from=13, to=5, by=-3))&nbsp; # go down from 13 to 4 by -3</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("On day", dayNum, "the high temp was",</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; weatherData[dayNum, "highTemp"], "\n");</h6>
+<h6>}</h6>
+<p></p>
+<p>The <em><strong>to</strong> </em>value in the sequence is the boundary -- the sequence will not go beyond that value but the sequence does not have to use that value.&nbsp; In both examples above the <em><strong>to</strong> </em>value was not used because it was not part of the sequence.</p>
+<p></p>
+<p>So, <em><strong>seq(13, 5, -3)</strong></em> executes the loop using the values <em><strong>13,10,7.</strong></em>&nbsp; The next value in the sequence would be<strong> 4</strong> but <strong>4</strong> is not within the sequence.</p>
+<p></p>
+<p><img src="../Images/R-02-03%20Sequence%20with%20increment.PNG" alt="" class="flexSize" /></p>
+<h5>Using the <strong>seq()</strong> function to create a sequence with increment values other than<strong> 1</strong></h5>
+<p></p>
+<h2>Creating a manual sequence</h2>
+<p>All the sequences that we created above are really vectors -- we can see that if we save the sequence to a variable.</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>seq1 = 1:5;</h6>
+<h6>seq2 = 13:8;</h6>
+<h6>seq3 = seq(from=13, to=4, by=-3);</h6>
+<h6>seq4 = seq(from=1, to=10, by=2);</h6>
+<p></p>
+<p>In the Environment Window we can see that the four sequence variables (<em><strong>seq1, seq2, seq3, seq</strong><strong>4</strong></em>) are vectors that have the values of all the numbers in the sequence.</p>
+<p></p>
+<p><img src="../Images/R-02-03%20Sequence%20values%20in%20vectors.PNG" alt="" class="flexSize" /></p>
+<h5>Saving sequences to a vector variable.</h5>
+<p></p>
+<p>We can use any of these variables as the sequence in a <em><strong>for(). </strong></em></p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>seq1 = 1:5;</h6>
+<h6>seq2 = 13:8;</h6>
+<h6>seq3 = seq(from=13, to=4, by=-3);</h6>
+<h6>seq4 = seq(from=1, to=10, by=2);</h6>
+<h6></h6>
+<h6>weatherData = read.csv("data/LansingWeather2.csv");</h6>
+<h6></h6>
+<h6>for(dayNum in seq4)&nbsp; # seq4 is a vector that holds five values: 1,3,5,7,9</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("On day", dayNum, "the high temp was",</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; weatherData[dayNum, "highTemp"], "\n");</h6>
+<h6>}</h6>
+<p></p>
+<p><em><strong>seq4</strong> </em>is a vector variable that holds the values 1,3,5,7,9 and the <em><strong>for()</strong></em> goes through that sequence assigning <em><strong>dayNum</strong> </em>each of the 5 values</p>
+<p></p>
+<p><img src="../Images/R-02-03%20Sequence%20variable%20in%20for.PNG" alt="" class="flexSize" /></p>
+<h5>Using vector variable as the sequence in a<strong> for()</strong></h5>
+<h2>Manual Sequences</h2>
+<p>Remember that:</p>
+<h6 class="partial">for(i in 1:6)</h6>
+<p>executes the codeblock attached to the <em><strong>for()</strong></em> for all values in the sequence vector <strong>1:6</strong> (which are 1,2,3,4,5, and 6)</p>
+<p></p>
+<p>Similarly, the line:</p>
+<h6 class="partial">for(dayNum in seq4)</h6>
+<p>tells R to execute the codeblock attached to the <em><strong>for()</strong> </em>for all values in the vector <em><strong>seq4.&nbsp; </strong></em></p>
+<p></p>
+<p><em><strong>seq4</strong> </em>was assigned the values 1,3,5,7,9 using <em><strong>seq()</strong></em></p>
+<h6 class="partial">seq4 = seq(from=1, to=10, by=2);</h6>
+<p></p>
+<p>But <em><strong>seq4</strong> </em>is really just<em><span style="color: #990000;"> a vector</span></em> with values 1,3,5,7, and 9.&nbsp; We can also manually create vectors to use as a sequence in a <em><strong>for().</strong> </em></p>
+<p></p>
+<p>To create a vector we use the <em><strong>c()</strong> </em>function.</p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>manualSeq = c(7,3,9,1);&nbsp; # creates a vector with four values: 7,3,9,1</h6>
+<p></p>
+<p><img src="../Images/R-02-03%20Create%20vector.PNG" alt="" class="flexSize" /></p>
+<h5>Creating a manual sequence and saving it as a vector.</h5>
+<p></p>
+<p>And we can use <em><strong>manualSeq</strong> </em>in the <em><strong>for()</strong></em></p>
+<p><em><strong></strong></em></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>manualSeq = c(7,3,9,1);&nbsp; # creates a vector with four values: 7,3,9,1</h6>
+<h6></h6>
+<h6>weatherData = read.csv("data/LansingWeather2.csv");</h6>
+<h6></h6>
+<h6>for(dayNum in manualSeq)&nbsp; # creates a vector with four values: 7,3,9,1</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("On day", dayNum, "the high temp was",</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; weatherData[dayNum, "highTemp"], "\n");</h6>
+<h6>}</h6>
+<p></p>
+<p>In the script above, the <em><strong>for()</strong></em> executes the codeblock attached to it <strong>4</strong> times, which is the length of the vector <em><strong>manualSeq</strong></em>.&nbsp; Each time the codeblock executes, <em><strong>dayNum</strong> </em>is iteratively assigned the next value from the vector <em><strong>manualSeq</strong></em>.</p>
+<p></p>
+<p><img src="../Images/R-02-03%20Manual%20sequence%20in%20for.PNG" alt="" class="flexSize" /></p>
+<h5>Using a manual sequence to iterate through a <strong>for()</strong></h5>
+<p></p>
+<p>Inside the codeblock, <em><strong>dayNum</strong> </em>is used to both specify the day and to index the <em><strong>highTemp</strong> </em>vector from <em><strong>weatherData</strong></em></p>
+<h2 class="application" title="Lesson Practice">Application</h2>
+<p>A) Create two vectors:</p>
+<ol>
+<li>one that has all integer values from 45 to 167 in ascending order.</li>
+<li>one that has all integer values from 25 down to -7 in descending order.</li>
+</ol>
+<p></p>
+<p>B) Use the root and power functions on values in a sequence vector:</p>
+<ol>
+<li>Create a sequence that goes from 17 to 5 and increments down by 3 -- save the sequence to a vector variable.</li>
+<li>Create a <em><strong>for()</strong></em> that uses the vector variables created in part A.</li>
+<li>In the codeblock attached to the <em><strong>for()</strong></em>, output the cubed power (3rd power) and the cubed root (1/3rd power) of each value in the vector.</li>
+</ol>
+<p></p>
+<p>C) Create a <em><strong>for()</strong> </em>that outputs to the Console Window the date and precipitation for the 13th, 3rd, 5th, 8th, and 7th days from<em><strong> LansingWeather2.csv</strong></em> (make sure it is in the order 13, 3, 5, 8, 7)</p>
+<p></p>
+<p>Note: you will need to add the parameter <em><strong>stringsAsFactor</strong> </em>= <strong>FALSE</strong> to <em><strong>read.csv()</strong></em> to make part C work. Otherwise, you will oputput the factor number instead of the date.&nbsp; This is demonstrated in the Application Answers folder and there is more about this in <em class="linkTo" title="string-factor">Trap: Strings and factors in a data frame</em></p>
+<p></p>
+<p>D) Challenge: Go through the all the precipitation values using a <em><strong>for()</strong> </em>and output to the Console Window the days that have more than 1 inch of rain.&nbsp; Hint: use an <em><strong>if()</strong> </em>inside the<em><strong> for()</strong></em>.</p>
+<p></p>
+<h2 class="trap" id="string-factor">Trap: Strings and factors in data frames</h2>
+<p>When we save the data from <em><strong>LansingWeather2.csv</strong></em> to a data frame, the <strong>date</strong> column gets converted to a <em class="hl">factor variable</em> (or a categorical variable).&nbsp;</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>weatherData = read.csv("data/LansingWeather2.csv");</h6>
+<p></p>
+<p><img src="../Images/R-02-03%20factors.PNG" alt="" class="fs" /></p>
+<h5 class="" id="date-factor">The date column in <strong>weatherData</strong> by default is treated as a factor, or categorical variable.</h5>
+<p></p>
+<p>Any time there is a non-numeric value in a column of a data frame, R will categorize the column as factors. In this case, the <strong>date</strong> column has <strong>14</strong> different value, because it has <strong>14</strong> different dates.&nbsp; Each unique value gets its own factor or category so there are 14 levels (1 through 14).&nbsp; The "levels" are determined alphabetically so <strong>Apr1</strong> is <strong>1</strong>, <strong>Apr2</strong> is<strong> 2</strong>,... and <strong>Mar31</strong>, alphabetically last, is <strong>14</strong>.&nbsp; In <em class="figureRef" title="date-factor">fig</em>, it shows that the first value, <strong>Mar27</strong>, is <strong>10</strong> and the <strong>8th</strong> value, <strong>Apr3</strong>, is<strong> 3</strong>.</p>
+<p></p>
+<p>For the purposes of this class, this behavior just causes headaches and there is no real need for it.&nbsp; Many vectors are converted into factors unnecessarily all of the function we use in this class will convert a vector to a factor if needed -- we will see this in unit 3.&nbsp;</p>
+<p></p>
+<p>By default, it is probably best to treat vectors with non-numeric values as strings.&nbsp; We can do this by adding a parameters to <em><strong>read.csv()</strong></em> called <em><strong>stringsAsFactor.</strong></em></p>
+<p><em><strong></strong></em></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>weatherData = read.csv("data/LansingWeather2.csv",</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stringsAsFactors = FALSE);</h6>
+<p></p>
+<p>Notice that now when we output values from the <em><strong>date</strong> </em>vector, the values are given instead of the categorical level.</p>
+<p></p>
+<p><img src="../Images/R-02-03%20stringasfactors.PNG" alt="" class="fs" /></p>
+<h5>Treating the <strong>date</strong> column as a string instead of a factor.</h5>
+</body>
+</html>

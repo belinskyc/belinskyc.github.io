@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<!-- adds the style sheet for the editor -- this has to be done here otherwise the D2L editor will ignore it -->
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2028084" target="_self">Complex Conditional Statements</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=MichiganSt-1980313" target="_self">Subset Operations</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">02-01: File Inputs</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Setting the working directory for your RStudio projects</li>
+<li>Create a CSV file using R</li>
+<li>Get data from a CSV file and save it to a variable</li>
+<li>Introduce variable with multiple values</li>
+</ul>
+<h2>Concepts</h2>
+<h2>Data from files</h2>
+<p>Up until this point, all of the data used in our scripts have either been hardcoded (e.g., <em><strong>myVal</strong> </em>= <strong>4</strong>) or input from the user (e.g.,<em><strong> age = readline</strong></em><strong>("</strong>How old are you?<strong>")</strong>.&nbsp; However, you are often dealing with data sets that exists in a separate file, often a CSV (Comma-separated Values) file.&nbsp; The data is usually in the form of a data frame, which is data containing a series of related values (e.g., multiple types of weather measurements over a 15 day period).&nbsp; The data from the file is read in by the R script and saved to a variable -- similar to how R can use<em><strong> readline()</strong></em> to assign user input values to a variable.&nbsp;</p>
+<h2>Setting up RStudio to get data</h2>
+<p>For the first time in this class, we will be working with multiple files (script files and data files).&nbsp; Before we do this, it would be best to set up the RStudio environment to make it easier to access data from files .&nbsp;&nbsp;</p>
+<h3>Creating an R folder structure</h3>
+<p>It is helpful to have a consistent place to save all your scripts and associated files especially because we will be using R to read from and write to files outside of your R script file.&nbsp; This means we need to tell R where the files are.</p>
+<p></p>
+<p>For this class I created a folder called "R Root" and inside that folder, I created three more folders: <em><strong>data</strong></em>, <em><strong>plots</strong></em>, and <em><strong>scripts</strong> </em>(<em class="figureRef" title="folders">fig</em>).</p>
+<p></p>
+<p><img src="../Images/R-02-01-Inputs-Folder%20Structure.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="folders">Folder structure I use for this class</h5>
+<p></p>
+<p>All of my examples is this class are coded to use this folder structure above (<em class="figureRef" title="folders">fig</em>) so, for convenience, you should create the same folder structure on your computer.&nbsp; You should have a root folder (what I call "<em><strong>R Root</strong></em>") that contains the three folders (<em><strong>data</strong></em>, <em><strong>scripts</strong></em>, <em><strong>plots</strong></em>) . It does not matter where you put the "R Root" folder.&nbsp;</p>
+<p></p>
+<p>If you do not use this folder structure (<em class="figureRef" title="folders">fig</em>) then you will have to do a minor edit to all my example code to get it to execute properly -- I will point out the edit in the first example.</p>
+<h3>Setting the working directory in RStudio</h3>
+<p>The next thing you need to do is set the "R Root" folder as the <em><strong>default working directory</strong></em> in RStudio.</p>
+<p></p>
+<p>The <em class="hl">default working directory</em> in RStudio is the default folder that RStudio goes to open or save files.</p>
+<p></p>
+<p>To permanently set the the <em><strong>default working directory </strong></em>in RStudio (<em class="figureRef" title="working">fig</em>)<strong></strong><em><strong><br /></strong></em> 1) Click on<em><strong> Tools -&gt; Global Options&nbsp; </strong></em><em><strong><br /></strong></em></p>
+<p>2) Click on <em><strong>Browse</strong> </em>next to the <em><strong>d</strong><strong><em>ef</em>ault working directory</strong> </em>textbox</p>
+<p>3) Move to the<em><strong> R Roo</strong><strong>t</strong></em> folder you created earlier (<em class="figureRef" title="folders">fig</em>)</p>
+<p>4) Click <em><strong>Select Folder</strong></em> (Windows)<strong></strong> or click<em><strong> O</strong><strong>pen </strong></em>(Mac)<strong> </strong><em><strong><br /></strong></em></p>
+<p>5) Restart RStudio (the change will not take effect until you restart RStudio)</p>
+<p></p>
+<p><img src="../Images/R-02-01-Inputs-Working%20Directory.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="working">Setting the RStudio working directory</h5>
+<p></p>
+<p class="linkTo" title="file-paths">Extension: relative and absolute file paths.</p>
+<h3>Checking your default working directory</h3>
+<p>After your restart RStudio, you can check if the <em><strong>default working directory</strong></em> has correctly changed by clicking on<em><strong> File -&gt; Open</strong></em> and the window should open up the <em><strong>R Root</strong></em> folder (<em class="figureRef" title="open">fig</em>).</p>
+<p></p>
+<p><img src="../Images/R-02-01-Inputs-Open%20File.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="open">Checking the default working directory</h5>
+<h3>Manually changing your default working directory</h3>
+<p>RStudio uses the <em><strong>default working directory</strong></em> whenever it is launched directly.&nbsp; However, if RStudio is opened by clicking on script file with a <em><strong>.R</strong></em> extension (called a <em class="hl">file association link</em>), then RStudio will change the <em><strong>default working directory</strong></em> <em><strong></strong></em>for that session to the directory the opened script is in.&nbsp;</p>
+<p></p>
+<p class="linkTo" title="session">Extension: The default working directory is a session variable</p>
+<p></p>
+<p>In other words, <em class="hl">how you open RStudio determines what the default working directory is</em>.&nbsp; The workarounds for this are:</p>
+<ol>
+<li>Always open your script files in RStudio using <em><strong>File -&gt; Open File...</strong></em></li>
+<li>Always open RStudio before double-clicking on a script file</li>
+<li>Click on <em><strong>Session</strong> </em>-&gt; <em><strong>Set Working Directory</strong></em> -&gt;<em><strong> Choose Directory...</strong> </em>and navigate to your <em><strong>R Root</strong></em> folder</li>
+<li>Add a line to your script file that sets the <em><strong>default working directory</strong></em></li>
+</ol>
+<p></p>
+<p>The fourth option is the most robust but requires that you add the following line of code to the top of all your scripts:</p>
+<h6 class="p">setwd("<em class="hl">default working directory pat</em><em class="hl">h</em>");</h6>
+<p></p>
+<p>The directory path highlighted below (<em class="figureRef" title="dwd">fig</em>) can be copied and pasted into <em><strong>setwd()</strong></em> <em><strong></strong></em>-- don't forget to put quotes around the file path.</p>
+<p></p>
+<p><img src="../Images/R-02-01%20copying%20DWD.PNG" alt="" class="fs" /></p>
+<h5 class="" id="dwd">Default working directory to be copied/pasted into <strong>setwd()</strong></h5>
+<p><em><strong></strong></em></p>
+<p>The line of code for this author is (for you it will be different):</p>
+<h6 class="p">setwd("C:/Users/belinsky/OneDrive/QFC/Classes/New R Class/R Root");</h6>
+<p></p>
+<p>Note: R uses forward slashes (<strong> /</strong> ) in its file path whereas Windows uses backward slashes ( <strong>\</strong> )</p>
+<h2>Data files</h2>
+<p>The next step is to create a data file that will be read in by an R Script.&nbsp; The data file will contain weather data from Lansing, Michigan (where yours truly is located).</p>
+<p></p>
+<p>The data file is a pure text file and any text editor (e.g., Notepad, TextEdit) can be used to create, read, or modify the data file.&nbsp; RStudio can also create, read, and modify text files so, for simplicity, I am going to use RStudio to create the data file.</p>
+<p></p>
+<h3>Information for the data file</h3>
+<p>The data file will contain weather information for Lansing, Michigan over a 14 day period (3/27/17 to 4/9/17).&nbsp; Each line will contain a high temperature and a low temperature.&nbsp; On the first line I put the labels <em><strong>highTemp</strong> </em>and <em><strong>lowTemp</strong></em>, which R will treat as the headers for the data (<em class="figureRef" title="weather-data">fig</em>).&nbsp;</p>
+<p></p>
+<h6 class="text">highTemp, lowTemp</h6>
+<h6>57,45</h6>
+<h6>50,43</h6>
+<h6>54,42</h6>
+<h6>40,38</h6>
+<h6>39,37</h6>
+<h6>58,45</h6>
+<h6>60,46</h6>
+<h6>53,50</h6>
+<h6>55,48</h6>
+<h6>44,40</h6>
+<h6>39,36</h6>
+<h6>53,43</h6>
+<h6>61,45</h6>
+<h6>75,63</h6>
+<h5 id="weather-data">Temperature data to be saved to a csv file.</h5>
+<p><span style="color: #000000;"></span></p>
+<h3><span class="">Creating a data file in R</span></h3>
+<ol>
+<li><span style="color: #000000;">In RStudio, create a new text file (<em><strong>File -&gt; New File -&gt; Text File</strong></em>) </span></li>
+<li><span style="color: #000000;">Copy the 14 high temperatures and 14 low temperatures (directly from <em class="figureRef" title="weather-data">fig</em>) along with the <em><strong>highTemp</strong> </em>and <em><strong>lowTemp</strong> </em>headers to the new text file you just created.&nbsp; </span></li>
+<li><span style="color: #000000;">Save the file as<em><strong> LansingWeather.csv</strong></em> (<em><strong>File -&gt; Save As...</strong></em>) in the <em><strong>data</strong> </em>folder<em><span style="color: #990000;"> inside the default working directory</span></em>, <em><strong>R Root</strong></em> (<em class="figureRef" title="csv">fig</em>).</span></li>
+</ol>
+<p><span style="color: #000000;"></span></p>
+<p><span style="color: #000000;">Note: <em><strong>LansingWeather.csv</strong></em> <em><strong></strong></em>is a data file -- not an R script file.&nbsp; Data files are not executed but they can read in by an R script file and saved as a variable.</span></p>
+<p><span style="color: #000000;"></span></p>
+<p><img src="../Images/R-02-01-Inputs-CSV.PNG" alt="" class="flexSize" /></p>
+<h5 id="csv">Save <strong>LansingWeather.csv</strong> file to data folder</h5>
+<p><span class=""></span></p>
+<p><span class="">To reopen a csv file in R go to <em><strong>File -&gt; Open File</strong> </em>and find the file.</span></p>
+<h3>Input data from a file to script</h3>
+<p>Now that we have a data file in our data folder, the next step is to create a script that can read the data file.&nbsp;</p>
+<p></p>
+<p>The <em><strong>R Root</strong></em> folder is my default working directory.&nbsp; Data files get saved in the <em><strong>data</strong> <span style="color: #990000;"></span></em>folder and the <em><strong>data</strong> </em>folder is inside the <em><strong>R Root</strong></em> folder.&nbsp; This is why I used <em><strong>"<span style="color: #990000;">data</span>/LansingWeather.csv"</strong></em>, to tell R to go inside the <em><strong>data</strong> </em>folder.</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6># The line of code below will work for you as long as you put LansingWeather.csv</h6>
+<h6># in the data folder inside # your R Root folder.</h6>
+<h6><span class=""># If your folder structure is different from mine,</span> you will need to change</h6>
+<h6># ("<span class="">data</span>/LansingWeather.csv") to</h6>
+<h6># ("&lt;<span class="">folder_where_LansingWeather.csv_is</span>&gt;/LansingWeather.csv")</h6>
+<h6></h6>
+<h6># read data from LansingWeather.csv and save to the variable weatherData...</h6>
+<h6>weatherData = read.csv("data/LansingWeather.csv");</h6>
+<p></p>
+<p>Line 9 of the script opens the<em><strong> LansingWeather.csv</strong></em> file and saves the information inside the <em><strong>LansingWeather.csv</strong></em> file to the variable named <em><strong>weatherData</strong></em>.&nbsp;</p>
+<p></p>
+<h2>A variable that holds multiple values</h2>
+<p><em><strong>WeatherData</strong> </em>is a different kind of variable from any other variable we have worked with so far. Up until this point all variables held one value but <em><strong>weatherData</strong> </em>is a variable that <em><span style="color: #990000;">holds multiple values</span></em>.&nbsp; In fact, <em><strong>weatherData</strong> </em>holds all of the values in the csv file.&nbsp;</p>
+<p></p>
+<p>Looking at the Environment Window, we see <em><strong>weatherData</strong> </em>has "14 obs. of 2 variables".&nbsp; The 2 "variables" are <em><strong>highTemp and lowTemp&nbsp;</strong> </em>(the labels we put on the first line) and the 14 observations are the 14 temperatures we entered for each day (<em class="figureRef" title="source" id="fig-source">fig</em>).&nbsp; In this case, <span style="color: #000000;"><em><span style="color: #990000;">variable refers to the column headers of the data frame</span></em>.&nbsp; This is not the same as the way we have used the term variable, so from now on we will refer to these data frame headers as <em><span style="color: #990000;">column headers</span></em>.</span></p>
+<p></p>
+<p><img src="../Images/R-02-01%20Column%20Variables.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="source">Saving the data from <strong>LansingWeather.csv</strong> to a variable</h5>
+<h3>Viewing the input data</h3>
+<p>If you click on the arrow to the left of<strong><em> weather</em></strong><em><strong>Data, </strong></em>two more rows appear representing the column variables <em><strong>highTemp </strong></em>and<strong> </strong><em><strong>lowTemp</strong></em> (<em class="figureRef" title="variables" id="fig-variables">fig</em>), the type of values stored in the column variable (<em><strong>int</strong></em>, which stands for integer) and a partial list of the values held in each column variable (57, 50, 54...)</p>
+<p></p>
+<p><img src="../Images/R-02-01-Inputs-GetVarFromData.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="variables">Using the Environment Window to show the values within the variables</h5>
+<p></p>
+<p>If you want to see all the values associated with <strong><em>weather</em></strong><em><strong>Data</strong></em> -- you can double-click on the <strong><em>weather</em></strong><em><strong>Data</strong></em> line and a new tab will open in the main window that gives an indexed table of all of the values in <strong><em>weather</em></strong><em><strong>Data</strong></em> (<em class="figureRef" title="table" id="fig-table">fig</em>).</p>
+<p></p>
+<p><img src="../Images/R-02-01-Inputs-hightempdata3.PNG" alt="Showing data in tabular form" class="flexSize" /></p>
+<h5 class="caption" id="table">Showing data in tabular form</h5>
+<p></p>
+<h2 class="application" title="Lesson Practice">Application</h2>
+<p>A) In the LansingWeather.csv file, add a third set of values called <em><strong>precipitation </strong></em>and use the following values for the 14 days (the values are in inches)</p>
+<p></p>
+<p>0.01, 0.005, 0.04, 1.11, 0.12, 0, 0.005, 0.49, 0.45, 0.30, 1.13, 0.004, 0, 0</p>
+<p></p>
+<p>B) In your R Script, save the data in LansingWeather.csv to a variable called <em><strong>newWeatherData</strong></em>.</p>
+<p></p>
+<p>C) Open <em><strong>newWeatherData </strong></em> in the Main Window and make sure newWeatherData has 3 filled columns of weather data (<em><strong>highTemp</strong></em>, <em><strong>lowTemp</strong></em>, and <em><strong>precipitation</strong></em>)</p>
+<p></p>
+<p>Verify, by double clicking on the data frame <em><strong>newWeatherData</strong> </em>in the Environment Window, that <em><strong>newWeatherData</strong> </em>looks like this:</p>
+<p><img src="../Images/R-02-01%20New%20Weather%20Data.PNG" alt="" class="fs" /></p>
+<h5><strong>newWeatherData</strong> data frame with <strong>precipitation</strong> values added.</h5>
+<p></p>
+<h2 class="extension" id="file-paths">Extension: <strong></strong>relative and absolute file paths</h2>
+<p>Let's take a look at the default working directory again:</p>
+<p><img src="../Images/R-02-01%20File%20Path.PNG" alt="" class="fs" /></p>
+<h5>The absolute file path for the default working directory.</h5>
+<p></p>
+<p>The path for me starts at the <em><strong>C:</strong></em> drive, moves to the <em><strong>Users</strong> </em>folder, then <em><strong>belinsky</strong></em>, <em><strong>OneDrive</strong></em>, <em><strong>QFC</strong></em>, <em><strong>New R Class</strong></em>, and finally <em><strong>R Root</strong></em>.</p>
+<p></p>
+<p>This is called an <em class="hl">absolute file path</em>. Absolute file paths start at the base of the tree (your harddrive, or network folder) and move down the branches (folders) until it find the required directory.</p>
+<p></p>
+<p>The problem with absolute file paths is that they are usually unique.&nbsp; No one else reading this lesson will have the same file path (unless you are on a Windows 10 machine using OneDrive, have the last name belinsky, work at the QFC, and are developing a new R class).&nbsp; This means that I cannot use absolute file paths in my script and expect anyone reading this to be able to execute the script.</p>
+<p></p>
+<p>This is why we usually use relative file path naming in programming.&nbsp; Relative file paths start at whatever folder you are currently in (as opposed to the base-of-the-tree folder).&nbsp; With relative file paths, I can set up a folder structure that anyone can copy and use. &nbsp; In R, the working directory is the starting point for all relative file paths.&nbsp;</p>
+<p></p>
+<p>For example, say I want to get the file "weather.csv" from the <em><strong>data</strong> </em>folder in the working directory:&nbsp;</p>
+<h6 class="p">weatherData = read.csv("data/weather.csv");</h6>
+<p></p>
+<p>Perhaps "weather.csv" is in the folder <em><strong>Lansing</strong> </em>inside the folder <em><strong>data</strong> </em>in the working directory:</p>
+<h6 class="p">weatherData = read.csv("data/Lansing/weather.csv");</h6>
+<p></p>
+<p>Or, "weather.csv" is in the parent folder of your working directory (i.e., you need to go back a folder):</p>
+<h6 class="p">weatherData = read.csv("../weather.csv");</h6>
+<p></p>
+<p><em class="hl">Note: <strong>../</strong> means "go back a folder",</em></p>
+<p><em class="hl">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>../../</strong> means "go back two folders"</em></p>
+<p></p>
+<p>Lastly, sometimes you need to move backwards and forward through directories.&nbsp; In other words, go back to find a common parent folder, and then move forward.&nbsp; In this case, we move back a folder and then into the <em><strong>Lansing</strong> </em>folder:</p>
+<h6 class="p">weatherData = read.csv("../Lansing/weather.csv");</h6>
+<p></p>
+<h2 class="extension" id="session">Extension: Default working directory (DFD) is a session variable</h2>
+<p>The DFD is a variable like the other variables you have used in your scripts.&nbsp; The difference is that the DFD is a variable for <em class="hl">the whole RStudio session</em>, not just your one script file.&nbsp; This mean that if you have multiple scripts open in RStudio and one script changes the DFD, then the DFD changes for all the scripts opened in RStudio.&nbsp; This is called a <em class="hl">session variable</em>.</p>
+<p></p>
+<p>When you open RStudio directly (i.e., not by double-clicking on a .r script file), it sets the DFD to the file path you set it to in<em><strong> Tools -&gt; Global</strong><strong> Options</strong></em>. When you open RStudio through a file association by double-clicking a script file on your hard drive or network folder, the DFD is set to the file path of the script file.&nbsp;</p>
+<p></p>
+<p>Each time RStudio opens, it sets the DFD.&nbsp; So, the behavior of your script can change based on how RStudio is opened and your script may fail if it depends on the DFD.</p>
+<p></p>
+</body>
+</html>

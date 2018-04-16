@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<!-- adds the style sheet for the editor -- this has to be done here otherwise the D2L editor will ignore it -->
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=MichiganSt-1934340" target="_self">File Inputs</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2028085" target="_self">Sequences and For Loops</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">02-02: Subset Operations</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Access specific values within a data frame</li>
+<li>Access a range of values within a data frame and save to a vector</li>
+<li>Access values within a vector</li>
+</ul>
+<h2>Concepts</h2>
+<h2>Accessing specific values within a data set</h2>
+<p>For this lesson we will use an expanded version of the Lansing weather data<em><strong></strong></em> that adds two more columns: <em><strong>date</strong> </em>and <em><strong>precipitation.</strong></em></p>
+<p><em><strong></strong></em></p>
+<h6 class="text">date,highTemp,lowTemp,precipitation</h6>
+<h6>Mar27,57,45,0.01</h6>
+<h6>Mar28,50,43,0.005</h6>
+<h6>Mar29,54,42,0.04</h6>
+<h6>Mar30,40,38,1.11</h6>
+<h6>Mar31,39,37,0.12</h6>
+<h6>Apr1,58,45,0</h6>
+<h6>Apr2,60,46,0.005</h6>
+<h6>Apr3,53,50,0.49</h6>
+<h6>Apr4,55,48,0.45</h6>
+<h6>Apr5,44,40,0.30</h6>
+<h6>Apr6,39,36,1.13</h6>
+<h6>Apr7,53,43,0.004</h6>
+<h6>Apr8,61,45,0</h6>
+<h6>Apr9,75,63,0</h6>
+<p></p>
+<p>Create a new text file in RStudio (<em><strong>File -&gt; New File -&gt; Text File</strong></em>) and paste the above data inside the file.&nbsp; We will save this file as <em><strong>LansingWeather<span style="color: #990000;">2</span>.csv</strong></em> so we do not overwrite the old file.&nbsp; Save<em><strong> LansingWeather2.csv</strong></em> to the <em><strong>data</strong> </em>folder inside the default working directory, <em><strong>R Root</strong></em> (<em class="figureRef" title="data">fig</em>).</p>
+<p></p>
+<p><img src="../Images/R-02-02%20Save%20CSV.png" class="flexSize" /></p>
+<h5 id="data">Save <strong>LansingWeather2.csv</strong> file to the <strong>data</strong> folder</h5>
+<h3>Input data from a file to a DataFrame</h3>
+<p>We will use a similar script from last lesson to read in the data from <em><strong>LansingWeather2.csv</strong></em> and save it to the variable <em><strong>weatherData</strong></em>.</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6># read data from LansingWeather2.csv and save to the variable weatherData</h6>
+<h6>weatherData = read.csv("data/LansingWeather2.csv");</h6>
+<p></p>
+<p>Line 5 of the script opens the<em><strong> LansingWeather2.csv</strong></em> file and saves the information inside the <em><strong>LansingWeather2.csv</strong></em> file to the variable named <em><strong>weatherData</strong></em>.&nbsp; <em><strong>weatherData</strong> </em>is called a <em class="hl">data frame </em>in R.&nbsp; A data frame is a collection of related values.</p>
+<p></p>
+<p>Looking at the Environment Window, we see <em><strong>weatherData</strong> now </em>has "<strong>14</strong> obs. of <strong>4</strong> variables".&nbsp; Double click on <em><strong>weatherData</strong> </em>in the Environment Window to open the table in a window (<em class="figureRef" title="table">fig</em>).</p>
+<p></p>
+<p><img src="../Images/R-02-02%20ViewData.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="table">Viewing the full <strong>weatherData</strong> data frame in RStudio</h5>
+<h2>Getting values from the data frame</h2>
+<p>In <em class="figureRef" title="table">fig</em>, the script shows that <em><strong>weatherData</strong> </em>has "14 obs. of 4 variables".&nbsp; <span style="color: #000000;">"variables" here refers to the <em class="hl">column headers</em> in the data frame -- <em><span style="color: #660000;">t</span></em></span><em><span class="hl" style="color: #660000;">his is not the same as a programming variable.</span></em><span class="" style="color: #660000;"> </span><span class="hl" style="color: #660000;"><br /></span></p>
+<p></p>
+<p>Data frames, in general, have columns that consist of related data collected from an experiment.&nbsp; Each column in a data frame consists of a <em class="hl">specific type of data</em> (e.g., date, high temp, low temp, precipitation) and the rows are <em class="hl">instances of each data type</em> (e.g., day1, day2...)</p>
+<h3>The subset operator</h3>
+<p>Data frames are two dimensional objects -- every value in the Data Frame can referenced by two values: a column and a row.&nbsp; In R, we can extract data from a data frame using a subset operator ( [ ] ).&nbsp; The subset operator allows us to index the data frame using the rows and columns.&nbsp; The simplest way to use the subset operator is to extract one value from the data frame by the value's row and column placement.</p>
+<p></p>
+<h6 class="partial">dataPoint = weatherData[rowNumber, colNumber];</h6>
+<p></p>
+<p>where <em><strong>dataPoint</strong> </em>is the name of the variable that will store the value from the <em><strong>weatherData</strong> </em>DataFrame</p>
+<p><em><strong>rowNumber</strong> </em>is the row that the data point is on</p>
+<p><em><strong>colNumber</strong> </em>is the column that the data point is on</p>
+<p></p>
+<p>So, if we want to get the <em><strong>highTemp</strong> </em>(column 2) for March 31st (row 5), the code is:</p>
+<p></p>
+<h6 class="partial">dataPoint = weatherData[5, 2];</h6>
+<p></p>
+<p>Adding this to the earlier script gives this:</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>weatherData = read.csv("data/LansingWeather2.csv");</h6>
+<h6>dataPoint = weatherData[5,2];</h6>
+<p></p>
+<p>The output we see in the Environment Window is "39L" (<em class="figureRef" title="point">fig</em>).&nbsp; The "L" stands for "Long Integer" and refers to how the number is stored in memory -- for our sake, the "L" can be ignored. If we check the table (<em class="figureRef" title="table">fig</em>), we see that 39 is indeed the high temperature on March 31st.</p>
+<p></p>
+<p><img src="../Images/R-02-02%20Subset%20Data%20Frame.png" alt="" class="flexSize" /></p>
+<h5 class="caption" id="point">Subset a data frame to get a specific value</h5>
+<p class="caption"></p>
+<p>We can assign this data point to a variable and (like we did last unit) can perform a conditional operation on it:</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);<br /><br />weatherData = read.csv("data/LansingWeather2.csv");<br />dataPoint = weatherData[5,2];<br /><br />if(dataPoint &lt; 40)<br />{<br />&nbsp; cat("It was cold that day!");<br />}</h6>
+<p></p>
+<p><img src="../Images/R-02-02%20If%20on%20subset.png" class="flexSize" /></p>
+<h5 class="" id="if">Using <strong>if</strong> statement on individual values from a data frame</h5>
+<p></p>
+<p class="linkTo" title="data-values">Extension: Data vs Values in the Environment Window</p>
+<h3>Subset by name</h3>
+<p>We can also use the column headers to subset the data frame</p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>weatherData = read.csv("data/LansingWeather2.csv");</h6>
+<h6>dataPoint1 = weatherData[5, "highTemp"]; # 5th value from highTemp column</h6>
+<h6>dataPoint2 = weatherData[7, "lowTemp"];&nbsp; # 7th value from lowTemp column</h6>
+<p></p>
+<p><img src="../Images/R-02-02%20Subset%20by%20header.png" alt="" class="flexSize" /></p>
+<h5 class="" id="subset-name">Subset a data frame using the column header</h5>
+<p></p>
+<p>Notice that <em><strong>highTemp</strong> </em>and <em><strong>lowTemp</strong> </em>are in quotes.&nbsp; This is because <em><strong>highTemp</strong> </em>and <em><strong>lowTemp</strong> </em>are values <em><span class="hl" style="color: #990000;">not variables</span></em>.&nbsp; If you take out the quotes you will get the error: "<em class="hl">Object highTemp not found</em>"</p>
+<p></p>
+<p><img src="../Images/R-02-02%20Error-%20header%20value.png" class="flexSize" /></p>
+<h5>Error: did not put <strong>highTemp</strong> in quotes</h5>
+<h2>Retrieving a whole column of data using subset operator ( [ ] )</h2>
+<p>We can also use the subset operator ( <em><strong>[ ]</strong> </em>) to grab a whole column of data and save those data to a variable.&nbsp; Remember the subset operator takes two parameters: <em><strong>row</strong></em> and <em><strong>col</strong></em>.</p>
+<p></p>
+<h6 class="partial">dataPoints = weatherData[rowNumber, colNumber];</h6>
+<p></p>
+<p>The <em><strong>highTemp</strong> </em>data is in column 2 of <em><strong>weatherData</strong> </em>so we want the values <em><span class="hl" style="color: #990000;">from every row</span></em> in column 2.&nbsp;</p>
+<p></p>
+<p>To return the value <em><span class="hl" style="color: #990000;">of every row</span></em><span class="" style="color: #990000;"> from a column</span>, we leave the <em><span class="hl" style="color: #990000;">row number blank</span></em> and just put in a column number.</p>
+<h6 class="partial">highTempData = weatherData[ , 2]; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; # column 2 is the "highTemp" data</h6>
+<p></p>
+<p>Or we could use the column header instead of the column number:</p>
+<h6 class="p">highTempData = weatherData[ , "highTemp"];&nbsp; # this the equivalent to the above line</h6>
+<p></p>
+<p>This code accesses the <em><strong>highTemp</strong> </em>data using the <em class="hl">column number</em> and the <em><strong>lowTemp</strong> </em>data using the<em class="hl"> column header</em>:</p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE); <br /><br />weatherData = read.csv("data/LansingWeather2.csv");</h6>
+<h6></h6>
+<h6># get all highTemps and save to highTempData<br />highTempData = weatherData[ ,2]; &nbsp; &nbsp; &nbsp;&nbsp; # same as weatherData[ ,"highTemp"]</h6>
+<h6># get all lowTemps and save to highTempData</h6>
+<h6>lowTempData = weatherData[ ,"lowTemp"]; # same as weatherData[ ,3]</h6>
+<p><em><strong></strong></em></p>
+<p><em><strong>highTempData</strong> </em>and <em><strong>lowTempData</strong> </em>are both shown in the Environment Window prefaced by<em><strong> int [1:14] (</strong></em><em class="figureRef" title="vectors">fig</em><em><strong>).&nbsp; </strong></em>This means that there are <strong>14</strong> values associated with both <em><strong>highTempData</strong> </em>and <em><strong>lowTempData</strong> </em>and all the values are <strong>integers</strong>.&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-02-02%20SAve%20column%20to%20vector.PNG" alt="" class="flexSize" /></p>
+<h5 id="vectors">Saving values to a vector</h5>
+<p></p>
+<p><em><strong>highTempData</strong> </em>and <em><strong>lowTempData</strong> </em>are both vectors.&nbsp; <em class="hl">Vectors, in R, are variables that hold multiple values</em> -- in this case, multiple temperature readings.</p>
+<h3>Accessing specific values in a vector</h3>
+<p>We can use the subset operator (<em><strong> [ ]</strong></em> ) to access specific values within vectors.&nbsp; The difference from accessing values in a data frame is that the vectors (<em><strong>highTempData</strong></em>, <em><strong>lowTempData</strong></em>) are one-dimensional objects whereas data frames like <em><strong>w</strong><strong><em>e</em>atherData</strong> </em>are two-dimensional.&nbsp; In other words, <em class="hl">only one index position is needed to subset a vector</em>, whereas two index positions are needed to subset a data frame.&nbsp; The value used to subset a vector is often called an <em class="hl">index value</em>.</p>
+<p></p>
+<h6 class="partial">highTempValue = highTempData[index];</h6>
+<p></p>
+<p>The following code returns the <em><strong>3rd</strong> </em>value in <em><strong>highTemps</strong> </em>and the <em><strong>9th</strong> </em>value in <em><strong>lowTemps</strong></em></p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE); <br /><br />weatherData = read.csv("data/LansingWeather2.csv");<br /><br />highTempData = weatherData[ ,"highTemp"];&nbsp; # same as weatherData[ ,2]</h6>
+<h6>lowTempData = weatherData[ ,3];&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # same as weatherData[ ,"lowTemp"]</h6>
+<h6></h6>
+<h6>cat("Third value of highTemps: ", highTempData[3]);</h6>
+<h6>cat("\nNinth value of lowTemps: ", lowTempData[9]);</h6>
+<p></p>
+<p><img src="../Images/R-02-02%20Index%20vectors.PNG" alt="" class="flexSize" /></p>
+<h5 class="">Subset (index) vectors to get individual values</h5>
+<p></p>
+<p><em><strong>highTempData[3]</strong></em> is the 3rd value in the variable <em><strong>highTempData</strong></em></p>
+<p><em><strong>lowTempData[9]</strong></em> is the 9th value in the variable <em><strong>lowTempData</strong></em></p>
+<p></p>
+<p>More formally, a <em class="hl">vector is a variable that has multiple values that are of the same type</em> <em></em>(e.g., integers or characters)<em>.</em></p>
+<p>Both <em><strong>highTempData</strong> </em>and <em><strong>lowTempData</strong> </em>are <em><strong>vectors</strong> </em>because they are one-dimensional objects that&nbsp; hold multiple values of the same type.</p>
+<h2 class="application" title="Lesson Practice">Application</h2>
+<p>A) Save the data from LansingWeather2.csv to a data frame object</p>
+<p><em></em></p>
+<p>B)<em> From the data frame </em>you just created<em>:</em> output to the Console Window the&nbsp; <em><strong>precipitation</strong></em> for the 3rd day and the 10th day</p>
+<p>&nbsp;</p>
+<p>C) Save the <em><strong>precipitation</strong> </em>column from the data frame to a vector named <em><strong>precipData</strong></em></p>
+<p></p>
+<p>D)<em> From the vector you just created in part C, <strong>precipData</strong></em>: output to the Console Window the <em><strong>precipitation</strong> </em>for the 5th day and the 13th day <em><em><strong></strong> </em></em></p>
+<p></p>
+<p>E)<em></em> Challenge: calculate the temperature difference (highTemp - lowTemp) for the 4th day and the 6th day -- save the answer to variables.<em><strong></strong></em></p>
+<p></p>
+<h2 class="extension" id="data-values">Extension: Data vs Values in the Environment Window</h2>
+<p><img src="../Images/R-02-02%20Data%20and%20Values.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="data-values-img"><strong>Data</strong> and <strong>Values</strong> in the RStudio Environment Window</h5>
+<p></p>
+<p class="figCaption" title="data-values">The RStudio Environment window displays all the variables in a script and RStudio separates those variables into two categories: <em><strong>Data</strong> </em>and <em><strong>Values</strong> </em>(<em class="figureRef" title="data-values-img">fig</em>).&nbsp; The functional difference between <em><strong>Data</strong> </em>and <em><strong>Values</strong> </em>is that any variable under <em><strong>Data</strong> </em>can be double-clicked and viewed in the Main Window.</p>
+<p></p>
+<p>The technical difference between <em><strong>Data</strong> </em>and <em><strong>Values</strong> </em>is that <em><strong>Data</strong> </em>contains all multi-dimensional variables (e.g., data frames), whereas <em><strong>Values</strong> </em>contains all one-dimensional variables (e.g., vectors) and point variables.&nbsp; I would argue that this is not intuitive and that you would be better off ignoring the distinction between <em><strong>Data</strong> </em>and <em><strong>Values</strong> </em>-- the Environment Window is the only place where you will see it.</p>
+<p></p>
+<p></p>
+<p></p>
+</body>
+</html>

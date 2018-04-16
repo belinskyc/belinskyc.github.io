@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/> 
+<!-- styles for the editor only -- need to come before styles for page -->
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=MichiganSt-1906747" target="_self">R Installation</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=MichiganSt-1906753" target="_self">Mathematical Operations</a></p>
+<h1 class="title" id="title">Variables</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Discuss what a scripting variable is and how it compares to an algebraic variable.</li>
+<li>Discuss naming conventions for variables.</li>
+<li>Assign values to the variables and change the value.</li>
+<li>Briefly discuss the different variable types.</li>
+</ul>
+<h2>Concepts</h2>
+<p><iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/811482/sp/81148200/embedIframeJs/uiconf_id/27554931/partner_id/811482?iframeembed=true&amp;playerId=kaltura_player&amp;entry_id=1_82ipmmoq&amp;flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[leadWithHTML5]=true&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;&amp;wid=1_3f76xvmo" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" width="480" height="306" frameborder="0"></iframe></p>
+<h2>Instruction: Intro to variables</h2>
+<p>Variables is a widely used term found in many different fields.&nbsp; Unfortunately, the definition of variable is not consistent throughout the fields.&nbsp; For this reason I will always precede the term <em><strong>variable</strong> </em>with the<em><span style="color: #990000;"> type of variable </span></em>(e.g., <em><span style="color: #990000;">algebraic</span> variable</em>, <em><span style="color: #990000;">experimental </span>variable</em>, <span style="color: #990000;"><em>statistical</em> </span><em>variable</em>) with the exception of programming variable.&nbsp; <span style="color: #990000;"><em>If you see the term variable without anything preceding it, then it is assumed to be a programming variable.</em></span></p>
+<p></p>
+<h3>Algebraic variables</h3>
+<p>In Physics, properties are denoted algebraically by some symbol and the symbol represents some generic value that changes based on the situation.&nbsp; For example, velocity can be expressed algebraically as&nbsp; <em><strong>v=d/t</strong></em> where <em><strong>v</strong></em>, <em><strong>d</strong></em>, and <em><strong>t</strong></em> are symbols representing the physical properties velocity, distance, and time.&nbsp;</p>
+<p></p>
+<p><em><strong>v, d</strong></em>, and<em><strong> t</strong></em> are all algebraic variables that have the following properties</p>
+<p>1) Name: v,d, t (synonymous with symbol)</p>
+<p>2) Type: numeric</p>
+<p>3) Values: given by situation -- can be known or unknown</p>
+<h3>Programming variables</h3>
+<p>In programming, <strong>variables</strong> work in a similar way.&nbsp; Programming variables are storage locations that hold information.&nbsp; This information could be a runner's distance, time, and velocity or it could be the <em>number of fish</em> caught in a day or the<em> time of day</em> the fish were caught.&nbsp;</p>
+<p></p>
+<p>Like algebraic variable&nbsp; programming variables have <strong><em>name</em></strong>, <strong><em>type</em></strong>, and <strong><em>value</em></strong>.</p>
+<p></p>
+<p class="linkTo" id="link-constants">Trap: Constants in programming</p>
+<h4>Programming variable name</h4>
+<p>The name corresponds to the symbol in physics -- it is how the programming variable is represented in the script.&nbsp; The name is used to reference the storage location that holds the information.&nbsp; For our initial example, we will use the symbols (<em><strong>v,d,t</strong></em>) as the programming variables' names.&nbsp; Later in this lesson I will talk more about naming conventions.</p>
+<h4>Programming variable value&nbsp;</h4>
+<p>The value is the information that is stored in the location pointed to by the name.&nbsp; So, when <em><strong>v = 10</strong></em> (we will not worry about units), that mean there is a storage location in memory named <em><strong>v</strong></em> and in that location there is the number <em><strong>10</strong>.</em></p>
+<h4>Programming variable type</h4>
+<p>The type describes what kind of value is being stored in memory which, in turn, tells the script what kind of operations can be performed on the programming variable. Distance, velocity, and time all have <span style="color: #990000;"><em>numeric values</em></span> and mathematical operations can be performed on them.&nbsp;<strong> Numeric values</strong> are one type of programming variable but there are multiple types of values that can be stored.&nbsp; Some other types include <strong>Boolean</strong> (a true/false statement), <strong>strings </strong>(a text value like fish species), or <strong>categorical </strong>(a limited set of text values like seasons).&nbsp;</p>
+<p></p>
+<p>It would not make sense to perform most mathematical operations on <em><strong>strings</strong> </em>or <em><strong>categorical</strong> </em>variables.&nbsp; We will talk more about non-numeric programming variable types in future lessons, for now we will stick with numeric programming variables.</p>
+<h2>Using programming variables in a script</h2>
+<p>We are going to create a simple script that calculates velocity given a distance and time.&nbsp;</p>
+<p>So there are three programming variables in this script: <em><strong>d</strong></em>,<em><strong>v</strong></em>, and <em><strong>t</strong></em></p>
+<p></p>
+<p>To make this script this you need to (1) start a new script, (2) add code to the script, and then (3) run the code.</p>
+<h3>1) Start a new script</h3>
+<p><span style="color: #000000;">In RStudio, click on<em><strong> File -&gt; New File -&gt; R Script</strong></em> (<em class="figureRef" title="open" id="fig-open">Fig</em>)</span></p>
+<p></p>
+<p><img src="../Images/R-01-02-New%20Script.PNG" alt="" class="flexSize" id="open" /></p>
+<p class="caption">Opening a new R file in RScript</p>
+<h3>2) Add code to the script</h3>
+<p>Copy and paste the following lines into the code window</p>
+<p></p>
+<h6># the next two lines should be at the top of all your scripts</h6>
+<h6>rm(list=ls());&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
+<h6>options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6># create three variables: d, t, and v</h6>
+<h6># give d and t values and use them to calculate v</h6>
+<h6>d = 100;</h6>
+<h6>t = 20;</h6>
+<h6>v = d/t;</h6>
+<p></p>
+<p>Lines 2, 6, and 7 are comment lines -- designed to make the script easier to read.&nbsp; You can take them out and the script will run exactly the same.&nbsp; Go ahead, try it -- but put the comments back in.</p>
+<p></p>
+<p class="">Lines 3 and 4 are helpful code that should always go at the beginning of all your scripts. They are explained further in <em class="linkTo" id="link-first-two-lines">Extension: The First Two Lines</em></p>
+<p></p>
+<p>Lines 3,4,8,9, and 10 all have semicolons ( <em><strong>;</strong></em> ) at the end.&nbsp; The semicolon designates the end of a programming statement just like the period designates an end-of-sentence.&nbsp; The semicolon is optional and often not used in R but I highly recommend the use of semicolons in all your scripts.&nbsp;</p>
+<p></p>
+<p>Line 1 and 11 respectively have a start and end curly bracket (<em><strong> { }</strong> </em>).&nbsp; They designate the start and end of a codeblock.&nbsp; Extending the semicolon designate end-of-sentence analogy, curly brackets designate the start and end of a paragraph.&nbsp; Like semicolons, these curly brackets are useful but not required. <em class="linkTo" id="link-why-semicolons">Extension: Why semicolons and curly brackets?</em></p>
+<p></p>
+<p>Lines 7, 8, and 9 are where the real action occurs and each line contains a <span style="color: #990000;"><em>variable assignment</em></span>:</p>
+<ul>
+<li>Line 7 assigns the value <em><strong>100</strong> </em>to the variable named <em><strong>d</strong></em> <em><strong></strong></em></li>
+<li>Line 8 assigns the value <strong><em>20</em> </strong>to the variable named <em><strong>t</strong></em></li>
+<li>Line 9 assigns the value of the calculation <em><strong>d/t</strong></em> to the variable named <em><strong>v</strong></em>.</li>
+</ul>
+<p></p>
+<p class="linkTo" id="link-assignment-equality">Trap: Assignment vs Equality</p>
+<p class="linkTo" id="link-alt-assignment">Extension: Alternate Assignment Operation</p>
+<h3>3) Execute your code</h3>
+<p>Click <em><strong>Source</strong> </em>(<em class="figureRef" title="source" id="fig-source">Fig</em>).&nbsp; Your RStudio window should look like this:</p>
+<p></p>
+<p><img src="../Images/R-01-02%20v-d-t%20script.PNG" alt="" class="flexSize" id="source" /></p>
+<p class="caption">Executing (sourcing) the velocity-distance-time script</p>
+<p></p>
+<p>Note: The Environment Window (top-right corner) displays the values for <strong><em>v</em></strong>,<strong><em>d</em></strong>, and<strong><em> t</em></strong>.&nbsp;</p>
+<p></p>
+<p>Try changing the values for <strong><em>d</em></strong> and <strong><em>t</em></strong> (lines 7 and 8) and click <em><strong>Source</strong> </em>again to see how the value in the Environment Window change.</p>
+<h2>Re-assigning values to programming variables</h2>
+<p>Programming variables get their namesake from the fact that their values can change.&nbsp;</p>
+<p></p>
+<p>In the code below...</p>
+<p>1) <strong><em>d</em></strong> is assigned the value <strong><em>100</em> </strong>in line 8</p>
+<p>2) <strong><em>d</em></strong> to used to calculate <em><strong>v</strong></em> in line 10</p>
+<p>3) <strong><em>d</em></strong> is assigned a <em>new value of</em> <em><strong>400</strong> </em>in line 11</p>
+<p></p>
+<p>Run the code below to see what happens</p>
+<p></p>
+<h6># the next two lines should be at the top of all your scripts<br />rm(list=ls()); <br />options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6># create three variables: d, t, and v<br /># give d and t values and use them to calculate v<br />d = 100; # assign d the value 100<br />t = 20;<br />v = d/t; # use d to calculate v<br />d = 400; # re-assigns d to 400</h6>
+<p></p>
+<p>Notice in the Environment Window that the value of <strong><em>v</em></strong> remains <strong><em>5</em></strong> even though <strong><em>d</em></strong> changes.&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-01-02%20change%20d.PNG" alt="" class="flexSize" id="change" /></p>
+<h5>Changing d in the script does not retroactively change v</h5>
+<p></p>
+<p>The value of <em><strong>v</strong></em> remains <em><strong>5&nbsp;</strong></em> because line 10 assigns the value of <strong><em>d/t</em></strong> to <strong><em>v. &nbsp; </em></strong>But, as of line 10, <em><strong>d</strong></em> is still equal to 100 -- <em><strong>v</strong></em> does not get updated because one of the variables used to calculate it (<em><strong> d</strong></em> ) changes later.&nbsp;</p>
+<p><em><strong></strong></em></p>
+<p><em><strong>v</strong> </em>will remain <em><strong>5</strong></em> until it is assigned another value.</p>
+<p></p>
+<p class="linkTo" id="link-nonexistent-variable">Trap: Assigning nonexistent values</p>
+<p><em><strong></strong></em></p>
+<p>What happens if you add the line&nbsp; <strong><em>v=d/t</em></strong> at the end of the script?&nbsp; Try the following code and click <em><strong>Source</strong></em><strong><em></em></strong></p>
+<h6># the next two lines should be at the top of all your scripts<br />rm(list=ls()); <br />options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6># create three variables: d, t, and v<br /># give d and t values and use them to calculate v<br />d = 100; # assign d the value 100<br />t = 20;<br />v = d/t; # use d to calculate v<br />d = 400; # re-assigns d to 400</h6>
+<h6>v = d/t; # re-assign v using the new value of d</h6>
+<p></p>
+<p>Notice that now the value of <em><strong>v</strong></em> has changed.&nbsp; This is because line 12 <em><span style="color: #990000;">assigns a new value</span></em> to <em><strong>v</strong></em> that uses the new value of<em><strong> d</strong></em> from line 11.</p>
+<p></p>
+<p><img src="../Images/R-01-02%20reassign%20v.PNG" alt="" class="flexSize" id="reassign" /></p>
+<h5>Assign a new value to v after assigning the new value to d</h5>
+<p></p>
+<h2>In-line and whole-line comments</h2>
+<p>The code in the previous script has example of<em><span style="color: #990000;"> whole-line comments</span> </em>(lines 2,6, and 7) and<em><span style="color: #990000;"> in-line comments</span></em> (lines 8,10,11,and 12).&nbsp; R ignores everything after the ( <em><strong>#</strong> </em>) but still executes everything on the line before&nbsp; the ( <em><strong>#</strong></em> ).&nbsp; In-line comments are a nice way to give a quick&nbsp; description of the code on the line, whereas whole-line comments are better for more robust descriptions.</p>
+<h2>Naming Programming Variables</h2>
+<p>The problem with programming variable names like <strong><em>v</em></strong>, <strong><em>d</em></strong>, and<strong><em> t</em></strong> is that they are not very descriptive.&nbsp; It is good programming practice to give names that are descriptive so that people reading your code can more easily understand what is going on.&nbsp; So, the first step would be to spell the names out, for example: <strong><em>velocity</em></strong>, <strong><em>distance</em></strong>, and <strong><em>time</em></strong>.</p>
+<p></p>
+<p>However, it is most likely that a script solving for velocity will be calculating multiple velocities.&nbsp; Perhaps the script is calculating the speed of both a runner and a car -- the programming variable names should reflect this.&nbsp;</p>
+<h3>Naming Conventions</h3>
+<p>The are two common programming conventions for programming variables names:</p>
+<p>1) Capitalize the first letter of every word except the first&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; examples: <strong><em>runnerVelocity</em></strong>, <strong><em>runnerDistance</em></strong>, <strong><em>runnerTime</em></strong></p>
+<p>2) Put an underscore ( <em><strong>_</strong> </em>) between each word</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; examples:&nbsp;<em><strong> runner_velocity, runner_distance, runner_time</strong></em></p>
+<p></p>
+<p class="linkTo" id="link-case-counts">Trap: Case Counts</p>
+<p></p>
+<p>For this class I will use the first convention.&nbsp; For your class project, you need to choose one of these two conventions.</p>
+<h3>Naming Rules</h3>
+<p>There are also a few rules for naming a programming variable:</p>
+<p>1) It must start with a letter</p>
+<p>2) It can only contains letters, numbers, the underscore (<strong> _</strong> ), or dash (<em><strong> -</strong></em> )</p>
+<p>&nbsp;&nbsp;&nbsp; - note: dots (<em><strong> .</strong></em> ) are also accepted in R but dots are not accepted in most programming languages</p>
+<p>3) There can be no spaces in the name</p>
+<p>4) There are system reserved words you cannot use as programming variable names (e.g., if, else, while, TRUE, FALSE, function, next...)</p>
+<h2>Application</h2>
+<p>In RStudio, calculate the number of fish caught per day at</p>
+<p>&nbsp;&nbsp; 1) the north fishing port, where there were <em><strong>1000 fish</strong> </em>caught over an <em><strong>eight day</strong></em> period.</p>
+<p>&nbsp;&nbsp; 2) the south fishing port, there were <em><strong>500 fish</strong> </em>caught over an <em><strong>ten day</strong></em> period.</p>
+<p></p>
+<p>A) Create programming variables to represent the</p>
+<p>&nbsp;&nbsp; 1) number of fish caught at both ports</p>
+<p>&nbsp;&nbsp; 2) number of days to catch the fish at both ports</p>
+<p>&nbsp;&nbsp; 3) calculated number of fish caught per day at both ports</p>
+<p>&nbsp;&nbsp; So, there should be a total of <em><strong>6 programming variables</strong></em>.&nbsp;</p>
+<p></p>
+<p>B) Make sure you are using proper naming convention for the programming variables</p>
+<p></p>
+<p>C) Make sure all the programming variables appear in the Environment Window with correct values.</p>
+<h2 class="trap" id="assignment-equality">Trap: Assignment vs. Equality</h2>
+<p>The equal sign ( <strong><em>=</em></strong> ) in programming plays a different role in scripting than in Algebra. &nbsp;</p>
+<p>In algebra the equal sign is an <em>equality operator</em> saying that <span style="color: #660000;">the two sides are equivalent to each-other.</span></p>
+<p></p>
+<p>So, in algebra,<em><strong> v = d/t</strong></em> says that <em><strong>v</strong></em> <em>is equivalent to<strong> d</strong></em> divided by<em><strong> t</strong></em></p>
+<p></p>
+<p>In programming, the equals sign is an <em>assignment operator</em> and it says that the programming <span style="color: #660000;">variable on the left side will be assigned the value calculated on the right side</span>.</p>
+<p></p>
+<p>So, in programming, <em><strong>v = d/t</strong></em> says that<em><strong> v</strong></em> will be assigned the calculation of&nbsp; <em><strong>d</strong></em> divided by <em><strong>t</strong></em></p>
+<p><em><strong></strong></em></p>
+<p>These two operations (equality and assignment) can result in the exact same output but often they will not.&nbsp;<span style="color: #660000;"> Notice how in scripting, <em><strong>v</strong></em> does not change after <em><strong>d</strong></em> or <em><strong>t</strong></em> change values.&nbsp; <em><strong>v</strong> </em>is assigned a value calculated using<em><strong> d</strong></em> and <em><strong>t</strong></em> but <em><strong>v</strong></em> is not tied to <em><strong>d</strong></em> and<em><strong> t</strong></em>.</span></p>
+<h3>Treating the equal sign as an equality operation</h3>
+<p>A very common error in programming is to treat the assignment operator ( <strong><em>=</em> </strong>) as an equality operator.</p>
+<p>The following statements make sense in algebra as <em>equality statements</em> but will cause errors in R.</p>
+<p></p>
+<h6 class="partial">d/2 = 100; # d/2 is not a valid variable -- you cannot "assign" a value to it (d = 100*2 is valid)</h6>
+<h6>20 = t; &nbsp;&nbsp; # '20' cannot be assigned the value of 't' (t = 20 is valid)</h6>
+<h6>d/t = v; &nbsp; # d/t is not a valid variable (v = d/t is valid)</h6>
+<p></p>
+<p>Put the above lines of code in your script individually.&nbsp; You will notice an error message gets displayed in the console (bottom-right corner).&nbsp; The error message are often not intuitive but they do give you a line number.&nbsp;</p>
+<p></p>
+<p>In the following example (<em class="figureRef" title="error" id="fig-error">Fig</em>), line 9 contains an error and the lines below it never get executed</p>
+<p></p>
+<h6># the next two lines should be at the top of all your scripts<br />rm(list=ls()); <br />options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6># create three variables: d, t, and v<br /># give d and t values and use them to calculate v<br />d = 100;</h6>
+<h6>20 = t;&nbsp;&nbsp; # error!</h6>
+<h6>v = d/t;</h6>
+<p></p>
+<p>Notice that the execution of the script stops as soon as an error occurs -- so, in this case, line 10, which calculates<em><strong> v</strong></em>, never gets executed.</p>
+<p></p>
+<p><img src="../Images/R-01-02%20assignment%20error.PNG" alt="" class="flexSize" id="error" /></p>
+<p class="caption">Assignment error in the R Script</p>
+<h2 class="trap" id="constants">Trap: Constants in programming</h2>
+<p>The name "variable" suggests that the value can be changed and this is usually true. However, mathematical constants like <b><i>&pi;</i></b> do not change, but they are still referred to as variables in programming.&nbsp; In other words, there can be a storage location referred to as <em><strong>pi</strong> </em>that contains the numeric value <em><strong>3.1415</strong></em>. These are often, and confusingly, referred to as "constant variables".</p>
+<h2 class="trap" id="nonexistent-variable">Trap: Assigning nonexistent variables</h2>
+<p class="">The first time you assign a value to a variable, a storage container is created in memory and a value is put in it.&nbsp; We call this a declaration (more about declaration in lesson 4). After a variable has been declared, it can be used in calculations and re-assigned values.&nbsp; Before this point, R knows nothing about the variable-- here is an example of using a variable before it is declared.&nbsp; <span style="color: #660000;">Notice the only change in this script was moving the line <em><strong>v=d/t</strong> </em>before the declaration of <em><strong>d</strong></em> and <em><strong>t</strong></em>.&nbsp;<span style="color: #000000;"> </span></span></p>
+<p></p>
+<h6># the next two lines should be at the top of all your scripts</h6>
+<h6>rm(list=ls()); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
+<h6>options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6># create three variables: d, t, and v</h6>
+<h6># give d and t values and use them to calculate v</h6>
+<h6>v = d/t;&nbsp; # error</h6>
+<h6>d = 100;&nbsp;</h6>
+<h6>t = 20;</h6>
+<p></p>
+<p><img src="../Images/R-01-02%20assignment%20error%202.PNG" alt="" class="flexSize" id="error2" /></p>
+<p class="caption">Did not assign a value to the variable named d -- error</p>
+<p><span style="color: #660000;"><span style="color: #000000;">&nbsp;</span></span></p>
+<p><span style="color: #660000;"><span style="color: #000000;">There is an error in the console window (<em class="figureRef" title="assignment" id="fig-assignment">Fig</em>) saying "object 'd'&nbsp; not found". The reason for this error is that, on line 8, the script is asked to assign the calculation<em><strong> d/t</strong></em> to the variable <em><strong>v</strong></em> but</span><em><strong> d</strong></em> and<em><strong> t</strong></em> do not exist yet.</span></p>
+<p></p>
+<p><span style="color: #660000;"><span style="color: #000000;">Try the following code and see how the error changes. <span style="color: #660000;">Notice in this code<em><strong> v=d/t</strong></em> is after the declaration of <em><strong>d</strong></em> but before the declaration of <em><strong>t</strong></em>.</span></span></span></p>
+<p></p>
+<h6># the next two lines should, for now, be at the top of all your scripts</h6>
+<h6>rm(list=ls()); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
+<h6>options(show.error.locations = TRUE);&nbsp;</h6>
+<h6></h6>
+<h6># create three variables: d, t, and v</h6>
+<h6># give d and t values and use them to calculate v</h6>
+<h6>d = 100;</h6>
+<h6>v = d/t;&nbsp; # error</h6>
+<h6>t = 20;</h6>
+<h2 class="trap" id="case-counts">Trap: Case counts in variable names</h2>
+<p>In R, as in most scripting language, uppercase and lowercase letters are always seen as different.&nbsp; So, <em><strong>runnersTime</strong> </em>and <em><strong>runnerstime </strong></em> are seen as two different variable names by R.&nbsp; If the case is not correct then you will receive an "Object not found" error just like you would if you spelled the word wrong.</p>
+<h2 class="extension" id="first-two-lines">Extension: the first two lines of code</h2>
+<p>The following two lines should, for now, be put at the beginning of any script you create</p>
+<p></p>
+<h6 class="partial">rm(list=ls());</h6>
+<h6>options(show.error.locations = TRUE);</h6>
+<p></p>
+<p>Line 1 cleans out the environment window each time the script is executed.&nbsp; Essentially this provides you with an clean slate each time you run a script.&nbsp;</p>
+<p></p>
+<p>Line 2 adds the line number to an error statement in the console.&nbsp; This is an incredibly useful feature as your script get longer.</p>
+<h2 class="extension" id="alt-assignment">Extension: alternate assignment operator</h2>
+<p>In R there are two assignment operators, the equal sign ( <strong><em>=</em></strong> ) and the arrow ( <strong><em>&lt;-</em></strong> ).&nbsp; The two operators are (almost) completely synonymous.</p>
+<p>In all the code above,&nbsp; ( <em><strong>=</strong></em> ) can be replaced with ( <em><strong>&lt;-</strong> </em>) with no change in functionality, as:</p>
+<p></p>
+<h6>rm(list=ls());</h6>
+<h6>options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>d &lt;- 100;</h6>
+<h6>t &lt;- 20;</h6>
+<h6>v &lt;- d/t;</h6>
+<p></p>
+<p>You will see a lot of R programs written using the arrow.&nbsp; In this class, I will use the equal sign because that is the standards for most other programming languages (including JavaScript and C)</p>
+<p></p>
+<h2 id="why-semicolons" class="extension">Extension: Why semicolons and curly brackets?</h2>
+<p>You will almost never see curly bracket ( <em><strong>{&nbsp; }</strong></em> ) put at the start and the end of an R script and you will rarely see semicolons put at the end of a statement -- your code will run just fine if you do not do either of these things.&nbsp; However, the two little practices make fixing (what we call debugging) your script easier.&nbsp;</p>
+<p></p>
+<p class="figCaption">RStudio has tools to help you fix mistakes in your script and putting the curly brackets at the beginning and end of your scripts and adding semicolons to the end of statements helps RStudio help you fix those mistakes.&nbsp; So the practice of adding semicolon and initial/final curly brackets are tricks to help find mistakes in your script.&nbsp; In some ways, they are making up for the deficiencies in the debugging tools within R and RStudio.</p>
+<p></p>
+<p class="">Also, both of these tricks are required when programming in C. So, I would suggest you use these tricks -- even if your fellow R programmer are not.</p>
+<p></p>
+<pre>This is preformatted text meant to act like inline content -- this is the only built in inline content in D2L<br />Line 2 of preformatted<br />Line 3 of preformatted<br /><br />Try to switch out of preformatted (hint: shift-enter)....<br /><br /><br /></pre>
+</body>
+</html>

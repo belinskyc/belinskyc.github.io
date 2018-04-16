@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<script src="../../../../Programming/module.js">
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile); **/
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=MichiganSt-1906748" target="_self">Syllabus</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=MichiganSt-1906746" target="_self">Variables</a></p>
+<h1 class="title" id="title">Orphaned Material (that we still like)</h1>
+<h2>Using the debugger</h2>
+<p>The debugger is a useful tool to see how the code inside an if-else structure is being executed.&nbsp; I am going to use the debugger on the above script.&nbsp;&nbsp;</p>
+<p></p>
+<p>The breakpoint is set at line 7 and the value entered by the user is <em><strong>74</strong> </em>(so "<em><strong>C</strong></em>" should be the output message)</p>
+<p></p>
+<p>When I run the script, I am asked to enter my score and I enter 74.&nbsp; The script pauses execution at line 7 and highlights the whole <em><strong>if-else-if </strong></em>structure (Fig 5).</p>
+<p></p>
+<p><img src="../Images/R-08-Debug-If-Else.PNG" alt="Debugger - stopped at line 7" title="Debugger - stopped at line 7" class="flexSize" /></p>
+<p></p>
+<p>RStudio's debugger treats the <em><strong>if-else-if</strong></em> structure as one block of code.&nbsp; Each time you hit <em><strong>Next</strong></em>, Rstudio proceeds to the next conditional statement in the <em><strong>if-else-if</strong></em> structure until a conditional statement is <em><strong>TRUE</strong></em>.&nbsp;</p>
+<p></p>
+<p>The first conditional statement: <em><strong>if (score &gt; 90)</strong> </em>is <em><strong>FALSE</strong></em>.&nbsp; Hit <strong><em>Next </em></strong>and RStudio proceeds to the next conditional statement (Fig 6).</p>
+<p></p>
+<p><img src="../Images/R-08-Debug-If-Else2.PNG" alt="Checking the second conditional statement" title="Checking the second conditional statement" class="flexSize" /></p>
+<p></p>
+<p>The second conditional statement: <em><strong>if (score &gt; 80)</strong> </em>is also <em><strong>FALSE</strong></em>.&nbsp; Hit <strong><em>Next </em></strong>and RStudio proceeds to the third conditional statement (Fig 7).</p>
+<p></p>
+<p><img src="../Images/R-08-Debug-If-Else3.PNG" alt="Checking the third conditional statement" title="Checking the third conditional statement" class="flexSize" /></p>
+<p></p>
+<p>The third conditional statement: <em><strong>if (score &gt; 70)</strong> </em>is <em><strong>TRUE</strong></em>.&nbsp; Hit <strong><em>Next </em></strong>and RStudio goes to the code attached to this conditional statement (Fig 8).</p>
+<p></p>
+<p><img src="../Images/R-08-Debug-If-Else4.PNG" alt="Condition was TRUE -- going to code attached to condition" title="Condition was TRUE -- going to code attached to condition" class="flexSize" /></p>
+<p></p>
+<p>The line<em><strong> cat("C")</strong></em> gets execute and RStudio exits the <em><strong>if-else-if</strong> </em>structure without checking the remaining conditional statement<em><strong> if (score &gt; 60) </strong></em>(Fig 9).</p>
+<p></p>
+<p><em><strong><img src="../Images/R-08-Debug-If-Else5.PNG" alt="R exits the if-else structure" title="R exits the if-else structure" class="flexSize" /></strong></em></p>
+<p></p>
+<h2>Iterative operation: While &lt;moving this to another lesson&gt;</h2>
+<p></p>
+<p>The are times when the number of data points in not given by the input source.&nbsp; In these cases we use a <em><strong>while()</strong></em> loop.&nbsp; The <em><strong>while()</strong></em> looks a lot like <em><strong>if()</strong></em> in that <em><strong>while()</strong></em>&nbsp; also contains a conditional statement:</p>
+<p></p>
+<h6>while ( # some condition is TRUE )</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp;&nbsp; # execute the code in between these brackets</h6>
+<h6>}</h6>
+<p></p>
+<p>Like an <em><strong>if()</strong></em>, the <em><strong>while()</strong></em> will only execute the code in between the curly brackets if the condition is <em><strong>TRUE</strong></em>.&nbsp; The difference is that <em><strong>while()</strong></em> will keep iterating the execution of the code until the condition is <em><strong>FALSE. </strong></em><strong>&nbsp;</strong>Usually there will be some condition like<em><strong> while ( we are not at the end-of-file</strong></em><strong> )</strong> and when the end-of-file signal is sent, the script exits the <em><strong>while().&nbsp; </strong></em></p>
+<p><em><strong></strong></em></p>
+<p class="linkTo" id="link-infinite-while">Trap: The infinite while() loop</p>
+<p class=""></p>
+<p class="">In this case, the user will supply the <em><strong>FALSE</strong> </em>condition.&nbsp; Let's make the FALSE condition any negative number.&nbsp;</p>
+<p class=""></p>
+<h6>while ( # data point value is a non-negative number )</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp;&nbsp; # execute the code in between these brackets</h6>
+<h6>}</h6>
+<p></p>
+<p>So, the <em><strong>while()</strong></em> will iterate as long as the user enters a positive number or zero.&nbsp; The challenge is when to ask the user for the input</p>
+<p></p>
+<h6>while (dataPoint &gt;= 0)&nbsp; # will run as long as the user input is 0 or a positive number</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; numPoints = numPoints + 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # increase number of points by one</h6>
+<h6>&nbsp;&nbsp; runningTotal = runningTotal + dataPoint # increase the running total by the data point</h6>
+<h6>}</h6>
+<p></p>
+<h2>&amp;&amp; vs &amp;, || vs | (vector vs scalar operators)</h2>
+<h2>Boolean variables (and console use)</h2>
+<h2>Complex Conditions (&amp;&amp; and || and () )</h2>
+<h2>Comparing the values of two variables (ignore -- moving to a later lesson)</h2>
+<p>runner1speed &gt; runner2Speed</p>
+<p>fish1Location&nbsp; == fish2Location</p>
+<p></p>
+<h2>Combining and ( &amp;&amp; ) and or ( || )&nbsp; &lt;moving this section to a later lesson&gt;</h2>
+<p>With ( <em><strong>&amp;&amp;</strong> </em>) and ( <em><strong>||</strong> </em>) you can code for pretty much any condition. The following example shows how you can combine the ( &amp;&amp; ) and ( || )</p>
+<p></p>
+<h6>rm(list=ls())</h6>
+<h6>options(show.error.locations = TRUE)</h6>
+<h6>&nbsp;</h6>
+<h6>hour = readline("What hour is it (24 hour time)? ")</h6>
+<h6>day = readline("What day of the week is it (Mon, Tues, Wed, Thurs, Fri, Sat, Sun)? ")</h6>
+<h6>&nbsp;</h6>
+<h6>if( ( hour &gt; 10 &amp;&amp; hour &lt; 21 ) &amp;&amp; ( day == "Mon" || day == "Tues") )</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("We are open!!")</h6>
+<h6>} else</h6>
+<h6>{</h6>
+<h6>&nbsp; cat ("We are closed")</h6>
+<h6>}</h6>
+<p></p>
+<p>&lt;probably moving the Challenge below to lesson 10 (Unit 2 lesson 1) -- iterative mathematical operations&gt;</p>
+<p><strong>Challenge:</strong></p>
+<p>E) Find the mean age of only the fish caught in the north port.</p>
+<p></p>
+<p><strong>Clues for Challenge</strong> (ignore this if you really want a challenge!!):</p>
+<p>Declare a variable named <em><strong>totalAge</strong> </em>and set its value to the number <em><strong>0</strong></em></p>
+<p>Declare a variable named <em><strong>numFish</strong> </em>and set its value to the number <em><strong>0</strong></em></p>
+<p></p>
+<p>Add to the <em><strong>totalAge</strong> </em>and <em><strong>numFish</strong> </em>values when you get a fish caught in the north port.</p>
+<p></p>
+<p>Remember:&nbsp;&nbsp;</p>
+<address>val = 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; # declare and assign a value to val</address><address>val = val + 10&nbsp;&nbsp; # add 10 to val (val will be 10 after this line)</address><address>val = val + 5&nbsp;&nbsp;&nbsp; # add another 5 to val (val will be 15 after this line)</address>
+<p></p>
+<p><strong>Clues -- take 2</strong> (no, really, ignore this if you want a challenge):</p>
+<address>val = 5 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # declare and assigns the value of 5 to val</address><address>addedVal = readline("Give a value") # asks user for a value, assigns it to addedVal</address><address>val = val + addedVal &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; # adds val and addedVal, assigns answer to val</address><address></address><address>
+<h2>Extracting information from vectors</h2>
+<p>When we have vectors representing some experimental variables (in this case, high temperatures), we usually want to do a lot more than just displaying the information. We want to extract information out of the data.&nbsp; For instance we might to find the maximum of the data or the mean of the data.</p>
+<p></p>
+<h3>Finding the maximum</h3>
+<p>If we want to find the maximum temperature in our high temp vector, we can use a<em><strong> for()</strong> </em>to iterate through each value in the vector, checking each to see if it is the highest.</p>
+<p></p>
+<p>Essentially the process is:</p>
+<p>1) go through each temperature in the vector <em><strong>highTempData</strong> </em>using a <em><strong>for()</strong></em></p>
+<p>2) for each index temperature: see if the temperature is higher than the <em><strong>maxTemperature</strong></em></p>
+<p>3) if the temperature is higher, set the <em><strong>maxTemperature</strong></em> to this temperature</p>
+<p></p>
+<p>Step 1 asks you to iterate through a vector -- so that uses a <em><strong>for().&nbsp; </strong></em>The code below iterates through each value in the vector <em><strong>highTempData</strong> </em>but does not do anything else...</p>
+<h6>for(day in 1:length(highTempData))<br />{</h6>
+<h6>&nbsp;<br />}</h6>
+<p></p>
+<p>Step 2 asks you to check each vector value and see if its value is greater than <em><strong>maxTemperature</strong></em></p>
+<p>So, inside the <em><strong>for()</strong></em>, we need to put an <em><strong>if()</strong></em> that checks whether the <em><strong>highTempData</strong> </em>value for the day is greater than the <em><strong>maxTemperature</strong></em>...</p>
+<h6>for(day in 1:length(highTempData))<br />{</h6>
+<h6>&nbsp; if(highTempData[day] &gt; maxTemperature)&nbsp;</h6>
+<h6>&nbsp;<span style="color: #ffff00;"> {&nbsp; # start the code associated with the if()<br /></span></h6>
+<h6><span style="color: #ffff00;">&nbsp;</span></h6>
+<h6><span style="color: #ffff00;">&nbsp; }&nbsp; # end the code associated with the if()</span></h6>
+<h6>}</h6>
+<p><em><strong>for()</strong></em> and<em><strong> if()</strong></em> both use curly brackets (<em><strong> { }</strong> </em>) to start and end the code.&nbsp; In the above code, the <em><strong>if()</strong></em> is nested inside the <em><strong>for().&nbsp; </strong></em> In the above code, the brackets associated with the <em><strong>if()</strong></em> are colored yellow and indented.&nbsp; It is good programming practice to indent nested statements so that it is easier to read the code and see where the codeblocks associated with different statements end.</p>
+<p></p>
+<p>Step 3 asks you to set <em><strong>maxTemperature</strong></em> to the current<strong> </strong><em><strong>highTempValue</strong></em> when the<em><strong> highTempValue</strong></em> is greater</p>
+<h6>for(day in 1:length(highTempData))<br />{</h6>
+<h6>&nbsp; if(highTempData[day] &gt; maxTemperature)&nbsp;</h6>
+<h6>&nbsp;<span style="color: #ffff00;"> { <br /></span></h6>
+<h6><span style="color: #ffff00;">&nbsp;</span>&nbsp;&nbsp; # set the maximum to the indexed value</h6>
+<h6>&nbsp;&nbsp;&nbsp; maxTemperature = highTempData[day]&nbsp;</h6>
+<h6><span style="color: #ffff00;">&nbsp; }&nbsp; <br /></span></h6>
+<h6>}</h6>
+<p></p>
+<p>Now let's develop the whole script to find the maximum temperature....</p>
+<div>
+<h6>rm(list=ls())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</h6>
+<h6>options(show.error.locations = TRUE)</h6>
+<h6>&nbsp;</h6>
+<h6>weatherData = read.csv("data/LansingWeather.csv")</h6>
+<h6>highTempData = weatherData[ ,2]</h6>
+<h6>lowTempData = weatherData[ ,3]</h6>
+<h6></h6>
+</div>
+<h6>maxTemperature&nbsp; = 0&nbsp;&nbsp; # a dummy value</h6>
+<h6>for(day in 1:length(highTempData))<br />{</h6>
+<h6>&nbsp; # if the indexed high temperature is greater than the maximum</h6>
+<h6>&nbsp; if(highTempData[day] &gt; maxTemperature)&nbsp;</h6>
+<h6>&nbsp; <span style="color: #ffff00;">{</span></h6>
+<h6>&nbsp;&nbsp;&nbsp; # set the maximum to the indexed value</h6>
+<h6>&nbsp;&nbsp;&nbsp; maxTemperature = highTempData[day]&nbsp;</h6>
+<h6>&nbsp; <span style="color: #ffff00;">}</span> <br />}</h6>
+<h6>cat("The maximum temperature was:", maxTemperature)</h6>
+<p></p>
+<p><img src="../Images/R-02-03%20Finding%20Max%20Temp.PNG" alt="" class="flexSize" /></p>
+<p>Finding the maximum temperature from the vector highTempData</p>
+<p></p>
+<p>We need to "prime the pump", so to speak, buy setting a maximum temperature before we check any value.&nbsp;</p>
+<p></p>
+<p>The code:</p>
+<h6>maxTemperature = 0&nbsp;&nbsp; # a dummy value</h6>
+<p>sets a maximum temperature initially to 0 (if this was Alaska, we would probably need to choose a lower number!) and then <em><strong>maxTemperature </strong></em>will be<em> </em>overwritten each time a value from <em><strong>highTempData</strong> </em>is greater than the maximum.</p>
+<p></p>
+<p>The code</p>
+<h6>&nbsp; if(highTempData[day] &gt; maxTemperature)&nbsp;</h6>
+<p>checks if the current indexed temperature is greater than the current maximum temperature.&nbsp; If it is then the code</p>
+<h6>maxTemperature = highTempData[day]</h6>
+<p>is executed, setting the maximum temperature to the indexed temperature, making this temperature the new maximum temperature</p>
+</address>
+</body>
+</html>

@@ -1,0 +1,359 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=MichiganSt-1914887" target="_self">Outputs</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=MichiganSt-1920039" target="_self">If-Else Statements</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">01-07: Conditional Operations</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Creating "decision points" in a script using if-statements</li>
+<li>Introduce the six different conditional operators</li>
+<li>Code conditional statements on strings and numbers</li>
+</ul>
+<h2>Concepts</h2>
+<h2>Decision Points</h2>
+<p>So far all of our scripts have been linear -- in other words, the execution of the script goes line-by-line until the end of the script.&nbsp; However, most scripts do not work like this -- they have multiple points within them where the execution of code depends on some condition.&nbsp; These conditions can be thought of as questions:<em> Is the fish's weight above 100 grams?</em>&nbsp;<em> Is one runner's speed greater than another runner's speed?&nbsp; Did the player hit the fire button? Was the temperature less than 30?&nbsp;</em></p>
+<p></p>
+<p>In script, the questions are presented as conditional statements using<em><strong> if()</strong></em>.&nbsp; The basic structure of an <em><strong>if() </strong></em>statement is:</p>
+<p></p>
+<h6 class="partial">if (&nbsp; <em></em>)&nbsp;&nbsp; # <em>some condition to check goes in these parenthesis</em></h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; # execute the code between these curly brackets</h6>
+<h6>&nbsp;&nbsp; # if the condition in parenthesis is TRUE</h6>
+<h6>}</h6>
+<h6># next lesson we will cover what happens if the condition is FALSE.</h6>
+<p><em></em></p>
+<p>Inside the curly brackets (<em><strong> {&nbsp; }</strong></em> ) attached to the <em><strong>if()</strong></em> is a <em class="hl">codeblock</em> that gets executed if the conditional statement is <em><strong>TRUE</strong></em>.&nbsp; If the conditional statement is <em><strong>FALSE</strong></em>, the codeblock is ignored.</p>
+<p></p>
+<p class="linkTo" title="curly-brackets">Extension: embedded curly bracket</p>
+<h3>Operators in R</h3>
+<p>To perform a conditional statement using <em><strong>if()</strong></em> we need to introduce a new type of operator called the <em><strong>conditional operator.&nbsp; </strong></em>Along with conditional operators, let's also look at the different types of operators we have already used.</p>
+<p></p>
+<table style="width: 642.533px;">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 106px; height: 18px;"><strong>Operator Type</strong></td>
+<td style="width: 267px; height: 18px;"><strong>Purpose</strong></td>
+<td style="width: 206.533px; height: 18px;"><strong>R Symbols </strong></td>
+</tr>
+<tr style="height: 18.2667px;">
+<td style="width: 106px; height: 18.2667px;"><strong>Assignment</strong></td>
+<td style="width: 267px; height: 18.2667px;">assign a value to a variable</td>
+<td style="width: 206.533px; height: 18.2667px;">= or &lt;-</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 106px; height: 18px;"><strong>Mathematical</strong></td>
+<td style="width: 267px; height: 18px;">Perform a mathematical operation on a numeric value</td>
+<td style="width: 206.533px; height: 18px;">+, -, *, /, ^</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 106px; height: 18px;"><strong>Conditional <br /></strong></td>
+<td style="width: 267px; height: 18px;">Compare two values</td>
+<td style="width: 206.533px; height: 18px;">==, !=, &gt;, &lt;, &gt;=, &lt;=</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p>A<em><span class="hl"> conditional operator</span> </em>does two things:</p>
+<p>1) It compares two values using one of six operators ( <em><strong>==, !=, &gt;, &lt;, &gt;=, &lt;=</strong></em> ).&nbsp;</p>
+<p>2) It outputs either a <em><strong>TRUE</strong> </em>or <em><strong>FALSE</strong> </em>statement based on results of the comparison.</p>
+<h3>Conditional Operators and Conditional Statements</h3>
+<p><em><span class="hl">Conditional Statements</span></em> are statements that have conditional operators:</p>
+<table style="width: 576px;">
+<tbody>
+<tr>
+<td style="width: 239.3px;"><strong>Conditional Statement in English</strong></td>
+<td style="width: 330.7px;"><strong>Conditional Statement in R</strong></td>
+</tr>
+<tr>
+<td style="width: 239.3px;">fish's age greater than 10</td>
+<td style="width: 330.7px;">fishAge &gt; 10</td>
+</tr>
+<tr>
+<td style="width: 239.3px;">fish species is "Walleye"</td>
+<td style="width: 330.7px;">fishSpecies == "Walleye"</td>
+</tr>
+<tr>
+<td style="width: 239.3px;">fish weight less than or equal to 500 grams</td>
+<td style="width: 330.7px;">fishWeight &lt;= 500</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p>Note: Conditional Operators exclusively compare two values (e.g., <em><strong>fishSpecies</strong> </em>== "Walleye").&nbsp; In lesson nine (multiple conditions), we will learn how to deal with more complex conditions (e.g., how to check if <em><strong>fishSpecies</strong> </em>is "Walleye" or "Carp").</p>
+<h3>If statements and conditional operators</h3>
+<p>The conditional statement goes inside the parenthesis of the <em><strong>if():</strong></em></p>
+<table style="width: 576px;">
+<tbody>
+<tr>
+<td style="width: 239.3px;"><strong>If statement in English</strong></td>
+<td style="width: 330.7px;"><strong>If statement in R</strong></td>
+</tr>
+<tr>
+<td style="width: 239.3px;">if the fish's age is greater than 10</td>
+<td style="width: 330.7px;">if ( fishAge &gt; 10 )</td>
+</tr>
+<tr>
+<td style="width: 239.3px;">if the fish species is "Walleye"</td>
+<td style="width: 330.7px;">if( fishSpecies == "Walleye" )</td>
+</tr>
+<tr>
+<td style="width: 239.3px;">if the fish weight less than or equal to 500 grams</td>
+<td style="width: 330.7px;">if( fishWeight &lt;= 500 )</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p>The conditional statement in an <em><strong>if() </strong></em>returns as output either<strong> </strong><em><strong>TRUE </strong></em>or<strong></strong><em><strong> FALSE.&nbsp;</strong></em> <em><strong>TRUE</strong> </em>means<em><span class="hl"> the codeblock attached to the<strong> if()</strong> gets executed</span></em>, <em><strong>FALSE</strong></em> means <em><span class="hl">the codeblock attached to the if() does not get executed </span></em><span class="">(i.e., it is ignored in the code)</span>.</p>
+<p></p>
+<p>An <em><strong>if()</strong> </em>statement contains:</p>
+<ol>
+<li>A conditional statement</li>
+<li>Curly brackets (<em><strong> {&nbsp; }</strong></em> ) that contain a codeblock that executes if the conditional statement is <em><strong>TRUE</strong></em></li>
+</ol>
+<p></p>
+<p>Our first example will ask the user their age and output a statement depending on the value of the age.&nbsp; Don't forget that line 7 is needed to tell R to explicitly designate the input, <em><strong>yourAge</strong></em>, from the user as a number!</p>
+<p></p>
+<p class="linkTo" id="link-string-number">Trap: string/number comparison</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6># R will treat the input, yourAge, as a string,</h6>
+<h6># so we need to force it to become numeric</h6>
+<h6>yourAge = readline("What is your age? ");</h6>
+<h6>yourAge = as.numeric(yourAge);</h6>
+<h6>&nbsp;</h6>
+<h6>if(yourAge &lt; 20)&nbsp; # check the conditional statement: yourAge less than 20</h6>
+<h6>{</h6>
+<h6>&nbsp; # this codeblock is executed if the conditional statement is TRUE</h6>
+<h6>&nbsp; cat("You are only", yourAge, "?\n");</h6>
+<h6>&nbsp; cat("You have your whole life ahead of you!!");</h6>
+<h6>}</h6>
+<p></p>
+<p>If you run this script then the codeblock attached to the <em><strong>if()</strong></em> is executed if the age entered by the user is less than <span style="color: #990000;"><em>but not equal</em> </span>to <strong>20</strong>, and the codeblock is ignored if the age is greater than <span style="color: #990000;"><em>or equal to</em></span> <strong>20</strong>.&nbsp; This script also works with negative numbers and decimals.&nbsp; The values -2, 10, 0.1, 19, and 19.9 all cause the codeblock attached to the <em><strong>if()</strong></em> to be executed.&nbsp; The values 20, 20.1, and 100 cause the codeblock to be ignored (<em class="figureRef" title="less-than">fig </em>).&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-01-07%20Checking%20Age.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="less-than">Testing the less-than ( &lt; ) Conditional Operator by asking the age of the user</h5>
+<p></p>
+<p>Note: the script in (<span class="figureRef" title="less-than">fig</span>) ran multiple times but the Environment Window only shows the last value for <em><strong>yourAge </strong></em> that was input by the user.</p>
+<h2>Conditional Operators with strings and numbers</h2>
+<p>The above example used ( <em><strong>&lt;</strong></em> ) to compare the variable <em><strong>yourAge</strong> </em>to the value <em><strong>20.</strong> <strong>Less-than</strong></em> ( <em><strong>&lt;</strong></em> ) represents one of six conditional operators -- the table below present all six conditional operators and their effect when used to compare <em><strong>yourAge</strong></em> to the number <em><strong>20.</strong> </em></p>
+<p><em><strong></strong></em></p>
+<table style="width: 593.417px;">
+<tbody>
+<tr style="height: 18px;">
+<td style="height: 18px; width: 38px;"><strong>Operator</strong></td>
+<td style="height: 18px; width: 156px;"><strong>Meaning</strong></td>
+<td style="height: 18px; width: 373.417px;"><strong>results when comparing <em>yourAge </em>to <em>20 </em></strong></td>
+</tr>
+<tr style="height: 18px;">
+<td style="text-align: center; height: 18px; width: 38px;"><strong>==</strong></td>
+<td style="height: 18px; width: 156px;">equal to</td>
+<td style="height: 18px; width: 373.417px;">
+<p>if( <em><strong>yourAge</strong> </em>== <em><strong>20</strong></em> ) is</p>
+<p>&nbsp; <em><strong>TRUE</strong> </em>if <em><strong>yourAge</strong> </em>is <em><strong>20</strong></em></p>
+<p>&nbsp; <em><strong>FALSE</strong> </em>if <em><strong>yourAge</strong> </em>is anything but <em><strong>20</strong></em></p>
+</td>
+</tr>
+<tr style="height: 18px;">
+<td style="text-align: center; height: 18px; width: 38px;"><strong>!=</strong></td>
+<td style="height: 18px; width: 156px;">not equal to</td>
+<td style="height: 18px; width: 373.417px;">
+<p>if( <em><strong>yourAge</strong> !</em>= <em><strong>20</strong></em> ) is</p>
+<p>&nbsp; <em><strong>TRUE</strong> </em>if <em><strong>yourAge</strong> </em>is anything but <em><strong>20</strong></em></p>
+<p>&nbsp; <em><strong>FALSE</strong> </em>if <em><strong>yourAge</strong> </em>is <em><strong>20</strong></em></p>
+</td>
+</tr>
+<tr style="height: 18px;">
+<td style="text-align: center; height: 18px; width: 38px;"><strong>&gt;=</strong></td>
+<td style="height: 18px; width: 156px;">greater than or equal to</td>
+<td style="height: 18px; width: 373.417px;">
+<p>if( <em><strong>yourAge</strong> &gt;</em>= <em><strong>20</strong></em> ) is</p>
+<p>&nbsp; <em><strong>TRUE</strong> </em>if <em><strong>yourAge</strong> </em>is greater than or equal to <em><strong>20</strong></em></p>
+<p>&nbsp; <em><strong>FALSE</strong> </em>if <em><strong>yourAge</strong> </em>is less than (but not equal to) <em><strong>20</strong></em></p>
+</td>
+</tr>
+<tr style="height: 18.2333px;">
+<td style="text-align: center; height: 18.2333px; width: 38px;"><strong>&lt;=</strong></td>
+<td style="height: 18.2333px; width: 156px;">less than or equal to</td>
+<td style="height: 18.2333px; width: 373.417px;">
+<p>if( <em><strong>yourAge</strong> &lt;</em>= <em><strong>20</strong></em> ) is</p>
+<p>&nbsp; <em><strong>TRUE</strong> </em>if <em><strong>yourAge</strong> </em>is less than or equal to <em><strong>20</strong></em></p>
+<p>&nbsp; <em><strong>FALSE</strong> </em>if <em><strong>yourAge</strong> </em>is greater than (but not equal to) <em><strong>20</strong></em></p>
+</td>
+</tr>
+<tr style="height: 18px;">
+<td style="height: 18px; text-align: center; width: 38px;"><strong>&gt;</strong></td>
+<td style="height: 18px; width: 156px;">only greater than</td>
+<td style="height: 18px; width: 373.417px;">
+<p>if( <em><strong>yourAge</strong> </em>&gt; <em><strong>20</strong></em> ) is</p>
+<p>&nbsp; <em><strong>TRUE</strong> </em>if <em><strong>yourAge</strong> </em>is greater than (but not equal to) <em><strong>20</strong></em></p>
+<p>&nbsp; <em><strong>FALSE</strong> </em>if <em><strong>yourAge</strong> </em>is less than or equal to <em><strong>20</strong></em></p>
+</td>
+</tr>
+<tr style="height: 18px;">
+<td style="height: 18px; text-align: center; width: 38px;"><strong>&lt;</strong></td>
+<td style="height: 18px; width: 156px;">only less than</td>
+<td style="height: 18px; width: 373.417px;">
+<p>if( <em><strong>yourAge</strong> </em>&lt; <em><strong>20</strong></em> ) is</p>
+<p>&nbsp; <em><strong>TRUE</strong> </em>if <em><strong>yourAge</strong> </em>is less than (but not equal to) <em><strong>20</strong></em></p>
+<p>&nbsp; <em><strong>FALSE</strong> </em>if <em><strong>yourAge</strong> </em>is greater than or equal to <em><strong>20</strong></em></p>
+</td>
+</tr>
+</tbody>
+</table>
+<h5>Table: the six conditional operators and the output of their operation.</h5>
+<p></p>
+<p>The following code will check the <em>equal</em> ( <em><strong>==</strong> </em>) condition and the <em>greater than or equal to</em> ( <em><strong>&gt;=</strong> </em>) condition</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>yourAge = readline("What is your age? ");</h6>
+<h6>yourAge = as.numeric(yourAge);</h6>
+<h6>&nbsp;</h6>
+<h6>if(yourAge == 20)&nbsp; # check the condition: yourAge is equal to 20</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("Welcome to the third decade of your life!\n");</h6>
+<h6>}</h6>
+<h6>if(yourAge &gt;= 20) # check the condition: yourAge is greater than or equal to 20</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("You still have plenty of life left in you!\n");</h6>
+<h6>}</h6>
+<p></p>
+<p>The output (<em class="figureRef" title="mult-if">Fig</em>) shows that the script executes (for example):</p>
+<ol>
+<li>neither codeblock if the user enters <em><strong>10</strong></em></li>
+<li>the second codeblock if the user enters <em><strong>30</strong></em></li>
+<li>both codeblocks if the user enters <em><strong>20</strong></em></li>
+</ol>
+<p></p>
+<p><img src="../Images/R-01-07%20Checking%20Two%20Ages.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="mult-if">Multiple if statements checking the same variable, <strong>yourAge</strong></h5>
+<h2>Conditional operators on strings</h2>
+<p>The previous examples used conditional operators to compare two numerical values.&nbsp; Conditional operators can also be used to compare two string values.&nbsp; Let's change the above script to one that asks the user for a string input -- their favorite animal.</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>favAnimal = readline("What is your favorite animal? ");</h6>
+<h6>&nbsp;</h6>
+<h6># check the conditional statement: favAnimal is equal to "Llama"</h6>
+<h6>if(favAnimal == "Llama")&nbsp;&nbsp;</h6>
+<h6>{</h6>
+<h6>&nbsp; # if the conditional statement is TRUE, execute this codeblock</h6>
+<h6>&nbsp; cat("You have the wisdom of the elders!!");</h6>
+<h6>}</h6>
+<p></p>
+<p>The codeblock attached to the <em><strong>if()</strong></em> will only be executed if the user entered <em><strong>"</strong><strong>Llama"</strong></em>.&nbsp; Even <em><strong>"</strong><strong>llama" </strong></em>(lowercase "<em><strong>l</strong></em>" to begin the word) is not seen by R as equal to <em><strong>"</strong><strong>Llama"</strong> </em>(<em class="figureRef" title="string-equiv">Fig</em>).</p>
+<p></p>
+<p><img src="../Images/R-01-07%20Checking%20Fav%20Animal.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="string-equiv">Using a Conditional Operator to compare string values</h5>
+<p></p>
+<p>Only two of the six conditional operators ( <em><strong>==</strong></em> ) and (<em><strong> !=</strong></em> ) make sense to use when comparing string values.&nbsp;</p>
+<ul>
+<li><em><strong>==</strong></em> returns <em><strong>TRUE</strong> </em>when the string values being compared are <em>exactly the same.</em>&nbsp;</li>
+<li><strong>!=</strong> returns <em><strong>TRUE</strong> </em>when the string values being compared <em>are not exactly the same</em>.&nbsp;</li>
+</ul>
+<p></p>
+<p class="linkTo" id="link-greater-than-less-than-strings">EXTENSION: Greater than and less than on string values</p>
+<p></p>
+<h3>Using the not equal to operator (!=)</h3>
+<p>Let's change the script above to use a ( <em><strong>!=</strong></em> ).&nbsp; In this case, the conditional statement is <em><strong>TRUE</strong> </em>if <em><strong>favAnimal</strong> <span class="hl">is not equal</span></em> to <em><strong>"</strong><strong>Llama"</strong></em></p>
+<p><em><strong></strong></em></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>favAnimal = readline("What is your favorite animal? ");</h6>
+<h6></h6>
+<h6># check the conditional statement: favAnimal is NOT equal to "Llama"&nbsp;</h6>
+<h6>if(favAnimal != "Llama")&nbsp;&nbsp;</h6>
+<h6>{</h6>
+<h6>&nbsp; # if the conditional statement is TRUE, execute this codeblock</h6>
+<h6>&nbsp; cat("Well, you still have some growing up to do!!");</h6>
+<h6>}</h6>
+<p></p>
+<p>The above code will execute the codeblock attached to the<em><strong> if()</strong></em> when the user inputs anything but "Llama" as shown below (<em class="figureRef" title="not-equal">fig</em>)</p>
+<p></p>
+<p><img src="../Images/R-01-07%20Not%20Fav%20Animal.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="not-equal">Using the not-equal conditional operator to compare values</h5>
+<h2>Application</h2>
+<p>Note: All of the following code should be in <em class="hl">one script file</em>.</p>
+<p></p>
+<p>A) Have a user enter two values and save these values to variables:</p>
+<p style="padding-left: 30px;">1) The high temperature for the day</p>
+<p style="padding-left: 30px;">2) The type of weather (either "sunny", "cloudy", or "rainy")</p>
+<p></p>
+<p>B) Using<em><strong> if()</strong></em> , give a message if the high temperature is less than 30.</p>
+<p></p>
+<p>C) Using <em><strong>if()</strong></em>, give a different message if the high temperature is greater than or equal to 80.</p>
+<p></p>
+<p>D) Using <em><strong>if(),</strong> </em>give a message if the weather is cloudy.</p>
+<p></p>
+<p>E) Using <em><strong>if(),</strong> </em>give a message if the weather is not rainy.</p>
+<p></p>
+<h2 class="extension" id="curly-brackets">Extension: Embedded curly brackets</h2>
+<p>Curly brackets are somewhat similar to paragraph in that they bring together multiple statements that are connected.&nbsp; However, curly brackets can also be embedded, meaning you have a codeblock within a codeblock.&nbsp; In all the examples in this lesson, the codeblock attached to the <em><strong>if()</strong></em> are embedded within the codeblock which is the entire script.&nbsp; You can also embed codeblocks attached to <em><strong>if()</strong></em> within codeblocks attached to a different <em><strong>if()</strong></em>.&nbsp; <em><strong> </strong></em>For example:</p>
+<p><em><strong></strong></em></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>yourAge = as.numeric(readline("What is your age? "));</h6>
+<h6>&nbsp;</h6>
+<h6>if(yourAge &lt; 30)&nbsp; # check the condition: yourAge is less than 30</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("You are less than 30!!");</h6>
+<h6></h6>
+<h6>&nbsp; if(yourAge &lt; 20)# check the condition: yourAge is less than 20</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp; cat("And you are less than 20!!!");</h6>
+<h6>&nbsp; }</h6>
+<h6>}</h6>
+<p></p>
+<p>In this case, the codeblock attached to the second <em><strong>if()</strong> </em>is embedded within the codeblock attached to the first <em><strong>if().</strong></em></p>
+<p><em><strong></strong></em></p>
+<p><em><strong><img src="../Images/R-01-07%20Embedded%20if%20statements.PNG" alt="" class="fs" /></strong></em></p>
+<h5><strong>if()</strong> embedded within an <strong>if() </strong></h5>
+<h2 class="trap" id="string-number">TRAP: String/Number comparisons</h2>
+<p>If you forget to explicitly say that <em><strong>yourAge</strong> </em>is a number, meaning R thinks of it as a string, R will still attempt to make a comparison between <em><strong>yourAge</strong> </em>and <em><strong>20</strong> </em>in line 6:</p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>yourAge = readline("What is your age? "); # but, R will treat this as a string</h6>
+<h6>&nbsp;</h6>
+<h6>if(yourAge &lt; 20)&nbsp; # check the condition: yourAge is less than 20</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp;&nbsp; cat("You have your whole life ahead of you!!");</h6>
+<h6>}</h6>
+<p></p>
+<p>The result seems to work at first if you use values between 1 and 99 but if you look a little deeper, many problems emerge.&nbsp; For instance the values <em><strong>100</strong></em>, <em><strong>!!!</strong></em>, or<em><strong> "bob"</strong> </em>(with the quotes) are all considered to be less than 20.&nbsp; This is because R converts the number <em><strong>20</strong> </em>to a string in order to compare it to the string that was entered by the user (even if the string has only numbers).&nbsp;</p>
+<p></p>
+<p>String comparisons are really checking to see how the values alphabetically compare</p>
+<p>So "10" is less than&nbsp; "20" because "1" is alphabetically less than "2".&nbsp; The same logic applies for "10000" is less than&nbsp; "20"</p>
+<p></p>
+<p>The rules for determining whether one character is greater than another character are complicated and have to do with ASCII character codes.</p>
+<p></p>
+<p>Needless to say, this is not the kind of functionality you want.&nbsp; Most other scripting language will give you a warning or an error if you attempt to make a comparison between a number and a string.&nbsp; In R, you just need to be careful about explicitly ensuring a number is treated as a number.</p>
+<h2 class="extension" id="greater-than-less-than-strings">Extension: Greater than and less than on strings</h2>
+<p>Greater than and less than conditional operator do work on strings.&nbsp; If the strings only have letters from the English alphabet, then &gt; and &lt; will do an alphabetical comparison between the values.</p>
+<p></p>
+<p>However, if there are characters other than letters from the English alphabet, R will look at the <a href="http://www.theasciicode.com.ar/extended-ascii-code/latin-diphthong-ae-uppercase-ascii-code-146.html" target="_blank" rel="noopener noreferrer">ASCII character code</a>.&nbsp; ASCII character codes are unique numbers assigned to every character.&nbsp; The main use for ASCII character codes is that they allow someone to use and output characters that are not on your keyboard like the<em><strong> &zeta;</strong></em> , which is character number 950.</p>
+<p></p>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../AuxFiles/Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../AuxFiles/Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	<style type="text/css">
+		/* For accessibility reason, I need to use visibility: hidden; instead of display: none;
+			This means I also have to zero out height, width, margin, and padding */
+		h1 
+		{ visibility: hidden; height: 0px; width: 0px; margin: 0; padding: 0; } 
+		h2
+		{ margin: 0px; padding: 0px; text-align: left; }
+		p
+		{ margin:0px; padding:0px; }
+		table
+		{ margin-bottom: 10px; width: 100%; } 
+		td 
+		{ height: 18px; }
+		ul,ol
+		{ margin-top: 0px; padding-top: 0px; margin-bottom:0px; padding-bottom: 0px; }
+		body
+		{ font-size: 14px; }
+	</style>
+</head>
+
+<body>
+<h1>Links to previous and Next Lessons</h1>
+<table class="lessonLink previousLesson" id="p1" title="link to previous lesson">
+<tbody>
+<tr>
+<td>Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=MichiganSt-1877568" target="_self">Variables</a></td>
+</tr>
+</tbody>
+</table>
+<table class="lessonLink nextLesson" id="p2" title="link to next lesson">
+<tbody>
+<tr>
+<td>Up Next:<a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=MichiganSt-1879633" target="_self"> Outputs</a></td>
+</tr>
+</tbody>
+</table>
+<table class="title" id="p3" title="title of current lesson">
+<tbody>
+<tr>
+<td>
+<p>Mathematical Operations</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="purpose content" id="p4" title="Purpose of the lesson" style="width: 918px;">
+<tbody>
+<tr style="height: 17px;">
+<th style="height: 17px; width: 908px;">
+<h2>Purpose</h2>
+</th>
+</tr>
+<tr style="height: 68px;">
+<td style="height: 68px; width: 908px;">
+<ul>
+<li>Perform mathematical operations on numerical variables</li>
+<li>Perform power operations.</li>
+<li>Perform counter operations</li>
+<li>Print values to the console</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="concept content" id="p5" title="Lesson Concepts">
+<tbody>
+<tr style="height: 26px;">
+<th style="width: 897px; height: 26px;">
+<h2>Concepts</h2>
+</th>
+</tr>
+<tr style="height: 34px;">
+<td style="width: 897px; height: 34px;">In the last module, we learned two types of operations: declaration and assignment. &lt;most program require a lot of calculation... something connecting algebra and variables&gt; In this module we will learn how to use mathematical operations using <em>numerical variables.</em></td>
+</tr>
+</tbody>
+</table>
+<table class="activities programming content" id="p6" title="Lesson Examples">
+<tbody>
+<tr>
+<th style="width: 1330px;">
+<h2>Programming</h2>
+</th>
+</tr>
+<tr>
+<td style="width: 1330px;">
+<p></p>
+<p>We are going to return to the previous lesson's example using velocity, distance, and time except we will use the full version of the formula which looks at the changes in distance and time as opposed to absolute distance and time.&nbsp; The full formula is:</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>v</mi><mo>=</mo><mo>&#160;</mo><mfrac><mrow><msub><mi>d</mi><mi>f</mi></msub><mo>-</mo><msub><mi>d</mi><mi>i</mi></msub></mrow><mrow><msub><mi>t</mi><mi>f</mi></msub><mo>&#160;</mo><mo>-</mo><mo>&#160;</mo><msub><mi>t</mi><mi>i</mi></msub></mrow></mfrac></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mfrac&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;/math&gt;"}</annotation></semantics></math>&nbsp;&nbsp; (If <math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><msub><mi>t</mi><mi>i</mi></msub></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msub&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;/math&gt;"}</annotation></semantics></math> and <math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><msub><mi>d</mi><mi>i</mi></msub></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msub&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;/math&gt;"}</annotation></semantics></math> are zero then you get the original formula: <math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>v</mi><mo>&#160;</mo><mo>=</mo><mo>&#160;</mo><mfrac><mi>d</mi><mi>t</mi></mfrac></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mfrac&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;/mfrac&gt;&lt;/math&gt;"}</annotation></semantics></math>)</p>
+<p></p>
+<br />
+<p>Now we need the formula to look more like something that we can put into a script, which means the numerator and denominator must be on one line.&nbsp; In order to do this, we need to group the items in the numerator and denominator by putting them in parenthesis.</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><msub><mi>v</mi><mi>f</mi></msub><mo>=</mo><mo>&#160;</mo><mfrac><mrow><mo>(</mo><msub><mi>d</mi><mi>f</mi></msub><mo>-</mo><msub><mi>d</mi><mi>i</mi></msub><mo>)</mo></mrow><mrow><mo>(</mo><msub><mi>t</mi><mi>f</mi></msub><mo>&#160;</mo><mo>-</mo><mo>&#160;</mo><msub><mi>t</mi><mi>i</mi></msub><mo>)</mo></mrow></mfrac></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msub&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mfrac&gt;&lt;mrow&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>And then pull the fraction between the numerator and denominator out&nbsp;and make it a division</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><msub><mi>v</mi><mi>f</mi></msub><mo>=</mo><mo>(</mo><msub><mi>d</mi><mi>f</mi></msub><mo>&#160;</mo><mo>-</mo><mo>&#160;</mo><msub><mi>d</mi><mi>i</mi></msub><mo>)</mo><mo>&#160;</mo><mo>/</mo><mo>(</mo><msub><mi>t</mi><mi>f</mi></msub><mo>&#160;</mo><mo>-</mo><mo>&#160;</mo><msub><mi>t</mi><mi>i</mi></msub><mo>)</mo></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msub&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>Now the formula is all on one line but the symbols need to be replaced with valid variable names</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>f</mi><mi>i</mi><mi>n</mi><mi>a</mi><mi>l</mi><mi>V</mi><mi>e</mi><mi>l</mi><mo>=</mo><mo>(</mo><mi>f</mi><mi>i</mi><mi>n</mi><mi>a</mi><mi>l</mi><mi>D</mi><mi>i</mi><mi>s</mi><mi>t</mi><mo>&#160;</mo><mo>-</mo><mo>&#160;</mo><mi>i</mi><mi>n</mi><mi>i</mi><mi>t</mi><mi>D</mi><mi>i</mi><mi>s</mi><mi>t</mi><mo>)</mo><mo>&#160;</mo><mo>/</mo><mo>(</mo><mi>f</mi><mi>i</mi><mi>n</mi><mi>a</mi><mi>l</mi><mi>T</mi><mi>i</mi><mi>m</mi><mi>e</mi><mo>&#160;</mo><mo>-</mo><mo>&#160;</mo><mi>i</mi><mi>n</mi><mi>i</mi><mi>t</mi><mi>T</mi><mi>i</mi><mi>m</mi><mi>e</mi><mo>)</mo></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;V&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;D&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;D&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;T&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;T&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>Finally, lets make this a valid line of code in R</p>
+<pre>finalVel = (finalDist - initDist) / (finalTime - initTime)</pre>
+<h4>Variable naming error -- or cases count</h4>
+<p>This line of code says that finalVelocity <span style="color: #660000;">will be assigned<span style="color: #000000;"> the value equal to the calculation of everything on the right side.</span></span></p>
+<p><span style="color: #660000;"><span style="color: #000000;">Of course, this means that every variable on the right must be given a value beforehand otherwise you will get the pesky "Object not found" error as shown in the image&nbsp; below</span></span></p>
+<p><span style="color: #660000;"><span style="color: #000000;"></span></span></p>
+<p><span style="color: #660000;"><span style="color: #000000;"><img src="../../Math%20Ops--Error%20in%20Naming.PNG" alt="Error naming variable" title="Error naming variable" class="flexSize" /></span></span></p>
+<p></p>
+<p>Note, this error occurred because I "spelled" the variable name wrong.&nbsp; <strong><span style="color: #660000;">finaltime</span> </strong>is not the same as <strong><span style="color: #660000;">finalTime </span></strong><span style="color: #000000;">-- case counts in programming!</span></p>
+<p><span style="color: #000000;"></span></p>
+<p><span style="color: #000000;">Here is the working code.&nbsp; Note:&nbsp; I am no longer going to be printing the initial code lines -- you should be automatically putting those line in &lt;put in one more time and say next time they are out?&gt;.</span></p>
+<pre>finalDistance = 100<br />initDistance = 50<br />finalTime = 20<br />initTime = 15<br />finalVelocity = (finalDistance - initDistance) / (finalTime - initTime)</pre>
+<p></p>
+<h4>Powers and multiplication</h4>
+<p>We will look at one more formula that relates kinetic energy to mass and velocity:</p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><msub><mi>E</mi><mi>k</mi></msub><mo>&#160;</mo><mo>=</mo><mo>&#160;</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mi>m</mi><msup><mi>v</mi><mn>2</mn></msup></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msub&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mfrac&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p><br />There are two new issues with this formula:</p>
+<p>1) the square power function</p>
+<p>2) the implicit multiplication (we know that values are being multiplied but there is no multiplication sign)</p>
+<p></p>
+<p>So lets first pull the one-half out of fraction and into division form and put it in parenthesis</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><msub><mi>E</mi><mi>k</mi></msub><mo>&#160;</mo><mo>=</mo><mo>&#160;</mo><mo>(</mo><mn>1</mn><mo>/</mo><mn>2</mn><mo>)</mo><mi>m</mi><msup><mi>v</mi><mn>2</mn></msup></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msub&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>Next we will explicitly put multiplication symbols in (in traps, we will look at the error created when you don't do this)</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><msub><mi>E</mi><mi>k</mi></msub><mo>&#160;</mo><mo>=</mo><mo>&#160;</mo><mo>(</mo><mn>1</mn><mo>/</mo><mn>2</mn><mo>)</mo><mo>*</mo><mi>m</mi><mo>*</mo><msup><mi>v</mi><mn>2</mn></msup></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;msub&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;msup&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>And then change the symbols to script-friendly variable names:</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>k</mi><mi>i</mi><mi>n</mi><mi>e</mi><mi>t</mi><mi>i</mi><mi>c</mi><mi>E</mi><mi>n</mi><mi>e</mi><mi>r</mi><mi>g</mi><mi>y</mi><mo>&#160;</mo><mo>=</mo><mo>&#160;</mo><mo>(</mo><mn>1</mn><mo>/</mo><mn>2</mn><mo>)</mo><mo>*</mo><mi>m</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>*</mo><mi>v</mi><mi>e</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>t</mi><msup><mi>y</mi><mn>2</mn></msup></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;msup&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>But we have to deal with the square.&nbsp; The easiest way in script is to just multiply a second velocity</p>
+<pre>kineticEnergy = (1/2)*mass*velocity*velocity  # this does work but it is not pretty</pre>
+<p>This solution is limited and useless for powers in root form (e.g., square root, cube root). We want a more robust solution that works for all powers.&nbsp; In R we use the ^ symbol to represent a power so...</p>
+<pre>kineticEnergy = (1/2)*mass*velocity^2 # much more robust solution</pre>
+<p>R does follow order-of-operations rules but sometimes it is helpful to add parenthesis to be explicit about what gets squared</p>
+<p></p>
+<pre>kineticEnergy = (1/2)*mass*(velocity)^2 # much more robust solution</pre>
+<p></p>
+<p>The (<em><strong> ^</strong> </em>) operator works for all powers including square roots, cubed roots, or mixed power (raising to the 3/2 or 5/3).&nbsp;</p>
+<p>Let's rearrange the kinetic energy formula to solve for velocity, which produces a square root &lt;footnote algebra&gt;</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>v</mi><mo>=</mo><mo>&#160;</mo><msqrt><mfrac><mrow><mn>2</mn><msub><mi>E</mi><mi>k</mi></msub></mrow><mi>m</mi></mfrac></msqrt></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;msqrt&gt;&lt;mfrac&gt;&lt;mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;msub&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;/mfrac&gt;&lt;/msqrt&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>Now to put it into a script form...</p>
+<p>1) Put the numerator and denominator on one line.&nbsp; Take out the fraction and replace with a division sign.</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>v</mi><mo>=</mo><mo>&#160;</mo><msqrt><mstyle displaystyle="false"><mo>(</mo><mn>2</mn><msub><mi>E</mi><mi>k</mi></msub><mo>&#160;</mo><mo>/</mo><mo>&#160;</mo><mi>m</mi><mo>)</mo></mstyle></msqrt></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;msqrt&gt;&lt;mstyle displaystyle=&quot;false&quot;&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;msub&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mstyle&gt;&lt;/msqrt&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>2) Put in multiplication symbols</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>v</mi><mo>=</mo><mo>&#160;</mo><msqrt><mstyle displaystyle="false"><mo>(</mo><mn>2</mn><mo>*</mo><msub><mi>E</mi><mi>k</mi></msub><mo>&#160;</mo><mo>/</mo><mo>&#160;</mo><mi>m</mi><mo>)</mo></mstyle></msqrt></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;msqrt&gt;&lt;mstyle displaystyle=&quot;false&quot;&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mstyle&gt;&lt;/msqrt&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>3) Spell it out in variable-friendly names:</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>v</mi><mi>e</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo>=</mo><mo>&#160;</mo><msqrt><mstyle displaystyle="false"><mo>(</mo><mn>2</mn><mo>*</mo><mi>k</mi><mi>i</mi><mi>n</mi><mi>e</mi><mi>t</mi><mi>i</mi><mi>c</mi><mi>E</mi><mi>n</mi><mi>e</mi><mi>r</mi><mi>g</mi><mi>y</mi><mo>&#160;</mo><mo>/</mo><mo>&#160;</mo><mi>m</mi><mi>a</mi><mi>s</mi><mi>s</mi><mo>)</mo></mstyle></msqrt></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;msqrt&gt;&lt;mstyle displaystyle=&quot;false&quot;&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mstyle&gt;&lt;/msqrt&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>Square rooting something is the same as saying "raised it to the 1/2 power"</p>
+<p></p>
+<p><math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>v</mi><mi>e</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo>=</mo><mo>&#160;</mo><msup><mfenced><mrow><mn>2</mn><mo>*</mo><mi>k</mi><mi>i</mi><mi>n</mi><mi>e</mi><mi>t</mi><mi>i</mi><mi>c</mi><mi>E</mi><mi>n</mi><mi>e</mi><mi>r</mi><mi>g</mi><mi>y</mi><mo>/</mo><mi>m</mi><mi>a</mi><mi>s</mi><mi>s</mi></mrow></mfenced><mrow><mn>1</mn><mo>/</mo><mn>2</mn></mrow></msup></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;msup&gt;&lt;mfenced&gt;&lt;mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;*&lt;/mo&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;E&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;/mrow&gt;&lt;/mfenced&gt;&lt;mrow&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>So it seems we have this in R</p>
+<p></p>
+<pre>velocity = (2*kineticEnergy / mass)^1/2&nbsp; # but there is a problem here...</pre>
+<p></p>
+<p>Instead of raising the (2*kineticEnergy/mass) to the 1/2 power, the above code will raise (2*kineticEnergy/mass) to the first power and then divide everything by 2.&nbsp; You need to be more explicit and put the 1/2 in parenthesis</p>
+<pre>velocity = (2*kineticEnergy / mass)^(1/2)&nbsp; # now we are good!</pre>
+<p></p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="activities debugging content" id="p7" title="Lesson Debug">
+<tbody>
+<tr>
+<th>
+<h2>Debugging</h2>
+</th>
+</tr>
+<tr>
+<td>
+<ul>
+<li>typical errors:</li>
+<ul>
+<li>b = 2a (no mult sign)</li>
+<li>b = 2c (c not delcares)</li>
+<li>b+2 = a</li>
+<li>8+7 = a</li>
+</ul>
+</ul>
+<ul>
+<li>which variables change:</li>
+<ul>
+<li>a = a+2, a=b+2...-\</li>
+</ul>
+<li>square, square root, cube... all powers</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="activities statistics content" id="p8" title="Lesson Debug">
+<tbody>
+<tr>
+<th>
+<h2>Statistics</h2>
+</th>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="suplemental traps content" id="p9" title="Lesson Debug">
+<tbody>
+<tr>
+<th>
+<h2>Traps</h2>
+</th>
+</tr>
+<tr>
+<td>
+<p>Multiplication must be explicit</p>
+<p>^(1/3) not ^1/3 &lt;order of ops&gt;</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="suplemental extensions content" id="p10" title="Lesson Debug">
+<tbody>
+<tr>
+<th>
+<h2>Extensions</h2>
+</th>
+</tr>
+<tr>
+<td>Console to do math ops</td>
+</tr>
+</tbody>
+</table>
+<table class="suplemental shortcuts content" id="p11" title="Lesson Debug">
+<tbody>
+<tr>
+<th>
+<h2>Extension</h2>
+</th>
+</tr>
+<tr>
+<td>There is another way to do square roots...</td>
+</tr>
+</tbody>
+</table>
+<table class="application content" id="p12" title="Lesson Practice">
+<tbody>
+<tr>
+<th>
+<h2>Application</h2>
+</th>
+</tr>
+<tr>
+<td>
+<p>Create a variables called aveFishCount and set it to... (note: * is multiply and / is divide) the average&nbsp; of 5 variables, also find std dev, variance.</p>
+<p>Math associations between variables in your project</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="application answers content" id="p13" title="Lesson Practice">
+<tbody>
+<tr>
+<th>
+<h2>Answers</h2>
+</th>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p></p>
+</body>
+</html>

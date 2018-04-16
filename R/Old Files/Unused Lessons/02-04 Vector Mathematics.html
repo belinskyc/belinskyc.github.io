@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=MichiganSt-1980313" target="_self">Subsetting Operations</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: Vector Mathematics (between)</p>
+<h1 class="title" id="title">Vector Mathematics and NA values</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Use a for() to iterate through a vector</li>
+<li>Perform mathematical operations using vector values</li>
+</ul>
+<h2>Concepts</h2>
+<p>- need to mention in video that we are learning what looks at first to be the more complicated way of vector manipulation (using for() loops) -- but for loops are a very important concept that are too often hidden in the details.&nbsp; But if you ever want to tweak something or...<br /><em></em></p>
+<p></p>
+<h2>Finding the mean</h2>
+<p>The mean value of a set of values is the total of all the values added together divided by the number of values or <math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>m</mi><mi>e</mi><mi>a</mi><mi>n</mi><mo>&#160;</mo><mo>=</mo><mo>&#160;</mo><mfrac><mrow><mi>t</mi><mi>o</mi><mi>t</mi><mi>a</mi><mi>l</mi><mo>&#160;</mo><mi>v</mi><mi>a</mi><mi>l</mi><mi>u</mi><mi>e</mi></mrow><mrow><mi>n</mi><mi>u</mi><mi>m</mi><mi>b</mi><mi>e</mi><mi>r</mi><mo>&#160;</mo><mi>o</mi><mi>f</mi><mo>&#160;</mo><mi>v</mi><mi>a</mi><mi>l</mi><mi>u</mi><mi>e</mi><mi>s</mi></mrow></mfrac></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mfrac&gt;&lt;mrow&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo&gt;&amp;#160;&lt;/mo&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p></p>
+<p>We want to find the mean high temperature. We already have the number of values given by the length of the vector:</p>
+<p><em><strong>length(lowTempData)</strong></em></p>
+<p></p>
+<p>To find the total value of all the high temperatures we need to add them all together.&nbsp; We add the low temperature values <em><span style="color: #990000;">one at a time, </span></em>using <em><strong>for()</strong></em>.</p>
+<p></p>
+<p>Again, we need a programming variable to "prime the pump"; the variable will be called <em><strong>totalTemp</strong></em> and it starts at<em><strong> 0</strong></em> (because no values have been added to it yet)</p>
+<p></p>
+<p>Then we keep adding the values from the vector one at a time to <em><strong>totalTemp</strong></em>:</p>
+<p></p>
+<h6>rm(list=ls())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br />options(show.error.locations = TRUE)<br /><br />weatherData = read.csv("data/LansingWeather.csv")<br />lowTempData = weatherData[ ,3]<br /><br />totalTemp = 0&nbsp; &nbsp;</h6>
+<h6>for( day in 1:length(lowTempData) )<br />{<br />&nbsp; totalTemp = totalTemp + lowTempData[day]&nbsp; # add the indexed temp to totalTemp<br />&nbsp; cat("Total Temp:", totalTemp, "\n")&nbsp; # not needed - just to display what is happening<br />}<br /><br />meanTemp = totalTemp/length(lowTempData)</h6>
+<h6>cat("The mean low temperature is:", meanTemp)</h6>
+<p></p>
+<p>The real magic above happens in line 10:</p>
+<h6 class="" title="10">totalTemp = totalTemp + lowTempData[day]</h6>
+<p>Remember that the right side <em><strong>(totalTemp + lowTempData[day]</strong></em>) is evaluated first and then the programming variable on the left side (<em><strong>totalTemp</strong></em>) is assigned the evaluated value.</p>
+<p></p>
+<p><img src="../Images/R-02-04%20Mean%20Temp.PNG" alt="" class="flexSize" id="mean" /></p>
+<h5 class="caption">Using for() to find the mean value of all the values in a vector</h5>
+<p></p>
+<p>So, on the first iteration of the<em><strong> for()</strong></em>, <em><strong>totalTemp</strong> </em>starts at <em><strong>0</strong></em> and the first value from <em><strong>lowTempData</strong> </em>, which is 45,<em> </em>is added to it.&nbsp;</p>
+<p>0+45 = <em><strong>45</strong> </em>is assigned to <em><strong>totalTemp</strong></em>.</p>
+<p></p>
+<p>On the second iteration, <em><strong>totalTemp</strong> </em>is equal to <em><strong>45</strong></em> and the second day's temperature, which is <em><strong>43</strong></em>, is added to it.&nbsp;</p>
+<p>43+45 = <em><strong>88</strong></em> is assigned to <em><strong>totalTemp</strong></em>.</p>
+<p></p>
+<p>On the third iteration, <em><strong>totalTemp</strong> </em>is equal 88 and the third day's temperature, which is 42, is added to it.&nbsp;</p>
+<p>88+42 = <em><strong>130</strong> </em>is assigned to <em><strong>totalTemp</strong></em>.</p>
+<p></p>
+<p>This repeat for 14 iterations and, at the end, <em><strong>totalTemp</strong> </em>is assigned the value of all the 14 temperatures added together, which is 621.</p>
+<p></p>
+<p><img src="../Images/R-02-04%20Mean%20Temp2.PNG" alt="" class="flexSize" id="mean2" /></p>
+<h5 class="caption">Calculating the mean value using the total value and the number of values.</h5>
+<p></p>
+<p><em><strong>621</strong> </em>is divided by the number of values, <em><strong>14</strong></em>, to get a <em><strong>meanTemp</strong> </em>of <em><strong>44.35714</strong></em></p>
+<p></p>
+<p>Just a reminder, in the Environment Window, <em><strong>day </strong></em>has a value of <em><strong>14L</strong></em>.&nbsp; The "L" is just referring to how the number is stored in memory and, for now, can be ignored.</p>
+<p></p>
+<h2>Data points that were not collected</h2>
+<p>In the previous example, we have an idealized situation where every day had a high temperature associated with it.&nbsp; In the real world, especially with large amounts of data, there is often data missing.&nbsp; In R, missing data is represented by <em><strong>NA</strong></em>.&nbsp; The NA can be used as a value in the CSV file, or if there is a blank space in the CSV, it will be converted to NA when R saves the data to a Data Frame.</p>
+<p></p>
+<p>First lets create a data set with missing values and save this as <em><strong>MissingTemps.csv</strong></em> in the <em><strong>Data</strong> </em>directory</p>
+<p></p>
+<h6 class="codeBlock">date,highTemp, lowTemp, precipitation<br />Mar27,57,45,0.01<br />Mar28,50,43,0.005<br />Mar29,54, ,0.04<br />Mar30,40,38,1.11<br />Mar31,39,NA,0.12<br />Apr1,58,45,0<br />Apr2,60, ,0.005<br />Apr3,53,50,0.49<br />Apr4,55,48,0.45<br />Apr5,44,40,0.30<br />Apr6,39,36,1.13<br />Apr7,53,43,0.004<br />Apr8,61,45,0<br />Apr9,75,63,0</h6>
+<p></p>
+<p>In the above data set, the <em><strong>lowTemp</strong> </em>for Mar29 and Apr2 are left blank and the <em><strong>lowTemp</strong> </em>for Mar31 is given as <em><strong>NA.&nbsp; </strong></em>So, there are three missing <em><strong>lowTemp</strong> </em>values.<em> </em></p>
+<p></p>
+<h3>Viewing blank or NA values</h3>
+<p>Let's save the data to a Data Frame called <em><strong>weatherData </strong></em>and save the <em><strong>lowTemp</strong> </em>column (3rd column) to a the vector variable <em><strong>lowTempData</strong></em></p>
+<p><em><strong></strong></em></p>
+<h6>rm(list=ls())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br />options(show.error.locations = TRUE)<br /><br />weatherData = read.csv("data/MissingTemps.csv")<br />lowTempData = weatherData[ ,3]</h6>
+<p></p>
+<p>Executing the code above and double-click on <em><strong>weatherData</strong> </em>in the<em><strong> Environment Window</strong></em> so that it appears in the <em><strong>Main Window</strong></em></p>
+<p></p>
+<p><img src="../Images/R-02-04%20NA%20values.PNG" alt="" class="flexSize" id="NA" /></p>
+<h5 class="caption">NA values in a Data Frame</h5>
+<p></p>
+<p>We see that the <em><strong>lowTemp</strong> </em>column has three NA values for Mar29, Mar31, and Apr2.&nbsp; So, R converted blank entries into <em><strong>NA</strong></em>.&nbsp; The vector variable <em><strong>lowTempData</strong> a</em>lso has <em><strong>NA</strong> </em>as the 3rd, 5th, and 7th values.</p>
+<p></p>
+<h3>Mathematical operation on NA values</h3>
+<p>If we try to use the same code to add all the values in the vector <em><strong>lowTempData</strong></em>, we will get <em><strong>NA</strong> </em>as the answer (code below).</p>
+<p><em><strong></strong></em></p>
+<h6><em></em>rm(list=ls())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br />options(show.error.locations = TRUE)<br /><br />weatherData = read.csv("data/MissingTemps.csv")<br />lowTempData = weatherData[ ,3]<br /><br />totalTemp = 0&nbsp; &nbsp;<br />numValues = length(lowTempData)<br />for(day in 1:numValues)<br />{<br />&nbsp; totalTemp = totalTemp + lowTempData[day]&nbsp; # add the indexed temp to totalTemp<br />&nbsp; cat("Total Temp:", totalTemp, "\n")&nbsp; # not needed - just to display what is happening<br />}<br /><br />meanTemp = totalTemp/numValues<br />cat("The mean low temperature is:", meanTemp)</h6>
+<p></p>
+<p><img src="../Images/R-02-04%20NA%20values.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption">Doing mathematical operation on NAs</h5>
+<p></p>
+<p>On the third iteration of the <em><strong>for()</strong></em>, the script hit the first <em><strong>NA</strong> </em>in the <em><strong>lowTempData</strong> </em>vector and tries to add <em><strong>NA</strong> </em>to the total.&nbsp; The answer is <em><strong>NA</strong></em>.&nbsp; <em><span style="color: #990000;">Whenever an <strong>NA</strong> is involved in a mathematical operation, the answer will always be <strong>NA</strong>.</span></em>&nbsp; So, after the third iteration of the <em><strong>for()</strong></em>, <em><strong>totalTemp</strong> </em>was always <em><strong>NA</strong> </em>and <em><strong>meanTemp</strong></em>, which is calculated using <em><strong>totalTemp</strong></em>, is also <em><strong>NA</strong></em>.&nbsp;</p>
+<p></p>
+<p>Note <em><strong>NA_real</strong></em> &lt;add picture, but R is making a guess that it is real&gt; in the Environment Window means the number could be a decimal (as opposed to an integer) but is still not available.</p>
+<p></p>
+<h2 class="">Dealing with NA values</h2>
+<p>When we calculate the mean temperature we need to exclude values that are not valid (e.g.,<em><strong> NA</strong></em>).&nbsp; This means:</p>
+<p>1) checking for <em><strong>NA</strong> </em>values using a <em><strong>if()</strong></em> statement and skip adding the <em><strong>NA</strong> </em>values to the total</p>
+<p>2) counting the number of <em><strong>NA</strong> </em>values and subtract that from the total number of values.</p>
+<p></p>
+<p><em><strong>NA</strong> </em>is a reserved word in R and acts as a value.&nbsp; <em><strong>NA</strong> </em>is kind of both a programming variable name and a value.</p>
+<p></p>
+<p>So, if I want to say that a programming variable has a value that is not available I would type:</p>
+<p></p>
+<h6>a = NA &nbsp;&nbsp; # correct -- NA does not have quotes around it</h6>
+<h6>b = "NA"&nbsp; # not correct -- just assigns the string "NA" to the variable b</h6>
+<h6>c = na &nbsp;&nbsp; # not correct -- causes an error (object 'na' not found) because lowercase na is not a variable name or a reserved word</h6>
+<p></p>
+<p><img src="../Images/R-02-04%20Assigning%20NA.PNG" alt="" class="flexSize" id="AssnNA" /></p>
+<h5 class="caption">Assigning NA to a programming variable</h5>
+<h3 class="">Checking for NA using if()</h3>
+<p>We need a conditional statement that checks if <em><strong>a</strong></em> is equal to <em><strong>NA</strong></em>:</p>
+<p></p>
+<h6>rm(list=ls())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br />options(show.error.locations = TRUE)<br /><br />a = NA&nbsp;&nbsp;&nbsp; # set a to the reserved NA<br /><br />if(a == NA)&nbsp; # this will cause an error<br />{<br />&nbsp; cat("Value does not exist")<br />}</h6>
+<p></p>
+<p></p>
+<p>But this statement causes the unituitive error: <span class="GGHFMYIBGOB  ace_constant ace_language" style="color: #c800a4;">missing value where TRUE/FALSE needed</span>.&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-02-04%20NA%20error.PNG" alt="" class="flexSize" id="NAerror" /></p>
+<h5 class="caption">Error when you try to use NA is a conditional statement</h5>
+<p></p>
+<p>In fact, any attempt to use a conditional operation on a programming variable that has an <em><strong>NA</strong> </em>value will cause an error.&nbsp;</p>
+<p></p>
+<p>So, if I replaced line 6 in the above code with any of the following lines, the same error will result</p>
+<p></p>
+<h6 class="" title="6">if(a != 0)</h6>
+<h6 class="" title="6">if(a &gt; 10)</h6>
+<h6 class="" title="6">if(a == "nothing")</h6>
+<p></p>
+<p><span class="">This behavior is unique to R.&nbsp; To check a programming variable for an <em><strong>NA</strong></em> value, you need do the following</span></p>
+<p><span class=""></span></p>
+<h6>rm(list=ls())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br />options(show.error.locations = TRUE)<br /><br />a = NA&nbsp;&nbsp;&nbsp; # set a to the reserved NA<br /><br />if( is.na(a) )<br />{<br />&nbsp; cat("Value does not exist")<br />}</h6>
+<p></p>
+<p>The conditional statement inside the <em><strong>if()</strong></em>:</p>
+<h6 class="" title="6">if( is.na(a) )</h6>
+<p>has a special R function called <em><strong>is.na()</strong></em></p>
+<p></p>
+<p><em><strong>is.na(a)</strong></em> is <em><strong>TRUE</strong> </em>when <em><strong>a</strong></em> is <em><strong>NA</strong> </em>and <em><strong>FALSE</strong> </em>when <em><strong>a</strong></em> is anything but <em><strong>NA</strong></em></p>
+<h2>checking for NA in a vector</h2>
+<p>Now that we know how to check if a value is NA, we will incorporate this into our&nbsp; code calculating the mean</p>
+<p></p>
+<h6>rm(list=ls())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br />options(show.error.locations = TRUE)<br /><br />weatherData = read.csv("data/MissingTemps.csv")<br />lowTempData = weatherData[ ,3]<br /><br />totalTemp = 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />numNA = 0<br /><br />for( day in 1:length(lowTempData) )<br />{<br />&nbsp; if( is.na(lowTempData[day]) )<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; numNA = numNA + 1<br />&nbsp; }<br />&nbsp; else<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; totalTemp = totalTemp + lowTempData[day] &nbsp;<br />&nbsp;&nbsp;&nbsp; cat("Total Temp:", totalTemp, "\n")&nbsp; <br />&nbsp; }<br />}<br /><br />meanTemp = totalTemp/( length(lowTempData) - numNA )<br />cat("The mean low temperature is:", meanTemp)</h6>
+<p></p>
+<p><img src="../Images/R-02-04%20mean%20with%20%20NA%20values.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption">Excluding the NA values when calculating the mean</h5>
+<p class="caption"></p>
+<p>The script calculate the mean of all the values that are not <em><strong>NA</strong></em>.&nbsp; So, it adds up the 11 non-<em><strong>NA</strong></em> values and divides that total by 11.</p>
+<h3>Counting the number of NA values</h3>
+<p>Line 8 of the script above:</p>
+<h6 class="" title="8">numNA = 0</h6>
+<p>declares a programming variable that is used to keep count of the number of <em><strong>NA</strong> </em>values in the vector.</p>
+<p></p>
+<p>Inside the<em><strong> for()</strong></em>, there is a nested <em><strong>if()</strong></em> that checks for NA values</p>
+<h6 class="" title="12">&nbsp; if( is.na(lowTempData[day]) )<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; numNA = numNA + 1<br />&nbsp; }</h6>
+<p>When <em><strong>is.na()</strong> </em>detects an <em><strong>NA</strong> </em>value, the programming variable <em><strong>numNA</strong> </em>is increase by <em><strong>1</strong></em></p>
+<h3><em><strong>Adding the non-NA values</strong></em></h3>
+<h6 class="" title="16">&nbsp; else<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; totalTemp = totalTemp + lowTempData[day] &nbsp;<br />&nbsp;&nbsp;&nbsp; cat("Total Temp:", totalTemp, "\n") &nbsp;<br />&nbsp; }</h6>
+<p>When an NA value is not detected, <em><strong>totalTemp</strong> </em>is increased by the newest temperature value and the result is output to the console</p>
+<h3>Calculating the mean temp</h3>
+<h6 class="" title="23">meanTemp = totalTemp/( length(lowTempData) - numNA )</h6>
+<p></p>
+<p>The <em><strong>totalTemp</strong> </em>is the addition of the 11 non-<em><strong>NA</strong> </em>values but<em><strong> length(lowTempData)</strong> </em>is 14 because it represents all temperature values, including the <em><strong>NA</strong></em>.&nbsp; So, we subtract <em><strong>numNA</strong> </em>from<em><strong> length(lowTempData)</strong></em>, which is the count of the <em><strong>NA</strong> </em>values -- 3.</p>
+<p></p>
+<p>The denominator is now equal to 11 and we get a correct value for the mean of the 11 non-<em><strong>NA</strong> </em>values.</p>
+<h2 class="application" title="Lesson Practice">Application</h2>
+<p>As always, declare your variables at the top of your script.</p>
+<p></p>
+<p>For the following data set:</p>
+<h6 class="codeBlock">date,highTemp, lowTemp, precipitation<br />Mar27,57,45,0.01<br />Mar28,50,43,0.005<br />Mar29,54, ,0.04<br />Mar30,40,38,1.11<br />Mar31,39,NA,0.12<br />Apr1,58,45,NA<br />Apr2,60, ,0.005<br />Apr3,53,50,0.49<br />Apr4,55,48,0.45<br />Apr5,44,40, <br />Apr6,39,36,1.13<br />Apr7,53,43,0.004<br />Apr8,61,45,0<br />Apr9,75,63,0</h6>
+<p></p>
+<p>A) Count the number of days when the:</p>
+<p>&nbsp;&nbsp;&nbsp; - low temperature is below 40</p>
+<p>&nbsp;&nbsp;&nbsp; - high temperature is above 60</p>
+<p>B) Count the number of days where there is precipitation</p>
+<p>C) Count the number of days where there is no data for precipitation</p>
+<p>D) Find the date that had the most precipitation &lt;skip for now -- need to add more instruction for this&gt;</p>
+<p>E) Find the mean precipitation</p>
+<p>F) Challenge: find the standard deviation of the precipitation</p>
+<p></p>
+<h2>Trap: Minding your parenthesis</h2>
+<p>There are multiple places in the following script where there are parenthesis within parenthesis (they are underlined and in yellow):</p>
+<p></p>
+<h6>rm(list=ls<span style="text-decoration: underline; color: #ffff00;"><strong>()</strong></span>)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br />options(show.error.locations = TRUE)<br /><br />weatherData = read.csv("data/MissingTemps.csv")<br />lowTempData = weatherData[ ,3]<br /><br />totalTemp = 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />numNA = 0<br /><br />for( day in 1:length<span style="text-decoration: underline; color: #ffff00;"><strong>(</strong></span>lowTempData<span style="text-decoration: underline; color: #ffff00;"><strong><span>)</span></strong></span> )<br />{<br />&nbsp; if( is.na<span style="text-decoration: underline; color: #ffff00;"><strong><span>(</span></strong></span>lowTempData[day]<span style="text-decoration: underline; color: #ffff00;"><strong><span>)</span></strong></span> )<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; numNA = numNA + 1<br />&nbsp; }<br />&nbsp; else<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; totalTemp = totalTemp + lowTempData[day] &nbsp;<br />&nbsp;&nbsp;&nbsp; cat("Total Temp:", totalTemp, "\n") &nbsp;<br />&nbsp; }<br />}<br /><br />meanTemp = totalTemp/( length<span style="text-decoration: underline; color: #ffff00;"><span style="text-decoration: underline;"><strong>(</strong></span></span>lowTempData<span style="text-decoration: underline; color: #ffff00;"><strong>)</strong></span> - numNA )<br />cat("The mean low temperature is:", meanTemp)</h6>
+<p></p>
+<p>Parenthesis are nested within each other -- just like in Algebra and it is very easy to miss or to add an extra parenthesis when writing a script.</p>
+<p></p>
+<p>It is pretty easy to use the Console to catch an extra end parenthesis.&nbsp; For the following script, I added an extra parenthesis to line 23</p>
+<p></p>
+<h6>meanTemp = totalTemp/( length(lowTempData<span style="color: #00ffff;">)</span> - numNA ) )&nbsp; # extra parenthesis</h6>
+<p></p>
+<p><img src="../Images/R-02-04%20extra%20end%20parenthsis.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption">Line 23 has an extra end parenthesis</h5>
+<p class="caption"></p>
+<p class="">In this case, R gives an error and puts a pointer ( ^ ) to where is see something unexpected (an end parenthesis where there is no start parenthesis)</p>
+<p class=""></p>
+<p class="">It is a little trickier to catch a missing end parenthesis using the Console</p>
+<h6>meanTemp = totalTemp/( length(lowTempData<span style="color: #00ffff;">)</span> - numNA&nbsp; # missing parenthesis</h6>
+<p class="caption"></p>
+<p><img src="../Images/R-02-04%20missing%20end%20parenthsis.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption">Line 23 has a missing end parenthesis</h5>
+<p class="caption"></p>
+<p class="">In this case, R goes to line 24 believing you are still inside the parenthesis.&nbsp; At the beginning of line 24, it see <em><strong>cat() </strong></em>and point to that as the error -- in other words, R cannot understand why you are putting <em><strong>cat()</strong></em> inside the parenthesis started on line 23.</p>
+</body>
+</html>

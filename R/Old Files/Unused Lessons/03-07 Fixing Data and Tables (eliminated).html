@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=michiganstate-2074491" target="_self">Packages</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: Factors</p>
+<h1 class="title" id="title">03-07 Fixing Data and Tables</h1>
+<h2>Purpose</h2>
+<h2 class="partial">Concepts</h2>
+<p>-</p>
+<p></p>
+<h2>Problems with a data set</h2>
+<p>We are going to look at a few issues that can occur in a data set from a CSV file.&nbsp; The first issue we will look at is that there are rows in the CSV file that have the wrong number of values. For our Lansing Weather data set, we expect the number of values in each row to be the same -- in this case, 5.</p>
+<p></p>
+<p>For this lesson we will use the file &lt;LansingWeatherError.CSV&gt;</p>
+<p></p>
+<p>We are going to check the data using the function <em><strong>count.fields().&nbsp; count.fields() </strong></em>takes two parameters: the location of the CSV file and the character used to separate values in the file.&nbsp; As with most CSV files, a comma is used to separate the values (hence the name Comma Separated Values).</p>
+<p></p>
+<h6 class="partial">numVals = count.fields("data/Lansing2016WeatherError.csv", sep=",");</h6>
+<p></p>
+<p><em><strong>numVals</strong> </em>is a vector that contains the number of values in each row of the CSV file.&nbsp; There are 367 values in <em><strong>numVals</strong> </em>because there are 367 rows in the CSV file -- the 366 days and a header row.</p>
+<p></p>
+<p>Now, we don't want to read all 367 value, we just want to see which rows have an unexpected count value (i.e., a count value other than 5). We can use <em><strong>which()</strong></em> to retrieve the rows that have a &lt;count&gt; values not equal to 5.</p>
+<p></p>
+<h6 class="partial">notFive = which(numVals != 5);</h6>
+<p></p>
+<p><em><strong>notFive</strong></em><em> </em>contains two values: 19 and 27.&nbsp; 19 and 27 represent the rows in the CSV that have something other than 5 values.&nbsp; If you feel like counting, you will also see that, in the Console Window, the 19th and 27th values of <em><strong>numVals</strong> </em>are 4 and 6 while every other value is 5.</p>
+<p></p>
+<p><img src="../Images/R-03-07%20Count%20Values%20in%20CSV.PNG" alt="" class="flexSize" /></p>
+<h5>Counting the number of values in each row of the CSV file</h5>
+<p></p>
+<h2>Fixing the rows</h2>
+<p>Let's open up the CSV file inside of RStudio.&nbsp; Note we are opening the file directly using the <em><strong>File -&gt; Open File&nbsp;</strong></em> interface.</p>
+<p></p>
+<p>Notice that the line number refers to the line number <em><span style="color: #990000;">in the CSV file</span></em>.&nbsp; The second number on each row is the line number of the data, which is one lower than the CSV file line number because it does not count the header line.</p>
+<p></p>
+<p><img src="../Images/R-03-07%20Weather%20Data-%20Error.PNG" alt="" class="flexSize" /></p>
+<h5>The weather data CSV file opened in RStudio</h5>
+<p></p>
+<p>We can see that line 19 is missing a value -- this is probably because the value was accidentally excluded because it was 0 (representing zero precipitation).&nbsp; We can add <span style="color: #990000;">",0"</span> to the end of line 19.</p>
+<p></p>
+<p>Line 27 has one too many values and the culprit is a dangling comma at the end of the line.&nbsp; The comma tells R that there is a 6th value on the row.&nbsp; Since there is nothing actually typed in after the comma, R determines the 6th value in the row is either a space or NULL.&nbsp; We can delete the extra comma from line 27.</p>
+<p></p>
+<h2>Fixing the columns</h2>
+<p>The corrections above were saved to the file <strong><em>Lansing2016WeatherError2.csv</em></strong>.&nbsp; Let's open up this CSV file and save it to a data frame called <em><strong>lansingWeather.</strong></em></p>
+<p></p>
+<p>The default in R is to treat any column that has non-numeric values as factors.&nbsp; This can be useful but there are often times when you want to treats non-numeric values as strings.&nbsp;</p>
+<p></p>
+<p>We are going to add a parameter to<em><strong> read.csv()</strong></em> that treats non-numeric values as strings: <em><strong>stringAsFactor = FALSE.</strong> </em></p>
+<p></p>
+<h6 class="partial">lansingWeather = read.csv("data/Lansing2016WeatherError2.csv", stringsAsFactors=FALSE);</h6>
+<p></p>
+<p>A cursory look in the Environment Window show that<em><strong> maxTemp</strong> </em>column is considered to be a column of characters.&nbsp; This is odd as<em><strong> maxTemp</strong></em> should only contain numeric values just like the <em><strong>cloudCover</strong> </em>and <em><strong>precipitation</strong> </em>columns.&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-03-07%20Factors%20and%20strings.PNG" alt="" class="flexSize" /></p>
+<h5>Saving the CSV file to a data frame -- note that the max.Temp column is a character column</h5>
+<p></p>
+<p>The fact that <em><strong>maxTemp</strong> </em>is considered to be non-numeric suggests that there are erroneous characters somewhere in the <em><strong>maxTemp</strong></em> column.&nbsp; We can use <em><strong>grep()</strong></em> to find the location of the values that are non-numeric.</p>
+<p></p>
+<h3>Using grep() to find non-numeric values</h3>
+<p>It will easier to find all the numeric values in <em><strong>maxTemp</strong> </em>first and then reverse it to find the non-numeric values.</p>
+<p></p>
+<p>We will start by saving the <em><strong>maxTemp</strong> </em>column to a vector named <em><strong>maxTemp</strong></em></p>
+<p><em><strong></strong></em></p>
+<h6 class="partial">maxTemp = lansingWeather[,"maxTemp"];</h6>
+<p><em><strong></strong></em></p>
+<p>and then use<strong> </strong><em><strong>grep() </strong></em>to find any value in <em><strong>maxTemp</strong> </em>that has a number.&nbsp; [0-9] means any character between 0 and 9 inclusive.</p>
+<h6 class="partial">grep("[0-9]", maxTemp);</h6>
+<p></p>
+<p>but we want to make sure there is at least 1 number so we add "+" to say "find all value that have one or more numbers"</p>
+<h6 class="partial">grep("[0-9]+", maxTemp);</h6>
+<p></p>
+<p>we want there to be nothing else so we use "^" and "$" to bookend the value -- this says that can be nothing before or after the numbers</p>
+<h6 class="partial">grep("^[0-9]+", maxTemp);</h6>
+<p></p>
+<p>And we will save the result to the variable <em><strong>onlyNumbers</strong></em></p>
+<h6 class="partial">onlyNumbers = grep("^[0-9]+", maxTemp);</h6>
+<p></p>
+<p>This will give us the index of all values that are numeric.&nbsp; We want the reverse of this -- we want to know which values are non-numeric (i.e., have at least one character that is not a number).&nbsp; We can reverse the <em><strong>grep()</strong></em> by adding the parameter<em><strong> invert=TRUE</strong></em></p>
+<h6 class="partial">notNumeric = grep("^[0-9]+$", lansingWeather[,"max.Temp"], invert=TRUE);</h6>
+<p></p>
+<p>We see that <em><strong>nonNumeric</strong> </em>has the values 51 and 56, meaning rows 51 and 56 in <em><strong>maxTemp</strong></em> have non-numeric values.&nbsp; This is verified by looking at <em><strong>onlyNumbers</strong></em> in the Console Window -- which has holes at 51 and 56.</p>
+<p></p>
+<p><img src="../Images/R-03-07%20Grepping%20Data.PNG" alt="" class="flexSize" /></p>
+<h5>Using grep to find non-numeric values in a column of a data frame</h5>
+<p></p>
+<h3>Fixing the non-numeric values</h3>
+<p>Let's look at the relevant rows in the CSV file.&nbsp; Notice that, in this case, the row number is referring to the data rows and excludes the header.&nbsp; So it might seem one off.</p>
+<p><img src="../Images/R-03-07%20Non%20numeric%20lines.PNG" alt="" class="flexSize" /></p>
+<h5>Rows 51 and 56 of the data have non-numeric characters</h5>
+<p></p>
+<p>The error are apparent -- the <em><strong>maxTemp</strong> </em>values in rows 51 and 56 have an extra non-numeric character.&nbsp; Let's delete the extra "a" and the extra "%" characters and save the file as <strong><em>Lansing2016WeatherError3.csv</em></strong>.</p>
+<p></p>
+<h2>Dealing with NA values</h2>
+<p>NA has a special meaning within R but data sets often have multiple ways to represent NA.&nbsp; It the case of our CSV, we see three different ways to represent NA values in the Cloud Cover column: a space, "na", and "NA"</p>
+<p></p>
+<p><img src="../Images/R-03-07%20na%20values.PNG" alt="" class="flexSize" /></p>
+<h5>Different values that (might) mean NA</h5>
+<p></p>
+<p>We can instruct <em><strong>read.csv()</strong></em> to treat certain values as if they were <em><strong>NA</strong> </em>by using the parameters <em><strong>na.strings. </strong></em>In the following line we have instructed <em><strong>read.csv()</strong> </em>that the following values should be saved as<em><strong> NA</strong></em> in the <em><strong>lansingWeather2</strong> </em>data frame: "", " ", "na", "NA", "NaN"</p>
+<p></p>
+<h6 class="partial">lansingWeather2 = read.csv("data/Lansing2016WeatherError3.csv",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stringsAsFactors=FALSE,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; na.strings=c("", " ", "na", "NA", "NaN") );</h6>
+<p></p>
+<p><img src="../Images/R-03-07%20NA%20in%20Data%20Frame.PNG" alt="" class="flexSize" /></p>
+<h5>NA values in a data frame</h5>
+<p></p>
+<h2>Counting values in a vector</h2>
+<p>The Cloud Cover column has values from 0 to 8 representing how cloudy the day was.&nbsp; 0 means no clouds, 8 means 100% clouds -- and there are also NA values suggesting data was not taken on certain days.</p>
+<p></p>
+<p>We want to display how many days fall into each cloudiness category (0-8 and NA).</p>
+<p></p>
+<p>First we will save the <em><strong>cloudCover</strong> </em>data to the vector <em><strong>cloudCover </strong></em></p>
+<h6 class="partial">cloudCover = lansingWeather2[,"cloudCover"];</h6>
+<p></p>
+<p>We can try to use <em><strong>barplot()</strong></em> on cloudCover...</p>
+<h6 class="partial">barplot(cloudCover);</h6>
+<p></p>
+<p>But the <em><strong>barplot()</strong></em> function just plots every value in the <em><strong>cloudCover</strong> </em>vector in order</p>
+<p><img src="../Images/R-03-07%20Barplot.PNG" alt="" class="flexSize" /></p>
+<h5>barplot of the cloud cover data -- not too useful</h5>
+<p></p>
+<p>We want something that gives the frequency of each value in <em><strong>cloudCover</strong> </em>-- we could try a histogram</p>
+<h6 class="partial">hist(cloudCover);</h6>
+<p></p>
+<p>And this looks better but a histogram treats the values as continuous -- whereas <em><strong>cloudCover</strong> </em>values are categorical.</p>
+<p><img src="../Images/R-03-07%20histogram.PNG" alt="" class="flexSize" /></p>
+<p></p>
+<h3>table function</h3>
+<p>What we really want is to plot a count of how many days meets each <em><strong>cloudCover</strong> </em>condition (0-8 and NA).</p>
+<p></p>
+<p>The first thing we need to do is format the data using<em><strong> table()</strong></em>.&nbsp; table() takes two parameter -- the <em><strong>cloudCover</strong> </em>vector and<em><strong> useNA = "ifany"</strong></em>, which tells <em><strong>table()</strong></em> to include NAs in the data.</p>
+<p></p>
+<h6 class="partial">cloudCoverTable = table(cloudCover, useNA = "ifany");</h6>
+<p></p>
+<p><em><strong>cloudCoverTable</strong> </em>(shown in the Console Window) is a variable that has 2 rows.&nbsp; The first row contains all the values that occurs in the vector <em><strong>cloudCover</strong></em>, the second row gives the number of time the values occurred.</p>
+<p><img src="../Images/R-03-07%20Table.PNG" alt="" class="flexSize" /></p>
+<h5>Creating a table that counts each value in the cloud cover vector</h5>
+<p></p>
+<p>We can use a <em><strong>barplot()</strong> <strong></strong></em> on <em><strong>cloudCoverTable</strong></em></p>
+<h6 class="partial">barplot(cloudCoverTable);</h6>
+<p></p>
+<p><img src="../Images/R-03-07%20Boxplot%20Table.PNG" alt="" class="flexSize" /></p>
+<p></p>
+<h2>Application</h2>
+<p>1)</p>
+</body>
+</html>

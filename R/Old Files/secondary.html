@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+	<script>
+		var pathToPrimaryFile = "./";  // this will need to be programmed in later
+		var pathToProgFolder = "../../AuxFiles/Programming/";  // this should not change
+		
+		/* the following code loads the module.js script file.  I
+			It needs to be done in JavaScript so that D2L does not rewrite the link */
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+			/*
+				when the script file loads, call the populate function  - 
+				need to code for the two files being in different directories
+			*/
+			populate(pathToPrimaryFile + "primary.html");
+		};
+		scriptFile.src = pathToProgFolder + "module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+
+	<!-- This is used if the primary and secondary pages are in different classes 
+			(deprecated because all naterial exists in the master class) -->
+	<!--base href="https://d2l.msu.edu/content/NCRS/2015/courses/NCRS-2015-QFCN0023/"-->
+	<title>Secondary Page</title>
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<div class="title" id="s0"></div>
+	<div class="concept" id="s2">Secondary 2</div>
+	<div id="s3">Secondary 3</div>
+	<div id="s4"></div>
+	<div id="s7"></div>
+	<div id="s9">Secondary 9</div>
+</body>
+</html>

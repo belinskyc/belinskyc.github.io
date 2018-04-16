@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=michiganstate-2028085" target="_self">Vectors and Iterations</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=michiganstate-2028087" target="_self">Vectors and Data Frames</a></p>
+<h1 class="title" id="title">02-04: Vector Mathematics</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Use a for() to iterate through a vector</li>
+<li>Perform mathematical operations using vector values</li>
+</ul>
+<h2>Concepts</h2>
+<p>- need to mention in video that we are learning what looks at first to be the more complicated way of vector manipulation (using <em><strong>for()</strong></em> loops) -- but for loops are a very important concept that are too often hidden in the details.&nbsp; But if you ever want to tweak something or...<br /><em></em></p>
+<p></p>
+<p>- put in which.min() ?</p>
+<p>- talk above highTemp[thisNum] -- basically an integer variable indexing a vector variable</p>
+<p></p>
+<p></p>
+<h2>Finding the mean using a for()</h2>
+<p>The mean value of a set of values is the sum of all the values added together divided by the number of values or&nbsp;<math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>m</mi><mi>e</mi><mi>a</mi><mi>n</mi><mo>&#xA0;</mo><mo>=</mo><mo>&#xA0;</mo><mfrac><mrow><mi>s</mi><mi>u</mi><mi>m</mi><mo>&#xA0;</mo><mi>o</mi><mi>f</mi><mo>&#xA0;</mo><mi>v</mi><mi>a</mi><mi>l</mi><mi>u</mi><mi>e</mi><mi>s</mi></mrow><mrow><mi>n</mi><mi>u</mi><mi>m</mi><mi>b</mi><mi>e</mi><mi>r</mi><mo>&#xA0;</mo><mi>o</mi><mi>f</mi><mo>&#xA0;</mo><mi>v</mi><mi>a</mi><mi>l</mi><mi>u</mi><mi>e</mi><mi>s</mi></mrow></mfrac></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mfrac&gt;&lt;mrow&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mi&gt;v&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;/math&gt;"}</annotation></semantics></math>&nbsp;</p>
+<p></p>
+<p>We want to find the mean low temperature. We already have the number of values given by the length of the vector:</p>
+<p><em><strong>length(lowTempData),</strong></em> which we will assign to the variable<strong> </strong><em><strong>lowTempLength<br /></strong></em></p>
+<p></p>
+<h6 class="partial">lowTempLength = length(lowTempData);</h6>
+<p></p>
+<p>To find the sum value of all the low temperatures we need to add them all together.&nbsp; One way to do this is to add the low temperature values <em><span style="color: #990000;">one at a time, </span></em>using <em><strong>for()</strong></em>.</p>
+<p></p>
+<h6 class="partial">lowTempLength = length(lowTempData);</h6>
+<h6></h6>
+<h6>for( day in 1:lowTempLength )<br />{<br />&nbsp; # add the indexed value in lowTempData<br />}</h6>
+<p></p>
+<p>The question is: What do we add the values in <em><strong>lowTempData</strong> </em>to?&nbsp; We need to create a variable that will hold the total value at the end of the<em><strong> for()</strong></em>.&nbsp; This variable needs to be set to zero before the <em><strong>for()</strong> </em>begins -- we will name the variable <em><strong>totalTemp</strong></em>.</p>
+<p></p>
+<h6 class="partial">lowTempLength = length(lowTempData);</h6>
+<h6><span style="color: #ffff00;">totalTemp = 0;&nbsp; # variable to hold the sum of all the low temp values</span></h6>
+<h6></h6>
+<h6>for( day in 1:lowTempLength )<br />{<br />&nbsp; # add the indexed value in lowTempData to totalTemp one at a time<br />}</h6>
+<p></p>
+<p>Inside the codeblock attached to the <em><strong>for()</strong></em> we keep adding the values from the vector one at a time to <em><strong>totalTemp</strong></em>:</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);<br />&nbsp;<br />weatherData = read.csv("data/LansingWeather2.csv");<br />lowTempData = weatherData[ ,"lowTemp"];</h6>
+<h6></h6>
+<h6>lowTempLength = length(lowTempData);</h6>
+<h6>totalTemp = 0;&nbsp;&nbsp;</h6>
+<h6>&nbsp;</h6>
+<h6>for( day in 1:length(lowTempData) )<br />{<br /><span style="color: #ffff00;">&nbsp; totalTemp = totalTemp + lowTempData[day]; # add the indexed temp to totalTemp</span><br />&nbsp; cat("Total Temp:", totalTemp, "\n");&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # not needed -displays intermediate steps<br />}<br />&nbsp;<br />meanTemp = totalTemp/length(lowTempData);</h6>
+<h6>cat("The mean low temperature is:", meanTemp);</h6>
+<p></p>
+<p>The real magic above happens in line 11:</p>
+<h6 class="partial" title="11">totalTemp = totalTemp + lowTempData[day];</h6>
+<p>Remember that the right side <em><strong>(totalTemp + lowTempData[day]</strong></em>) is evaluated first and then the variable on the left side (<em><strong>totalTemp</strong></em>) is assigned the answer.</p>
+<p></p>
+<p><img src="../Images/R-02-04%20Mean%20-%20for.PNG" alt="" class="flexSize" id="mean" /></p>
+<h5 class="caption">Using for() to find the mean value of all the values in a vector</h5>
+<p></p>
+<p>So, on the first iteration of the<em><strong> for()</strong></em>, <em><strong>totalTemp</strong> </em>starts at <em><strong>0</strong></em> and the first value from <em><strong>lowTempData</strong></em>, which is 45,<em> </em>is added to it.&nbsp;</p>
+<p>0+45 = <em><strong>45</strong> </em>is assigned to <em><strong>totalTemp</strong></em>.</p>
+<p></p>
+<p>On the second iteration, <em><strong>totalTemp</strong> </em>is equal to <em><strong>45</strong></em> and the second day's temperature, which is <em><strong>43</strong></em>, is added to it.&nbsp;</p>
+<p>43+45 = <em><strong>88</strong></em> is assigned to <em><strong>totalTemp</strong></em>.</p>
+<p></p>
+<p>On the third iteration, <em><strong>totalTemp</strong> </em>is equal to <em><strong>88</strong></em> and the third day's temperature, which is <em><strong>42</strong></em>, is added to it.&nbsp;</p>
+<p>88+42 = <em><strong>130</strong> </em>is assigned to <em><strong>totalTemp</strong></em>.</p>
+<p></p>
+<p>This repeat for 14 iterations and, at the end, <em><strong>totalTemp</strong> </em>is assigned the value of all the 14 temperatures added together, which is 621.</p>
+<p></p>
+<p><img src="../Images/R-02-04%20Mean2%20-%20for.PNG" alt="" class="flexSize" id="mean2" /></p>
+<h5 class="caption">Calculating the mean value using the total value and the number of values.</h5>
+<p></p>
+<p><em><strong>621</strong> </em>is divided by the number of values, <em><strong>lowTempLength</strong> </em>= <em><strong>14</strong></em>, to get <em><strong>meanTemp</strong> </em><strong><em>= </em></strong><em><strong>44.35714</strong></em></p>
+<p></p>
+<p>Just a reminder, in the Environment Window, <em><strong>day </strong></em>has a value of <em><strong>14L</strong></em>.&nbsp; The "L" is just referring to how the number is stored in memory and, for now, can be ignored.</p>
+<p></p>
+<h2>Calculating mean using R functions</h2>
+<p>There is a much quicker way to find the mean of a vector.&nbsp; R has a built in function to calculate the mean.&nbsp; In fact R has many built in functions to generate all sorts of statistics.&nbsp;</p>
+<p></p>
+<p>The alternate code to calculate the mean of the vector <em><strong>lowTempData</strong> </em>is:</p>
+<h6 class="partial">mean(lowTempData);</h6>
+<p></p>
+<p>So, the full script would be:</p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);<br />&nbsp;<br />weatherData = read.csv("data/LansingWeather2.csv");<br />lowTempData = weatherData[ ,"lowTemp"];</h6>
+<h6></h6>
+<h6>meanTemp = mean(lowTempData);</h6>
+<p></p>
+<p><img src="../Images/R-02-04%20Mean-R%20function.PNG" alt="" class="flexSize" /></p>
+<h5>Finding the mean of a vector using an R function</h5>
+<p></p>
+<p>Obviously, this is much quicker than using a <em><strong>for()</strong></em> but I would not recommend using this method until you get comfortable using the <em><strong>for()</strong></em>.&nbsp; Why?&nbsp; Because behind-the-scenes <em><strong>mean()</strong> </em>is performing iterations using <em><strong>for(),</strong></em> so<em><strong> mean()</strong></em> is essentially a shortcut. While R has a lot of functions that can simplify many tasks, you will come across many situations where you have to develop your own code -- where understanding the basics is vital.</p>
+<p></p>
+<h2>Finding the minimum of a vector</h2>
+<p>Another common operation we do is find the minimum of a vector.&nbsp; Again, there is a simple way to do this in R:</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);<br />&nbsp;<br />weatherData = read.csv("data/LansingWeather2.csv");<br />lowTempData = weatherData[ ,"lowTemp"];</h6>
+<h6>&nbsp;</h6>
+<h6>minTemp = min(lowTempData);</h6>
+<p></p>
+<p><img src="../Images/R-02-04%20Min-R%20function.PNG" alt="" class="flexSize" /></p>
+<h5>Finding the minimum of a vector using an R functions</h5>
+<p></p>
+<p>But it is best to learn how this works. And we can practice mixing loops and conditional statements</p>
+<p></p>
+<p>Essentially, looking for a minimum values involves checking each value in a vector to see if it is less than the current minimum</p>
+<p></p>
+<h6 class="partial">lowTempLength = length(lowTempData);</h6>
+<h6></h6>
+<h6>for( day in 1:lowTempLength )<br />{<br />&nbsp; # check each value to see if it is less than the current minimum<br />}</h6>
+<p></p>
+<p>But we first need a default minimum value before we enter the <em><strong>for(), </strong></em> which I will call <em><strong>minTemp</strong></em>.&nbsp; We could set <em><strong>minTemp</strong> </em>to a default value that is ridiculously high, like 100.&nbsp; But, a better solution <em><strong>minTemp</strong> </em>to the first value in the <em><strong>lowTempData</strong> </em>vector.&nbsp; This will work for any temperature set -- even those with temperature above 100 degrees.</p>
+<p></p>
+<h6 class="partial">lowTempLength = length(lowTempData);</h6>
+<h6><span style="color: #ffff00;">minTemp = lowTempData[1];</span>&nbsp; # the minTemp is initially the first temperature in the vector</h6>
+<h6></h6>
+<h6>for( day in 1:lowTempLength )<br />{<br />&nbsp; # check each value to see if it is less than the current minimum<br />}</h6>
+<p></p>
+<p>Next we need to use a conditional statement to check if the vector value is less than the current minimum</p>
+<p></p>
+<h6 class="partial">lowTempLength = length(lowTempData);</h6>
+<h6>minTemp = lowTempData[1];&nbsp; # set the minTemp to the first temperature in the vector</h6>
+<h6></h6>
+<h6>for( day in 1:lowTempLength )<br />{<br />&nbsp; <span style="color: #ffff00;">if(lowTempData[day] &lt; minTemp)&nbsp;</span> # if the day's temp is less than the minimum</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp; # check each value to see if it is less than the current minimum</h6>
+<h6>&nbsp; }<br />}</h6>
+<p></p>
+<p>Then, in the codeblock attached to the <em><strong>if()</strong></em>, we assign to <em><strong>minTemp</strong> </em>the temperature from the day that was less than <em><strong>minTemp</strong></em>.&nbsp; This will execute every time the condition <span class=""><em><strong>(lowTempData[day] &lt; minTemp)</strong></em> is <em><strong>TRUE</strong></em><br /></span></p>
+<p><strong></strong></p>
+<h6 class="partial">lowTempLength = length(lowTempData);</h6>
+<h6>minTemp = lowTempData[1];&nbsp; # set the minTemp to the first temperature in the vector</h6>
+<h6></h6>
+<h6>for( day in 1:lowTempLength )<br />{<br />&nbsp; if(lowTempData[day] &lt; minTemp)&nbsp;</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp; <span style="color: #ffff00;">minTemp = lowTempData[day];&nbsp;</span> # assign the new minimum temp to minTemp</h6>
+<h6>&nbsp; }<br />}</h6>
+<p></p>
+<p>The <em><strong>if()</strong></em> checks all values in the <em><strong>lowTempData</strong> </em>vector, changing the <em><strong>minTemp</strong> </em>whenever it finds a new minimum.&nbsp; Putting the code together...</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);<br />&nbsp;<br />weatherData = read.csv("data/LansingWeather2.csv");<br />lowTempData = weatherData[ ,"lowTemp"];</h6>
+<h6>&nbsp;</h6>
+<h6>lowTempLength = length(lowTempData);</h6>
+<h6>minTemp = lowTempData[1];</h6>
+<h6>&nbsp;</h6>
+<h6>for( day in 1:lowTempLength )<br />{<br />&nbsp; if(lowTempData[day] &lt; minTemp)&nbsp;</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp; minTemp = lowTempData[day];</h6>
+<h6>&nbsp; }<br />}</h6>
+<p></p>
+<p><img src="../Images/R-02-04%20Min-for.PNG" alt="" class="flexSize" /></p>
+<h5>Finding the minimum value in a vector using for()</h5>
+<h3>Finding day with minimum value</h3>
+<p>Let's take this a step further and get information about the day that had the minimum temperature.&nbsp; First we need to capture which day that was.&nbsp; We do this in a similar manner to finding the minimum temperature.&nbsp; We set the <em><strong>minTempDay</strong> </em>initially to <em><strong>1</strong></em>, to represent the first day, and change <em><strong>minTempDay</strong></em>'s value when we find a new minimum temperature.</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);<br />&nbsp;<br />weatherData = read.csv("data/LansingWeather2.csv");<br />lowTempData = weatherData[ ,"lowTemp"];</h6>
+<h6>&nbsp;</h6>
+<h6>lowTempLength = length(lowTempData);</h6>
+<h6>minTemp = lowTempData[1];&nbsp;</h6>
+<h6><span style="color: #ffff00;">minTempDay = 1;</span>&nbsp; # set the day with the min temp initially to 1</h6>
+<h6>&nbsp;</h6>
+<h6>for( day in 1:lowTempLength )<br />{<br />&nbsp; if(lowTempData[day] &lt; minTemp)&nbsp;</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp; minTemp = lowTempData[day];&nbsp;&nbsp;</h6>
+<h6>&nbsp;&nbsp;&nbsp;<span style="color: #ffff00;"> minTempDay = day;&nbsp;</span> # change the min temp day to the current day</h6>
+<h6>&nbsp; }<br />}</h6>
+<p></p>
+<p>Now that we know the day, we can use this information to index all the other associated valued for that day</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);<br />&nbsp;<br />weatherData = read.csv("data/LansingWeather2.csv");<br />lowTempData = weatherData[ ,"lowTemp"];</h6>
+<h6>&nbsp;</h6>
+<h6>lowTempLength = length(lowTempData);</h6>
+<h6>minTemp = lowTempData[1];&nbsp;</h6>
+<h6>minTempDay = 1;&nbsp; # set the day with the min temp initially to 1</h6>
+<h6>&nbsp;</h6>
+<h6>for( day in 1:lowTempLength )<br />{<br />&nbsp; if(lowTempData[day] &lt; minTemp)&nbsp;</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp; minTemp = lowTempData[day];&nbsp;&nbsp;</h6>
+<h6>&nbsp;&nbsp;&nbsp; minTempDay = day;&nbsp; # change the min temp day to the current day</h6>
+<h6>&nbsp; }<br />}</h6>
+<h6># get the date of the min temp, the precipitation on the date, and the high temp</h6>
+<h6><span style="color: #ffff00;">dateOfMin = as.character(weatherData[minTempDay, "date"]);</span><br /><span style="color: #ffff00;"> precipOnMin = weatherData[minTempDay, "precipitation"];</span><br /><span style="color: #ffff00;"> highTempOnMin = weatherData[minTempDay, "highTemp"];</span></h6>
+<p></p>
+<p><img src="../Images/R-02-04%20indexed%20values%20using%20min%20day.PNG" alt="" class="flexSize" /></p>
+<h5>Using the minimum value index to find associated values for that day</h5>
+<p></p>
+<p>After the <em><strong>for()</strong></em> is executed, <em><strong>minTempDay</strong> </em>is equal to the day that holds the minimum temperature (in this case,&nbsp; <em><strong>11)</strong></em>.&nbsp; We can use this index number to find other information from that day -- including the actual date (from the date column), the precipitation (from the precipitation column), and the high temperature (from the highTemp column).</p>
+<p></p>
+<p>Note: we need to use as.character() when we are dealing with string values in a vector as in</p>
+<h6><span class="partial" title="20">dateOfMin = as.character(weatherData[minTempDay, "date"]);</span></h6>
+<p>If we do not do that, R will treat the data in a strange way (that we will discuss later).</p>
+<h2>Application</h2>
+<p>1) Using <em><strong>for()</strong></em>, find the day that has the highest precipitation and output the date, high temp, low temp, and precipitation of that day.</p>
+<p>2) Challenge: Find the day that has the highest precipitation and output the date, high temp, low temp, and precipitation for that day.</p>
+<p>&nbsp;&nbsp;&nbsp; hint: <em><strong>which.max(</strong>vector<strong>)</strong></em> gives you the row of the maximum value</p>
+<p>3) Create a vector that gives the temperature difference for each day (like last lesson)</p>
+<p>&nbsp;&nbsp;&nbsp; a) Using <em><strong>for(),</strong></em> find the mean, standard deviation, and variance of the 14 temperature difference values</p>
+<p>&nbsp;&nbsp;&nbsp; b) Using R functions, find the mean, standard deviation, and variance of the 14 temperature difference values&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - <em><strong>mean()</strong></em>, <em><strong>sd()</strong></em>,<em><strong> var()</strong></em></p>
+<h2>Trap: Minding your parentheses</h2>
+<p>There are multiple places in the following script where there are parentheses within parentheses (they are underlined and in yellow):</p>
+<p></p>
+<h6>rm(list=ls<span style="text-decoration: underline; color: #ffff00;"><strong>()</strong></span>)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br />options(show.error.locations = TRUE)<br /><br />weatherData = read.csv("data/MissingTemps.csv")<br />lowTempData = weatherData[ ,3]<br /><br />totalTemp = 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />numNA = 0<br /><br />for( day in 1:length<span style="text-decoration: underline; color: #ffff00;"><strong>(</strong></span>lowTempData<span style="text-decoration: underline; color: #ffff00;"><strong><span>)</span></strong></span> )<br />{<br />&nbsp; if( is.na<span style="text-decoration: underline; color: #ffff00;"><strong><span>(</span></strong></span>lowTempData[day]<span style="text-decoration: underline; color: #ffff00;"><strong><span>)</span></strong></span> )<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; numNA = numNA + 1<br />&nbsp; }<br />&nbsp; else<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; totalTemp = totalTemp + lowTempData[day] &nbsp;<br />&nbsp;&nbsp;&nbsp; cat("Total Temp:", totalTemp, "\n") &nbsp;<br />&nbsp; }<br />}<br /><br />meanTemp = totalTemp/( length<span style="text-decoration: underline; color: #ffff00;"><span style="text-decoration: underline;"><strong>(</strong></span></span>lowTempData<span style="text-decoration: underline; color: #ffff00;"><strong>)</strong></span> - numNA )<br />cat("The mean low temperature is:", meanTemp)</h6>
+<p></p>
+<p>Parentheses are nested within each other -- just like in Algebra and it is very easy to miss or to add an extra parenthesis when writing a script.</p>
+<p></p>
+<p>It is pretty easy to use the Console Window to catch an extra end parentheses -- as long as we have the following line in our script:</p>
+<h6>options(show.error.locations = TRUE)</h6>
+<p></p>
+<p>For the following script, I added an extra parentheses to line 23:</p>
+<h6>meanTemp = totalTemp/( length(lowTempData<span style="color: #00ffff;">)</span> - numNA ) )&nbsp; # extra parenthesis</h6>
+<p></p>
+<p><img src="../Images/R-02-04%20extra%20end%20parenthsis.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption">Line 23 has an extra end parenthesis</h5>
+<p class="caption"></p>
+<p class="">In this case, R gives an error and puts a pointer ( ^ ) to where is see something unexpected (an end parenthesis where there is no start parenthesis)</p>
+<p class=""></p>
+<p class="">It is a little trickier to catch a missing end parenthesis:</p>
+<h6>meanTemp = totalTemp/( length(lowTempData<span style="color: #00ffff;">)</span> - numNA&nbsp; # missing parenthesis</h6>
+<p class="caption"></p>
+<p><img src="../Images/R-02-04%20missing%20end%20parenthsis.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption">Line 23 has a missing end parenthesis</h5>
+<p class="caption"></p>
+<p class="">In this case, R goes to line 24 believing you are still inside the parentheses.&nbsp; At the beginning of line 24, it see <em><strong>cat() </strong></em>and point to that as the error -- in other words, R cannot understand why you are putting <em><strong>cat()</strong></em> inside the parentheses started on line 23.</p>
+</body>
+</html>

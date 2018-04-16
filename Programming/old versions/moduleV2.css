@@ -1,0 +1,430 @@
+body
+{
+	background-color: rgb(0,60,60);
+	font-size: 14px;
+	font-family: arial;
+	line-height: 135%;
+}
+figure
+{
+	margin: 0;
+	padding: 0;
+}
+figcaption
+{
+	font-style: italic;
+	color: rgb(155,70,70);
+}
+a:link,a:visited
+{
+	text-decoration: none;
+	color: rgb(125,64,0);
+	/*border: 1px dashed rgb(125,64,0);*/
+}
+a:hover
+{
+	text-decoration: underline;
+}
+a[href^="#"],a.linkback   /* href that begin with '#' */
+{
+	color: rgb(255,0,0);
+} 
+h1
+{
+	/* Want to hide the H1 -- could have used display: none; to replace all the below code but 
+		this would hide the header from screen readers 	
+	visibility: hidden;
+	height: 0px;
+	width: 0px;
+	margin: 0px;
+	padding: 0px;*/
+	font-size: 24px;
+	color: rgb(0,0,100);
+}
+h2
+{
+	font-weight: 700;
+	color: rgb(100,0,0);
+	font-size: 20px;
+	text-align: left;
+	margin-left: -12px;
+	margin-top: 0px !important; /* override editor style */ 
+	margin-bottom: 10px;
+	margin-right: 0px;
+	background-color: transparent !important;/* override editor style */ 
+}
+h3
+{
+	color: rgb(0,0,100);
+	font-size: 18px;
+	margin: 0px !important; /* override editor style */
+	padding-top: 0px;
+	padding-bottom: 10px;
+	margin-left: -8px;
+	background-color: transparent !important;/* override editor style */ 
+}
+h4
+{
+	color: rgb(0,70,0);
+	font-size: 16px;
+	margin: 0px;			/* override editor style */
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-left: -6px;
+}
+p
+{
+	margin: 0em;
+	min-height: 1.25em;
+}
+ol,ul
+{
+	margin-left: 18px;
+	margin-right: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding: 0px;
+}
+table 
+{
+	border-collapse: collapse;
+}
+td
+{
+	border: solid 1px rgb(100,100,100);
+	padding: 3px;
+}
+.codeBlock
+{
+	cursor: pointer;
+}
+.codeBlock:hover
+{
+	/* instead of a border -- cannot use border becuase there
+	   is no height set on the code-blocks so the border automatically
+		changes the size of the box (so the box-sizing property does not work */
+	outline: 1px solid rgb(100,200,150);
+}
+.contentDiv
+{
+	padding-left: 25px;
+	padding-right: 13px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	overflow: auto;	
+}
+.h2Div
+{
+	background-color: rgb(220,220,220);
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+}
+.h3Div
+{
+	background-color: rgb(220,220,220);	
+	border-top-right-radius: 0px;
+	border-top-left-radius: 0px;
+}
+.h2NextDiv
+{
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+.h3NextDiv
+{
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+.nonlinear
+{
+	background-color: rgb(210,210,220);	
+}
+/*** Code typesettings ****/
+.code
+{	
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	/*padding-bottom: 0px;*/
+	
+	display: block;
+	line-height: 1.7em;	
+	font-style: normal;	
+	color: rgb(100,255,255);
+	padding-left: 4.5em;
+	text-indent: -4.5em;
+	background-color: rgb(33,33,33);
+	font-family: monospace;
+}
+.code:before
+{	
+	counter-increment: codeLines;
+	content: counter(codeLines);
+	display: inline-block;
+	border-right: 1px solid rgb(200,200,100);
+	padding-right: 8px;
+	margin-right: 12px;
+	color: rgb(200,200,100);
+	min-width: 30px;
+	text-align: right;
+}
+.firstLine
+{
+	padding-top: 7px;
+}
+.lastLine
+{
+	padding-bottom: 7px;
+}
+/* if the class list does not contain 'code' then we reset the counter */
+:not([class*='code'])
+{
+	counter-reset: codeLines;
+}
+/* if an element does not contain class="code" but the next element does */
+:not([class*='code']) + .code
+{
+	/* these styles will be applied to the next element (class="code") */
+	padding-top: 7px;  
+}
+/*  This takes priority over .code so it does not work
+.code + .code
+{
+	padding-bottom: 7px;
+}
+*/
+/*** enf of code typesettings ****/
+.menu
+{
+	display: none;
+	position: absolute;
+	padding: 10px;
+	background-color: rgba(130,130,130,.9);
+	z-index: 100;
+}
+.linkback
+{
+	padding: 10px;
+	display: block;
+}
+.resize
+{
+	position: fixed; /* the trouble is that the lesson is in an iframe so this really does nothing */
+	bottom: 10px; 
+	right: 10px; 
+	height: 20px; 
+	z-index:100; 
+	background-color: rgb(0,0,0); 
+	color: rgb(150,255,150);
+}
+.resize:hover
+{	
+	color: rgb(150,150,255);
+}
+.flexSize
+{
+	border-color: red;
+	border-width: 1px;
+	border-style: dotted;
+}
+.lessonLink
+{
+	font-size: 14px;
+	width: 375px;
+	background-color: #cccccc;
+	display: inline-block;
+	/* if you change the padding, need to change in print mode, too */
+	padding-left: 9px;
+	padding-right: 9px;
+	padding-bottom: 3px;
+	padding-top: 3px;
+	border-radius: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.previousLesson
+{
+	float: left;
+	text-align: left;
+}
+.nextLesson
+{
+	float: right;
+	text-align: right;
+}
+.title
+{
+	font-size: 24px;
+	width: 100%;
+	text-align: center;
+	padding: 0;
+	background-color: rgb(220,220,220);
+	border-radius: 10px;
+	/*background-color: #cccccc;		
+	display: inline-table;
+	font-weight: bold;
+	vertical-align: top;*/
+}
+.screenNote
+{
+	font-family: garamond;
+	color: rgb(100,0,0);
+}
+@media only screen and (max-width: 820px) 
+{
+	.lessonLink
+	{
+		width: calc(100% - 18px); /* 18px is padding-left + padding-right (9px+9px) */
+		display: block;
+	}
+	
+	.nextLesson, .previousLesson 
+	{
+	  float: none;
+	}
+	
+	.nextLesson
+	{
+		text-align: left;
+	}
+}
+@media only print
+{
+	.lessonLink, .concept, .resize, iframe
+	{
+		display: none; margin: 0; padding: 0; height: 0; width: 0;
+	}
+	img
+	{
+		page-break-inside: avoid; /* Images naturally do this? */
+		max-width: 100%;
+		/* not sure why "!important" is needed here -- 
+			I thought this should override all other heights automatically */
+		height: auto !important; 
+	}
+	code, .code
+	{
+		/* there is no standard way to print a background color -- instead changing the font color -- but putting a background-color just to be safe... */
+		color: rgb(0,0,75);
+		background-color: #ffffff;
+	}
+	code:before, .code
+	{
+		color: rgb(0,75,0);
+	}
+	pre
+	{
+		border-color: grey;
+		border-width: 1px;
+		border-style: solid;
+		border-radius: 5px;
+	}
+	.rightClickDiv
+	{
+		display: none;
+	}
+}
+
+
+/*** start of deprecated section  *****/
+pre
+{
+	counter-reset: line;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	padding-top: 7px;
+	padding-bottom: 7px;
+}
+code
+{	
+	counter-increment: line;
+	display: block;
+	line-height: 1.7em;	
+	color: rgb(100,255,255);
+	padding-left: 4.5em;
+	font-style: normal;	
+	text-indent: -4.5em;
+	background-color: rgb(33,33,33);
+}
+code:before
+{
+	content: counter(line);
+	display: inline-block;
+	border-right: 1px solid rgb(200,200,100);
+	padding-right: 8px;
+	margin-right: 12px;
+	color: rgb(200,200,100);
+	min-width: 30px;
+	text-align: right;
+}
+
+/** spacer is an editor-only style designed to make copying and pasting sections easier -- deprecated with version 2.0 */
+.spacer 
+{
+	display: none;
+}
+
+table
+{
+/*	padding-left: 25px;
+	padding-right: 15px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	background-color: rgb(220,220,220);
+	border-radius: 10px;
+	width: 100%;*/
+	/*box-shadow: 0px 0px 15px rgb(100,100,100);*/
+}
+th,td
+{
+	/*width: 100%;*/
+}
+.content, .content th, .content tr
+{
+	/* this is to keep D2L from resizing the content areas --
+		not a good solution */
+	width: 100% !important;
+}
+
+/****** end of deprecated section *****/
+
+.purpose
+{
+}
+.concept
+{
+}
+.animation
+{
+}
+.activities
+{
+}
+.practice
+{
+}
+.answers
+{
+}
+.application
+{
+}
+.debugging
+{
+}
+.programming
+{
+}
+.traps
+{
+}
+.bigpic
+{
+}
+.extensions
+{
+}	
+.shortcuts
+{
+}	

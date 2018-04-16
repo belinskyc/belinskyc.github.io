@@ -1,0 +1,371 @@
+/*
+user can select the number before code lines in all but Firefox
+- add all variation of user-select: none; to ::before
+
+*/
+
+body
+{
+	background-color: rgb(0,60,60);
+	font-size: 14px;
+	font-family: arial;
+	line-height: 135%;
+}
+figure
+{
+	margin: 0;
+	padding: 0;
+}
+a:link,a:visited
+{
+	text-decoration: none;
+	color: rgb(125,64,0);
+}
+a:hover
+{
+	text-decoration: underline;
+}
+a[href^="#"],a.linkback,.linkTo   /* href that begin with '#' */
+{
+	color: rgb(255,0,0);
+	cursor: pointer;
+} 
+h1
+{
+	/* h1 is essentially the title of the lesson */
+	font-size: 24px;
+	color: rgb(0,0,100);
+}
+h2
+{
+	font-weight: 700;
+	color: rgb(100,0,0);
+	font-size: 20px;
+	text-align: left;
+	margin-left: -12px;
+	margin-top: 0px; /*!important;  override editor style -- no longer need -- moved editor.css before this file*/ 
+	margin-bottom: 10px;
+	margin-right: 0px;
+	background-color: transparent; /*!important; override editor style */ 
+}
+h3
+{
+	color: rgb(0,0,100);
+	font-size: 18px;
+	margin: 0px; /*!important;  override editor style */
+	padding-top: 0px;
+	padding-bottom: 10px;
+	margin-left: -8px;
+	background-color: transparent; /*!important; override editor style */ 
+}
+h4
+{
+	color: rgb(0,70,0);
+	font-size: 16px;
+	margin: 0px;			
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-left: -6px;
+}
+p
+{
+	margin: 0em;
+	min-height: 1.25em;
+}
+ol,ul
+{
+	margin-left: 18px;
+	margin-right: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding: 0px;
+}
+table 
+{
+	border-collapse: collapse;
+}
+td
+{
+	border: solid 1px rgb(100,100,100);
+	padding: 3px;
+}
+.codeBlock
+{
+	cursor: pointer;
+}
+.codeBlock:hover
+{
+	/* instead of a border -- cannot use border becuase there
+	   is no height set on the code-blocks so the border automatically
+		changes the size of the box (so the box-sizing property does not work */
+	outline: 2px solid rgb(150,250,50);
+}
+.contentDiv
+{
+	padding-left: 25px;
+	padding-right: 13px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	overflow: auto;	
+}
+.h2Div
+{
+	background-color: rgb(220,220,220);
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+}
+.h3Div
+{
+	background-color: rgb(220,220,220);	
+	border-top-right-radius: 0px;
+	border-top-left-radius: 0px;
+}
+.h2NextDiv
+{
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+.h3NextDiv
+{
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+.nonlinear
+{
+	background-color: rgb(210,210,220);	
+}
+/*** Code typesettings ****/
+.code, h6
+{	
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	/*padding-bottom: 0px;*/
+	
+	display: block;
+	line-height: 1.7em;	
+	font-style: normal;	
+	font-weight: normal;	
+	font-size: 14px;
+	margin: 0;
+	color: rgb(100,255,255);
+	padding-left: 4.5em;
+	text-indent: -4.5em;
+	background-color: rgb(33,33,33);
+	font-family: monospace;
+}
+.code:before, h6:before
+{	
+	counter-increment: codeLines;
+	content: counter(codeLines);
+	display: inline-block;
+	border-right: 1px solid rgb(200,200,100);
+	padding-right: 8px;
+	margin-right: 12px;
+	color: rgb(200,200,100);
+	min-width: 30px;
+	text-align: right;
+	user-select: none;
+	-webkit-user-select: none; /* Chrome/Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
+}
+.caption, .figureRef
+{
+	color: rgb(0,100,0);
+	font-style: italic;
+}
+.firstLine
+{
+	padding-top: 7px;
+}
+.lastLine
+{
+	padding-bottom: 7px;
+}
+/* if the class list does not contain 'code' then we reset the counter */
+:not([class*='code'])
+{
+	counter-reset: codeLines;
+}
+/* if an element does not contain class="code" but the next element does */
+:not([class*='code']) + .code
+{
+	/* these styles will be applied to the next element (class="code") */
+	padding-top: 7px;  
+}
+/*** end of code typesettings ****/
+.menu
+{
+	display: none;
+	position: absolute;
+	padding: 10px;
+	background-color: rgba(130,130,130,.9);
+	z-index: 100;
+}
+.linkback
+{
+	padding: 10px;
+	display: block;
+}
+.resize
+{
+	position: fixed; /* the trouble is that the lesson is in an iframe so this really does nothing */
+	bottom: 10px; 
+	right: 10px; 
+	height: 20px; 
+	z-index:100; 
+	background-color: rgb(0,0,0); 
+	color: rgb(150,255,150);
+}
+.resize:hover
+{	
+	color: rgb(150,150,255);
+}
+.flexSize
+{
+	border-color: red;
+	border-width: 1px;
+	border-style: dotted;
+	cursor: pointer;
+}
+.lessonLink
+{
+	font-size: 14px;
+	width: 375px;
+	background-color: #cccccc;
+	display: inline-block;
+	/* if you change the padding, need to change in print mode, too */
+	padding-left: 9px;
+	padding-right: 9px;
+	padding-bottom: 3px;
+	padding-top: 3px;
+	border-radius: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.previousLesson
+{
+	float: left;
+	text-align: left;
+}
+.nextLesson
+{
+	float: right;
+	text-align: right;
+}
+.title
+{
+	font-size: 24px;
+	width: 100%;
+	text-align: center;
+	padding: 0;
+	background-color: rgb(220,220,220);
+	border-radius: 10px;
+}
+.figureRef
+{
+	text-decoration: none;
+}
+.screenNote
+{
+	font-family: garamond;
+	color: rgb(100,0,0);
+}
+@media only screen and (max-width: 820px) 
+{
+	.lessonLink
+	{
+		/* 18px is padding-left + padding-right (9px+9px) -- 
+			would like to use variables instead */
+		width: calc(100% - 18px); 
+		display: block;
+	}
+	
+	.nextLesson, .previousLesson 
+	{
+	  float: none;
+	}
+	
+	.nextLesson
+	{
+		text-align: left;
+	}
+}
+@media only print
+{
+	.lessonLink, .concept, .resize, iframe
+	{
+		display: none; margin: 0; padding: 0; height: 0; width: 0;
+	}
+	img
+	{
+		page-break-inside: avoid; /* Images naturally do this? */
+		max-width: 100%;
+		/* not sure why "!important" is needed here -- 
+			I thought this should override all other heights automatically */
+		height: auto !important; 
+	}
+	code, .code, h6
+	{
+		/* there is no standard way to print a background color -- instead changing the font color -- but putting a background-color just to be safe... */
+		color: rgb(0,0,75);
+		background-color: #ffffff;
+	}
+	code:before, .code
+	{
+		color: rgb(0,75,0);
+	}
+	pre
+	{
+		border-color: grey;
+		border-width: 1px;
+		border-style: solid;
+		border-radius: 5px;
+	}
+	.rightClickDiv
+	{
+		display: none;
+	}
+}
+
+.purpose
+{
+}
+.concept
+{
+}
+.animation
+{
+}
+.activities
+{
+}
+.practice
+{
+}
+.answers
+{
+}
+.application
+{
+}
+.debugging
+{
+}
+.programming
+{
+}
+.traps
+{
+}
+.bigpic
+{
+}
+.extensions
+{
+}	
+.shortcuts
+{
+}	

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../AuxFiles/Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../AuxFiles/Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	<style type="text/css">
+		/* For accessibility reason, I need to use visibility: hidden; instead of display: none;
+			This means I also have to zero out height, width, margin, and padding */
+		h1 
+		{ visibility: hidden; height: 0px; width: 0px; margin: 0; padding: 0; } 
+		h2
+		{ margin: 0px; padding: 0px; text-align: left; }
+		p
+		{ margin:0px; padding:0px; }
+		table
+		{ margin-bottom: 10px; width: 100%; } 
+		td 
+		{ height: 18px; }
+		ul,ol
+		{ margin-top: 0px; padding-top: 0px; margin-bottom:0px; padding-bottom: 0px; }
+		body
+		{ font-size: 14px; }
+	</style>
+</head>
+
+<body>
+<h1>Links to previous and Next Lessons</h1>
+<table class="lessonLink previousLesson" id="p1" title="link to previous lesson">
+<tbody>
+<tr>
+<td>Previously: Class Syllabus</td>
+</tr>
+</tbody>
+</table>
+<table class="lessonLink nextLesson" id="p2" title="link to next lesson">
+<tbody>
+<tr>
+<td>Up next: <a href="02-%20Variables.html" target="_self">Variables</a></td>
+</tr>
+</tbody>
+</table>
+<table class="title" id="p3" title="title of current lesson">
+<tbody>
+<tr>
+<td>R Installation</td>
+</tr>
+</tbody>
+</table>
+<table class="purpose" id="p4" title="Purpose of the lesson">
+<tbody>
+<tr>
+<th>Purpose</th>
+</tr>
+<tr>
+<td>Reasons for using R (move to syllabus)<br /> automation-- easily perform the same analysis on multiple data sets<br /> large community, lots of support<br /> powerful analytical tool<br /> flexible-- easy to make small changes<br /> transferable<br /><br /> Download, install, and setup RStudio, the program we will use for the rest of class.&nbsp; Explain the parts of RStudio that will be used prominently in this class.&nbsp; Show how commenting works and the importance of commenting</td>
+</tr>
+</tbody>
+</table>
+<table class="concept" id="p5" title="Lesson Concepts">
+<tbody>
+<tr>
+<th>Concepts</th>
+</tr>
+<tr>
+<td>R is a programming language (like C, C++, Basic, Fortan) and RStudio is a wrapper around R that provides a graphical interface for most of R's features.&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="activities programming" id="p6" title="Lesson Examples">
+<tbody>
+<tr>
+<th>Programming</th>
+</tr>
+<tr>
+<td style="text-align: left;">
+<p><strong>1) Install programs</strong>: There are two programs you need to install for this class: R and RStudio.&nbsp; R is the programming , RStudio is a wrapper around the R programming language.&nbsp; Once both are installed, you will be opening RStudio a) Download and Install R:<br /> The <a href="https://cran.r-project.org/bin/windows/base/" target="_blank">R for Windows download is here</a>. Click on "Download R #.#.# for Windows" The <a href="https://cran.r-project.org/bin/macosx/" target="_blank">R for Mac download is here</a>.&nbsp; Click on "R-#.#.#.pkg" on the left side of the page.</p>
+<p><img src="../../AuxFiles/Pics/RStudio%20Initial.PNG" alt="Installation" title="Installation" width="389" height="268" /></p>
+<p>The&nbsp;<a href="https://cran.r-project.org/bin/linux/" target="_blank">R for Linux download instructions are here.</a>&nbsp;&nbsp; Use the default installation options. b) Download and Install RStudio.&nbsp; You can <a href="https://www.rstudio.com/products/rstudio/download#download" target="_blank">download the RStudio Installer here.</a> Use the default installation options 2) RStudio Basics - RStudio with nothing opened &lt;pic&gt;<br /> -- you will almost never see this view so lets open a file &lt;pic&gt;<br /> - run the program<br /> - stuff we care about &lt;pic&gt;<br /> &nbsp; - Source button to run your program &nbsp; -<br /> - change the color &lt;pic&gt;<br /> 3) First programming topic: Commenting</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="activities debugging" id="p7" title="Lesson Debug">
+<tbody>
+<tr>
+<th>Debugging</th>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="activities statistics" id="p8" title="Lesson Debug">
+<tbody>
+<tr>
+<th>Statistics</th>
+</tr>
+<tr>
+<td>
+<ul>
+<li>sdfasdf</li>
+<li>asdfgasdfga</li>
+<ul>
+<li>dfgdfsag</li>
+<ul>
+<li>asdfsadfaf</li>
+</ul>
+</ul>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="suplemental traps" id="p9" title="Lesson Debug">
+<tbody>
+<tr>
+<th>Traps</th>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="suplemental extensions" id="p10" title="Lesson Debug">
+<tbody>
+<tr>
+<th>Extensions</th>
+</tr>
+<tr>
+<td>32 vs 64 bit issues</td>
+</tr>
+</tbody>
+</table>
+<table class="suplemental shortcuts" id="p11" title="Lesson Debug">
+<tbody>
+<tr>
+<th>Shortcuts</th>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="application" id="p12" title="Lesson Practice">
+<tbody>
+<tr>
+<th>Application</th>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="application answers" id="p13" title="Lesson Practice">
+<tbody>
+<tr>
+<th>Answers</th>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p></p>
+</body>
+</html>

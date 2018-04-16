@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2231640" target="_self">Iterations and State Variables</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2028087" target="_self">Vectors and Data Frames</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">02-05: Vector Operations and NA</h1>
+<h2>Purpose</h2>
+<ul>
+<li>mathematical operations on vectors</li>
+<li>dealing with missing values in a vector</li>
+<li>R shortcuts for vector mathematics</li>
+</ul>
+<h2>Concepts</h2>
+<h2>Vector math</h2>
+<p>For this lesson, we are going to use the data from the file <strong>LansingWeather2.csv</strong>.&nbsp; First we need to open the CSV file and save the data in the file to a data frame, which we will call <em><strong>weatherData</strong></em>.&nbsp;</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6># read data from LansingWeather2.csv and save to the variable weatherData...</h6>
+<h6>weatherData = read.csv("data/LansingWeather2.csv");</h6>
+<p></p>
+<p>The data frame, <em><strong>weatherData</strong></em>, has the date, high temperature, low temperature, and precipitation for 14 days (March 27-April 9, 2017) in Lansing, MI.</p>
+<p></p>
+<p><img src="../Images/R-02-05%20weather%20data.PNG" alt="" class="flexSize" /></p>
+<h5>Looking at the values in the <strong>weatherData</strong> data frame in the Main Window.</h5>
+<p></p>
+<h3>Finding change in temperature</h3>
+<p>We want to find the temperature range for each day -- in other words, the high temperature minus the low temperature.&nbsp; This means subtracting each day's low temperature from the high temperature and saving that value to a vector.</p>
+<p></p>
+<p>First we will extract the low and high temperature values from <em><strong>weatherData</strong></em> and save them to a vector.&nbsp; There are two ways we can do this:</p>
+<p>1) by column number</p>
+<h6 class="partial"># get all values from the 3rd column in weatherData</h6>
+<h6 class="partial">highTemp = weatherData[, 3];&nbsp;</h6>
+<p></p>
+<p>2) or by column name</p>
+<h6 class="partial"># get all values from the column named "lowTemp" in weatherData</h6>
+<h6 class="partial">lowTemp = weatherData[, "lowTemp"];</h6>
+<p></p>
+<p>Note: the row number is left blank to indicate we are getting values <em class="hl">from all rows.</em></p>
+<p><em class="hl"></em></p>
+<p>We will use a <em><strong>for()</strong></em> to iterate through each value (i.e., the highTemp - lowTemp for each day) and solve for the temperature difference.&nbsp; To do this we also need a vector that will hold the change in temperature values, which we will call <em><strong>changeInTemp</strong></em>.&nbsp;</p>
+<p><em><strong></strong></em></p>
+<h6 class="partial">changeInTemp = c();&nbsp; #declared a vector</h6>
+<p></p>
+<p><em><strong>changeInTemp</strong></em> acts as a state variable because:</p>
+<p>1) <em><strong>changeInTemp</strong></em> gets initialized before the<em><strong> for()</strong></em></p>
+<p>2) <em><strong>changeInTemp</strong></em> gets populated during the iterations of the<em><strong> for()</strong></em></p>
+<p><em><strong>3) changeInTemp </strong></em>final state is the full set of temperature differences</p>
+<p></p>
+<h3>Subtracting values from two different vectors</h3>
+<p><em></em> We are going to use a <em><strong>for()</strong> </em>loop that iterates through each value in <em><strong>highTemp</strong> </em>and <em><strong>lowTemp</strong></em>, finds the difference, and saves the answer to <em><strong>changeInTemp</strong></em>.&nbsp; We need to know the length of the vectors to do this.&nbsp; In this case, we already know there are <strong>14</strong> values, but we will use<em><strong> length()</strong> </em>to calculate this value so that it works for vectors of any size (i.e., if we wanted to run the same code but use more days).</p>
+<p></p>
+<h6 class="partial">vectorLength = length(lowTemp);</h6>
+<p>Note: since the length of all columns in a data frame are by definition the same, we only need to get the length of one vector.</p>
+<p></p>
+<p>We use <em><strong>vectorLength</strong></em><strong></strong><em> </em>to create a sequence that the <em><strong>for()</strong></em> iterates through.&nbsp; The <em><strong>for()</strong> </em>iterates through the sequence <strong>1:vectorLength</strong><em>, </em><strong>(<em></em></strong><strong></strong><strong>1:14)</strong>, and assigns the value of the <strong>14 <em>highTemp </em></strong>- <em><strong>lowTemp</strong> </em>difference operations to the <strong>14 <em>changeInTemp </em></strong>vector elements.</p>
+<h6 class="p">for(i in 1:vectorLength)</h6>
+<h6>{</h6>
+<h6>&nbsp; changeInTemp[i] = highTemp[i] - lowTemp[i];</h6>
+<h6>}</h6>
+<p></p>
+<p>Let's put all this code together:</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br /># read data from LansingWeather2.csv and save to variable weatherData<br />weatherData = read.csv("data/LansingWeather2.csv");</h6>
+<h6># get all values from the 3rd column in weatherData</h6>
+<h6>highTemp = weatherData[, 2]; <br /># get all values from the column named "lowTemp" in weatherData</h6>
+<h6>lowTemp = weatherData[, "lowTemp"]; <br /> <br />changeInTemp = c(); # declare a vector <br />vectorLength = length(lowTemp); # vectorLength will be 14 (length of data)</h6>
+<h6></h6>
+<h6># go through the sequence 1:14<br />for(i in 1:vectorLength)<br />{<br />&nbsp;&nbsp; # subtract lowTemp from highTemp for all 14 values and save to changeInTemp<br />&nbsp;&nbsp; changeInTemp[i] = highTemp[i] - lowTemp[i];<br />}</h6>
+<p></p>
+<p>The Environment Window shows the vector <em><strong>changeInTemp</strong> </em><em><strong></strong></em>but it only shows up to 10 values.&nbsp; If you want to see all the values in <em><strong>changeInTemp</strong></em>, you can type <em class="hl">changeInTemp</em> in the Console Window and the 14 values in <em><strong>changeInTemp</strong> </em>will appear on the next line.</p>
+<p></p>
+<p><img src="../Images/R-02-05%20difference%20calc.PNG" alt="" class="fs" /></p>
+<h5>Using a<strong> for()</strong> to perform iterative mathematical operations on vectors.</h5>
+<h2>Dealing with missing values</h2>
+<p>In the previous example, we have an idealized situation where every day had a high and low temperature associated with it.&nbsp; In the real world, especially with large amounts of data, there are often missing data.&nbsp; In R, missing data are represented by <em><strong>NA,</strong></em> but the CSV file could designate missing data according to a number of different conventions.</p>
+<p></p>
+<p>First lets create a data set with missing values and save this as <em><strong>MissingTemps.csv</strong></em> in the <em><strong>Data</strong> </em>directory</p>
+<h6 class="p">date,highTemp, lowTemp, precipitation<br />Mar27,57,45,0.01<br />Mar28,50,43,0.005<br />Mar29,54, ,0.04<br />Mar30,40,38,1.11<br />Mar31,39,<em class="hl">NA</em>,0.12<br />Apr1,58,45,0<br />Apr2,60, ,0.005<br />Apr3,53,50,0.49<br />Apr4,55,48,0.45<br />Apr5,44,40,0.30<br />Apr6,39,36,1.13<br />Apr7,<em class="hl">NULL</em>,43,0.004<br />Apr8,61,45,0<br />Apr9,75,63,0</h6>
+<p></p>
+<p>In the above data set, the <em><strong>lowTemp</strong> </em>for <strong>Mar29</strong> and <strong>Apr2</strong> are left blank, the <em><strong>lowTemp</strong> </em>for <strong>Mar31</strong> is given as <em><strong>NA, </strong></em>and the<strong></strong><em><strong> highTemp</strong>&nbsp;<strong></strong></em>for <strong>Apr7</strong> is given as <em><strong>NULL</strong></em>.&nbsp; So, there are four missing<em><strong></strong> </em>values in <em><strong>missingTemps.csv</strong></em>.</p>
+<p></p>
+<h3>Viewing blank or NA values</h3>
+<p>We are going to open a new script and save <em><strong>missingTemps.csv</strong></em> data to a Data Frame called <em><strong>weatherData, </strong></em>but we want to standardize the way that missing values are recorded.&nbsp; So, in<em><strong> read.csv()</strong></em> we add the parameter <em><strong>na.strings</strong></em>:<em><strong><br /></strong></em></p>
+<p></p>
+<h6><code class="partial">na.strings=c("", " ", "NULL", NULL, "NA", "na", NA, "null")</code></h6>
+<p><code></code></p>
+<p>Essentially, <em><strong>na.strings</strong></em> is a vector that contains all the value that you want R to assign as <em><strong>NA</strong></em>.&nbsp; It is good to be paranoid here and think of all the possible ways in which CSV files will present these values!&nbsp; In this case, we only needed to use " ", "NULL", and "NA".<code></code></p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /><br />weatherData = read.csv("data/missingTemps.csv", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; na.strings=c("", " ", "NULL", NULL, "NA", "na", NA, "null"));</h6>
+<p></p>
+<p>Execute the code above and double-click on <em><strong>weatherData</strong> </em>in the<em><strong> Environment Window</strong></em> so that it appears in the Main Window.&nbsp; We see that all four missing values in <em><strong>weatherData</strong> </em>are now labelled as <em><strong>NA</strong></em>.</p>
+<p></p>
+<p><img src="../Images/R-02-05%20NA%20values.PNG" alt="" class="flexSize" /></p>
+<h5><strong>NA</strong> values in a data frame</h5>
+<p></p>
+<h3>Mathematical operations on vectors with NA values</h3>
+<p>We are going to run the same change in temperature script as before except with NA values in the data frame:</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br /># read data from missingTemps.csv and save to the variable weatherData...<br />weatherData = read.csv("data/missingTemps.csv", <br />&nbsp;&nbsp;&nbsp;&nbsp; na.strings=c("", " ", "NULL", NULL, "NA", "na", NA, "null"));</h6>
+<h6></h6>
+<h6># get all values from the 3rd column in weatherData</h6>
+<h6>highTemp = weatherData[, 2];</h6>
+<h6># get all values from the column named "lowTemp" in weatherData <br />lowTemp = weatherData[, "lowTemp"];</h6>
+<h6><br />changeInTemp = c(); # declare a vector <br />vectorLength = length(lowTemp); # vectorLength will be 14 (length of data)</h6>
+<h6></h6>
+<h6># go through the sequence 1:14<br />for(i in 1:vectorLength)<br />{<br />&nbsp;&nbsp; # subtract lowTemp from highTemp for all 14 values and save to changeInTemp<br />&nbsp;&nbsp; changeInTemp[i] = highTemp[i] - lowTemp[i];<br />}</h6>
+<p></p>
+<p>Note: anytime there is an <em><strong>NA</strong> </em>in a calculation (e.g., 3rd element in <em><strong>changeInTemp</strong></em>) , the answer is going to be <em><strong>NA</strong></em>.&nbsp; This is a special feature of <em><strong>NA -- </strong></em>if you used any other value to represent missing data then you would get an error in the calculation.</p>
+<p></p>
+<p><img src="../Images/R-02-05%20difference%20calc%20with%20NA.PNG" alt="" class="fs" /></p>
+<h5>Doing mathematical operation with <strong>NA </strong>values</h5>
+<p></p>
+<p class="linkTo" title="multiple-NA">Extension: What counts as NA</p>
+<h2>Vector Operation Shortcuts</h2>
+<p>So far we have used <em><strong>for()</strong> </em>loops to perform iterative operations on a vector or multiple vectors.&nbsp; However, R has built in functions that do all these operations using a lot less code.&nbsp; For example, we can perform the above change in temperature calculation without a <em><strong>for().</strong></em></p>
+<p><em><strong></strong></em></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />weatherData = read.csv("data/missingTemps.csv", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; na.strings=c("", " ", "NULL", NULL, "NA", "na", NA, "null"));</h6>
+<h6></h6>
+<h6>highTemp = weatherData[, 2]; <br />lowTemp = weatherData[, "lowTemp"];</h6>
+<h6 class="hl"><br />changeInTemp = highTemp - lowTemp;</h6>
+<p></p>
+<p>Line 10 does all the work of iterating through the values in the vector, subtracting the values, and saving the answer to the vector <em><strong>changeInTemp</strong></em>.&nbsp; The result is the same as the script that uses the <em><strong>for()</strong> </em>loop.&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-02-05%20difference%20calc%20with%20R%20function.PNG" alt="" class="fs" /></p>
+<h5>Subtracting a vector in R.</h5>
+<p></p>
+<p>This method is obviously easier than <em><strong>for()</strong></em> loops for subtracting two vectors -- and it is the method R programmer will usually use.&nbsp; However, this method is really a shortcut and it is important to understand what is going on in with the <em><strong>for()</strong></em> example because, eventually, you will find a situation where you need to use a <em><strong>for()</strong></em> to solve a more complex problem.</p>
+<p></p>
+<h3>Many other shortcuts</h3>
+<p>R has many functions that can quickly perform the most common operations on vectors like<em><strong> sum(), max(), min(),</strong>&nbsp;</em> and <em><strong>mean()</strong></em>.&nbsp;</p>
+<p></p>
+<p>One important parameter used in&nbsp; all of these functions is <em><strong>na.rm:</strong></em></p>
+<p><em><strong>na.rm = TRUE</strong>&nbsp;<strong> </strong></em>tells R to exclude the <em><strong>NA</strong> </em>values from the<em> </em>vector before performing the operation.&nbsp;</p>
+<p><em><strong>na.rm = FALSE</strong></em> tells R to return <em><strong>NA</strong> </em>if there are <em><strong>NA</strong> </em>values in the vector.&nbsp;</p>
+<p></p>
+<p>The default value for <em><strong>na.rm</strong></em> is <em><strong>FALSE</strong></em>.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br />weatherData = read.csv("data/missingTemps.csv", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; na.strings=c("", " ", "NULL", NULL, "NA", "na", NA, "null"))</h6>
+<h6><br /># save high temp and low temp columns to vectors<br />highTemp = weatherData[, 2]; <br />lowTemp = weatherData[, "lowTemp"]; <br /> <br /># get min and max temp (na.rm = default = FALSE)<br />minTemp = min(lowTemp);<br />maxTemp = max(highTemp);</h6>
+<h6><br /># get min and max temp ignoring the NAs <br />minTempTake2 = min(lowTemp, na.rm=TRUE);<br />maxTempTake2 = max(highTemp, na.rm=TRUE);<br /> <br /># get the index of min and max values <br />minIndex = which.min(lowTemp);<br />maxIndex = which.max(highTemp);<br /> <br /># get simple statistics on a vector<br />sumTemp = sum(highTemp, na.rm=TRUE); <br />meanTemp = mean(highTemp, na.rm=TRUE);</h6>
+<h6>medianTemp = median(highTemp, na.rm=TRUE);</h6>
+<h6>stanDev = sd(highTemp, na.rm=TRUE);<br />variance = var(highTemp, na.rm=TRUE); <br /> <br /># get index of values that meet a condition</h6>
+<h6># this is more advanced and will be covered in detail later<br />whichHighGT60 = which(highTemp &gt; 60);<br />whichLowLT43 = which(lowTemp &lt; 43);</h6>
+<p></p>
+<p><img src="../Images/R-02-05%20R%20Shortcuts.PNG" alt="" class="flexSize" /></p>
+<h5>Using R functions to perform common vector operations.</h5>
+<h2 class="application" title="Lesson Practice">Application</h2>
+<p>1) Create a vector called <em><strong>changeInHighTemp</strong> </em>and, using the data from <strong>lansingWeather2.csv</strong>, find the change in high temperatures from day-to-day.&nbsp;</p>
+<p style="padding-left: 30px;">So if your four high temperatures are: 40, 45, 35, 42</p>
+<p style="padding-left: 30px;"><em><strong>changeInHighTemp</strong> </em>would be: <em><strong>NA</strong></em>, 5, -10, 7</p>
+<p style="padding-left: 30px;"></p>
+<p style="padding-left: 30px;">Note: There are only three <em><strong>changeInHighTemp</strong> </em>values to calculate but we want the length of <em><strong>changeInHighTemp</strong> </em>to be four, same as the number of high temps, so we add the <em><strong>NA</strong> </em>to the front.&nbsp; The <em><strong>NA</strong> </em>is necessary because there is no previous data point to subtract from the first data point in the series.</p>
+<p></p>
+<p>2) Add the vector <em><strong>changeInHighTemp</strong> </em>to the data frame -- this means the vector must be the same size as the other columns.</p>
+<h2 class="trap" id="multiple-NA">Extension: What counts as NA</h2>
+<p>R is somewhat savvy when it moves data from a CSV to a data frame.&nbsp; If there is an empty value in a column that is all numbers, then R will convert the empty value to <em><strong>NA</strong></em>. &nbsp; <em><strong>NULL</strong></em>, however, is not considered to be a valid data frame value and if there is a <em><strong>NULL</strong> </em>in a column, it will be treated as the string value "NULL".&nbsp; R also does not consider lowercase <em><strong>na</strong> </em>to be <em><strong>NA</strong> </em>and this will also be treated as the string value "na".</p>
+<p></p>
+<p>There is now a second problem: if there is even one string in a column, all values in the column are treated as strings.&nbsp; This means that <strong>40</strong> will be seen as the string "40" and mathematical operations on strings will cause an error.&nbsp; This, specifying the <em><strong>na.strings</strong> </em>argument can be useful to ensure that you will nor have to convert columns to numeric using an extra step after the data are imported.</p>
+</body>
+</html>

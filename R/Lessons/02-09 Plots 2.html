@@ -1,0 +1,319 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2028089" target="_self">Functions 1</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2044334" target="_self">Functions 2</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">02-09: Plots 2</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Create a histogram, barplot, and boxplot</li>
+<li>Understand and use the parameters in the plot functions</li>
+<li>Style the plots and change axis ranges</li>
+</ul>
+<h2>Concepts</h2>
+<h2>plot() is a function</h2>
+<p><em><strong>plot()</strong></em> is a function in R<strong><em></em></strong><em><strong></strong></em> that takes in a bunch of parameters, executes a codeblock, and outputs a plot.&nbsp; <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/plot.html" target="_self">Information about the function <em><strong>plot()</strong></em> can be found here</a>.&nbsp; You can also type "plot" in the search bar of the Help Window (<em class="figureRef" title="help-plot">fig</em>). The information does not show you the code inside the <em><strong>plot()</strong></em>, just the parameters and an explanation of the purpose of the function and the details of the parameters.</p>
+<p></p>
+<p><img src="../Images/R-02-09%20Help-Plot.PNG" alt="" class="fs" /></p>
+<h5 class="" id="help-plot">Help Window information for <strong>plot()</strong>.</h5>
+<p></p>
+<p>&nbsp;Unlike the<em><strong> pythagoras()</strong> </em>function we created in the previous lesson, you do not have to assign a value to every parameters in <em><strong>plot()</strong></em>.&nbsp; Many of the parameters in <em><strong>plot()</strong></em> have default values -- similar to how Microsoft Word has default settings for font type (Calibri -- it used to be Times New Roman) and font size (11) -- but you can change these values.</p>
+<p></p>
+<p>In this lesson we are going to create three different types of plots: histograms, bar plots, and box plots.&nbsp; We are going to modify some of the parameters in each plot and learn how to add additional lines and points to the plots.&nbsp; Note: we will not be directly using <em><strong>plot()</strong> </em>but all the plotting functions we will use all call <em><strong>plot()</strong></em> in the background.</p>
+<p></p>
+<h2>The histogram</h2>
+<p>We will start by making a histogram of the humidity values for the 14 days in <em><strong>LansingWeather3.csv</strong></em>.&nbsp; To make this plot we call the R function<em><strong> hist()</strong></em> and pass in the humidity vector.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>weatherData = read.csv("data/LansingWeather3.csv");<br />humidityData = weatherData[ ,"humidity"];</h6>
+<h6></h6>
+<h6>hist(humidityData);</h6>
+<p></p>
+<p>A histogram is a plot that shows the distribution of a numeric variable.&nbsp; The values are distributed into equally spaced bins (in the case, of length 5) and the frequency of counts in each bin is plotted as the height of the bar.&nbsp; If you add up all of the frequencies, you will see that it adds up to 14 -- for the 14 humidity values.</p>
+<p></p>
+<p><img src="../Images/R-02-09%20Histogram.PNG" alt="" class="flexSize" /></p>
+<h5>Plotting a histogram of the 14 humidity values</h5>
+<p></p>
+<h3>Modifying the histogram with function parameters</h3>
+<p>So we have a pretty basic histogram telling us that humidity ranged from 55-90%, and there was high humidity (&gt; 80%) on 7 of the days, which explains why we had so much rain during that time.</p>
+<p></p>
+<p>As in the previous plotting lesson, there are numerous modifications we can make to the histogram.&nbsp; <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/hist.html" target="_self">The function hist(), along with the parameters, is described here</a>.&nbsp; Or, you can type "hist" in the Help Window.</p>
+<p></p>
+<p>The<em><strong> hist()</strong> </em>function looks like this (copied from the link above):</p>
+<h6 class="partial">hist(x,<span class=""><span class="hl"> breaks</span> = "Sturges",</span></h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp; freq = NULL, probability = !freq,</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp; include.lowest = TRUE, <span class=""><span class="hl">right</span> = TRUE,</span></h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp; density = NULL, angle = 45, <span class="hl">col</span> = NULL,</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp; border = NULL, <span class="hl"> main</span> = paste("Histogram of" , xname),</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp; xlim = range(breaks), ylim = NULL,</h6>
+<h6><span class="">&nbsp;&nbsp;&nbsp;&nbsp; <span class="hl">xlab</span> = xname, ylab,</span></h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp; axes = TRUE, plot = TRUE, <span class="hl">labels</span> = FALSE,<span style="color: #ffff00;"> </span></h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp; nclass = NULL, warn.unused = TRUE, ...)</h6>
+<p>As you can see, there are many parameters that can be set and the (<em><strong> ...</strong></em> ) indicates there are many more that are not given here.&nbsp; In the link above there is a description of what the different parameters do.&nbsp; The majority of the parameters already have assigned (default) values -- all except <strong>x,</strong> which is assigned the data.</p>
+<p></p>
+<p>So:</p>
+<h6 class="partial">hist(x=humidityData);</h6>
+<p>assigns the values of <em><strong>humidityData</strong> </em>to <em><strong>x</strong></em></p>
+<p></p>
+<p class="linkTo" title="x-value">Extension: The x value in hist().</p>
+<h3>Assigning values to the parameters that have default values</h3>
+<p>Now we will assign values to a few of the other parameters -- the parameters highlighted above.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6>weatherData = read.csv("data/LansingWeather3.csv")<br />humidityData = weatherData[ ,"humidity"];</h6>
+<h6></h6>
+<h6>hist(humidityData, <em class="hl">labels</em>=TRUE, <em class="hl">breaks</em>=4, <em class="hl">right</em>=FALSE,<br />&nbsp;&nbsp;&nbsp;&nbsp; <em class="hl">xlab</em>="Humidity (%)", <em class="hl">col</em>=c("red","blue"),<br />&nbsp;&nbsp; &nbsp; <em class="hl">main</em>="Humidity");</h6>
+<p></p>
+<p><img src="../Images/R-02-09%20Histogram2.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="hist2">Changing some of the parameters in the <strong>hist()</strong> function</h5>
+<p></p>
+<p>Let's look at what these parameters did and I encourage you to play with these values.</p>
+<ul>
+<li><em><strong>labels = TRUE</strong> </em>put the frequency numbers on top of the bars</li>
+<li><em><strong>breaks = 4</strong> </em>set the number of bins (bars) in the plot.&nbsp; Note: the number assigned to <em><strong>breaks</strong> </em>is more of a suggestion and is often not the exact number that R will use -- try out different numbers.</li>
+<li><em><strong>right</strong> </em>tell <em><strong>hist()</strong></em> how to handle values that fall exactly on the border of two bins.&nbsp; There is a humidity value of 80, which is on the border of the last 2 bins</li>
+<ul>
+<li><em><strong>right = TRUE</strong></em> (default) assigns the border value, 80, to the right bin</li>
+<li><strong><em>right = FALSE</em></strong> assigns the border value, 80, to the left bin.</li>
+</ul>
+<li><em><strong>xlab</strong> sets</em> the label on the x-axis</li>
+<li><em><strong>main</strong> </em>sets the title of the plot</li>
+<li><em><strong>col</strong> </em>sets the color of the bars.&nbsp; You can put in multiple colors and R will recycle the colors-- so, in this case, the bin colors will go<strong> red-blue-red-blue-red-blue</strong>...</li>
+</ul>
+<h3>Fixing the y-axis range</h3>
+<p>The last plot has a small issue with it.&nbsp; The last frequency bar has no label on it -- actually it has a label, but the label is cut off.&nbsp; We need to increase the range of the y-axis to include the label.&nbsp; The property to change is <em><strong>ylim</strong></em>.&nbsp; <em><strong>ylim</strong> </em>take a vector with two values: the minimum and maximum value of the axis.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6>weatherData = read.csv("data/LansingWeather3.csv")<br />humidityData = weatherData[ ,"humidity"];</h6>
+<h6>hist(humidityData, labels=TRUE, breaks=4, right=FALSE,<br />&nbsp;&nbsp;&nbsp;&nbsp; xlab="Humidity (%)", col=c("red","blue"),<br />&nbsp;&nbsp; &nbsp; main="Humidity", <em class="hl">ylim =c(0,10)</em> );</h6>
+<p></p>
+<p>So we have increased the y-axis maximum from<strong> 8</strong> to <strong>10</strong> and the last frequency label now appears.</p>
+<p></p>
+<p><img src="../Images/R-02-09%20Histogram%20Limits.PNG" alt="" class="flexSize" /></p>
+<h5>Changing the limits of the y-axis so the frequency label does not get cut off.</h5>
+<h3>Adding a line to the histogram</h3>
+<p>Next, we will add a vertical line to represent the mean humidity.&nbsp; First we need to find the mean of the humidity values using the<em><strong> mean()</strong> </em>function.&nbsp; Then we call the function <em><strong>abline()</strong> </em>to add a line at the mean value to the histogram.&nbsp; <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/abline.html" target="_self">Information about abline() can be found here</a>.</p>
+<p></p>
+<p><em><strong>abline()</strong></em> is a function that adds lines to a plot.&nbsp; We will assign values to three parameters:</p>
+<ul>
+<li><em><strong>v</strong></em>: vertical line(s) -- we set this to <em><strong>meanHumidity</strong> </em>(approximately 76)</li>
+<li><em><strong>col</strong></em>: the color of the line (darkgreen)</li>
+<li><em><strong>lty</strong></em>: the line type (e.g., solid, dashes) which can accept values from 1-6</li>
+</ul>
+<p></p>
+<p class="linkTo" title="abline">Extension: The ( ... ) parameters for abline()</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6>weatherData = read.csv("data/LansingWeather3.csv");<br />humidityData = weatherData[ ,"humidity"];</h6>
+<h6></h6>
+<h6>hist(humidityData, labels=TRUE, breaks=4, right=FALSE,<br />xlab="Humidity (%)", col=c("red","blue"),<br />main="Humidity", ylim=c(0,10) );<br /> <br /><span class="hl">meanHumidity = mean(humidityData);</span><br /><span class="hl">abline(v=meanHumidity, col="darkgreen", lty=4);</span></h6>
+<p></p>
+<p>The mean humidity was calculate to be about 76 and then<em><strong> abline()</strong></em> put a vertical line at the mean humidity.</p>
+<p></p>
+<p><img src="../Images/R-02-09%20Histogram%20-%20add%20line.PNG" alt="" class="flexSize" /></p>
+<h5>Adding a vertical line to represent the mean humidity</h5>
+<p></p>
+<h2>The barplot</h2>
+<p>R has a function that creates barplots called <em><strong>barplot()</strong> </em>and it works in a similar manner to<em><strong> hist()</strong></em></p>
+<p></p>
+<p>We can simply pass a vector (in this case, precipitation) into the<em><strong> barlpot()</strong></em>.<em>&nbsp; </em>The values in this vector represent the height of each bar.&nbsp; Note: <em><strong>hist()</strong></em> processes and tabulates the inputs before plotting, whereas <em><strong>barplot()</strong></em> does no processing -- it simply plots the vectors element as a new height.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6>weatherData = read.csv("data/LansingWeather3.csv");<br />precipData = weatherData[ ,"precipitation"]; <br /> <br />barplot(precipData);</h6>
+<p></p>
+<p>This produces a very plain barplot that shows there were several days with rain -- and on two occasions the rain was greater than one inch.</p>
+<p></p>
+<p><img src="../Images/R-02-09%20Barplot.PNG" alt="" class="flexSize" /></p>
+<h5>A barplot of the precipitation from the 14 days of data</h5>
+<p></p>
+<h3>Using parameters to modify the barplot</h3>
+<p><a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/barplot.html" target="_self">The function <em><strong>barplot()</strong></em> looks very similar to hist()</a></p>
+<p></p>
+<h6 class="partial">barplot(height, width = 1, space = NULL,</h6>
+<h6 class="partial"><span style="color: #990000;">&nbsp;&nbsp;&nbsp;&nbsp; <span class="hl">names.arg</span></span> = NULL, legend.text = NULL, beside = FALSE,</h6>
+<h6 class="partial">&nbsp;&nbsp;&nbsp;&nbsp; horiz = FALSE, density = NULL, angle = 45,</h6>
+<h6 class="partial">&nbsp;&nbsp;&nbsp;&nbsp; <span class="hl">col</span> = NULL, border = par("fg"),</h6>
+<h6 class="partial">&nbsp;&nbsp;&nbsp;&nbsp; <span class="hl">main</span> = NULL, sub = NULL, <span class="hl">xlab</span> = NULL, ylab = NULL,</h6>
+<h6 class="partial">&nbsp;&nbsp;&nbsp;&nbsp; xlim = NULL, ylim = NULL, xpd = TRUE, log = "",</h6>
+<h6 class="partial">&nbsp;&nbsp;&nbsp;&nbsp; axes = TRUE, axisnames = TRUE,</h6>
+<h6 class="partial">&nbsp;&nbsp;&nbsp;&nbsp; cex.axis = par("cex.axis"), cex.names = par("cex.axis"),</h6>
+<h6 class="partial">&nbsp;&nbsp;&nbsp;&nbsp; inside = TRUE, plot = TRUE, axis.lty = 0, offset = 0,</h6>
+<h6 class="partial">&nbsp;&nbsp;&nbsp;&nbsp; add = FALSE, args.legend = NULL, ...)</h6>
+<p></p>
+<p>Let's now assign values to some of the parameters that have default values (the ones highlighted above)</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>weatherData = read.csv("data/LansingWeather3.csv");<br />precipData = weatherData[ ,"precipitation"]; <br /><br />barplot(precipData, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; main="Precipitation over the 14 days", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ylab="Preciptation (inches)",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ylim=c(0,1.4), <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; angle=60, density=30,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; col=c("purple", "black", "orange", "red"));</h6>
+<p></p>
+<p>Now we have a barplot that is more colorful and the y-axis limits have been increased to match our precipitation values.</p>
+<p></p>
+<p><img src="../Images/R-02-09%20Barplot%202.PNG" alt="" class="flexSize" /></p>
+<h5>Barplot with a bunch of parameters changed</h5>
+<p></p>
+<p>Let's look at the parameters we changed:</p>
+<ul>
+<li><em><strong>main</strong></em>: adds a title</li>
+<li><em><strong>ylab</strong></em>: adds a label to the y axis</li>
+<li><em><strong>ylim</strong></em>: changes the limits of the y-axis (it now goes from 0 to 1.4)</li>
+<li><em><strong>angle</strong></em>: sets the angle of the hatch lines inside the bars to 60 degrees</li>
+<li><em><strong>density</strong></em>: sets the numbers of hatch lines in the bars to 30 per inch</li>
+<li><em><strong>col</strong></em>: sets the color by bar. In this case the order goes purple-black-orange-red-purple-black...</li>
+</ul>
+<h3>Adding values to the x-axis</h3>
+<p>The x-axis is pretty barren on this plot.&nbsp; It would be nice to put useful information on the x-axis, like the date.&nbsp; We have the dates in the <em><strong>weatherData</strong> </em>data frame, which we will save to the vector <em><strong>dateData</strong></em>:</p>
+<p></p>
+<h6 class="partial">dateData = weatherData[ ,"date"];</h6>
+<p></p>
+<p>We can use the <em><strong>dateData</strong> </em>vector as x-axis labels using the <em><strong>names.arg</strong></em> parameter in the <em><strong>barplot()</strong></em> function</p>
+<h6 class="partial">names.arg=dateData</h6>
+<p></p>
+<p>And we also assign the value "Dates" to the pararmeter <em><strong>xlab</strong> </em>and the full script becomes...</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>weatherData = read.csv("data/LansingWeather3.csv");<br />precipData = weatherData[ ,"precipitation"]; <br />dateData = weatherData[ ,"date"];<br /> <br />barplot(precipData, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; main="Precipitation over the 14 days",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hl"> xlab="Dates"</span>, ylab="Preciptation (inches)",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ylim=c(0,1.4), <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; angle=60, density=30,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; col=c("purple", "black", "orange", "red"),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hl">names.arg=dateData</span>);</h6>
+<p></p>
+<p><img src="../Images/R-02-09%20Adding%20dates%20to%20the%20x-axis%20barplot.PNG" alt="" class="flexSize" /></p>
+<h5>Adding dates to the x-axis (note: not all dates are plotted because they would overlap)</h5>
+<h3>Adding a line to represent the mean</h3>
+<p>Just like with the histogram of humidity, we can add a mean line for the precipitation.&nbsp; The difference here is that the mean line needs to be placed horizontally because our axes are different.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>weatherData = read.csv("data/LansingWeather3.csv");<br />precipData = weatherData[ ,"precipitation"]; <br />dateData = weatherData[ ,"date"];<br /> <br />barplot(precipData, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; main="Precipitation over the 14 days", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xlab="Dates", ylab="Preciptation (inches)",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ylim=c(0,1.4), <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; angle=60, density=30,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; col=c("purple", "black", "orange", "red"),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; names.arg=dateData);</h6>
+<h6></h6>
+<h6><span class="hl">meanPrecip = mean(precipData);</span><br /><span class="hl">abline(h=meanPrecip, col="darkgreen", lty=2);</span></h6>
+<p></p>
+<p>Just like with the histogram, we found <em><strong>meanPrecip</strong> </em>using <em><strong>mean()</strong> </em>and added a line using <em><strong>abline()</strong></em>.&nbsp; The difference is that we added a horizontal line so we assigned the vector <em><strong>meanPrecip</strong></em> to the parameter <em><strong>h</strong></em> instead of the parameter<strong> </strong><em><strong>v</strong></em>.</p>
+<p></p>
+<p><img src="../Images/R-02-09%20Barplot%20-%20add%20line.PNG" alt="" class="flexSize" /></p>
+<h5>Adding the mean line to the precipitation barplot</h5>
+<p></p>
+<h2>The boxplot</h2>
+<p>Our last plot is a boxplot, which is another way to plot the distribution of data similarly to <em><strong>hist()</strong></em>.&nbsp; We are going to put two boxplots on one graph-- one for <em><strong>highTempData</strong> </em>and one for <em><strong>lowTempData.</strong></em></p>
+<p><em><strong></strong></em></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>weatherData = read.csv("data/LansingWeather3.csv");<br />highTempData = weatherData[ ,"highTemp"]; <br />lowTempData = weatherData[ ,"lowTemp"]; <br /> <br />boxplot(highTempData, lowTempData);</h6>
+<p></p>
+<p>R places the two boxplots on the graph.</p>
+<p></p>
+<p><img src="../Images/R-02-09%20Boxplot.PNG" alt="" class="fs" /></p>
+<h5 class="" id="boxplot1">A boxplot of the high and low temperatures</h5>
+<p></p>
+<p class="linkTo" title="unknown-param">Extension: unknown number of parameters.</p>
+<p></p>
+<h3>Changing some of the boxplot parameters</h3>
+<p>We are going to assign values to two parameters in<em><strong> boxplot()</strong></em>:</p>
+<ol>
+<li><em><strong>names</strong></em>: replace the sequence label on the x-axis (1 and 2 in <em class="figureRef" title="boxplot1">fig</em>) with names for each boxplot</li>
+<li><em><strong>ylim</strong></em>: set the limits on the y-axis</li>
+</ol>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>weatherData = read.csv("data/LansingWeather3.csv");<br />highTempData = weatherData[ ,"highTemp"]; <br />lowTempData = weatherData[ ,"lowTemp"]; <br /> <br />boxplot(highTempData, lowTempData,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hl"> ylim=c(20,90),</span><br /><span class="hl">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; names=c("High Temp", "Low Temp")</span>);</h6>
+<p></p>
+<p><img src="../Images/R-02-09%20Boxplot%202.PNG" alt="" class="flexSize" /></p>
+<h5>Adding labels to the x axis</h5>
+<p></p>
+<h3>Adding points to the boxplot</h3>
+<p>We can add points to the boxplot using the<a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/points.html" target="_self"><em><strong> points()</strong> </em>function described on this page.</a></p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>weatherData = read.csv("data/LansingWeather3.csv");<br />highTempData = weatherData[ ,"highTemp"]; <br />lowTempData = weatherData[ ,"lowTemp"]; <br /> <br />boxplot(highTempData, lowTempData,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ylim=c(20,90),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; names=c("High Temp", "Low Temp"));</h6>
+<h6></h6>
+<h6><span class="hl">points(1,30, col="blue", pch=17);</span><br /><span class="hl">points(1.5,55, col="red", pch=12);</span><br /><span class="hl">points(2,75, col="darkgreen", pch=8);</span></h6>
+<p></p>
+<p>We added three different points, each with a different color (<em><strong>col="blue", "green", and "red"</strong></em>) and shape (<em><strong>pch= 17,12, and 8</strong></em>).&nbsp;&nbsp; <a href="http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r" target="_self">Here is a list of the different types of shapes that can be used as point characters (<em><strong>pch</strong></em>)</a>.</p>
+<p></p>
+<p><img src="../Images/R-02-09%20Boxplot%20with%20points.PNG" alt="" class="flexSize" /></p>
+<h5>Adding points to the boxplot</h5>
+<p></p>
+<p>Let's look at the parameters of<em><strong> points()</strong></em></p>
+<ul>
+<li><em><strong>#,#</strong></em>: the x and y coordinates of the point.&nbsp; The "values" on the x-axis are the sequence values, with the number 1 represents the first boxplot on the x-axis, the number 2 represents the second number.&nbsp; Decimal number will give you positions in between objects.</li>
+<li><em><strong>col</strong></em>: the color of the point</li>
+<li><em><strong>pch</strong></em>: the shape of the point.&nbsp; <a href="http://www.endmemo.com/program/R/pchsymbols.php" target="_self">The different point shapes you can use are described here.</a></li>
+</ul>
+<h2>Application</h2>
+<p>1) Create a histogram of the difference between the high and low temperature for the 14 days.&nbsp; Add labels to both axes and a title.&nbsp; Make the bins in the histogram 2 unit wide.&nbsp; Add an average change in temperature line to the plot.</p>
+<p></p>
+<p>2) Create a bar plot of the high and low temperatures (so, all 28 values on a single plot).&nbsp; Label both axes, add a title, and use three colors for the bins.&nbsp; Add an average temperature line to the barplot.</p>
+<p>Hint: create a vector that contains all the high temp and low temp values</p>
+<p></p>
+<p>3) Create a boxplot of humidity and precipitation together on a new plot.&nbsp; Label the axes and give them titles with units.&nbsp;</p>
+<p>Hint, divide the humidity values by 100 so that they are decimal values.</p>
+<p></p>
+<p>4) Find the average humidity and precipitation and add a point representing each to the box plot.</p>
+<h2 class="extension" id="x-value">Extension: The x value in hist()</h2>
+<p>The function for <em><strong>hist()</strong></em> includes the parameter <em><strong>x.&nbsp; x</strong></em> is the data to be plotted.&nbsp; Because <em><strong>x</strong></em> is the first parameter, the name is often skipped as the first value in the function is assumed by R to be the value of the first parameter.</p>
+<p></p>
+<p>So</p>
+<h6 class="p">hist(humidityData);</h6>
+<p></p>
+<p>is functionally the same as</p>
+<h6 class="p">hist(x=humidityData);</h6>
+<p></p>
+<p>Of course, you need to name any other parameter that you assign values to unless <em class="hl">you keep the parameters in the exact same order</em> as the function declaration.&nbsp; No one does this and it would be a real pain given how many parameters are in functions like <em><strong>hist()</strong></em>:</p>
+<h6 class="p">hist(x, breaks = "Sturges",<br />&nbsp;&nbsp;&nbsp;&nbsp; freq = NULL, probability = !freq,<br /> &nbsp;&nbsp; &nbsp; include.lowest = TRUE, right = TRUE,<br /> &nbsp; &nbsp;&nbsp; density = NULL, angle = 45, col = NULL, border = NULL,<br /> &nbsp;&nbsp; &nbsp; main = paste("Histogram of" , xname),<br /> &nbsp; &nbsp;&nbsp; xlim = range(breaks), ylim = NULL,<br /> &nbsp;&nbsp; &nbsp; xlab = xname, ylab,<br /> &nbsp; &nbsp;&nbsp; axes = TRUE, plot = TRUE, labels = FALSE,<br /> &nbsp; &nbsp;&nbsp; nclass = NULL, warn.unused = TRUE, ...)</h6>
+<p></p>
+<p>This is true of all other functions that involve data and a bunch of other parameters.&nbsp; Some, like <em><strong>plot()</strong></em>, have two parameters for the data (<em><strong>x</strong></em> and <em><strong>y</strong></em>).&nbsp;</p>
+<p></p>
+<p>So, you will often see</p>
+<h6 class="p">plot(humidityData, precipData);</h6>
+<p></p>
+<p>which is equivalent to</p>
+<h6 class="p">plot(x=humidityData, y=precipData);</h6>
+<p></p>
+<p>which is <em class="hl">also</em> equivalent to</p>
+<h6 class="p">plot(y=precipData, x=humidityData);</h6>
+<p></p>
+<h2 class="extension" id="abline">Extension: The ( ... )&nbsp; parameters of abline()</h2>
+<p>The function <em><strong>abline()</strong></em> is given<a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/abline.html" target="_self"> at this help page</a> as:</p>
+<h6 class="partial">abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL,</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; coef = NULL, untf = FALSE, ...)</h6>
+<p></p>
+<p>Notice that <em><strong>col</strong> </em>and <em><strong>lty</strong> </em>are not variables in the <em><strong>abline()</strong></em> function in the link above.&nbsp; They are actually part of the (<em><strong> ...</strong></em> ) -- as described further down <a href="https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/abline.html" target="_self">in the help page</a>.&nbsp; <em><strong>col</strong> </em>and <em><strong>lty</strong></em> are part of the graphical parameters in the function <em><strong>par()</strong></em>, which is a very large set of parameters that you can assign values to.</p>
+<p></p>
+<p>You can type "par" in the search bar of the Help Window to see the various parameters that can be set.</p>
+<h2 class="extension" id="unknown-param">Extension: Unknown number of parameters</h2>
+<p><em><strong>boxplot()</strong></em> has an unusual function declaration:</p>
+<h6 class="p">boxplot(x, <em class="hl">...</em>, range = 1.5, width = NULL, varwidth = FALSE,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; notch = FALSE, outline = TRUE, names, plot = TRUE,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; border = par("fg"), col = NULL, log = "",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pars = list(boxwex = 0.8, staplewex = 0.5, outwex = 0.5),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; horizontal = FALSE, add = FALSE, at = NULL)</h6>
+<p></p>
+<p>The ( ... ) represents the fact that<em><strong> boxplot()</strong> </em>can handle an undefined number of data sets, each getting a separate boxplot.&nbsp; In this case, there is no specific parameter value for the data so the data are passed in to <em><strong>boxplot()</strong></em> <em class="hl">without a parameter name</em>.</p>
+<p></p>
+<p>So:</p>
+<h6 class="p">boxplot(highTempData, lowTempData);</h6>
+<p>outputs a boxplot for both <em><strong>highTempData</strong> </em>and <em><strong>lowTempData</strong></em></p>
+<p><em><strong></strong></em></p>
+<p><em></em>and you could produce more boxplots on the same plot:</p>
+<h6 class="p">boxplot(highTempData, lowTempData, humidityData, precipData);</h6>
+<p></p>
+<p>There are no parameter names for any of these values.</p>
+</body>
+</html>

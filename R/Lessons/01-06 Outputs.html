@@ -1,0 +1,272 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=MichiganSt-1914236" target="_self">Strings and Inputs</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=MichiganSt-1924513" target="_self">Conditional Operations</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">01-06: Outputs</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Output variables to the Console Window</li>
+<li>Output messages to the Console Window</li>
+<li>Output special characters to the Console Window, including a line feed</li>
+<li>Output mixed message and variable statements to the Console Window</li>
+</ul>
+<h2>Concepts</h2>
+<h2>Output to console</h2>
+<p>In the last lesson, we had examples of R output when we asked the user for information using <em><strong>readline()</strong></em>.&nbsp; The <em><strong>readline()</strong> </em>function instructs R to output the statement inside the parentheses to the console and then wait for an input from the user.&nbsp; In this lesson we will more formally go through the different ways to output information to the user.&nbsp; The output, in these cases, will always go to the Console Window.&nbsp; In a later lesson we will talk about outputs to the Plot Window and to a file.</p>
+<h3>Output a message</h3>
+<p>If you just want to output a message to the user then you use the function <em><strong>cat()</strong></em>. Note that <em><strong>cat()</strong> </em>stands, rather unintuitively, for concatenate.<em class="linkTo" title="concatenate"> Extension: The concatenate, cat(),&nbsp; function<strong>.</strong></em> But, for our sake, <em><strong>cat()</strong></em> is simply an instruction to output to the Console Window what is inside the parentheses.</p>
+<p></p>
+<p>Put the message you want to output to the Console Window in quotes inside the parentheses of <em><strong>cat()</strong></em>.&nbsp;</p>
+<p></p>
+<h6 class="partial">cat("Hello, World");</h6>
+<p></p>
+<p>If you do not use quotes (<em><strong>" "</strong></em>), R will think you are referring to a variable.&nbsp; For instance the line <em><strong>cat(Hello)</strong></em> gives you the <em class="hl">"Object not found"</em> error because R thinks this is a reference to a variable named <em><strong>Hello</strong> </em>-- and, in this case, there is no variable named <em><strong>Hello.</strong><br /></em></p>
+<p></p>
+<p>You can add as many <em><strong>cat()</strong></em> statements to your script as you like and they will be sequentially sent to the Console Window:</p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>cat("Hello, World.");</h6>
+<h6>cat("How are you?");</h6>
+<h6>cat("I am fine?");</h6>
+<p></p>
+<p><img src="../Images/R-01-06%20Output%20without%20spacing.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="output-message">Output message without spacing</h5>
+<p></p>
+<h3>The line feed: \n</h3>
+<p>But there is a problem here -- R puts no spacing in between the lines (<em class="figureRef" title="output-message">Fig</em>).&nbsp; This is actually typical behavior of most programming languages -- they do not add line feeds (e.g., enter or return) unless the script specifically requests that a line feed is added.&nbsp;</p>
+<p></p>
+<p>The instruction to add a line feed is <em><strong>\n </strong></em>and <em><strong>\n</strong></em> is put inside the quotes (<em><strong> "&nbsp; "</strong></em> ):</p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>cat("Hello, World.\n");</h6>
+<h6>cat("How are you?\n");</h6>
+<h6>cat("I am\n fine?\n");</h6>
+<p></p>
+<p><img src="../Images/R-01-06%20Output%20with%20line%20feeds.PNG" alt="" class="flexSize" /></p>
+<h5 id="line-feed" class="">Message with line feeds</h5>
+<p></p>
+<p>Now we have our text on multiple lines (<em class="figureRef" title="line-feed">Fig</em>).&nbsp; Notice that the <em><strong>\n</strong></em> does not get printed to the screen and \n is not a variable.&nbsp;<em class="hl"> <strong>\n</strong> is an instruction inside the message to add a line feed</em> and needs to be put inside the quotes.</p>
+<p></p>
+<p class="linkTo" id="link-backslash">EXTENSION: the backslash (<strong> \</strong> )</p>
+<p></p>
+<p><em><strong>\n</strong></em> can be put anywhere in a quote.&nbsp; In the above code there is a <em><strong>\n</strong></em> put in between "am" and "fine", hence the line feed between the two word.&nbsp; The exact same message as <em class="figureRef" title="line-feed">Fig</em> can be output to the Console Window using only one <em><strong>cat()</strong> </em>statement with multiple <em><strong>\n</strong></em>:</p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>cat("Hello, World.\nHow are you?\nI am\n fine?\n");</h6>
+<p></p>
+<p><img src="../Images/R-01-06%20Output%20with%20one%20statement.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="one-line">Using one<strong> cat()</strong> statement with multiple <strong>\n</strong> to output multiple lines of text</h5>
+<h2>Output messages with variables</h2>
+<p>If you are outputting a message to the user, you probably also want to output the value of variables from the script.&nbsp; The function <em><strong>cat()</strong></em> can be used to output the value of a variable by putting the variable's name in between the parentheses <em class="hl">without quotes</em>.&nbsp; The following example calculates <em><strong>velocity</strong> </em>and outputs it to the console.</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>distance = 100;</h6>
+<h6>time = 50;</h6>
+<h6>velocity = distance/time;</h6>
+<h6>cat(velocity);&nbsp; # print(velocity); also works here </h6>
+<p></p>
+<p><img src="../Images/R-01-06%20Output%20variable.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="variable">Outputting the value of a variable to the Console Window</h5>
+<p></p>
+<p>The output from the script above is far from robust (<em class="figureRef" title="variable">Fig</em>) as only a number (the velocity) is output -- with no other information.&nbsp; A more robust output would include a message that explains to the user that this value is a velocity. &nbsp;</p>
+<h2>Outputting mixed messages and variables</h2>
+<p>In most cases you want to output both a message and a variable's value.</p>
+<p></p>
+<p>The following script outputs a message and a variable using multiple <em><strong>cat()</strong></em> statements:</p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>distance = 100;</h6>
+<h6>time = 50;</h6>
+<h6>velocity = distance/time;</h6>
+<h6>cat("Your velocity is: ");</h6>
+<h6>cat(velocity);</h6>
+<h6>cat("miles/hour");</h6>
+<p></p>
+<p>Lines <strong>7</strong> and<strong> 9</strong> both output a message, the content inside the double quotes, to the Console Window</p>
+<p>Line <strong>8</strong> outputs the value of the variable <em><strong>velocity </strong></em>(<strong></strong><em><strong>2)</strong> </em>to the Console Window</p>
+<p></p>
+<p><img src="../Images/R-01-06%20Output%20variable%20and%20string.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="string-variable">Output strings and variables to the Console</h5>
+<h3 class="">Output strings and variables in one statement</h3>
+<p>In the previous example (<em class="figureRef" title="string-variable">fig</em>) we used <em><strong>cat()</strong></em> three times to:</p>
+<ol>
+<li>output a message ("Your velocity is:")</li>
+<li>output the value of a variable (<em><strong>velocity</strong> </em>-- which is <em><strong>2</strong></em>)</li>
+<li>output a message ("miles/hour")</li>
+</ol>
+<p></p>
+<p>We could also output all three parts using just one <em><strong>cat()</strong> </em>statement.</p>
+<p></p>
+<p>To do this, we use a comma to separate the different parts of the output, so the following three <em><strong>cat()</strong></em> statements:</p>
+<h6 class="partial">cat("Your velocity is: ");</h6>
+<h6>cat(velocity);</h6>
+<h6>cat("miles/hour");</h6>
+<p></p>
+<p>can be written as one statement:</p>
+<h6 class="partial">cat("Your velocity is: "<em><span class="hl">,</span></em> velocity<strong><span style="color: #ffff00;">,</span></strong> "miles/hour");</h6>
+<p></p>
+<p>The commas effectively "stitch" together, or concatenate, the different parts of the output:</p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>distance = 100;</h6>
+<h6>time = 50;</h6>
+<h6>velocity = distance/time;</h6>
+<h6>&nbsp;</h6>
+<h6>cat("Your velocity is: ", velocity, "miles/hour");</h6>
+<p></p>
+<p>Note: By default, <em><strong>cat()</strong></em> put a space in the output wherever a comma is used.</p>
+<p></p>
+<p><img src="../Images/R-01-06%20cat%20and%20commas.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="two-commas">Using <strong>cat()</strong> to output a message with mixed variables and strings</h5>
+<p></p>
+<p><em class="linkTo" id="link-misplace-quote">TRAP: Misplacing Quotes.</em>&nbsp;</p>
+<h3>Output multiple strings and multiple variables using one cat() statement</h3>
+<p>You can stitch together an output with multiple variables and multiple strings using commas in <em><strong>cat()</strong></em> .&nbsp;</p>
+<p></p>
+<p>The following example outputs the value of three variables (velocity, distance, and time) in the script and gives an explanation of the values (<em class="figureRef" title="commas">Fig</em>):</p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>distance = 100;</h6>
+<h6>time = 50;</h6>
+<h6>velocity = distance/time;</h6>
+<h6>cat("The values are...", "\nDistance: ", distance, "\ntime: ", time, "\nvelocity: ", velocity);</h6>
+<p></p>
+<p>Notice the use of <em><strong>\n</strong></em> to add line feeds to the output.</p>
+<p></p>
+<p><img src="../Images/R-01-06%20mult%20strings%20and%20variables.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="commas">Multiple variables and messages strung together using commas</h5>
+<h2>Breaking up long lines of code</h2>
+<p>Line 7 in the code above (<em class="figureRef" title="commas">fig</em>) gets pretty long.&nbsp; Sometime we want to break up a line of code into multiple lines to make it more readable.&nbsp;</p>
+<p></p>
+<p>In R you can break most lines of code into multiple line (one exception is long file-path names).&nbsp; You just need to be judicious about how you break up the line -- <em><span class="hl" style="color: #990000;">the best places to break up a line of code are after a comma or where a space occurs</span></em>.</p>
+<p></p>
+<p>You can break up the <em><strong>cat()</strong></em> statement from the script above (<em class="figureRef" title="commas">fig</em>) into two lines <em><span style="color: #990000;">without changing its functionality:</span></em></p>
+<h6 class="partial" title="7">cat("The values are...", "\nDistance: ", distance,</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "\ntime: ", time, "\nvelocity: ", velocity);</h6>
+<p></p>
+<p>Notice that I only put a semicolon at the end of the second line.&nbsp; Just like a period ends a sentence,<em class="hl"> a semicolon designates the end of a statement</em>.&nbsp; In this case, the<em><strong> cat()</strong> </em>statement is two lines long so the semicolon goes at the end of the second line.</p>
+<p></p>
+<p><img src="../Images/R-01-06%20multiple%20line%20cat.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="multiple-lines"><strong>cat()</strong> statement divided over two lines</h5>
+<h2>Putting margin lines in your script</h2>
+<p>The generally accepted standard for the maximum number of characters in a line of code is 80.&nbsp; This is not a hard-and-fast rule but keeping your lines 80 characters or less makes it a lot easier to read your code especially on smaller montiors.&nbsp; You can put a margin line at 80 characters in RStudio by clicking <em><strong>Tools -&gt; Global Options -&gt; Code.&nbsp; </strong></em>On the <em><strong>Display</strong> </em>tab check <em><strong>Show margin</strong> </em>and set <em><strong>Margin column</strong></em> to <strong>80.&nbsp; </strong><em class="hl">One of the requirements of the class project is that you keep your lines 80 characters or less</em>.</p>
+<p><strong></strong></p>
+<p><strong><img src="../Images/R-01-06%20Line%20Margin.PNG" alt="" class="fs" /></strong></p>
+<h5>Setting the line margin in RStudio.</h5>
+<p></p>
+<p>Now you will see a grey vertical line at 80 characters (<em class="figureRef" title="margin">fig</em>).&nbsp; The line is there as a guide -- you can still type beyond this line.&nbsp;<em class="hl">&nbsp;</em> There are times when it is not possible to keep a line to 80 characters -- the most common reason is a long file-path name and <em class="hl">file-path names cannot be broken up</em>.</p>
+<p></p>
+<p><img src="../Images/R-01-06%20Column%20line.PNG" alt="" class="fs" /></p>
+<h5 class="" id="margin">The grey line that acts as a margin guide.&nbsp;</h5>
+<p></p>
+<p>Note: You can also see the character number the cursor is on in the lower-left corner (<em class="figureRef" title="margin">fig</em>) -- in this case, character 98.</p>
+<h2>Application</h2>
+<p>A) Just like&nbsp; the last lesson, get 6 inputs from the user, which are:</p>
+<p style="padding-left: 30px;">1) Five temperature measurements for a given location</p>
+<p style="padding-left: 30px;">2) The name of the location</p>
+<p style="padding-left: 30px;"></p>
+<p>B) Have the script calculate the mean of the 5 temperature measurements</p>
+<p></p>
+<p>C) Using <em><strong>cat()</strong></em>, output to the screen a message that gives:</p>
+<p style="padding-left: 30px;">1) On line 1: The location the temperature measurements are from (e.g., Lansing)</p>
+<p style="padding-left: 30px;">2) On line 2: The five temperature measurements (and a message that says these are the measurements)</p>
+<p style="padding-left: 30px;">3) On line 3: The mean temperature (and a message that says this is the mean)</p>
+<p></p>
+<p style="padding-left: 30px;">So the full message in the Console Window should look something like this:</p>
+<p style="padding-left: 30px;"><em><span style="color: #990000;">The temperatures are from: [location].</span></em></p>
+<p style="padding-left: 30px;"><em><span style="color: #990000;">The temperature measurements are [temp1],&nbsp;[temp2], [temp3], [temp4], and [temp5]. <br /></span></em></p>
+<p style="padding-left: 30px;"><em><span style="color: #990000;">The mean temperature is [meanTemp].</span></em></p>
+<p style="padding-left: 30px;"><em><span style="color: #990000;"></span></em></p>
+<p style="padding-left: 30px;">Don't forget to output the commas in between the temperature values and the other punctuation.</p>
+<p style="padding-left: 30px;">Where the values in brackets<em><strong> [ ]</strong></em> represent the values of the variables in your script</p>
+<h2 class="extension" id="backslash">Extension: The backslash ( \ )</h2>
+<p>The backslash in programming is used in a string as an<span style="color: #990000;"><em> <span class="hl">escape character.</span>&nbsp;</em></span><em> </em>This means that the character after the backslash is treated in some special manner -- similar to the way the <strong>Shift</strong>, <strong>Control</strong> or <strong>Alt</strong> keys on your keyboard change the meaning of the character that is pressed with them.</p>
+<p></p>
+<p>Backslash can be used to</p>
+<ul>
+<li>put in a line feed ( <em><strong>\n</strong></em> )</li>
+<li>print to the Console a double quote -- in other words, treat the double quote as a character, not as the start or end of a message</li>
+<li>print our special characters not on the keyboard.&nbsp; Here is a <a href="http://www.ascii.cl/htmlcodes.htm" target="_blank" rel="noopener noreferrer">link to a partial list of special characters</a>.</li>
+</ul>
+<p></p>
+<h6 class="partial">cat("And the boy said, \"Hello\" \n");</h6>
+<h6>cat("To print to console a backslash, use \\ \n");<br />cat("Some hex characters: \xB1 \xC6 \20AC");</h6>
+<p></p>
+<p><img src="../Images/R-01-06%20Special%20Characters.PNG" alt="" class="fs" /></p>
+<h5>Using backslash ( <strong>\</strong> ) to output special characters.</h5>
+<h2 class="trap" id="misplace-quote">Trap: Misplacing (or forgetting) quotes</h2>
+<p>It is easy to accidentally forget a quote, add a quote, or simply move a quote to a place it does not belong.&nbsp; The following code has a missing quote on line 8 right after "<em>The values are...</em></p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>distance = 100;</h6>
+<h6>time = 50;</h6>
+<h6>velocity = distance/time;</h6>
+<h6></h6>
+<h6>cat("The values are..., "\nDistance: ", distance, "\ntime: ",</h6>
+<h6>&nbsp;&nbsp;&nbsp; time, "\nvelocity: ", velocity);</h6>
+<p></p>
+<p>The execution of the code causes an "<em class="hl">Unexpected Symbol</em>" error that is not too helpful.&nbsp; However, RStudio has a built in feature to help you find misplaced quotes -- the color scheme.&nbsp; Quoted text is in a different color than other parts of the code.&nbsp; For example, in the XCode color scheme -- text in quotes is colored red.&nbsp;</p>
+<p></p>
+<p class="caption"><img src="../Images/R-01-06%20Missing%20Quote.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="missing-quote">Missing quote</h5>
+<p></p>
+<p>(<em class="figureRef" title="missing-quote">Fig</em>) shows that, right after "The value are... , the variables are all treated as if they are in quotes and the messages are outside the quotes.&nbsp; Since one quote was missing, the error propagated and assumed characters to be variables/numbers and avariables/numbers to be characters.</p>
+<p></p>
+<p>We will add the missing quote to line 8:</p>
+<h6 class="p" id="8">cat("The values are...<em class="hl">"</em>, "\nDistance: ", distance, "\ntime: ",</h6>
+<h6>&nbsp;&nbsp;&nbsp; time, "\nvelocity: ", velocity);</h6>
+<p></p>
+<p>Now the correct components of the output are colored red and the script executes without an error:</p>
+<p></p>
+<p><img src="../Images/R-01-06%20Add%20Missing%20Quote.PNG" alt="" class="fs" /></p>
+<h5>Missing quote added</h5>
+<p></p>
+<h2 class="extension" id="concatenate">Extension: The concatenate, cat(), function</h2>
+<p>Let's switch to the "Help" tab in the Plot Window and type "cat" in the search bar:</p>
+<p><img src="../Images/R-01-06%20Cat%20function.PNG" alt="" class="fs" /></p>
+<h5>Information about the <strong>cat()</strong> function in the Help Window.</h5>
+<p></p>
+<p>The first part of <em><strong>cat()</strong></em> is the three dots "<strong>...</strong>".&nbsp; The three dots say that <em class="hl"><strong>cat()</strong> will accept any number of objects</em> as inputs that it will tun into outputs.&nbsp; The objects can be messages in quotes, string variables, numeric variable, or other objects we have not discussed yet like vectors.</p>
+<p></p>
+<p>After the three dots, <em><strong>cat()</strong></em> has <strong>5</strong> parameters (or arguments): <em><strong>file</strong></em>, <em><strong>sep</strong></em>, <em><strong>fill</strong></em>, <em><strong>labels</strong></em>, and <em><strong>append.</strong></em></p>
+<p><em><strong></strong></em></p>
+<p>Parameters are used to modify the behavior of a function<em><strong></strong></em>.&nbsp; We are going to change the <em><strong>sep </strong></em>parameter.&nbsp; <em class="hl"><strong>sep</strong> changes how the different components of the output are separated</em>.&nbsp; The default is to put a single space between the components of the output.</p>
+<p></p>
+<p>Let's take the code from above and add the <em><strong>sep</strong> </em>parameter to<em><strong> cat() </strong></em>and give <em><strong>sep</strong> </em>the value " ** ":</p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6>distance = 100;</h6>
+<h6>time = 50;</h6>
+<h6>velocity = distance/time;</h6>
+<h6>cat("The values are...", "\nDistance: ", distance, "\ntime: ",</h6>
+<h6>&nbsp;&nbsp;&nbsp; time, "\nvelocity: ", velocity, <em class="hl">sep=" ** "</em>);</h6>
+<p></p>
+<p>And you will notice that the different component are separated by " ** ".</p>
+<p></p>
+<p><img src="../Images/R-01-06%20sep%20parameter.PNG" alt="" class="fs" /></p>
+<h5>Using the <strong>sep</strong> parameter in<strong> cat()</strong></h5>
+</body>
+</html>

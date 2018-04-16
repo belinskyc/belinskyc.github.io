@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=michiganstate-2074491" target="_self">Packages</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: Factors</p>
+<h1 class="title" id="title">03-08 Date Variables</h1>
+<h2>Purpose</h2>
+<h2 class="partial">Concepts</h2>
+<p>-</p>
+<p></p>
+<h2>Saving a vector in a date format</h2>
+<p>Our goal in to create a new column in the <em><strong>lansingWeather</strong> </em>data frame that gives the season.&nbsp;</p>
+<p></p>
+<p>We will once again save the data from Lansing2016Weather.csv to a data frame named lansingWeather.&nbsp; We will include the stringAsFactor and na.strings parameters even though they are not technically of concern in this example.&nbsp; However, they are important things to think about anytime you save data to a data frame.</p>
+<p></p>
+<h6>lansingWeather = read.csv("data/Lansing2016Weather.csv",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stringsAsFactors=FALSE,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; na.strings=c("", " ", "na", "NA", "NaN") );</h6>
+<p></p>
+<p>The <em><strong>date</strong> </em>column is considered to be a bunch of string (chr) values.&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-03-08%20Date%20Column.PNG" alt="" class="flexSize" /></p>
+<h5>Saving the weather data to a data frame</h5>
+<p></p>
+<p>However, the date column has a very specific format (month-day-year) and we can explicitly tell R that these values should be treated as the variable type <em><strong>Date</strong></em> using the <em><strong>as.Date()</strong></em> function.&nbsp; The following line of code says to convert the values in the <em><strong>date</strong> </em>column to the date format.</p>
+<p></p>
+<h6>date = as.Date(lansingWeather[,"date"]);</h6>
+<p></p>
+<p>In the Environment Window, date is declared as a Date variable with 366 values.</p>
+<p></p>
+<p><img src="../Images/R-03-08%20Date%20Variable.PNG" alt="" class="flexSize" /></p>
+<h5>Creating a vector with variables in the Date format.</h5>
+<p></p>
+<h3>formatting date variables</h3>
+<p>We can extract individual values from the date like month, day, and year using the<em><strong> format()</strong></em> function.&nbsp; <em><strong>format()</strong> </em>takes two parameters: the variable to format and the value you want to extract ("%m" means month, "%d" means day, "%y" means year).</p>
+<p></p>
+<p>We will extract the month, day, and year from two different values in the <em><strong>date</strong> </em>vector:</p>
+<p></p>
+<h6>testMonth1 = format(date[234], "%m");<br /> testDay1 = format(date[234], "%d"); <br /> testYear1 = format(date[234], "%y"); <br /> testMonth2 = format(date[47], "%m");<br /> testDay2 = format(date[47], "%d");<br /> testYear2 = format(date[47], "%y");</h6>
+<p></p>
+<p></p>
+<p></p>
+<p><img src="../Images/R-03-08%20Date%20Extraction.PNG" alt="" class="flexSize" /></p>
+<h5>Extracting month, day, and year from a date value</h5>
+<p></p>
+<h3>Reformatting a date (extension topic??)</h3>
+<p><em><strong>format()</strong></em> can also be used to reformat a date.&nbsp; Let's say we want to change the way the dates are presented in the <em><strong>date</strong> </em>vector.&nbsp; Right now they done using the American format of <em>year-day-month</em>.&nbsp; Perhaps we want the format to be<em> day-month-year</em> -- and put dots instead of dashes between the values.</p>
+<p></p>
+<p>So we would like</p>
+<p><em><strong>2016-21-08</strong></em></p>
+<p></p>
+<p>to become</p>
+<p><em><strong>08.21.2016</strong></em></p>
+<p><em><strong></strong></em></p>
+<h6><em></em>advDate = format(date, "%d.%m.%Y");</h6>
+<p></p>
+<p>If you use "%Y", it output the full year.&nbsp; "%y" outputs only the last two numbers</p>
+<p></p>
+<p><img src="../Images/R-03-08%20Reformat%20Date.PNG" alt="" class="flexSize" /></p>
+<h5>Reformatting the date values</h5>
+<p></p>
+<h2>Creating a season's vector</h2>
+<p>Our next task is to create a new vector&nbsp; that gives the season.&nbsp; We first need to declare a vector, which we will call <em><strong>season</strong></em></p>
+<p><em><strong></strong></em></p>
+<h6>season = c();</h6>
+<p></p>
+<p>Season will eventually be a vector with 366 values that will either be "winter", "spring", "summer", or "fall".&nbsp; We know that the first value in the <em><strong>season</strong> </em>vector will be "winter" because it represent January 1st (assuming we are still in the northern hemisphere...).&nbsp;</p>
+<p></p>
+<p>So, we will create a variable that holds the current season and set it to "winter"</p>
+<h6>currentSeason = "winter";</h6>
+<p></p>
+<p>We are going to iterate through all 366 days and as we iterate the variable&nbsp;<em><strong> currentSeason</strong></em> will change four times:</p>
+<p>On March 21st, <em><strong>currentSeason</strong> </em>goes from "winter" to "spring"</p>
+<p>On June 21st, <em><strong>currentSeason</strong> </em>goes from "spring" to "summer"</p>
+<p>On September 21st, <em><strong>currentSeason</strong> </em>goes from "summer" to "fall"</p>
+<p>On December 21st, <em><strong>currentSeason</strong> </em>goes from "fall" to "winter"</p>
+<p></p>
+<p>This is done using if statements but we need to check the month and day inside the conditional statement</p>
+<p></p>
+<p>The following code will go through each of the 366 values in the <em><strong>date</strong> </em>vector and extract the month and day using <em><strong>format()</strong></em></p>
+<p></p>
+<h6>for(i in 1:366)<br /> {<br />&nbsp; month = format(date[i], "%m"); <br />&nbsp; day = format(date[i], "%d");</h6>
+<h6>}</h6>
+<p></p>
+<p>Now we need to check the month and day to see if the season changes on that day.&nbsp; If it does, the change is reflected in the variable <em><strong>currentSeason.</strong></em></p>
+<h6>for(i in 1:366)<br /> {<br />&nbsp; month = format(date[i], "%m"); <br />&nbsp; day = format(date[i], "%d");<br /> <br />&nbsp; if(month == "03" &amp;&amp; day == "21")<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; currentSeason = "spring"; <br />&nbsp; }<br />&nbsp; else if(month == "06" &amp;&amp; day == "21")<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; currentSeason = "summer";<br />&nbsp; }<br />&nbsp; else if(month == "09" &amp;&amp; day == "21")<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; currentSeason = "fall";<br />&nbsp; }<br />&nbsp; else if(month == "12" &amp;&amp; day == "21")<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; currentSeason = "winter";<br />&nbsp; }<br />&nbsp; season[i] = currentSeason; <br /> }</h6>
+<p></p>
+<p>and at the very end of the<em><strong> for()</strong></em>, we assign the indexed <em><strong>season</strong> </em>to the current value of <em><strong>currentSeason&nbsp;</strong> </em></p>
+<p><em><strong></strong></em></p>
+<p><em><strong><img src="../Images/R-03-08%20Seasons.PNG" alt="" class="flexSize" /></strong></em></p>
+<h5>The season vector populated with values using the for()</h5>
+<p><em><strong></strong></em></p>
+<h2>Boxplot of temperature by season</h2>
+<p>Now that we have a season vector, we can create a boxplots for the maximum temperature in each season</p>
+<p></p>
+<h6>boxplot(maxTemp~season);</h6>
+<p></p>
+<p><img src="../Images/R-03-08%20boxplot%20-%20seasons.PNG" alt="" class="flexSize" /></p>
+<h5>Boxplot of maximum temperatures for each season</h5>
+<p></p>
+<h2>Application</h2>
+<p>1)</p>
+</body>
+</html>

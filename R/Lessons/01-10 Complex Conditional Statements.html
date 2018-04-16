@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/> 
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=MichiganSt-1924514" target="_self">Multiple Conditions</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next:<a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=MichiganSt-1934340" target="_self"> File Inputs</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">01-10: Complex Conditional Statements</h1>
+<h2>Purpose</h2>
+<ul>
+<li>create conditional statement that check multiple variables for multiple conditions</li>
+<li>using parenthesis to break up larger conditional statements</li>
+<li>create numerical ranges using conditional statements</li>
+</ul>
+<h3>Student-Instructor meeting</h3>
+<p>This is the last lesson in Unit 1, which means it is time to schedule a 20-30 minute meeting with the instructor.&nbsp; Please email the instructor at <a href="mailto:belinsky@msu.edu">belinsky@msu.edu</a> and provide some times that you are available.</p>
+<h2>Concepts</h2>
+<h2>Breaking up complex conditional statements</h2>
+<p>In the last lesson we dealt with conditional statement that checked multiple conditions on one variable using logical operators (<em><strong>&amp;&amp;</strong></em> and <em><strong>||</strong></em>)</p>
+<h6 class="partial">if ( favAnimal == "Llama" || favAnimal == "Alpaca" )</h6>
+<h6 class="partial">if ( age &gt; 30 &amp;&amp; age &lt; 40 )</h6>
+<p></p>
+<p>And conditional statements that check a single condition on multiple variables using logical operators (<em><strong>&amp;&amp;</strong></em> and<em><strong> ||</strong></em>):</p>
+<h6 class="partial">if ( age &gt; 20 &amp;&amp; gender == "male" )</h6>
+<h6 class="partial">if ( favAnimal == "Llama" &amp;&amp; favCheese == "Muenster" )</h6>
+<h6 class="partial">if ( weather == "rainy" || temperature &lt; 40 )</h6>
+<p></p>
+<p>Now we want to check multiple conditions on multiple variables.&nbsp; The conditional statement we will look at in this lesson are (in English):</p>
+<ol>
+<li><em><strong>if (</strong> <strong>age</strong> </em>is between 20 and 50 and <em><strong>gender</strong> </em>is male <em><strong>)</strong></em></li>
+<li><em><strong>if (</strong></em> <em><strong>favAnimal</strong> </em>is Llama or Alpaca or Goat and <em><strong>favCheese</strong> </em>is Muenster or Swiss<em><strong> )</strong></em></li>
+<li><em><strong>if (</strong></em> <em><strong>weather</strong> </em>is rainy or windy or the <em><strong>temperature</strong> </em>is less than 40 or greater than 90<em><strong> )</strong></em></li>
+</ol>
+<p></p>
+<h3>Separating variables using parentheses</h3>
+<p>The strategy for creating a conditional statement with multiple conditions on multiple variables is to separate the variables using parentheses.&nbsp; Parentheses in programming have the same function as parentheses in Algebra -- they are used determine the order-of-operations and they also help break larger problems (in this case, conditional statements) into multiple smaller problems.&nbsp;</p>
+<p></p>
+<p>So we take a statement like:</p>
+<h6 class="p"><em><strong>if( age</strong></em> is between 20 and 50 and <strong>gender</strong> is male<em><strong> )</strong></em></h6>
+<p></p>
+<p>and separate the variables using parenthesis so it becomes:</p>
+<h6 class="p"><em><strong>if (</strong> <span class="hl">(</span> <strong>age</strong> </em>is between 20 and 50<span class="hl"> )</span> and&nbsp;<span class="hl">(</span> <em><strong>gender</strong> </em>is male<span class="hl"> )&nbsp;</span> <em><strong>)</strong></em></h6>
+<p></p>
+<p>Since the age grouping and the gender grouping has to both be <em><strong>TRUE</strong> </em>is order for the conditional statement to be <em><strong>TRUE</strong></em>, we know the <em><strong>&amp;&amp;</strong> </em>operator connects the groupings:</p>
+<h6 class="p"><em><strong>if (</strong> <span class="">(</span> <strong>age</strong> </em>is between 20 and 50<span class=""> )</span> <em class="hl">&amp;&amp;</em> <span class="">(</span> <em><strong>gender</strong> </em>is male<span class=""> )&nbsp;</span> <em><strong>)</strong></em></h6>
+<p></p>
+<p>Gender is male is the same as saying gender == "male":</p>
+<h6><em><strong>if (</strong> ( <strong>age</strong> </em>is between 20 and 50 ) <em class="">&amp;&amp;</em> ( <em><strong class="p">gender </strong></em><em class="hl">== "</em>male<em class="hl">"</em> )&nbsp; <em><strong>)</strong></em></h6>
+<p></p>
+<p>The conditional statement for age between 20 and 50 is: age greater than 20 and age less than 50 so:</p>
+<h6 class="p"><em><strong>if (</strong> ( <strong>age</strong> </em><span class="hl">&gt;</span> 20 <em class="hl">&amp;&amp; age &lt;</em> 50 ) <em>&amp;&amp;</em> ( <em><strong>gender </strong></em><em class="">== "</em>male<em class="">"</em> )&nbsp; <em><strong>)</strong></em></h6>
+<p></p>
+<p>And there we have it.&nbsp; The important parts are the inner parentheses that break up the larger conditional statement into more manageable chunks.&nbsp;</p>
+<h3>Parenthesis within parenthesis in script</h3>
+<p>The parentheses, like in Algebra, sets the order of operation so that the conditional statements inside the inner parentheses...</p>
+<h6 class="partial">if (<span class="hl" style="color: #ffff00;">(</span> age &gt; 20 <strong><span class="hl" style="color: #ffff00;">&amp;&amp;</span></strong> age &lt; 50 <span class="hl" style="color: #ffff00;">)</span> &amp;&amp; <span class="hl" style="color: #ffff00;">(</span> gender <span style="color: #ffff00;"><strong class="hl">==</strong></span> "male" <span class="hl" style="color: #ffff00;">)</span> )</h6>
+<p></p>
+<p>get evaluated before the conditional statements in the outer parentheses</p>
+<h6 class="partial">if <span class="hl" style="color: #ffff00;">(</span> ( age &gt; 20 &amp;&amp; age &lt; 50 ) <strong><span class="hl" style="color: #ffff00;">&amp;&amp;</span></strong> ( gender<em><strong> ==</strong></em> "male" ) <span class="hl" style="color: #ffff00;">)</span></h6>
+<p></p>
+<p>Putting the conditional statement into a script:</p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6># get age <span class="">from</span> user and convert to number in one line... <br />age = as.numeric(readline("What is the age? "));<br />gender = readline("What is the gender (male or female)? ");</h6>
+<h6></h6>
+<h6><em class="hl">if ( ( age &gt; 20 &amp;&amp; age &lt; 50 ) &amp;&amp; ( gender == "male" ) )</em><br />{<br />&nbsp;&nbsp; cat("Male between 20 and 50");<br />}<br />else<br />{<br />&nbsp;&nbsp; # all we know is that the user did not type in "male" AND <br />&nbsp;&nbsp; # an age between 20 and 50<br />&nbsp;&nbsp; cat("Other than male between 20 and 50");<br />}</h6>
+<p></p>
+<p><img src="../Images/R-01-10%20Age%20and%20Gender.PNG" alt="" class="flexSize" /></p>
+<h5>Checking multiple conditions on multiple variables</h5>
+<h2>Multiple conditions for multiple variables</h2>
+<p>The previous example had two conditions for the first variable (<em><strong>age</strong></em>), and one condition for the second variable (<em><strong>gender</strong></em>).&nbsp; The second example has multiple conditions for each variable (<em><strong>favAnimal</strong> </em>and <em><strong>favCheese</strong></em>):</p>
+<p></p>
+<h6 class="p"><em><strong>if </strong></em>(<strong></strong><em><strong> favAnimal </strong></em>is Llama or Alpaca or Guanaco and <em><strong>favCheese</strong> </em>is Muenster or Swiss<em><strong> )</strong></em></h6>
+<p></p>
+<p>Once again, the first step is to separate the variables (<em><strong>favAnimal</strong> </em>and <em><strong>favCheese</strong></em>) using parentheses:</p>
+<h6 class="p"><em><strong>if</strong> </em>( <span class="hl">(</span> <em><strong>favAnimal</strong> </em>is Llama or Alpaca or Guanaco<span class="hl"> )</span> and</h6>
+<h6 class="p"><span class="hl">&nbsp;&nbsp;&nbsp;&nbsp; (</span> <em><strong>favCheese</strong> </em>is Muenster or Swiss <span class="hl">)</span> )</h6>
+<p></p>
+<p>The<em><strong> &amp;&amp;</strong></em> says that both conditionals inside the inner parentheses must be <em><strong>TRUE</strong> </em>in order for the conditional statement to be <em><strong>TRUE:</strong></em></p>
+<h6 class="p"><em><strong>if</strong> </em>( ( <em><strong>favAnimal</strong> </em>is Llama or Alpaca or Guanaco ) <span style="color: #000000;"><em><strong class="hl">&amp;&amp;</strong></em> </span></h6>
+<h6 class="p">&nbsp;&nbsp;&nbsp;&nbsp; ( <em><strong>favCheese</strong> </em>is Muenster or Swiss ) )</h6>
+<p></p>
+<p>"Is" means is equal to, which is the ( <em><strong>==</strong></em> ) operator:</p>
+<h6><em><strong>if</strong> </em>( ( <em><strong class="p">favAnimal</strong> </em><span class="hl">==</span> "Llama" or "Alpaca" or "Guanaco " ) &amp;&amp;</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp; ( <em><strong>favCheese</strong> </em><span class="hl">==</span> "Muenster" or "Swiss" ) )</h6>
+<p></p>
+<p>But we must be explicit and include the variable with every conditional operation:</p>
+<h6>if ( ( <em><strong class="p">favAnimal</strong> </em>== "Llama" or<span style="color: #000000;"> <em class="hl"><strong>favAnima</strong></em></span><em class="hl"><strong>l</strong></em><span class="hl"><em class="hl"> </em>==</span> "Alpaca" or <span class="hl"><em><strong>favAnimal</strong> </em>==</span> "Guanaco " )</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &amp;&amp; ( <em><strong>favCheese</strong> </em>== "Muenster" or <span class="hl"><em><strong>favAnimal</strong> </em>== </span>"Swiss" ) )</h6>
+<p></p>
+<p>Finally,&nbsp; we replace the "or" with the ( <em><strong>||</strong></em> ) operator and get the conditional statement:</p>
+<h6><span class="partial">if ( ( favAnimal == "Llama" || favAnimal == "Alpaca" || favAnimal == "Guanaco" ) </span></h6>
+<h6><span class="partial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &amp;&amp; ( favCheese == "Muenster" || favCheese == "Swiss" ) )</span></h6>
+<p></p>
+<p>We might want to break up this statement into multiple lines -- just be careful keeping the parentheses in order.&nbsp; The outer conditional statement (parenthesis and logical operator) is highlighted:</p>
+<h6><span class="partial">if <span class="hl">(</span> ( favAnimal == "Llama" || </span></h6>
+<h6><span class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; favAnimal == "Alpaca" || </span></h6>
+<h6><span class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; favAnimal == "Guanaco" ) <span class="hl">&amp;&amp;</span> </span></h6>
+<h6><span class="">&nbsp;&nbsp;&nbsp;&nbsp; ( favCheese == "Muenster" || </span></h6>
+<h6><span class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; favCheese == "Swiss" )<span class="hl"> )</span></span></h6>
+<p><span class="" style="color: #000000;"><span class=""></span></span></p>
+<p><span class="" style="color: #000000;"><span class="">Lets add a message if the person gets both the cheese and the animal right:</span></span></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>favAnimal = readline("What is your favorite animal? ");<br />favCheese = readline("What is your favorite cheese? ");</h6>
+<h6></h6>
+<h6>if ( ( favAnimal == "Llama" ||<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; favAnimal == "Alpaca" ||<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; favAnimal == "Guanaco" ) &amp;&amp;<br />&nbsp;&nbsp;&nbsp;&nbsp; ( favCheese == "Muenster" ||<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; favCheese == "Provolone" ) )<br />{<br />&nbsp;&nbsp; cat("You are truly a wise human being!");<br />}</h6>
+<p></p>
+<p><img src="../Images/R-01-10%20Cheese%20and%20Animal.PNG" alt="" class="flexSize" /></p>
+<h5>Checking multiple <strong>favCheese</strong> and <strong>favAnimal</strong> conditions</h5>
+<p></p>
+<h2>If-Else-If structures and multiple variables</h2>
+<p>Perhaps we also want to check if the person got <em><span class="hl">either the cheese or the animal right</span></em>. We can extend the <em><strong>if-else</strong></em> structure to check for the <em class="hl">cheese-only</em> and <em class="hl">animal-only</em> conditions by using an <em><strong>if-else-if</strong></em> structure:</p>
+<p></p>
+<h6><span class="p">if (animal and cheese are correct)&nbsp;&nbsp; # 1st test<br /></span></h6>
+<h6><span class="">else if (animal is correct)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 2nd test<br /></span></h6>
+<h6><span class="">else if (cheese is correct)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # 3rd test<br /></span></h6>
+<h6><span class="">else&nbsp; // the 3 tests all returned FALSE<br /></span></h6>
+<p><span class="" style="color: #000000;"></span></p>
+<p><span class="" style="color: #000000;">Remember that an<em><strong> i</strong></em></span><span class=""><span style="color: #000000;"><em><strong>f-else-if</strong> </em>executes in order and<em> </em>exits</span> as soon as one of the conditional statements is <strong><em></em></strong><em><strong>TRUE</strong></em></span><span class="" style="color: #000000;">. So: </span></p>
+<ul>
+<li><span class="" style="color: #000000;">If both the animal and cheese are correct (<em class="hl">1st test</em>), the scripts exits the <em><strong>if-else-if</strong></em> structure and does not do the other tests. </span></li>
+<li><span class="" style="color: #000000;">If the <strong><em>animal-and-cheese</em></strong> test fails, the script will do the <em class="hl">2nd test</em> (<em><strong>animal-only</strong></em>).&nbsp;</span></li>
+<li><span class="" style="color: #000000;"> If the <em><strong>animal-only</strong></em> test fails, the script will do the <em class="hl">3rd test</em> (<em><strong>cheese-only</strong></em>).&nbsp;</span></li>
+<li><span class="" style="color: #000000;"> If the <em><strong>cheese-only</strong></em> test fails then we know both animal and cheese are wrong and the <em><strong>else</strong> </em>statement</span><span class="" style="color: #000000;"> </span><span class="" style="color: #000000;">is executed</span></li>
+</ul>
+<p><span class="" style="color: #000000;"></span></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>favAnimal = readline("What is your favorite animal? ");<br />favCheese = readline("What is your favorite cheese? ");</h6>
+<h6></h6>
+<h6>if ( ( favAnimal == "Llama" ||<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; favAnimal == "Alpaca" ||<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; favAnimal == "Guanaco" ) &amp;&amp;<br />&nbsp;&nbsp;&nbsp;&nbsp; ( favCheese == "Muenster" ||<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; favCheese == "Provolone" ) )&nbsp; # 1st test (animal and cheese)<br />{<br />&nbsp;&nbsp; cat("You are truly a wise human being!");<br />}<br />else if ( favAnimal == "Llama" || <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; favAnimal == "Alpaca" ||<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; favAnimal == "Guanaco" ) &nbsp; # 2nd test (animal only)<br />{<br />&nbsp;&nbsp; cat("Correct on the animal but not the cheese");<br />}<br />else if ( favCheese == "Muenster" ||<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; favCheese == "Provolone" ) # 3rd test (cheese only)<br />{<br />&nbsp;&nbsp; cat("Correct on the cheese but not the animal");<br />}<br />else # all 3 tests returned FALSE (so, neither animal nor cheese)<br />{<br />&nbsp;&nbsp; cat("You have failed this test"); <br />}</h6>
+<p></p>
+<p><img src="../Images/R-01-10%20Cheese%20and%20Animal%20if-else-if.PNG" alt="" class="flexSize" /></p>
+<h5><strong>If-else-if</strong> structure used to check for multiple <strong>favAnimal</strong>/<strong>favCheese</strong> possibilities</h5>
+<h2>Multiple conditions and ranges</h2>
+<p>Our third example connects outer conditional operations using an <em><strong>or ( || )&nbsp;</strong></em> instead of an<strong></strong><em><strong> and ( &amp;&amp; ):</strong></em></p>
+<h6 class="p">if ( <strong>weather</strong> is rainy or windy <em><strong>or</strong></em> the</h6>
+<h6 class="p"><strong>&nbsp;&nbsp;&nbsp;&nbsp; temperature</strong> is less than 40 or greater than 90 )</h6>
+<p></p>
+<p>First, let's separate the variables <em><strong>weather</strong> </em>and <em><strong>temperature</strong> </em>using parentheses:</p>
+<h6 class="p">if ( <em class="hl">(</em> <strong>weather</strong> is rainy or windy <em class="hl">)</em> <em><strong>or</strong></em></h6>
+<h6 class="p"><em class="hl">&nbsp;&nbsp;&nbsp;&nbsp; (</em> the <strong>temperature</strong> is less than 40 or greater than 90 <em class="hl">)</em> )</h6>
+<p><br />Now, we are saying if either the <em><strong>weather</strong> </em>or <em><strong>temperature</strong> </em>inner conditional statement is <em><strong>TRUE</strong> </em>then the whole conditional statement is <em><strong>TRUE</strong> </em>-- this is an ( <em><strong>||</strong></em> ) operation:</p>
+<h6 class="p">if ( ( <strong>weather</strong> is rainy or windy ) <em><strong class="hl">||</strong></em></h6>
+<h6 class="p">&nbsp;&nbsp;&nbsp;&nbsp; ( the <strong>temperature</strong> is less than 40 or greater than 90 ) )</h6>
+<p></p>
+<p>Let's be explicit with the conditional statements in each inner parentheses:</p>
+<h6 class="p">if ( ( <strong>weather</strong> is rainy or <em class="hl">weather is</em> windy ) ||</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp; ( the <strong>temperature</strong> is less than 40 or <em class="hl">temperature is</em> greater than 90 ) )</h6>
+<p></p>
+<p>And replace "is" with the is equal to ( == ) operator,&nbsp; "less than" with ( <em><strong>&lt;</strong></em> ), and&nbsp; "greater than" with (<em><strong> &gt;</strong> </em>)</p>
+<h6 class="p">if ( ( <strong>weather </strong><em class="hl">==</em> "rainy" <em><strong>or </strong></em>weather<em class="hl"><strong> </strong>==</em> "windy" ) ||</h6>
+<h6 class="p">&nbsp;&nbsp;&nbsp;&nbsp; ( the <strong>temperature </strong><em class="hl">&lt;</em> 40 <em><strong>or </strong></em><strong>temperature </strong><em class="hl">&gt;</em> 90 ) )</h6>
+<p></p>
+<p>And, finally replace the <em><strong>or</strong> </em>connection the <em><strong>weather</strong> </em>and <em><strong>temperature</strong> </em>conditions with ( || )</p>
+<h6 class="p">if ( ( <em><strong>weather</strong> </em>== "rainy" <em class="hl">||</em> <em><strong>weather</strong> </em>== "windy" ) ||</h6>
+<h6 class="p">&nbsp;&nbsp;&nbsp;&nbsp; ( the <em><strong>temperature</strong> </em>&lt; 40 <em class="hl">||</em> <em><strong>temperature</strong> </em>&gt; 90 ) )</h6>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>weather = readline("What is the weather (rainy, windy, sunny)? ");<br />temperature = as.numeric(readline("What is the temperature? "));</h6>
+<h6></h6>
+<h6>if ( ( weather == "rainy" || weather == "windy" ) || <br />&nbsp;&nbsp;&nbsp;&nbsp; ( temperature &lt; 40 || temperature &gt; 90 ) )<br />{<br />&nbsp;&nbsp; cat("Perhaps it is best to stay indoors.");<br />}</h6>
+<p></p>
+<p>In the previous examples, both inner conditional operations had to be <em><strong>TRUE</strong> </em>for the whole conditional statements to be <em><strong>TRUE</strong></em>.</p>
+<p>In this example if <em class="hl">either </em>inner conditional operation (<em><strong>weather</strong> </em>or <em><strong>temperature</strong></em>) evaluates to <em><strong>TRUE</strong> </em>then the whole conditional statement is <em><strong>TRUE</strong></em>.</p>
+<p></p>
+<p><img src="../Images/R-01-10%20Weather%20and%20Temperature.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="mult-weather-temp">Checking the <strong>weather</strong> and <strong>temperature</strong> range</h5>
+<p></p>
+<h3>Interpreting a FALSE condition</h3>
+<p>If the conditional statement in the previous example (<em class="figureRef" title="mult-weather-temp">fig</em>) evaluates to <em><strong>TRUE</strong></em>, we know that at least one of these conditions is <em><strong>TRUE</strong></em>:</p>
+<ol>
+<li>Weather is rainy</li>
+<li>Weather is windy</li>
+<li>Temperature is less than 40</li>
+<li>Temperature is greater than 90</li>
+</ol>
+<p></p>
+<p>What do we know if the conditional statement evaluates to <em><strong>FALSE</strong></em>? Well there are two things:</p>
+<ol>
+<li>The weather is not rainy nor windy.<br />So, <em class="hl">the weather must be sunny</em> (assuming the user only had those three choices).</li>
+<li>The temperature is not less than 40 nor greater than 90. <br />So <em class="hl">the temperature must be between 40 and 90</em>.</li>
+</ol>
+<p></p>
+<p>Let's create an <em><strong>if-else-if</strong></em> structure that takes advantage of the fact that we know the<em class="hl"> weather must be sunny</em> if the conditional statement evaluates to <em><strong>FALSE</strong></em>.</p>
+<p></p>
+<p>Using an <em><strong>if-else-if</strong></em> structure, we will create a second test that checks if temperatures are less than 80.&nbsp; If this is <em><strong>TRUE</strong> </em>then the <em class="hl">weather must be sunny</em> and the<em class="hl"> temperature must be between 40 and 80</em>.</p>
+<p></p>
+<p>If the first two tests fail, the weather must be sunny and the <em class="hl">temperature must be between 80 and 90</em>.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>weather = readline("What is the weather (rainy, windy, sunny)? ");<br />temperature = as.numeric(readline("What is the temperature? "));</h6>
+<h6></h6>
+<h6>if ( ( weather == "rainy" || weather == "windy" ) || <br />&nbsp;&nbsp;&nbsp;&nbsp; ( temperature &lt; 40 || temperature &gt; 90 ) )&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # first test<br />{<br />&nbsp;&nbsp; cat("Perhaps it is best to stay indoors.");<br />}</h6>
+<h6>else if (temperature &lt; 80)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # second test</h6>
+<h6>{</h6>
+<h6>&nbsp; # we know the temperature is between 40 and 90 and it is sunny</h6>
+<h6>&nbsp; cat("Go out and play!");</h6>
+<h6>}</h6>
+<h6>else # temperature must be between 80 and 90, weather must be sunny</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("Go to the beach!");</h6>
+<h6>}</h6>
+<p></p>
+<p><img src="../Images/R-01-10%20Weather%20and%20Temperature%20with%20if-else-if.PNG" alt="" class="flexSize" /></p>
+<h5>Using <strong>if-else-if</strong> to check for multiple <strong>weather</strong>/<strong>temperature</strong> conditions</h5>
+<h2>Application</h2>
+<p>A) Have a user enter values for:</p>
+<p style="padding-left: 30px;">1) The age of a fish</p>
+<p style="padding-left: 30px;">2) The location that the fish was caught (north or south)</p>
+<p></p>
+<p>B) Categorize the fish based on location and age:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1) All fish caught in Northport between the ages of 3 and 5 are in category "I"</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; 2) All fish caught in Southport between the ages of 2 and 6 are in category "II"</p>
+<p>&nbsp; &nbsp; &nbsp;&nbsp; 3) All fish too old to be in categories "A" or "B" are in category "III"</p>
+<p>&nbsp; &nbsp; &nbsp;&nbsp; 4) All fish too young to be in categories "A" or "B" are in category "IV"</p>
+<p>&nbsp;</p>
+<p>C) Create an error condition for the previous script that gives an "invalid port" message if the port is not North or South.&nbsp; This fish should not be categorized.</p>
+</body>
+</html>

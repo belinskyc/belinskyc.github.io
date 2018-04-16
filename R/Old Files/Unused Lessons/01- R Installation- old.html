@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../AuxFiles/Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../AuxFiles/Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	<style type="text/css">
+		/* For accessibility reason, I need to use visibility: hidden; instead of display: none;
+			This means I also have to zero out height, width, margin, and padding */
+		h1 
+		{ visibility: hidden; height: 0px; width: 0px; margin: 0; padding: 0; } 
+		h2
+		{ margin: 0px; padding: 0px; text-align: left; }
+		h3
+		{  }
+		h4
+		{  }	
+		p
+		{ margin: 0; }
+		table
+		{ margin-bottom: 10px; width: 100%; } 
+		td 
+		{ height: 18px; }
+		ul,ol
+		{ margin-top: 0px; padding-top: 0px; margin-bottom:0px; padding-bottom: 0px; }
+		body
+		{ font-size: 14px; }
+	</style>
+</head>
+
+<body>
+<h1>Links to previous and Next Lessons</h1>
+<table class="lessonLink previousLesson" id="p1" title="link to previous lesson">
+<tbody>
+<tr>
+<td>Previously: Class Syllabus</td>
+</tr>
+</tbody>
+</table>
+<table class="lessonLink nextLesson" id="p2" title="link to next lesson">
+<tbody>
+<tr>
+<td>Up next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=MichiganSt-1877568" target="_self">Variables</a></td>
+</tr>
+</tbody>
+</table>
+<table class="title" id="p3" title="title of current lesson">
+<tbody>
+<tr>
+<td>R Installation</td>
+</tr>
+</tbody>
+</table>
+<table class="purpose" id="p4" title="Purpose of the lesson">
+<tbody>
+<tr>
+<th>
+<h2>Purpose</h2>
+</th>
+</tr>
+<tr>
+<td>
+<ul>
+<li>Download, install, and setup RStudio, the program we will use for the rest of class.&nbsp;</li>
+<li>Explain the parts of RStudio that will be used prominently in this class.&nbsp;</li>
+<li>Show how commenting works and the importance of commenting</li>
+<li>Choose a color scheme for your code</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="concept" id="p5" title="Lesson Concepts">
+<tbody>
+<tr>
+<th>
+<h2>Concepts</h2>
+</th>
+</tr>
+<tr>
+<td><iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/811482/sp/81148200/embedIframeJs/uiconf_id/27554931/partner_id/811482?iframeembed=true&amp;playerId=kaltura_player&amp;entry_id=1_r3fke641&amp;flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[leadWithHTML5]=true&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;&amp;wid=1_jw3ebswp" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen="" width="640" height="396" frameborder="0"></iframe></td>
+</tr>
+</tbody>
+</table>
+<table class="activities programming" id="p6" title="Lesson Examples">
+<tbody>
+<tr>
+<th>
+<h2>Programming</h2>
+</th>
+</tr>
+<tr>
+<td>
+<h3>1) Install programs</h3>
+<p>There are two programs you need to install for this class: R and RStudio.&nbsp; R is the programming language, RStudio is a interface for the R programming language.&nbsp; Once both are installed, you will be working in&nbsp; RStudio</p>
+<h4>Download and Install R</h4>
+<p>The <a href="https://cran.r-project.org/bin/windows/base/" target="_blank">R for Windows download is here</a>. Click on "Download R #.#.# for Windows"</p>
+<p>The <a href="https://cran.r-project.org/bin/macosx/" target="_blank">R for Mac download is here</a>.&nbsp; Click on "R-#.#.#.pkg" on the left side of the page.&nbsp;</p>
+<p>The&nbsp;<a href="https://cran.r-project.org/bin/linux/" target="_blank">R for Linux download instructions are here.</a>&nbsp;&nbsp;</p>
+<p>Use the default installation options.</p>
+<h4>Download and Install RStudio</h4>
+<p>You can <a href="https://www.rstudio.com/products/rstudio/download#download" target="_blank">download the RStudio Installer here.</a> Download the appropriate file under "Installers" and use the default installation options.</p>
+<h3>2) RStudio Basics</h3>
+<h4>Start RStudio</h4>
+<p>The following picture shows RStudio when you first open it up and there is no script file.&nbsp;</p>
+<p>You will almost always have a script file opened, so this view will rarely be seen.</p>
+<pre class="screenNote">Note: all pictures are from a Windows 10 machine </pre>
+<p><img src="../../AuxFiles/Pics/IntroUnit-OpenRStudio.PNG" alt="First time opening RStudio" title="First time opening RStudio" class="flexSize" /></p>
+<pre class="screenNote">Note: clicking on this picture will increase it's size to the size of the viewscreen, a second click will revert it back to the small size.&nbsp; You can see a bigger version of the picture by right-clicking and choose "View Image" -- it will open outside this webpage. Any picture in the class with a red border has this feature.</pre>
+<h4>Open your first script file</h4>
+<p>There are two files you need to download.&nbsp;<span style="color: #000000;"> <br /></span></p>
+<p>1) the first is <a href="../../AuxFiles/code/Intro-linearModel.csv" download="">data in a csv file </a> -- the data represents fish lengths from two consecutive years</p>
+<p>2) the second is the <a href="../../AuxFiles/code/Intro-linearModel.R" download="">R script file</a>, the R Script runs a linear model using the data in the csv file</p>
+<pre class="screenNote">Note: the file links above will directly download the files in Firefox and Chrome -- in Safari and Internet Explorer you will need to right-click and save the link.</pre>
+<p>You need to open the R script file in RStudio.&nbsp; To do this you can either</p>
+<p>1) Double-click on downloaded R Script file or</p>
+<p>2) In RStudio click File -&gt; Open File -&gt; find downloaded R Script file and click Open.&nbsp;</p>
+<p></p>
+<p>After opening the script file, you should see something that looks like this on your screen...</p>
+<p></p>
+<p><img src="../../AuxFiles/Pics/IntroUnit-RStudio-Quadrants.PNG" alt="RStudio Quadrants" title="RStudio Quadrants" class="flexSize" /></p>
+<p></p>
+<p>There four numbered quadrants in the picture above are:</p>
+<p>1) <strong>Script </strong>-- text for all the opened script file (upper-left quadrant)</p>
+<p>2) <strong>Console</strong> -- where information from the execution of your script file is displayed (lower-left quadrant)</p>
+<p>3) <strong>Environment </strong>--<strong> </strong>where are the variables in your script file are displayed (upper-right quadrant)</p>
+<p>4) <strong>Plots</strong> -- where plots produced by the execution of your script file are displayed (lower-right quadrant)</p>
+<p></p>
+<p>Quadrant 2,3,4 have other tabs you can open but we will not be using these tabs for a while.&nbsp; The "Help" tab in the fourth quadrant is something you might find useful.</p>
+<h4>Common buttons used in RStudio</h4>
+<p>The script file you opened is a fully functioning program and I am going to use this program to demonstrate a few of the very useful buttons in RStudio.&nbsp; I will explain the code in later lessons.</p>
+<p></p>
+<p>The one button you will use the most is "Source".&nbsp; This is the button that execute your code.</p>
+<p>Press the "Source" button.&nbsp; The program asks you to locate the data file (csv) you just downloaded.</p>
+<p></p>
+<p><img src="../../AuxFiles/Pics/IntroUnit-SourcedCode.PNG" alt="R sourced code" title="R sourced code" class="flexSize" /></p>
+<p></p>
+<p>You can use the arrow buttons to view the different plots produced by the program.</p>
+<p></p>
+<p><img src="../../AuxFiles/Pics/IntroUnit-PlotArrows.PNG" alt="R arrows to switch plots" title="R arrows to switch plots" class="flexSize" /></p>
+<p></p>
+<p>The Environment and the Plots windows can get very crowded -- especially after you have ran multiple programs.&nbsp;</p>
+<p>To clean them up, use the brush button.</p>
+<p></p>
+<p><img src="../../AuxFiles/Pics/IntroUnit-Brush.PNG" alt="RStudio Brush Button" title="RStudio Brush Button" class="flexSize" /></p>
+<p></p>
+<p>If you click "Source" again, the Environment and Plots windows get populated again.</p>
+<p></p>
+<h3>3) Your first programming topic: Commenting</h3>
+<p>We are not going to spend any time on the R code itself in this lesson.&nbsp; But I want you to focus on an important feature of all programming languages called commenting.&nbsp; Commenting is text in an RScript that does not get executed -- it is often there to explain to the reader what is happening in the code.&nbsp; In other words, it allows programmers to explain their code in English.&nbsp; Notice how the functionality can still be generally understood just by reading the comments.</p>
+<p></p>
+<p>In the R language, comments are created using the # key.&nbsp; Any text on the line after the # will be treated by R as a comment and it will not be executed.</p>
+<p></p>
+<p>Notice how RStudio uses a different color to delineate comments.&nbsp; In the pictures above, the comments are in a lighter green.</p>
+<p></p>
+<p><img src="../../AuxFiles/Pics/IntroUnit-Comments.PNG" alt="R Comments" title="R Comments" class="flexSize" /></p>
+<br />
+<h3>4) Choosing a color scheme</h3>
+<p>I am not a big fan of the default color scheme in RStudio.&nbsp; It does not create enough differentiation between the different components of a program.&nbsp; For instance, comments (red arrows) are in green and quoted items (blue arrows) are in just a slightly different green.</p>
+<p></p>
+<p><img src="../../AuxFiles/Pics/IntroUnit-CommentsandQuotes.png" alt="R Comments and Quotes" title="R Comments and Quotes" class="flexSize" />&nbsp;</p>
+<p></p>
+<p>A good color scheme can really help a programmer by helping them quickly identify parts of a program and some common errors (like misplaced quotes).&nbsp; To change the color scheme</p>
+<p>1) click on "Tools" in the main menu (circled in picture below)</p>
+<p>2) choose "Global Options"</p>
+<p>3) When the "Global Options" window open (in picture below), click on "Appearance"</p>
+<p></p>
+<p><img src="../../AuxFiles/Pics/IntroUnit-ColorScheme.PNG" alt="R Color Schemes" title="R Color Schemes" class="flexSize" /></p>
+<p></p>
+<p>The picture above shows the "Vibrant Ink" color scheme.&nbsp; I prefer "Vibrant Ink" because I find the black background to be a little less straining on the eyes and the text colors are well differentiated. Notice how the comments (in purple) are now clearly distinguished from the quotes (in green).&nbsp;</p>
+<p></p>
+<p>You can choose from around 20 themes in the Editor Theme window and you can change it anytime without affecting anything else.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="activities debugging" id="p7" title="Lesson Debug">
+<tbody>
+<tr style="height: 26px;">
+<th style="height: 26px;">
+<h2>Debugging</h2>
+</th>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="activities statistics" id="p8" title="Lesson Debug">
+<tbody>
+<tr>
+<th>
+<h2>Statistics</h2>
+</th>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="suplemental traps" id="p9" title="Lesson Debug">
+<tbody>
+<tr>
+<th>
+<h2>Traps</h2>
+</th>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="suplemental extensions" id="p10" title="Lesson Debug">
+<tbody>
+<tr>
+<th>
+<h2>Extensions</h2>
+</th>
+</tr>
+<tr>
+<td>32 vs 64 bit issues</td>
+</tr>
+</tbody>
+</table>
+<table class="suplemental shortcuts" id="p11" title="Lesson Debug">
+<tbody>
+<tr>
+<th>
+<h2>Shortcuts</h2>
+</th>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="application" id="p12" title="Lesson Practice">
+<tbody>
+<tr>
+<th>
+<h2>Application</h2>
+</th>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="application answers" id="p13" title="Lesson Practice">
+<tbody>
+<tr>
+<th>
+<h2>Answers</h2>
+</th>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p></p>
+</body>
+</html>

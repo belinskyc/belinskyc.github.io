@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=michiganstate-2044334" target="_self">Functions 2</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: Sampling and Matrices</p>
+<h1 class="title" id="title">03-01: Packages and Data Frames</h1>
+<h2>Purpose</h2>
+<p></p>
+<h2>Concepts<em><br /></em></h2>
+<p>- token attached to email</p>
+<p>- give generic token -- attach to <a href="mailto:qfc@msu.edu">qfc@msu.edu</a></p>
+<p>- toolbox: token</p>
+<p>- noaa vs ncdc would be better called "get climate data"</p>
+<p>- highlight the dates both before and after</p>
+<p>- list is like a folder</p>
+<p>- package names with or without quotes</p>
+<p>- numerous crazy messages appear when installing some libraries</p>
+<h2>A script for this lesson</h2>
+<p><a href="../Scripts/3-1b.R" target="_blank" rel="noopener noreferrer" class="download">The script that contains all of the code for this lesson can be found here</a>.&nbsp; This lesson will not contain full script that you copy/paste.&nbsp; Instead the lesson will go through the linked script in order.&nbsp; You might want to comment out the whole script and remove the comments as you go through the lesson so that you can see the progression of the lesson.&nbsp; All the lessons in this unit will have full script attached.&nbsp;</p>
+<p></p>
+<p>RStudio Shortcut: <em><strong>Control-Shift-C</strong></em> will comment or uncomment all highlighted lines (<em><strong>Command-Shift-C</strong> </em>on a MAC).</p>
+<p></p>
+<p>Note: The script linked will not work until you get your unique token from NOAA's website -- information about this is below.</p>
+<p></p>
+<h2>Packages (or, other peoples' functions)</h2>
+<p>In the last lesson we use a few plotting functions.&nbsp; These functions exist in the&nbsp; <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html" target="_self">R Base Package</a> -- the R Base Package is script that contains a large list of functions that are included in R.&nbsp; However, as we saw two lessons ago, you can create a file that contains your own functions.&nbsp; In fact, many people have done this and created their own packages that they have shared with the public.&nbsp; These packages (stats, plot, ...)</p>
+<p></p>
+<p>In this lesson we will work with two packages: <strong><a href="https://cran.r-project.org/web/packages/rnoaa/rnoaa.pdf" target="_blank" rel="noopener noreferrer">rnoaa </a></strong>and <strong><a href="https://cran.r-project.org/web/packages/reshape2/reshape2.pdf" target="_blank" rel="noopener noreferrer">reshape2</a></strong>.&nbsp; The functions in <strong>rnoaa</strong> allows you to connect to and gather weather information from the NOAA database and the functions in <strong>reshape2</strong> allows you to manipulate (reshape) your data frame.</p>
+<p></p>
+<p>To use the functions inside the <strong>rnoaa</strong> and <strong>reshape2</strong> packages, you need to:</p>
+<p>1) install <strong>rnoaa</strong> and <strong>reshape2</strong> in RStudio</p>
+<p>2) include <strong> rnoaa</strong> and <strong>reshape2</strong> in your script</p>
+<h3>Installing the rnoaa and reshape2 package</h3>
+<p>To install the <strong>rnoaa</strong> package in RStudio</p>
+<p>1) click on <em><strong>Tools -&gt; Install Packages</strong></em>...</p>
+<p>2) type in <strong>rnoaa</strong> in the Packages textbox</p>
+<p>3) click on <em><strong>Install</strong> </em>(make sure "Install Dependencies" is checked)</p>
+<p></p>
+<p><img src="../Images/R-03-01b%20Install%20Package.PNG" alt="" class="flexSize" /></p>
+<h5>Installing the rnoaa package in RStudio</h5>
+<p></p>
+<p>Repeat the above steps for the reshape2 package.&nbsp; These steps will work for any package you want to install in the future.</p>
+<h3>Including the packages in your script</h3>
+<p>You still need to tell your script that you are going to use the functions in the <strong>rnoaa</strong> and <strong>reshape2</strong> package. To do this, add the following line to the beginning of your script:</p>
+<p></p>
+<h6 class="partial">library("rnoaa");&nbsp;&nbsp;&nbsp; # include functions from the rnoaa package</h6>
+<h6>library("reshape2"); # include functions from the reshape2 package</h6>
+<p></p>
+<p>Now your script has access to all of the <strong>rnoaa</strong> and <strong>reshape2</strong> functions.</p>
+<p></p>
+<h2>Getting data from rnoaa package</h2>
+<p>I want to get all of the weather information for 2016 from Lansing, Michigan.&nbsp; I am going to use the <em><strong>ncdc </strong></em>function in the <strong>weatherData</strong> package.</p>
+<p></p>
+<p>The <em><strong>ncdc </strong></em>function looks like this (from page 9 on the <a href="https://cran.r-project.org/web/packages/rnoaa/rnoaa.pdf" target="_blank" rel="noopener noreferrer">rnoaa.pdf</a>):</p>
+<h6 class="partial">ncdc(datasetid = NULL, datatypeid = NULL, stationid = NULL,<br />&nbsp;&nbsp;&nbsp;&nbsp; locationid = NULL, startdate = NULL, enddate = NULL, sortfield = NULL,<br />&nbsp;&nbsp;&nbsp;&nbsp; sortorder = NULL, limit = 25, offset = NULL, token = NULL,<br />&nbsp;&nbsp;&nbsp;&nbsp; dataset = NULL, datatype = NULL, station = NULL, location = NULL,<br />&nbsp;&nbsp;&nbsp;&nbsp; locationtype = NULL, page = NULL, year = NULL, month = NULL,<br />&nbsp;&nbsp;&nbsp;&nbsp; day = NULL, includemetadata = TRUE, results = NULL, ...)</h6>
+<p></p>
+<p>And ( <strong>... )</strong> at the end of the function means there are many more parameters to change. Here is the<em><strong> ncdc()</strong></em> function with the parameters that we will be working with and their default values.&nbsp; The rest of the parameters will have default values (often, the default is <em><strong>NULL</strong></em>).</p>
+<p></p>
+<h6 class="partial">ncdc(datasetid=NULL, datatypeid=NULL,<br />&nbsp;&nbsp;&nbsp;&nbsp; stationid=NULL, startdate = NULL, enddate =NULL',<br />&nbsp;&nbsp;&nbsp;&nbsp; token=NULL, limit=25 )</h6>
+<p></p>
+<h3>Getting a token</h3>
+<p>NOAA is free to use but you do need to register.&nbsp; When you register, NOAA sends you a token, which is a 32 character string that must be used as the value for the <em><strong>token</strong></em> parameter in every function call.&nbsp;</p>
+<p></p>
+<p>You can <a href="https://www.ncdc.noaa.gov/cdo-web/token" target="_blank" rel="noopener noreferrer">register at NOAA on this page</a>.&nbsp; NOAA will send a 32 character string to your email that you need to set as the value for the parameter <em><strong>token</strong></em>.&nbsp; Don't forget to check your SPAM folder for the email if you don't receive it right away -- I have tested it a few times and got the email within 1 minute each time.</p>
+<p></p>
+<h3>The limit parameter</h3>
+<p>The limit parameter set the limit on how much data you will get.&nbsp; This is mostly to protect NOAA from people accidentally (or maliciously) requesting millions of data points and crashing the server!&nbsp; The highest number you can put is 1000.&nbsp; We are getting 10 data points for every day for one month so we will set the limit to 400.&nbsp; Note: you can go above</p>
+<p></p>
+<p>Note: If you do not receive all the data from NOAA that you requested, there is a good chance that NOAA cut off the request because there were too may data points.</p>
+<p></p>
+<h3>The start and end date parameters</h3>
+<p>Alright, lets get to the real data.&nbsp; <em><strong>startdate</strong> </em>and <em><strong>enddate</strong> </em>are just like they sound -- they give the date range for the data.</p>
+<p></p>
+<p>We want all of January 2016 so:</p>
+<h6 class="partial">startdate = "2016-01-01", enddate = "2016-01-31"</h6>
+<p>note the YEAR-MONTH-DAY format for the dates</p>
+<p></p>
+<h3>The datasetid parameter</h3>
+<p><em><strong>datasetid</strong> (date set id) </em>is the name of the database you want to get data from.&nbsp;</p>
+<p></p>
+<p>We are going to using the Global Historical Climatology Network-Daily database -- the id is <em><strong>GHCND</strong></em>.</p>
+<p></p>
+<p>&lt;EXTENSION&gt;Finding the datasetidsUnfortunately, there really does not exist the best help for using the NOAA databases so finding what the names of the databases is not elementary.</p>
+<p><a href="https://www.ncdc.noaa.gov/cdo-web/webservices/v2#datasets">https://www.ncdc.noaa.gov/cdo-web/webservices/v2#datasets</a></p>
+<p></p>
+<h3>The stationid parameter</h3>
+<p>The <em><strong>stationid</strong> </em>is a string this is 17 characters long and starts with "GHCND:".&nbsp; <a href="https://www.ncdc.noaa.gov/cdo-web/results" target="_blank" rel="noopener noreferrer">You can find station ids on this page</a>. Note: the search is not the best -- you cannot use zip codes.</p>
+<p></p>
+<p>For this lesson we will use the Lansing Capital City Airport station -- id: <strong>GHCND:USW00014836</strong></p>
+<p></p>
+<p><img src="../Images/R-03-01b%20StationID.PNG" alt="" class="flexSize" /></p>
+<h5>Searching for a station id -- in this case we will use the one at Lansing Airport</h5>
+<p></p>
+<h3>the datatypeid</h3>
+<p>Finally, we need to tell NOAA what kind of data we want.&nbsp;</p>
+<p></p>
+<p>If you go to the<a href="https://www.ncdc.noaa.gov/cdo-web/datasets/GHCND/stations/GHCND:USW00014836/detail" target="_blank" rel="noopener noreferrer"> Lansing Capital City Airport station page </a>and scroll to the bottom, you will see a section called <em><strong>Available Data Type</strong></em>, clicking on the categories produces a list of data types and their 4 digit code.&nbsp; It is these 4 digits code used for the <em><strong>datatypeid</strong></em>.</p>
+<p></p>
+<p>For this example, I will use the following codes:</p>
+<p>TMAX, TAVG, TMIN, PRCP, SNOW, AWND, WDF2, WSF2, WT01, WT09</p>
+<p></p>
+<p>We need to put these IDs in a vector to assign them to the parameter <em><strong>datatypeid</strong></em></p>
+<h6 class="partial">datatypeid=c("TMAX", "TAVG", "TMIN", "PRCP", "SNOW", "AWND", "WDF2", "WSF2", "WT01", "WT09")</h6>
+<p></p>
+<p>Note: if you are really bored and want to know everything about the data contained with the GHCND data set,<a href="https://www1.ncdc.noaa.gov/pub/data/ghcn/daily/readme.txt" target="_blank" rel="noopener noreferrer"> you can consult this document.</a></p>
+<h3>Putting it all together</h3>
+<p>Here is the function call to NOAA.&nbsp; I assign the return value from <em><strong>ncdc()</strong> </em>to the variable <em><strong>lansingWeather</strong></em></p>
+<p></p>
+<h6 class="partial">lansingWeather =&nbsp; ncdc(datasetid='GHCND', <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; datatypeid=c("TMAX", "TAVG", "TMIN", "PRCP", <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "SNOW", "AWND", "WDF2", "WSF2",&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "WT01", "WT02", "WT03"),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stationid='GHCND:USW00014836', <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; startdate = '2016-01-01', enddate ='2016-01-31',<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; token="&lt;put your 32-character token here&gt;",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; limit=500 );</h6>
+<p></p>
+<p><em><strong>lansingWeather</strong> </em>is a list.&nbsp; Lists is essentially&nbsp; a package that contains loosely related objects that are of different sizes and types.&nbsp; In this case, <em><strong>weatherData</strong></em> contains two objects: <em><strong>meta</strong> </em>and <em><strong>data</strong></em>.&nbsp; <em><strong>data</strong> </em>is the data frame you want.</p>
+<p></p>
+<p><img src="../Images/R-03-01b%20Return%20list.PNG" alt="" class="flexSize" /></p>
+<h5>list object return from the function call to the NOAA database.</h5>
+<p></p>
+<h3>Subsetting a list</h3>
+<p>We want to extract the data frame from the <em><strong>list</strong> </em>object named <em><strong>lansingWeather</strong></em>. Essentially we want to get a subset of <em><strong>lansingWeather</strong> </em>and to subset a <em><strong>list</strong> </em>we use double brackets [[ ]] (note: to subset a data frame we used single brackets [ ] ).</p>
+<p></p>
+<p>The following line gets the data frame named <em><strong>data</strong> </em>from <em><strong>lansingWeather</strong> </em>and saves it to the variable <em><strong>lansingWeatherDF</strong></em>.</p>
+<h6 class="partial">lansingWeatherDF = lansingWeather[["data"]];</h6>
+<p></p>
+<h2>Reshaping a data frame</h2>
+<p>The data frame <em><strong>lansingWeatherDF</strong> </em>is not in a very readable format.&nbsp; This will often happen when you get data from a big government database.&nbsp; The database is just throwing data at you -- it is your job to format the data in a useful way.</p>
+<p></p>
+<p>Here is the data frame:</p>
+<p><img src="../Images/R-03-01b%20Data%20Frame%20in%20wrong%20format.PNG" alt="" class="flexSize" /></p>
+<h5>Data frame that needs serious formatting.</h5>
+<p></p>
+<p>What we want is have</p>
+<ol>
+<li>each unique <em><strong>date</strong> </em>be a row</li>
+<li>each unique <em><strong>datatype</strong> </em>be a column and</li>
+<li>populated the table with the data in the <em><strong>value</strong> </em>column<em>.&nbsp; </em></li>
+</ol>
+<p></p>
+<p>This is where we use the <strong>reshape2</strong> package.</p>
+<p></p>
+<p><a href="https://cran.r-project.org/web/packages/reshape2/reshape2.pdf" target="_blank" rel="noopener noreferrer">Information about the <strong>reshape2</strong> package</a> can be found here.&nbsp; We are going to use the <em><strong>dcast()</strong></em> function on pages 2 and 3.&nbsp; There are many parameters to <em><strong>dcast()</strong> </em>but we are only concerned with three of the parameters:</p>
+<p></p>
+<ol>
+<li><em><strong>data</strong></em>: the data frame we are reshaping, which is <em><strong>lansingWeatherDF</strong></em></li>
+<li><em><strong>formula</strong></em>: defines the rows and columns of the reshaped data frame -- we want the rows to be <em><strong>date</strong> </em>and the columns to be <em><strong>datatype</strong> </em>so the formula is <em><strong>date ~ datatype</strong></em></li>
+<li><em><strong>value.var</strong></em>: determines what column populates the rest of the reshaped data frame -- the column that holds the values in <em><strong>lansingWeatherDF</strong> </em>is named <em><strong>value</strong></em></li>
+</ol>
+<p></p>
+<h6 class="partial">lansingWeatherRS = dcast(data = lansingWeatherDF, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; formula = date ~ datatype, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; value.var = "value");</h6>
+<p></p>
+<p>The reshaped data frames gets saved to the variable <em><strong>lansingWeatherRS</strong> </em>and looks like this...</p>
+<p></p>
+<p><img src="../Images/R-03-01b%20REshaped%20data%20frame.PNG" alt="" class="flexSize" /></p>
+<h5>Lansing weather data frame after reshaping.</h5>
+<p></p>
+<h3>Repositioning the columns</h3>
+<p>We can change the position of the columns by creating a new data frame using <em><strong>lansingWeatherRS </strong></em>and then assigning the new data frame to <em><strong>lansingWeatherRS</strong></em>.&nbsp; This is conceptually very similar to saying:</p>
+<p></p>
+<h6 class="partial">count = count + 1;</h6>
+<p>In R, this means add one to the value of <em><strong>count</strong> </em>and then save the answer to <em><strong>count.</strong></em></p>
+<p><em><strong></strong></em></p>
+<p><em></em>To reposition the column we do:</p>
+<h6 class="partial">lansingWeatherRS = lansingWeatherRS[,c(1,3,4,5,6,7,2,8,9,10,11)];</h6>
+<p>which says we will create a data frame that has the column from <em><strong>lansingWeatherRS</strong> </em>in this order: 1,3,4,5,6,7,2,8,9,10,11 and we will save that data frame to <em><strong>lansingWeatherRS.</strong></em></p>
+<p><em><strong></strong></em></p>
+<p><em></em>Basically we moved column 2, which was <em><strong>AWND,</strong> </em>over 5 column and shifted the columns in between.</p>
+<p></p>
+<p><img src="../Images/R-03-01b%20Shifting%20Column.PNG" alt="" class="flexSize" /></p>
+<h5>Shifting the Average Wind (AWND) column.</h5>
+<h3>Formatting the data</h3>
+<p>There are still many issues with the data that we will deal with.&nbsp; The first is that most of the values in the table are in tenths of a unit.&nbsp; This is done so that all the number can be integers.&nbsp; So, a <em><strong>TMAX</strong> </em>of <strong>-88</strong> really means <strong>-8.8</strong> degree Celsius and a <em><strong>PRCP</strong> </em>of <strong>135</strong> means <strong>13.5</strong> millimeters.</p>
+<p></p>
+<p>The columns that are presented like this are: PRCP, SNOW, TAVG, TMAX, TMIN, AWND, and WSF2 -- or column numbers 2,3,4,5,6,7, and 9</p>
+<p></p>
+<p>We want to divide every value in these column by 10 so that the values are in regular units.</p>
+<p></p>
+<p>The following code takes all the values in columns 2,3,4,5,6,7,9 in <em><strong>lansingWeatherRS</strong></em>, divides the values by 10, and save the results back to the same columns in <em><strong>lansingWeatherRS</strong></em>.</p>
+<h6 class="partial">lansingWeatherRS[,c(2,3,4,5,6,7,9)] = lansingWeatherRS[,c(2,3,4,5,6,7,9)]/10;</h6>
+<p></p>
+<p>as a shortcut, you can use the sequence 2:7 to replace 2,3,4,5,6,7</p>
+<p></p>
+<h6 class="partial">lansingWeatherRS[,c(2:7,9)] = lansingWeatherRS[,c(2:7,9)]/10;</h6>
+<p></p>
+<p><img src="../Images/R-03-01b%20Change%20from%20tenths%20to%20zero.PNG" alt="" class="flexSize" /></p>
+<h5>Changing from tenths of a unit to regular units.</h5>
+<p></p>
+<h3>Converted temperature values</h3>
+<p>The temperature values look much more sensible now but the temperatures are in Celsius and I am use to Fahrenheit.&nbsp; So, I would like to convert every value in TAVG, TMIN, and TMAX from Celsius to Fahrenheit.</p>
+<p></p>
+<p>The conversion is:&nbsp;<strong> FahrenheitTemp =&nbsp; (9/5) * CelsiusTemp +32</strong></p>
+<p>and we want to convert the values in&nbsp; columns 4,5, and 6</p>
+<p></p>
+<h6 class="partial">lansingWeatherRS[,4:6] = (9/5) * lansingWeatherRS[,4:6] + 32;</h6>
+<p></p>
+<p>Like before, we are performing a mathematical operation on all values in columns 4, 5, and 6 on <em><strong>lansingWeatherRS</strong> </em>and saving the results back to columns 4, 5, and 6 of <em><strong>lansingWeatherRS</strong></em>.</p>
+<p></p>
+<p><img src="../Images/R-03-01b%20Temperature%20Conversion.PNG" alt="" class="flexSize" /></p>
+<h5>Converting temperature columns from Celsius to Fahrenheit (most scientists are cringing...).&nbsp;</h5>
+<p></p>
+<h3>Rounding Values</h3>
+<p>I really have no need for 2 decimal places in the temperature value.&nbsp; I want just 1 decimal place.&nbsp; So, I will use the <em><strong>round()</strong></em> function to round all of the values in the temperature columns (4, 5, and 6) to one decimal place .&nbsp; The parameters for <em><strong>round()</strong> </em>are</p>
+<p></p>
+<p><em><strong>x:</strong></em> the values to round</p>
+<p><em><strong>digits</strong></em>: where you want to round relative to the decimal point (negative numbers means go left of decimal)</p>
+<p></p>
+<h6 class="partial">lansingWeatherRS[,4:6] = round(x=lansingWeatherRS[,c(4,6)],digits=1);</h6>
+<p></p>
+<p><img src="../Images/R-03-01b%20Rounding.PNG" alt="" class="flexSize" /></p>
+<h5>Rounding temperature value using round().</h5>
+<p></p>
+<h3>Getting a substring</h3>
+<p>I really don't want all the time information given in column 1.&nbsp; I really only need the two digit month and day.&nbsp; I can use the function <em><strong>substr()</strong> <strong></strong></em>to pull out a portion of the string value and save that portion back to the column. Essentially, I want the 6th through the 10th characters:</p>
+<p></p>
+<p>2016-<strong>01-02</strong>T00:00:00</p>
+<p>2016-<strong>01-14</strong>T00:00:00</p>
+<p>2016-<strong>01-26</strong>T00:00:00</p>
+<p></p>
+<p><em><strong>substr()</strong> </em>has three parameters that we are going to assign value to:</p>
+<p><em><strong>x</strong></em>: the values that we want to subset</p>
+<p><em><strong>start</strong></em>: the position we want the substring to start at</p>
+<p><em><strong>end</strong></em>: the position that we want the substring to end at</p>
+<p></p>
+<h6 class="partial">lansingWeatherRS[,1] = substr(x=lansingWeatherRS[,1], start=6, stop=10);</h6>
+<p></p>
+<p><img src="../Images/R-03-01b%20Subsetting%20Strings.PNG" alt="" class="flexSize" /></p>
+<h5>Subsetting strings in the date column.</h5>
+<p></p>
+<h2>Changing column names</h2>
+<p>Lastly, some of the column have names that mean absolutely nothing to me, specifically column 10 (WT01) and column 11 (WT09).&nbsp; I would like to change the names to something more informative.</p>
+<p></p>
+<p>WT01 indicative if there was fog on that day, WT09 indicate if there was blowing snow on that day.</p>
+<p></p>
+<p>We can use the function<em><strong> colnames()</strong> </em>to change the column names.&nbsp; The only parameter is <em><strong>x</strong></em>, which is the data frame.&nbsp; Since the data frame has a column name for each column, we need to put in a subset value (the index of the column).</p>
+<p></p>
+<h6 class="partial">colnames(x=lansingWeatherRS)[10] = "Fog";<br /> colnames(x=lansingWeatherRS)[11] = "BSnow";</h6>
+<p></p>
+<p>The above code changes column 10's name to "Fog" and column 11's name to "BSnow"</p>
+<p></p>
+<p><img src="../Images/R-03-01b%20Change%20Coolumn%20Names.PNG" alt="" class="flexSize" /></p>
+<h5>Changing the column names in a data frame.</h5>
+<p></p>
+<h2>Saving the reformatted data frame</h2>
+<p>We don't want to have to go through this every time we use this data, so let's just save the reformatted data frame to a CSV file.&nbsp; That way, we can just open up the CSV file and go right to the formatted data.</p>
+<p></p>
+<p>We will use <em><strong>write.csv()</strong></em> to write the data frame to a CSV file.&nbsp; The parameters are:</p>
+<p><em><strong>x</strong></em>: the data frame to write</p>
+<p><em><strong>file</strong></em>: the file to write the data frame to</p>
+<p></p>
+<h6 class="partial">write.csv(x=lansingWeatherRS, file="data/formattedLansingWeather.csv");</h6>
+<p></p>
+<p>The above code will create a file named <em><strong>formattedLansingWeather.csv</strong></em> in the <em><strong>data</strong> </em>folder inside your<em><strong> R Root</strong></em> directory.&nbsp; <em><strong>formattedLansingWeather.csv</strong></em> can be opened by any R script and saved as a data frame (we will do this next lesson).</p>
+<h2>Application</h2>
+<ol>
+<li>&nbsp;Get the following data for December2016 in Lansing, MI:&nbsp; <strong>PRCP, SNOW, TAVG, TMAX, TMIN</strong></li>
+<li><em></em>Save the data frame (<em><strong>data</strong></em>) from the list to a variable named <em><strong>lansingDecWeather</strong></em></li>
+<li>&nbsp;Reshape the data frame so <em><strong>date</strong> </em>is on the x-axis (rows) and <em><strong>datatype</strong> </em>is on the y-axis (columns)</li>
+<li>&nbsp;Rearrange the columns to this order: <strong>date, TMIN, TMAX, TAVG, PRCP, SNOW</strong></li>
+<li>&nbsp;Rename the temperature columns to:&nbsp; <strong>minTemp, maxTemp, avgTemp</strong></li>
+<li>&nbsp;Divide all 5 data columns by 10 to get the values out of tenths of a unit.</li>
+<li>Convert the <strong>PRCP</strong> and <strong>SNOW</strong> columns from mm to inches (25 millimeters equals 1 inch)</li>
+<li>Substring the date column so that the dates look like this: <strong>16-12-02 </strong></li>
+<li>Find the mean, standard deviation, and variance for the <em><strong>maxTemp</strong> </em>and <em><strong>minTemp</strong> </em>columns (use the <em><strong>mean()</strong></em>, <em><strong>sd()</strong></em>, and <em><strong>var()</strong></em> functions)</li>
+<li>Challenge: Add a column to <em><strong>lansingDecWeather</strong> </em>called <em><strong>c</strong><strong>hangeTemp</strong></em>.&nbsp; This column will hold the high temperature minus the low temperature for each day.&nbsp; Look at Unit 2-5 for help.</li>
+</ol>
+</body>
+</html>

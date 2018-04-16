@@ -1,0 +1,285 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2268100" target="_self">Sampling</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2268106" target="_self">Conditional Subsets</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">03-06 Linear Regressions</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Convert vectors from string to numeric</li>
+<li>Create scatterplots between variables</li>
+<li>Simple linear regression</li>
+<li>Add regression lines to plots</li>
+</ul>
+<h2>Concepts</h2>
+<h2>Reading in the weather data</h2>
+<p>There are two files you need to download for this lesson:</p>
+<ol>
+<li><a href="../Scripts/3-6.R" target="_blank" rel="noopener noreferrer" class="download">The R script</a></li>
+<li><a href="../Scripts/LansingNOAA2016.csv" target="_self">Weather data from Lansing in 2016:<em><strong> LansingNOAA2016.csv</strong></em></a> (note: this data file contains an expanded version of weather data that we used in previous lessons)</li>
+</ol>
+<p></p>
+<p>Ensure that the data file, <a href="../Scripts/LansingNOAA2016.csv" target="_self"><em><strong class="dl">LansingNOAA2016.csv,</strong></em></a> is saved to your <em><strong>data</strong> </em>directory in the <em><strong>R Root</strong></em> folder.</p>
+<p><br />In this lesson we are going to look at a year's worth of weather data and try to find relationships among weather conditions (e.g, humidity and precipitation) using linear modelling.</p>
+<p></p>
+<p>The first thing we do in the script is import the data from the CSV file and save it to the variable <em><strong>lansing2016Weather,</strong></em> a data frame<strong></strong><em><strong><br /></strong></em></p>
+<h6 class="partial">lansing2016Weather = read.csv(file="data/LansingNOAA2016.csv");</h6>
+<h3>Factors in a data frame</h3>
+<p>If you look at the column headers in <em><strong>lansing2016Weather </strong></em>(<em class="figureRef" title="columns">fig</em>), you will see that five of them (<em><strong>d</strong><strong>ate, weatherType, precip, snow, snowDepth</strong></em>) are of type <em><strong>Factor </strong></em>(i.e., categorical variables).&nbsp; The other columns are numeric.&nbsp; By default, R will designate columns in a data frame as factor <em class="hl">if there are any non-numeric characters</em> in the column. &nbsp; <em class="linkTo" title="factors">Extension: Factors in R</em></p>
+<p></p>
+<p>Of these five column headers that are factors:</p>
+<ul>
+<li><em><strong>precip</strong></em>, <em><strong>snow,</strong></em> and <em><strong>snowDepth </strong></em>have numeric values but use&nbsp; <strong>T</strong> to represent trace amounts of precipitation (less than 0.01 inches)</li>
+<li><strong><em>date</em> </strong>uses dashes ( - ) to separate the numeric month and day (02-20 is February 20th)<em><strong><br /></strong></em></li>
+<li><em><strong>weatherType</strong> </em>contains 2-character strings that represent various weather conditions for the day (e.g., <strong>HZ</strong> is hazy, <strong>FG</strong> is foggy)</li>
+</ul>
+<p></p>
+<p><img src="../Images/R-03-06%20Factors.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="columns">In R, data frame column with strings in them default to factors.</h5>
+<p></p>
+<p>The problems is that we would not use four of the five "factor" columns as factors in an analysis and the fifth, <em><strong>weatherType</strong></em>, needs to be better formatted.&nbsp; In this case, it would be best to have R treat these columns as strings.&nbsp; We can add the parameter <em><strong>stringsAsFactors</strong> </em>to <em><strong>read.csv()</strong></em> to change this behavior:</p>
+<p></p>
+<h6 class="partial">lansing2016Weather = read.csv(file="data/LansingNOAA2016.csv",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stringsAsFactors = FALSE);</h6>
+<p></p>
+<p>Changing the columns to string also makes the variables in the Environment Window easier to read (<em class="figureRef" title="strings">fig</em>).</p>
+<p></p>
+<p><img src="../Images/R-03-06%20Strings%20not%20factors.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="strings">Strings (or characters) in a data frame.</h5>
+<p></p>
+<p>Note: most functions in R will intelligently convert strings or numbers to factors when needed.&nbsp; This happened in lesson 3-4 (t-tests and ANOVAs) when the <em><strong>boxplot()</strong></em> and <em><strong>aov()</strong></em> functions converted the years (second column of the data frame) into factors.</p>
+<h3>Getting data from the data frame</h3>
+<p>Next we are going to pull out 12 columns (representing 12 different weather measurements) from the <em><strong>lansing2016Weather</strong></em> data frame and save them to vectors.</p>
+<h6 class="partial">date = lansing2016Weather[,"date"];<br />eventData = lansing2016Weather[,"weatherType"];<br />avgTemp = lansing2016Weather[,"avgTemp"];<br />tempDept = lansing2016Weather[,"tempDept"]; <br />precipitation = lansing2016Weather[,"precip"]; <br />humidity = lansing2016Weather[,"relHum"];<br />barometer = lansing2016Weather[,"stnPressure"];<br />dewPoint = lansing2016Weather[,"dewPoint"];<br />avgWind = lansing2016Weather[,"windSpeed"];<br />maxWind = lansing2016Weather[,"windPeakSpeed"]; <br />windDirection = lansing2016Weather[,"windPeakDir"];<br />sunrise = lansing2016Weather[,"sunrise"];<br />sunset = lansing2016Weather[,"sunset"];</h6>
+<p></p>
+<p><img src="../Images/R-03-06%20Weather%20Data%20Vectors.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="cols">Saving columns from the data frame as vectors.</h5>
+<h2>Converting from characters to numbers</h2>
+<p>Precipitation is given as a character string instead of numeric (<em class="figureRef" title="cols">fig</em>).&nbsp; This is because it has "T" values, which means "trace" or that there were less than 0.01 inches of precipitation-- but not 0.&nbsp; It would be best to convert every value in the vector to a number so we can treat the whole vector as a number.&nbsp; In this case, we will convert "T" to 0.005 (halfway between 0 and 0.01).</p>
+<p></p>
+<h6 class="partial">for(i in 1:366)<br />{<br />&nbsp; if(precipitation[i] == "T")<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; precipitation[i] = 0.005;<br />&nbsp; }<br />}</h6>
+<p></p>
+<p>We go through all 366 values in the vector and, if the value is "T", we change it to 0.005.&nbsp; However, the vector will remain a string vector until we change its type.&nbsp; We do this using <em><strong>as.numeric()</strong></em>.</p>
+<p></p>
+<h6 class="partial">precipitation = as.numeric(precipitation);</h6>
+<p></p>
+<p><img src="../Images/R-03-06%20Numeric%20Conversion.PNG" alt="" class="flexSize" /></p>
+<h5>Converting precipitation into a numeric vector (0.005 in place of "T").</h5>
+<h2>Scatterplots</h2>
+<p>Before doing any statistics, we can use scatterplots to see if there is evidence for a relationship between variables.&nbsp; The following code creates a scatterplot of <em><strong>humidity</strong> </em>(y-axis) vs. <em><strong>avgTemp</strong> </em>(x-axis).</p>
+<p></p>
+<h6 class="partial">plot(formula=humidity~avgTemp);</h6>
+<p></p>
+<p><img src="../Images/R-03-06%20Scatterplot.PNG" alt="" class="flexSize" /></p>
+<h5><strong>Humidity</strong> vs <strong>avgTemp</strong> scatterplot.</h5>
+<p></p>
+<p class="linkTo" title="margins">Trap: figure margins too large</p>
+<p></p>
+<p>We can make this plot look much better by changing some parameters:</p>
+<ul>
+<li><em><strong>xlab, ylab</strong></em>: x-axis and y-axis labels</li>
+<li><em><strong>main</strong></em>: title</li>
+<li><em><strong>pch</strong></em>: point character or type of point -- <a href="http://www.endmemo.com/program/R/pchsymbols.php" target="_blank" rel="noopener noreferrer">click here for a detailed list of pch types</a></li>
+<li><em><strong>col</strong></em>: color of the points</li>
+<li><em><strong>cex</strong></em>: character expansion or scaler for the points (so 0.7 means the points are scaled to 70% of default)</li>
+</ul>
+<p></p>
+<h6 class="partial">plot(formula=humidity~avgTemp,</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp; xlab="Average Temperature (F)", ylab="Humidity (%)",</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp; main="Humidity vs Average Temperature",</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp; pch=4, col="blue", cex=0.7 );</h6>
+<p></p>
+<p><img src="../Images/R-03-06%20Scatterplot%20Modified.PNG" alt="" class="flexSize" /></p>
+<h5><strong>Humidity</strong> vs <strong>avgTemp</strong> scatterplot with parameters changed</h5>
+<p></p>
+<p class="linkTo" title="colorize">Extension: Conditionally coloring the points</p>
+<p class="linkTo" title="numbering">Extension: Numbering the points</p>
+<h2>Multiple scatterplots using pairs()</h2>
+<p>Sometimes it is convenient to look at the relationship of multiple variables at once. In R this can be accomplished using the <em><strong>pairs()</strong> </em>function.&nbsp; <em><strong>pairs()</strong></em> takes multiple vectors as input and outputs a scatterplot for each possible pair of vectors.&nbsp; The following code produces a plot of all six possible combinations of <em><strong>precipitation</strong></em>, <em><strong>avgTemp</strong></em>, and <em><strong>humidity</strong></em>.&nbsp; Note: each plot will have a corresponding plot with the same data but reversed axes.</p>
+<p></p>
+<h6 class="partial">pairs(formula=~avgTemp+humidity+precipitation);</h6>
+<p></p>
+<p class="linkTo" title="plus">Extension: The + sign</p>
+<p></p>
+<p><img src="../Images/R-03-06%20pairs.PNG" alt="" class="flexSize" /></p>
+<h5>Multiple scatterplots -- red text added outside of R</h5>
+<p></p>
+<h3>Even more pairs()</h3>
+<p>We can go crazy with <em><strong>pairs()</strong></em> and compare seven different variables</p>
+<p></p>
+<h6 class="partial">pairs(formula=~precipitation+avgTemp+maxWind+humidity+</h6>
+<h6 class="partial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; barometer+dewPoint+windDirection);</h6>
+<p></p>
+<p>The plots seem to show a strong relationship between <em><strong>avgTemp </strong></em>and <em><strong>dewPoint</strong></em>.&nbsp; The two plots highlighted both represent a comparison between <em><strong>avgTemp</strong> </em>and <em><strong>dewPoint</strong></em>.&nbsp; The top plot has <em><strong>avgTemp</strong> </em>on the y-axis, the bottom plot has <em><strong>dewPoint</strong> </em>on the y-axis.</p>
+<p></p>
+<p><img src="../Images/R-03-06%20pairs%20extreme.PNG" alt="" class="flexSize" /></p>
+<h5>Scatterplot matrix relating seven different weather vectors.</h5>
+<p></p>
+<h2>Linear Models</h2>
+<p>Taking a closer look at the <em><strong>avgTemp-</strong></em><em><strong>dewPoint</strong> </em>scatterplot seems to confirm a relationship (not a surprise if you know what dew point measures!):</p>
+<p></p>
+<h6 class="partial">plot(formula=avgTemp~dewPoint);</h6>
+<p></p>
+<p><img src="../Images/R-03-06%20dew%20point%20vs%20temp.PNG" alt="" class="flexSize" /></p>
+<h5><strong>avgTemp</strong> vs <strong>dewPoint</strong> scatterplot</h5>
+<p></p>
+<p>We want to quantify the relationship and we can do that by generating a linear model using <em><strong>avgTemp</strong> </em>and <em><strong>dewPoint</strong></em>.</p>
+<p></p>
+<p>In R the function <em><strong>lm()</strong></em> performs a linear model.&nbsp; <em><strong>lm()</strong></em> generates a bunch of output that is in the form of a list.&nbsp; We will assign the list to the variable named <em><strong>model</strong></em>.</p>
+<p></p>
+<h6 class="partial">model = lm(formula=avgTemp~dewPoint);</h6>
+<p></p>
+<p>And, because viewing the list in the Environment Window is not especially helpful,&nbsp; we will use <em><strong>print()</strong></em> and <em><strong>summary()</strong></em> to get a <em>summary</em> of the results of the linear model and <em>print</em> the summary in the Console Window.</p>
+<p></p>
+<h6 class="partial">print(summary(model));</h6>
+<p></p>
+<p>This is an example of nested functions, with <em><strong>summary()</strong> </em>nested inside <em><strong>print()</strong></em>.&nbsp; In other words, <em><strong>summary()</strong></em> is executed first and the results of <em><strong>summary()</strong> </em>are used as inputs for the function <em><strong>print()</strong></em>.</p>
+<p></p>
+<p><img src="../Images/R-03-06%20linear%20model.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="linear">Information about the linear model in the Console Window</h5>
+<p></p>
+<p>The output printed to the Console Window (<em class="figureRef" title="linear">fig</em>) is typical regression results such as parameter estimates (intercept:<strong> 8.354</strong>, slope: <strong>1.053</strong>), p-values (<strong>&lt; 2e-16</strong> means that it is lower than R can calculate), and R<sup>2</sup> statistic (0.9326).</p>
+<h3>Adding the regression line to the scatterplot</h3>
+<p>The<em><strong> abline()</strong></em> function can read information from the linear model, <em><strong>model</strong></em>, and add the relationship to the scatterplot.</p>
+<p></p>
+<h6 class="partial">abline(x=model, col="blue");</h6>
+<p></p>
+<p>The code above adds a line to the scatterplot that has the x-axis intercept (<strong>8.354</strong>) and slope (<strong>1.053</strong>) given by the linear model.</p>
+<p></p>
+<p><img src="../Images/R-03-06%20regressioin%20line.PNG" alt="" class="flexSize" /></p>
+<h5>Regression line added to <strong>avgTemp</strong> vs <strong>highTemp</strong> scatterplot using <strong>abline()</strong></h5>
+<h2>Conflating variables in a linear regression: preview</h2>
+<p>We are going to perform a second regression, this time between barometric pressure and temperature.&nbsp; Like last time we will:</p>
+<ol>
+<li>produce a scatterplot of <em><strong>avgTemp</strong> </em>vs <em><strong>barometer </strong><span style="text-decoration: underline;"></span></em>using<em><strong> plot()</strong></em></li>
+<li>create a linear model using <em><strong>lm()</strong></em></li>
+<li>summarize the model <em></em>in the Console Window using <em><strong>print(summary())</strong> </em></li>
+<li>use <em><strong>abline()</strong> to </em>add the regression line from the model to the scatterplot</li>
+</ol>
+<p></p>
+<h6 class="partial">plot(formula=avgTemp~barometer);<br />model2 = lm(avgTemp~barometer);<br />abline(model2, col="blue");<br />print(summary(model2));</h6>
+<p></p>
+<p><img src="../Images/R-03-06%20second%20regression.PNG" alt="" class="flexSize" /></p>
+<h5>Linear model showing no significant relationship between temperature and pressure</h5>
+<p></p>
+<p>While there seems to be little evidence for a relationship (p=0.1358) between <em><strong>avg</strong><strong><em>T</em>emp</strong> </em>and <em><strong>barometer</strong></em>, we will find out in the next lesson that we can tease out a relationship if we subset the data and look at other conflating factors like wind direction.</p>
+<h2>Saving vectors to a csv file</h2>
+<p>We will be using the data from the vectors in the application for this lesson and in future lessons so it would be best to save the vectors to a new CSV file.&nbsp; However, there is an intermediate step -- we first must save the vector to a new data frame and then save the data frame to a CSV file.</p>
+<p></p>
+<p>We can call <em><strong>data.frame()</strong></em> to create a new data frame, called <em><strong>formattedData</strong></em>, from the 12 weather vectors.</p>
+<h6 class="p">formattedData = data.frame(date, eventData, avgTemp, tempDept, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; precipitation, humidity, barometer,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dewPoint, avgWind, maxWind, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; windDirection, sunrise, sunset);&nbsp;</h6>
+<p></p>
+<p>And then we can write the data frame <em><strong>formattedData</strong> </em>to a csv file called <em><strong>LansingNOAA2016Formatted.csv, </strong></em>which we will put in the <em><strong>data</strong> </em>folder in the <em><strong>R Root</strong> </em>directory.</p>
+<p></p>
+<h6 class="p">write.csv(x=formattedData,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; file="data/LansingNOAA2016Formatted.csv",</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; row.names = TRUE );</h6>
+<p></p>
+<p>There should now be a file called <em><strong>LansingNOAA2016Formatted.csv </strong></em> in your data folder.</p>
+<h2>Application</h2>
+<p>For the application, you are going to use the data found in <em><strong>LansingNOAA2016Formatted.csv</strong></em></p>
+<p><em><strong></strong></em></p>
+<p>1) place the function below, <em><strong>timeConvert()</strong></em>, inside your <em><strong>toolbox.r</strong> </em>file.&nbsp; This function takes a time in this format: HHMM and converts it to hours.&nbsp; So <strong>1730 = 17.5, 445 = 4.75, 2012 = 20.2</strong><em><br /></em></p>
+<h6 class="p">timeConvert = function(hoursMinutes)<br />{<br />&nbsp; returnVector = c();<br />&nbsp; for(i in 1:length(hoursMinutes))<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; numDigits = nchar(as.character(hoursMinutes[i]));<br />&nbsp;&nbsp;&nbsp; minutes = substr(hoursMinutes[i], numDigits-1, numDigits);<br />&nbsp;&nbsp;&nbsp; minutes = as.numeric(minutes)*(1/60);<br />&nbsp;&nbsp;&nbsp; hours = floor(hoursMinutes[i]/100);<br />&nbsp;&nbsp;&nbsp; returnVector[i] = round(hours+minutes, 2);</h6>
+<h6>&nbsp; }<br />&nbsp; return(returnVector)<br />}</h6>
+<p></p>
+<p>2) Using the function above, <em><strong>timeConvert()</strong></em>, convert the <em><strong>sunrise</strong> </em>and <em><strong>sunset</strong> </em>vectors to hours.</p>
+<p></p>
+<p>3) Create a new vector called <em><strong>hoursOfSun.</strong><strong>&nbsp; hoursOfSun </strong></em>is the amount of time the sun is up on a particular day.&nbsp; It is sunset time minus sunrise time.</p>
+<p></p>
+<p>4) What variables does <em><strong>hoursOfSun</strong> </em>correlate with?&nbsp;</p>
+<ul>
+<li>create scatterplots between <em><strong>hoursOfSun</strong> </em> and other variables</li>
+<li>perform linear models between <em><strong>hoursOfSun</strong> </em> and at least three other variables.</li>
+<li>print to the Console Window and explain the summary of the linear models</li>
+<li>place regression lines on the scatterplots (so, one regression line per scatterplot)</li>
+</ul>
+<p></p>
+<h2 class="trap" id="margins">Trap: figure margins too large</h2>
+<p id="rstudio_console_output" tabindex="0">A common, and somewhat unintuitive, error you may get when executing a script that produces plots is:<span style="color: #990000;"><em> figure margins too large</em></span></p>
+<p tabindex="0"><span style="color: #990000;"><em></em></span></p>
+<p><img src="../Images/R-03-06%20figure%20margins%20too%20large.PNG" alt="" class="flexSize" /></p>
+<h5 tabindex="0"><span style="color: #990000;"></span>Figure margins too large error</h5>
+<p></p>
+<p>This error often has nothing to do with your script.&nbsp; Rather, the issue is that your plot window is too small to hold the plot you are trying to display.&nbsp; To fix this issue you just need to increase the size of the plot window.</p>
+<p></p>
+<h2 class="extension" id="colorize">Extension: Conditionally coloring points on a plot</h2>
+<p>On the <em><strong>humidity</strong> </em>vs. <em><strong>avgTemp </strong></em>plot, we have 366 point representing each day of the year but the plot tells you nothing about the days.&nbsp; We can add information about the points by controlling their color.</p>
+<p></p>
+<p>The colors indicate what day the point represents. In the plot below, yellow points represent early days in the year (e.g., January, February), red points represent middle days (e.g., June, July), and blue color represent later days (e.g., November, December).&nbsp; There is a spectrum so days in March and April are orangish and days in September and October are purpleish.</p>
+<p></p>
+<p><img src="../Images/R-03-06%20colored%20scatterplot.PNG" alt="" class="flexSize" /></p>
+<h5>Adding color to the points to represent days.</h5>
+<p></p>
+<p>The first step is to create a color scheme that goes from yellow to red to blue.&nbsp; We do that using the function<em><strong> colorRampPalette().</strong></em></p>
+<p><em><strong></strong></em></p>
+<h6 class="partial">colorByDay=colorRampPalette(color=c("yellow", "red", "blue"));</h6>
+<p></p>
+<p><em><strong>colorByDay</strong> </em>is technically a function that holds information about a yellow-red-blue color scheme.&nbsp; <em><strong>colorByDay</strong> </em>can be used to create color values in a plot:</p>
+<p></p>
+<h6 class="partial">plot(formula=humidity~avgTemp,<br />&nbsp;&nbsp; &nbsp; xlab="Average Temperature (F)", ylab="Humidity (%)",<br />&nbsp;&nbsp;&nbsp;&nbsp; main="Humidity vs Average Temperature",<br />&nbsp;&nbsp;&nbsp;&nbsp; pch=4, <span class="hl">col=colorByDay(366)</span>, cex=0.7 );</h6>
+<p></p>
+<p><em><strong>colorByDay</strong> </em>is a function expecting a value.&nbsp; The value is the number of colors you want.&nbsp; Since I have 366 points, I want to use 366 colors in the yellow-red-blue color scheme.&nbsp; This means that there are 366 different colors where color 1 is yellow, 366 is blue, and halfway in between, 183, is red.&nbsp; All colors in between are calculated.</p>
+<p></p>
+<p>You can use as many colors as you want in the <em><strong>colorRampPalette. </strong>&nbsp;<strong> </strong></em>This will work for scenarios where you want evenly-spaced colors.</p>
+<h2 class="extension" id="numbering">Extension: Using text instead of points</h2>
+<p>We can add more information to the scatterplot by replacing the points on the plot with text.&nbsp; In this case, the text will represent the days of the year(1 though 366).</p>
+<p></p>
+<p>We will first make the figure without plotting the points.&nbsp; We do that by setting <em><strong>type</strong> </em>to "n", which means <em class="hl">no</em> plot. &nbsp;</p>
+<h6 class="partial">plot(formula=humidity~avgTemp, <span class="hl">type="n"</span>,<br />&nbsp;&nbsp; &nbsp; xlab="Average Temperature (F)", ylab="Humidity (%)",<br />&nbsp;&nbsp;&nbsp;&nbsp; main="Humidity vs Average Temperature" );</h6>
+<p></p>
+<p>This creates an empty plot.&nbsp; We need to "manually" add points to the plot.&nbsp; But, instead of points, we are going to add numbers that represent the 366 days.&nbsp; So 1 is Jan 1, 2 is Jan 2, etc.</p>
+<p></p>
+<p>We use the <em><strong>text()</strong></em> function to add text points to the scatterplot</p>
+<h6 class="partial">text(formula=humidity~avgTemp, labels=1:366, cex= 0.7, col=colorByDay(366));</h6>
+<p></p>
+<p><em><strong>text()</strong></em> uses many of the same parameters as <em><strong>plot()</strong></em>.&nbsp; <em><strong>cex</strong> </em>is the size of text points, <em><strong>col</strong> </em>uses the color scheme from the previous extension.</p>
+<p><em><strong>labels</strong> </em>set the text starting with 1 and going up to 366.</p>
+<p></p>
+<p><img src="../Images/R-03-06%20text%20and%20colored%20scatterplot.PNG" alt="" class="flexSize" /></p>
+<h5>Using text as points in a scatterplot</h5>
+<p></p>
+<p>Lastly, if you want to make the scatterplot bigger, then you can use the Zoom button (highlighted).&nbsp; Zoom will open the scatterplot in a new window and you can resize it to your full screen.</p>
+<p></p>
+<h2 class="extension" id="factors">Extension: Factors in R</h2>
+<p>R, by default, will treat any column from a CSV file that has any characters in it as a <strong>factor</strong>.&nbsp; Functionally, this means that R groups equivalent values and assigns a number to them.&nbsp; So, if my values were: c("llama", "alpaca", "guanaco", "llama", "llama", "guanaco, "alpaca").&nbsp; R would create three factors ("llama", "alpaca, "guanaco") and assign them the <em class="hl">ordinal numbers</em> 1,2, and 3.</p>
+<p></p>
+<p>So, this vector:</p>
+<h6>c("llama", "alpaca", "guanaco", "llama", "llama", "guanaco, "alpaca");</h6>
+<p>would, as a <strong>factor</strong>,&nbsp; look like this:</p>
+<h6>c(1,2,3,1,1,3,2);</h6>
+<p></p>
+<p>Note: these are ordinal number meant to express order, these numbers are not meant to be used in mathematical operators (i.e., 1 + 2 =3 or 1*3 = 3 does not make sense in this case)</p>
+<p></p>
+<p>The reality is that, at this level, students do not need to worry about the distinction between <strong>strings</strong> and <strong>factor</strong> in R.&nbsp; R will, for the most part, intelligently make the conversion from string to factor when a grouping is needed. We have already seen this happen when we did boxplots and ANOVA on temperature data across years in lesson 3-4.</p>
+<p></p>
+<p>I recommend, as a default, setting the parameter <em><strong>stringAsFactor = </strong></em><strong>FALSE </strong>whenever you pull in data from a CSV file.&nbsp; In other words, treat strings as strings.<strong> </strong></p>
+<p></p>
+<h2 class="extension" id="plus">Extension The + sign</h2>
+<p>R using the <em><strong>+</strong></em> sign in formula to declare multiple independent variables.&nbsp; So, if you wanted to look at how <em><strong>temperature</strong> </em>depends on both <em><strong>humidity</strong> </em>and <em><strong>windSpeed</strong></em>, you would use the formula:</p>
+<h6 class="p">temperature ~ humidity +&nbsp; windSpeed;</h6>
+<p></p>
+<p>When doing scatterplots, the + sign has a slightly different meaning in that it declare all the independent variables that you are plotting.</p>
+<h6 class="p">pairs(formula = ~temperature + humidity + windSpeed);</h6>
+<p>In this case, <em><strong>temperature</strong></em>, <em><strong>humidity</strong></em>, and <em><strong>windSpeed</strong> </em>are all plotted against each other so they all act as independent and dependent variables.&nbsp; But, in would be redundant to also declare each as dependent since that is what <em><strong>pairs()</strong></em> does.</p>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=michiganstate-2044334" target="_self">Functions 2</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: Sampling and Matrices</p>
+<h1 class="title" id="title">02-10: Packages and NAs</h1>
+<h2>Purpose</h2>
+<p>- fix corrupted data from a csv file</p>
+<p>- use R packages</p>
+<h2>Concepts</h2>
+<p><em>- cleaning up data from a CSV file using the readr package in R<br /></em></p>
+<p></p>
+<h2>Packages (or, other peoples' functions)</h2>
+<p>In the last lesson we use a few plotting functions.&nbsp; These functions exist in the&nbsp; <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html" target="_self">R Base Package</a> -- the R Base Package is script that contains a large list of functions that are included in R.&nbsp; However, as we saw two lessons ago, you can create a file that contains your own functions.&nbsp; In fact, many people have done this and created their own packages that they have shared with the public.&nbsp; These packages (stats, plot, ...)</p>
+<p></p>
+<p>In this lesson we will work with a package called WeatherData.&nbsp; Essentially this package contains functions that allow you to connect to and get weather data from the NOAA weather database.&nbsp; <a href="https://cran.r-project.org/web/packages/weatherData/weatherData.pdf" target="_blank" rel="noopener noreferrer">The description of the weatherData package, along with the functions it includes, is here</a>.</p>
+<p></p>
+<p>To use the functions inside the weatherData package, you need to:</p>
+<p>1) install weatherData in RStudio</p>
+<p>2) include weatherData in your script</p>
+<h3>Installing the weatherData package</h3>
+<p>To install the weatherData package in RStudio</p>
+<p>1) click on Tools -&gt; Install Packages...</p>
+<p>2) type in weatherData in the Packages textbox</p>
+<p>3) click on Install (make sure "Install Dependencies" is checked)</p>
+<p></p>
+<p><img src="../Images/R-02-10%20Install%20package.PNG" alt="" class="flexSize" /></p>
+<h5>Installing the weatherData package in RStudio</h5>
+<p></p>
+<p>This will work for any package you want to install in the future.</p>
+<p></p>
+<h3>Including the weatherData package in your script</h3>
+<p>You still need to tell your script that you are going to use the functions in the weatherData package. To do this, add the following line to your script:</p>
+<p></p>
+<h6 class="partial">library("weatherData");</h6>
+<p></p>
+<p>Now you have access to all of the weatherData functions.</p>
+<p></p>
+<h3>Getting data from weatherData package</h3>
+<p>I want to get all of the weather information for 2016 from Lansing, Michigan.&nbsp; I am going to use the <em><strong>getSummarizedWeather </strong></em>function in the weatherData package.</p>
+<p></p>
+<p>The <em><strong>getSummarizedWeather</strong> </em>function looks like this (from page 9 on the <a href="https://cran.r-project.org/web/packages/weatherData/weatherData.pdf" target="_blank" rel="noopener noreferrer">weatherData pdf</a>):</p>
+<h6 class="partial">getSummarizedWeather(station_id, start_date, end_date = NULL,</h6>
+<h6>&nbsp; station_type = "airportCode", opt_temperature_columns = TRUE,</h6>
+<h6>&nbsp; opt_all_columns = FALSE, opt_custom_columns = FALSE,</h6>
+<h6>&nbsp; custom_columns = NULL, opt_verbose = FALSE)</h6>
+<p></p>
+<p>The variables I need to assign value to in this function are:</p>
+<ul>
+<li>station_id= "LANS"&nbsp; (Lansing)</li>
+<li>start_date = "2016-01-01" (start on January 1st, 2016)</li>
+<li>end_date = "2016-12-31" (end on December 31st, 2016)</li>
+<li>opt_all_columns = TRUE (I want all the weather information)</li>
+</ul>
+<p></p>
+<p>I also need to assign the weather information to a variable, which I will call <em><strong>weather2016</strong></em></p>
+<p><em><strong></strong></em></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE); <br /> library("weatherData");<br /> <br /> weather2016 = getSummarizedWeather(station_id="LANS",</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; opt_all_columns=TRUE,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="2016-01-01", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "2016-12-31");</h6>
+<p></p>
+<p>When we execute the script, weatherData is assigned "366 obs. of 24 variables".&nbsp; This means that there are 24 measurements for all 366 days in 2016 (which is a leap year).</p>
+<p></p>
+<p><img src="../Images/R-02-10%20weatherdata.PNG" alt="" class="flexSize" /></p>
+<h5>Populating a data frame with a year's worth of weather data.</h5>
+<p></p>
+<p>You can see the whole <em><strong>weather2016</strong> </em>data frame in the Main Window by double clicking on weather2016 in the Environment Window.</p>
+<p></p>
+<p><img src="../Images/R-02-10%20weatherdata%20data%20frame.PNG" alt="" class="flexSize" /></p>
+<h5>Viewing the weather data frame in the Main Window</h5>
+<h2>dealing with NAs</h2>
+<p class="">If you look through the Data Frame, you will notice that the <em><strong>CloudCover</strong> </em>column has a few values that are given as <em><strong>NA.&nbsp; </strong></em> In other words, there is no cloud cover data for that day.&nbsp; CloudCover is given a value between 0 (completely covered) to 8 (no clouds).&nbsp; We would like to find the mean cloud cover for the year but we need to deal with the NA values.</p>
+<p></p>
+<p>The first thing we are going to do is count how many NA values there are in the <em><strong>CloudCover</strong> </em>column.&nbsp; This means we are going to use a <em><strong>for()</strong></em> to iterate through all 366 values within the <em><strong>CloudCover</strong> </em>column.</p>
+<p></p>
+<p>To do this we need to</p>
+<p>1) Save the CloudCover data to a vector</p>
+<h6 class="partial">cloudCoverData = weather2016[,"CloudCover"];</h6>
+<p>2) create an NA count value and start the NA count value at zero</p>
+<h6 class="partial">naCount = 0;</h6>
+<p>3) get the length of the cloud cover vector</p>
+<h6 class="partial">lengthCCD = length(cloudCoverData);</h6>
+<p>4) create a for() that iterated through each value in the cloud cover vector</p>
+<h6 class="partial">for(i in 1:lengthCCD)</h6>
+<p></p>
+<p>Putting the code together...</p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE); <br /> library("weatherData");<br /> <br /> weather2016 = getSummarizedWeather(station_id="LANS", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; opt_all_columns=TRUE,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="2016-01-01", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "2016-12-31");</h6>
+<h6></h6>
+<h6>cloudCoverData = weather2016[,"CloudCover"];<br /> <br /> naCount = 0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br /> lengthCCD = length(cloudCoverData);</h6>
+<h6></h6>
+<h6>for(i in 1:lengthCCD)&nbsp; # iterate through all 366 values in the vector<br /> {<br />&nbsp; # check each value to see if it is NA<br /> }</h6>
+<p></p>
+<p>All we have done so far is establish that there are 366 values and that, if nothing is done, the <em><strong>NA</strong> </em>count will be 0.</p>
+<p></p>
+<p><img src="../Images/R-02-10%20iterate%20through%20CCD.PNG" alt="" class="flexSize" /></p>
+<h5>Setting up a for() to read through the cloud cover vector</h5>
+<p></p>
+<h3>Counting NA values</h3>
+<p>We want to check each vector value to see if it is NA.&nbsp; If the vector value is NA, then we increase the value of <em><strong>naCount</strong> </em>by 1.</p>
+<p></p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE); <br /> library("weatherData");<br /> <br /> weather2016 = getSummarizedWeather(station_id="LANS", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; opt_all_columns=TRUE,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="2016-01-01", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "2016-12-31");</h6>
+<h6>cloudCoverData = weather2016[,"CloudCover"];<br /> <br /> naCount = 0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br /> lengthCCD = length(cloudCoverData);</h6>
+<h6></h6>
+<h6>for(i in 1:lengthCCD)&nbsp; <br /> {<br />&nbsp; if(cloudCoverData[i] == NA) # check if the value is NA<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp; naCount = naCount +1; &nbsp;&nbsp; # increase value of naCount by 1<br />&nbsp; }<br /> }</h6>
+<p></p>
+<p>However, if we just try to use <em><strong>if()</strong> </em>to check if the value is equal to NA, we will get an error.&nbsp; We get the same error using <em><strong>NA</strong> </em>or "NA"</p>
+<p></p>
+<p><img src="../Images/R-02-10%20NA%20error.PNG" alt="" class="flexSize" /></p>
+<h5>Error when checking if a value is NA</h5>
+<h3>Check for NA values</h3>
+<p>To fix this error, we need to use the Base R function <em><strong>is.na()</strong></em> to check if a value if value is NA.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE); <br /> library("weatherData");<br /> <br /> weather2016 = getSummarizedWeather(station_id="LANS", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; opt_all_columns=TRUE,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="2016-01-01", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "2016-12-31");</h6>
+<h6>cloudCoverData = weather2016[,"CloudCover"];<br /> <br /> naCount = 0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br /> lengthCCD = length(cloudCoverData);</h6>
+<h6>for(i in 1:lengthCCD)&nbsp; <br /> {<br />&nbsp; if(is.na(cloudCoverData[i])) # check if the value is NA<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp; naCount = naCount +1; &nbsp; &nbsp; # increase value of naCount by 1<br />&nbsp; }<br /> }</h6>
+<p></p>
+<p>Now the script works and successfully counts up the 17 <em><strong>NA</strong> </em>values (you can go through all 366 value to double check this if you want...)</p>
+<p></p>
+<p><img src="../Images/R-02-10%20NA%20count.PNG" alt="" class="flexSize" /></p>
+<h5>Counting all the NA values in the cloud cover vector using the function is.na()</h5>
+<h2>Finding the mean cloud cover</h2>
+<p>To find the mean we need:</p>
+<p>1) the sum total of all the cloud cover values</p>
+<p>2) the number of cloud cover values</p>
+<p>But, the NAs need to be subtracted from the number of values.&nbsp; In effect, we are averaging over 366-17, or 349, values</p>
+<h3>Getting the total cloud cover</h3>
+<p>Like with the <em><strong>NA</strong> </em>count, we need to start the total cloud cover value at 0 before the <em><strong>for()</strong></em>, and inside the <em><strong>for()</strong></em> we add the values to the total.</p>
+<p>We need to add every value that is not NA to the total, so this just adds an <em><strong>else</strong> </em>to the <em><strong>if()</strong></em> inside the <em><strong>for()</strong></em></p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE); <br /> library("weatherData");<br /> <br /> weather2016 = getSummarizedWeather(station_id="LANS", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; opt_all_columns=TRUE,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="2016-01-01", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "2016-12-31");</h6>
+<h6></h6>
+<h6>cloudCoverData = weather2016[,"CloudCover"];<br /> <br />naCount = 0; <br /> lengthCCD = length(cloudCoverData); <br /> totalCCD = 0; # the sum of all cloud cover values</h6>
+<h6></h6>
+<h6>for(i in 1:lengthCCD)&nbsp; <br /> {<br />&nbsp; if(is.na(cloudCoverData[i])) <br />&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp; naCount = naCount +1; &nbsp; &nbsp; <br />&nbsp; }</h6>
+<h6>&nbsp; else # the value is not NA -- it needs to be added to the total<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; totalCCD = totalCCD + cloudCoverData[i];<br />&nbsp; }<br /> }</h6>
+<p></p>
+<p>Now we get the sum of all cloud cover value to be 1776 -- again, you can check this if you wish...</p>
+<p></p>
+<p><img src="../Images/R-02-10%20sum%20of%20values.PNG" alt="" class="flexSize" /></p>
+<h5>Sum of all the cloud cover values</h5>
+<h3>Excluding NAs from the count</h3>
+<p>The number of values we counted to get the sum was not 366, the the number of values in the cloud cover vector.&nbsp; It was 366 subtracted by the number of NA values.&nbsp; We need to reflect this fact when calculating for the mean.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE); <br /> library("weatherData");<br /> <br /> weather2016 = getSummarizedWeather(station_id="LANS", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; opt_all_columns=TRUE,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="2016-01-01", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "2016-12-31");</h6>
+<h6></h6>
+<h6>cloudCoverData = weather2016[,"CloudCover"];<br /> <br />naCount = 0; <br /> lengthCCD = length(cloudCoverData); <br /> totalCCD = 0; # the sum of all cloud cover values</h6>
+<h6></h6>
+<h6>for(i in 1:lengthCCD)&nbsp; <br /> {<br />&nbsp; if(is.na(cloudCoverData[i])) <br />&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp; naCount = naCount +1; &nbsp; &nbsp; <br />&nbsp; }</h6>
+<h6>&nbsp; else # the value is not NA -- it needs to be added to the total<br />&nbsp; {<br />&nbsp;&nbsp;&nbsp; totalCCD = totalCCD + cloudCoverData[i];<br />&nbsp; }</h6>
+<h6>&nbsp; realCount = lengthCCD - naCount; # length of vector with NAs taken out<br />&nbsp; meanCCD = totalCCD/realCount;&nbsp;&nbsp;&nbsp; # mean value<br /> }</h6>
+<p></p>
+<p>So, now we see the <em><strong>realCount</strong> </em>is 349 and, using that, we a get a mean cloud cover of about 5.1</p>
+<p></p>
+<p><img src="../Images/R-02-10%20Gettting%20the%20mean.PNG" alt="" class="flexSize" /></p>
+<h5>Getting the mean cloud cover using the count that does not include NAs</h5>
+<p></p>
+<h2>Getting the mean the easy way</h2>
+<p>OK, I promise this is the last time we go the long-way-around to calculate values theat can be done much quicker using a Base R function.&nbsp; But, it is important to know how to deal with NAs.</p>
+<p></p>
+<p>We have already used the <em><strong>mean()</strong></em> function in R but if we try it on the cloud cover vector we do not get a result...</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE); <br /> library("weatherData");<br /> <br /> weather2016 = getSummarizedWeather(station_id="LANS", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; opt_all_columns=TRUE,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="2016-01-01", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "2016-12-31");<br /> <br /> cloudCoverData = weather2016[,"CloudCover"];<br /> <br /> meanCC = mean(cloudCoverData);&nbsp; # get the mean using the function mean()</h6>
+<p></p>
+<p><img src="../Images/R-02-10%20mean()%20with%20NA%20issue.PNG" alt="" class="flexSize" /></p>
+<h5>The NA issue when using the mean() function</h5>
+<p></p>
+<h3>Adjusting the mean() function</h3>
+<p>Let's look at <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/mean.html" target="_self">mean()</a> and see if there is anything we can adjust...</p>
+<p></p>
+<p>mean() has the following variables:</p>
+<h6>mean(x, trim = 0, na.rm = FALSE, ...)</h6>
+<p></p>
+<p>And <em><strong>na.rm</strong></em> is "a logical value indicating whether <code>NA</code> values should be stripped before the computation proceeds."</p>
+<p></p>
+<p>So, we want to set <em><strong>na.rm</strong></em> to <em><strong>TRUE</strong></em></p>
+<p><em><strong></strong></em></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE); <br /> library("weatherData");<br /> <br /> weather2016 = getSummarizedWeather(station_id="LANS", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; opt_all_columns=TRUE,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start_date="2016-01-01", <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end_date = "2016-12-31");<br /> <br /> cloudCoverData = weather2016[,"CloudCover"];<br /> <br /> meanCC = mean(cloudCoverData, na.rm=TRUE);&nbsp; # get the mean using the function mean()</h6>
+<p></p>
+<p>And, now we get the same mean value (5.1) as last time.</p>
+<p></p>
+<p><img src="../Images/R-02-10%20mean()%20without%20NA%20issue.PNG" alt="" class="flexSize" /></p>
+<h5>Excluding the NA values in the mean() function</h5>
+<h2>Application</h2>
+<p>Using the weatherData package:</p>
+<p></p>
+<p>1) Find the mean high temperature for 2015 (1/1/15 to 12/31/15)</p>
+<p>2) Find how many days in 2015 had a<em><strong> Max_Gust_Speed</strong></em> greater than 35MPH&nbsp; &lt; how to deal with NAs&gt;</p>
+<p>3) Find the total rainfall in 2015</p>
+</body>
+</html>

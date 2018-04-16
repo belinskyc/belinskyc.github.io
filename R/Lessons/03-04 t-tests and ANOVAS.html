@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2268082" target="_self">Matrices</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2268100" target="_self">Sampling</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">03-04 t-tests and ANOVAs</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Perform a t-test on temperature data from two different years</li>
+<li>Set up data frame for use with an ANOVA</li>
+<li>Perform an ANOVA on temperature data from multiple years</li>
+<li>Display temperatures in a boxplot</li>
+</ul>
+<h2 class="">Concepts</h2>
+<h2>Script for this lesson</h2>
+<p><a href="../Scripts/3-4.R" target="_blank" rel="noopener noreferrer" class="download">You can get the script for this lesson here</a>.&nbsp; The lesson goes in order on the script.&nbsp; In RStudio, you can comment out large parts of the script using Control-Shift-C (Windows) or Command-Shift-C (MAC).</p>
+<h2>Comparing means using a t-test</h2>
+<p>We will be using the matrix we saved to <em><strong>lansJanTemps.csv</strong></em> from the last lesson.&nbsp; So, first we need to read in the file,<em><strong> lansJanTemp.csv</strong></em>, and save the data to a variable.</p>
+<p></p>
+<h6 class="partial">lansJanTempsDF = read.csv(file = "data/lansingJanTemps.csv");</h6>
+<p></p>
+<p>By default, <em><strong>read.csv()</strong></em> saves the data in the csv file as a data frame, whereas we want to data to be in matrix. We can convert the data frame into a matrix because all the values in the data frame are numeric. To convert the data frame to a matrix, we use the function <em><strong>as.matrix()</strong></em>.&nbsp; The only parameter we need to use is <em><strong>x</strong></em>, which is the data frame.</p>
+<p></p>
+<h6 class="partial">lansJanTemps = as.matrix(x=lansJanTempsDF);</h6>
+<h3>Creating a boxplot of the data</h3>
+<p>Let's first create a boxplot for each of the six years of January temperature using <em><strong>boxplot()</strong></em>.&nbsp; In other words, we want one boxplot for each column in the <em><strong>lansJanTemps</strong></em> matrix.&nbsp;</p>
+<p></p>
+<p>There are two parameters we will use:</p>
+<ul>
+<li><em><strong>x</strong></em>: the data</li>
+<li><em><strong>use.cols</strong></em>: if <em><strong>TRUE</strong></em>, group data by columns;&nbsp; if <em><strong>FALSE</strong></em>, group data by rows.</li>
+</ul>
+<p></p>
+<h6 class="partial">boxplot(x=lansJanTemps, use.cols = TRUE);</h6>
+<p></p>
+<p><img src="../Images/R-03-04%20Boxplot.PNG" alt="" class="fs" /></p>
+<h5>Boxplot of January temperatures.</h5>
+<p></p>
+<p>The parameter<strong> </strong><em><strong>use.cols </strong></em>has a default value of <em><strong>TRUE</strong></em>.&nbsp; So <em><strong>boxplot()</strong> </em>would do the same thing if you left <em><strong>use.cols</strong> </em>out.&nbsp; If you set<em><strong> use.cols</strong></em> = <em><strong>FALSE</strong></em>, then <em><strong>boxplot()</strong></em> will produce one boxplot for each row.&nbsp; In other word, you will get a boxplot for each of the 31 days in January.&nbsp; Try it</p>
+<h3>Adding labels to the boxplot</h3>
+<p>We are going to add a few more parameters to the boxplot() call:</p>
+<ul>
+<li>main: title of the plot</li>
+<li>xlab, ylab: labels on the x and y axes</li>
+<li>names: a vector that holds the names of the boxplots -- in this case, six values for the six displayed boxplots<br /><br /></li>
+</ul>
+<h6 class="partial">boxplot(x = lansJanTemps, use.cols = TRUE,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; names = c(2011,2012,2013,2014,2015,2016),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; main = "January 2011 through January 2016",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xlab = "Years",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ylab = "Temperature (Fahrenheit)"</h6>
+<h6 class="partial">);</h6>
+<p></p>
+<p><img src="../Images/R-03-04%20Labelled%20Boxplot.PNG" alt="" class="fs" /></p>
+<h5>Boxplots of January temperatures by year with labels.</h5>
+<p></p>
+<p>The boxplots suggest quite a bit of variation in temperature between the years. 2014 seems to be the coldest year and 2012 is the warmest year.&nbsp; 2011 seems to have the least variation.</p>
+<p></p>
+<p>Reminder: You can use the arrow keys in the upper-right of the Plot Window to cycle through the plots.</p>
+<h2>t-tests</h2>
+<p>Let's be more formal about analyzing the data and do a <em class="hl">two-sample t-test.</em>&nbsp; In statistics, a two-sample t-test is used to determine if there is evidence that the mean from two different sets of values, in this case columns (years) in the matrix, are statistically different.&nbsp;</p>
+<p></p>
+<p>We are going to compare the means from January 2013 (column 3) and January 2016 (column 6).&nbsp; To perform a t-test between these two years, we call the function <em><strong>t.test()</strong></em> and use the parameters <em><strong>x</strong></em> and <em><strong>y</strong></em>, which are vectors (i.e., the columns in the matrix we are comparing).&nbsp; In this case, columns 3 and 6 represent the years 2013 and 2016, respectively.</p>
+<p></p>
+<h6 class="partial">tTest1 = t.test(x=lansJanTemps[,3], y=lansJanTemps[,6]);</h6>
+<p></p>
+<p>In the Environment Window, <em><strong>tTest1</strong> </em>is labelled as a "List of 9".&nbsp; This is not the most intuitive way to read the results.&nbsp; We can get a much more helpful summary of the results using the function <em><strong>print()</strong></em> and passing it the results of the t-test using the parameter<em><strong> x</strong></em>.<strong></strong><em><strong><br /></strong></em></p>
+<p></p>
+<h6 class="partial">print(x=tTest1);</h6>
+<p></p>
+<p><img src="../Images/R-03-04%20t-test.PNG" alt="" class="fs" /></p>
+<h5>Performing a t-test and printing the summary of the t-test</h5>
+<p></p>
+<p>In the summary of the t-test it is stated that</p>
+<ol>
+<li>The mean of <em><strong>x</strong></em> (Jan 2013) is <strong>34.2</strong> and the mean of <em><strong>y</strong></em> (Jan 2016) is <strong>31.7</strong></li>
+<li>If the "experiment" could be repeated, we would expect to see a difference of this size between the means <strong>38.23%</strong> of the time (from the p-value of 0.3823)</li>
+<li>We are 95% sure that the means of <em><strong>x</strong></em> and <em><strong>y</strong></em> have a difference between <strong>-3.09</strong> and <strong>7.93</strong></li>
+<li>We would not reject the null hypothesis that the means of <em><strong>x</strong> </em>and <em><strong>y</strong></em> are equal</li>
+</ol>
+<h3>A second t-test</h3>
+<p>We will do a second t-test between years that do not look as similar -- 2012 (column 2) and 2014 (column 4):</p>
+<p></p>
+<h6 class="partial">tTest2 = t.test(x=lansJanTemps[,2], y=lansJanTemps[,4]);</h6>
+<h6>print(x=tTest2);</h6>
+<p></p>
+<p><img src="../Images/R-03-04%20second%20t-test.PNG" alt="" class="fs" /></p>
+<h5>Performing a second t-test and printing the summary of the t-test.</h5>
+<p></p>
+<p>In the summary of the t-test it is stated that</p>
+<ol>
+<li>The mean of <em><strong>x</strong></em> (Jan 2012) is <strong>35.8</strong> and the mean of <em><strong>y</strong></em> (Jan 2014) is<strong> 23.4</strong></li>
+<li>If the "experiment" could be repeated, we would expect to see a difference of this size between the means<strong> 0.001195%</strong> of the time (from the p-value of 1.195e-05 or 0.00001195)</li>
+<li>We are 95% sure that the means of <em><strong>x</strong></em> and <em><strong>y</strong></em> have a difference between <strong>7.21</strong> and <strong>17.6</strong></li>
+<li>In this case, we would reject the null hypothesis that the means of <em><strong>x</strong></em> and <em><strong>y</strong></em> are equal.</li>
+</ol>
+<p></p>
+<p id="rstudio_console_output" tabindex="0">Note: the "<em class="hl">figure margins too large</em>" message in the Plot Window.&nbsp; This happens when the Plot Window is sized too small to hold a plot (the plot was from earlier in the lesson).&nbsp; This script error given is:&nbsp; <em class="hl">Error in plot.new() (from 3-3b.R#11) : figure margins too large</em></p>
+<h2>ANOVA using a data frame</h2>
+<p>ANOVAs, while similar functionally to a t-test, require that data be structured differently.&nbsp; ANOVAs compare values in one column from a data frame (e.g., temperatures) based on groupings in another column (e.g., years).&nbsp; The first column contains the data and the second column contains the groupings (also called <em class="hl">categories,</em> <em class="hl">factors</em>).</p>
+<p></p>
+<p>In our case, the data are the temperatures whereas the groupings are the years.&nbsp; So, we want to create a data frame with two columns -- one that has the temperature values and one that has the associated year.&nbsp;</p>
+<p></p>
+<p>Note: For now, we are going to create data frames that only have the values we need to perform the ANOVAs.&nbsp; Later we will learn how to perform an ANOVA on a portion, or subset, of a data frame.</p>
+<h3>Setting up the data frame</h3>
+<p>Let's perform an ANOVA on the two years 2012 and 2014 -- just like the last t-test. Note: typically we would use more than two factors in an ANOVA, which we will do later.</p>
+<p></p>
+<p>The data frame will have two columns:</p>
+<ol>
+<li>a vector with the temperatures values from the years 2012 and 2014</li>
+<li>a vector with the associated grouping/category (either 2012 or 2014)</li>
+</ol>
+<p></p>
+<table>
+<tbody>
+<tr>
+<td>Temp</td>
+<td>Year</td>
+</tr>
+<tr>
+<td>##</td>
+<td>2012</td>
+</tr>
+<tr>
+<td>##</td>
+<td>2012</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>##</td>
+<td>2012</td>
+</tr>
+<tr>
+<td>##</td>
+<td>2014</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>##</td>
+<td>
+<p>2014</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p>To create a vector of temperature values from both 2012 and 2014, we just need to create a vector that combines the second and fourth columns of our matrix:</p>
+<h6 class="partial">JanTemps1 = c(lansJanTemps[,2], lansJanTemps[,4]);</h6>
+<p></p>
+<p>For the grouping vector, we want the first 31 values to be 2012 and the second 31 values to be 2014.&nbsp; We could create a vector with all 62 values:</p>
+<h6 class="partial">c(2012,2012,2012,....,2014,2014,2014);&nbsp; # Don't do this!</h6>
+<p>but that can be a bit painful.</p>
+<h3>the repeat function: rep()</h3>
+<p>A shortcut to creating the year vector is to use the <em><strong>rep()</strong></em> function.&nbsp; <em><strong>rep()</strong> </em>takes two parameters:</p>
+<ul>
+<li><em><strong>x</strong></em>: the value(s) to repeat</li>
+<li><em><strong>times</strong></em>: the number of times repeat it the value(s)</li>
+</ul>
+<p></p>
+<p>We will test<em><strong> rep()</strong></em> in the Console Window -- this is a good way to test out code that you do not necessarily want in your main script.</p>
+<p>The following <em><strong>rep()</strong></em> commands will repeat "<em>llama</em>" 5 times and <em>8754</em> 9 times</p>
+<h6 class="partial">rep(x="llama", times=5);&nbsp; # create a vector with 5 "llama"</h6>
+<h6>rep(x=8754, times=9);&nbsp;&nbsp;&nbsp;&nbsp; # create a vector with 9 "8754"</h6>
+<p></p>
+<p>We can also use<em><strong> rep()</strong> </em>to create a vector of vectors.&nbsp; In this case, we are combining 4 "<em>a</em>", 5 "<em>b</em>", and 2 "<em>c</em>" into one vector.</p>
+<h6 class="partial" tabindex="0">c(rep("a", 4), rep("b", 5), rep("c", 2));</h6>
+<p></p>
+<p><img src="../Images/R-03-04%20Repeat.PNG" alt="" class="flexSize" /></p>
+<h5>Using the <strong>rep()</strong> function to repeat values</h5>
+<p></p>
+<p>So, to create the category vector with 31 <strong><em>2012</em></strong> and 31 <em><strong>2014</strong>:</em><em><strong></strong></em></p>
+<h6 class="partial">JanYears1 = c(rep(2012,31), rep(2014,31));</h6>
+<p></p>
+<p>Note: for the above example, I took out the parameter names.&nbsp; This can be done if the parameters are given in the correct order.</p>
+<p></p>
+<p class="linkTo" title="each">Extension: the <em><strong>each</strong> </em>parameter</p>
+<h3>Combine temperature and year vectors into a data frame</h3>
+<p>Now we want to create a data frame with the vector that has the data (<em><strong>JanTemps1</strong></em>) and the vector that has the categories (<em><strong>JanYears1</strong></em>).&nbsp; <em><strong></strong></em></p>
+<h6 class="partial">JanDataFrame1 = data.frame(JanTemps1, JanYears1);</h6>
+<p></p>
+<p class="linkTo" title="data-frame-params">Extension: parameters names for data frame columns.</p>
+<p></p>
+<p><img src="../Images/R-03-04%20data%20frame.PNG" alt="" class="fs" /></p>
+<h5>Data frame with values and grouping columns (temperature and year)</h5>
+<h3>Boxplot using values and categories</h3>
+<p>Before we run our ANOVA, let's look at the data again.&nbsp; We can create a boxplot using this data frame like we did using the matrix, but the setup for the parameters for <em><strong>boxplot()</strong> </em>is different.&nbsp; In this case, we need to use the <em class="hl">formula </em>style.&nbsp;</p>
+<p></p>
+<p>The parameters for this type of <em><strong>boxplot()</strong></em> are:</p>
+<ul>
+<li><em><strong>data:</strong></em> data frame the boxplot is getting data from</li>
+<li><em><strong>formula</strong></em>: <em><strong>y~x</strong> </em></li>
+<ul>
+<li><em><strong>y</strong></em> is the column from the data frame that goes on the <em><strong>y-axis</strong></em> of the boxplot (temperatures)&nbsp;</li>
+<li><em><strong></strong></em><em><strong>x</strong></em> is the column from the data frame that goes on the <em><strong>x-axis</strong></em> of the boxplot (years) <em></em><strong><em><br /></em></strong></li>
+</ul>
+</ul>
+<h6 class="partial">boxplot(formula=JanTemps1~JanYears1, data=JanDataFrame1);</h6>
+<p></p>
+<p><img src="../Images/R-03-04%20boxplot%20-%202%20years.PNG" alt="" class="fs" /></p>
+<h5>Boxplot of the January temperatures (data) broken down by year (category)</h5>
+<h2>Performing an ANOVA</h2>
+<p>We will perform an ANOVA on the data frame using the function <em><strong>aov()</strong></em>-- in other words, we are going to check whether the 2 different months of January temperatures are likely to be from the same distribution.&nbsp; We use the same parameters for<em><strong> aov()</strong></em> as we did for the previous <em><strong>boxplot()</strong></em>.&nbsp;</p>
+<h6 class="partial">JanAnova1 = aov(formula=JanTemps1~JanYears1, data=JanDataFrame1);<br />print(summary(JanAnova1));</h6>
+<p></p>
+<p>Just like with t-tests, the results are stored to a list that is not very readable.&nbsp; To summarize the results with t-test we used the function <em><strong>print()</strong></em>.&nbsp; To summarize the important results for an ANOVA we use <em><strong>print(summary()).</strong><span class="linkTo" title="embedded"></span><strong><br /></strong></em></p>
+<p></p>
+<p><img src="../Images/R-03-04%20anova.PNG" alt="" class="fs" /></p>
+<h5>ANOVA of the temperatures from 2012 and 2014</h5>
+<p></p>
+<p>The results of the ANOVA show the probability that the temperatures come from the same distribution is 1.18e-05 (0.0000118).&nbsp; This, as expected, is the exact same probability that we got from doing the t-test between 2012 and 2014.</p>
+<h3>A Second ANOVA</h3>
+<p>We are going to perform a second ANOVA on 4 years worth of January temperatures.&nbsp; The steps will be the same as above.</p>
+<p></p>
+<p>Create a data vector with the temperature values from 2011, 2012, 2015, and 2016 (columns 1, 2, 5, and 6)</p>
+<h6 class="partial">JanTemps2 = c(lansJanTemps[,1], lansJanTemps[,2], <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lansJanTemps[,5], lansJanTemps[,6]);</h6>
+<p></p>
+<p>Create a category vector with 31 2011s, 2012s, 2015s, and 2016s:</p>
+<h6 class="partial">JanYears2 = c(rep(2011,31), rep(2012,31), <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rep(2015,31), rep(2016,31));</h6>
+<p></p>
+<p>Combine the data and category vector in a data frame:</p>
+<h6 class="partial">JanDataFrame2 = data.frame(JanTemps2, JanYears2);</h6>
+<p></p>
+<p>Perform an ANOVA -- the formula is temperature (data) vs year (category) and the data is from the data frame just created</p>
+<h6 class="partial">JanAnova2 = aov(JanTemps2~JanYears2, data=JanDataFrame2);</h6>
+<p></p>
+<p>Summarize the ANOVA in the Console Window</p>
+<h6 class="partial">print(summary(JanAnova2));</h6>
+<p></p>
+<p><img src="../Images/R-03-04%20second%20anova.PNG" alt="" class="fs" /></p>
+<h5>ANOVA on the temperatures from 2012, 2012, 2015, and 2016</h5>
+<p></p>
+<p>The results of the ANOVA show that the probability of the annual temperatures coming from the same distribution is <strong>0.685</strong>, or <strong>68.5%</strong>.&nbsp;</p>
+<h3>Histogram on the residuals</h3>
+<p>Lastly, we can perform a histogram on the residuals of the ANOVA to show the we have not violated normality assumptions.</p>
+<p></p>
+<p>The <em><strong>residuals()</strong></em> function gets the residuals from <em><strong>JanAnova</strong> </em>and <em><strong>hist()</strong></em> plots the residuals.</p>
+<p></p>
+<h6 class="partial">hist(x=residuals(JanAnova2));</h6>
+<p></p>
+<p>... and this histogram looks fairly normal so we probably did not violated the normality assumption.</p>
+<p></p>
+<p><img src="../Images/R-03-04%20histogram.PNG" alt="" class="fs" /></p>
+<h5>Histogram of the residuals from the second ANOVA</h5>
+<h2>Application</h2>
+<p>1) Using the data from NOAA/NCDC obtained in this lesson: Find out which years' temperatures are most statistically similar (using t-tests) to the temperatures from 2014 (other than 2014).<br /><br /></p>
+<p>2) Perform an ANOVA using all 6 months.</p>
+<p class="p">&nbsp; -&nbsp; Create a boxplot from the data frame that shows each of the years</p>
+<p>&nbsp; - Add labels to the boxplot that give the year for each plot&nbsp; &nbsp;</p>
+<p>&nbsp; - Make a histogram of the residuals from the ANOVA</p>
+<p>&nbsp; - Save the data frame created in part 2 to a file called JanTempDF.csv -- we will use this file later.</p>
+<h2 class="extension" id="data-frame-params">Extension: parameters names for data frame columns</h2>
+<p>When we look at the parameters for a data frame, we see that the data is entered in a different format from all other parameters, signified by the ( ... )</p>
+<p></p>
+<p><img src="../Images/R-03-04%20Data%20Frame%20params.PNG" alt="" class="fs" /></p>
+<h5 class="" id="data">From the R documentation: data for a data frame is part of the ( ... ) in<strong> data.frame()</strong></h5>
+<p></p>
+<p>In the case of a data frame, <em class="hl">tag = value</em> (<em class="figureRef" title="data">fig</em>) means you can use "parameter" name as the column header.&nbsp;</p>
+<p></p>
+<p>So, instead of building the data frame like this:</p>
+<h6 class="p">JanDataFrame1 = data.frame(JanTemps1, JanYears1);</h6>
+<p></p>
+<p>You could do this:</p>
+<h6 class="p">JanDataFrame1 = data.frame(temperatures = JanTemps1, years = JanYears1);</h6>
+<p>and the data frame will have the column header <em><strong>temperatures</strong> </em>and <em><strong>years</strong> </em>instead of<strong> </strong><em><strong>JanTemps1 </strong></em>and<strong> </strong><em><strong>JanYears1<br /></strong></em></p>
+<p><em><strong></strong></em></p>
+<p><em></em><img src="../Images/R-03-04%20Naming%20Data%20Frame%20columns.PNG" alt="" class="fs" /></p>
+<h5>Changing the column headers using <strong>data.frame()</strong></h5>
+<h2 class="extension" id="each">Extension: the <em>each</em> parameter</h2>
+<p>The line of code:</p>
+<h6 class="p">JanYears1 = c(rep(2012,31), rep(2014,31));</h6>
+<p></p>
+<p>can be equivalently coded as:</p>
+<h6 class="p">JanYears2 = rep( c(2012, 2014), each = 31);&nbsp;</h6>
+<p>which can be read as "repeat the values in the vector 31 times"</p>
+<p></p>
+<p>There is a small advantage to using this method when you have multiple values you want to repeat the same number of times.&nbsp;</p>
+<p></p>
+<p>For instance, if we wanted to repeat the years <strong>2010</strong> to <strong>2017</strong> 31 times then we could explicitly use <em><strong>rep()</strong></em> 8 times:</p>
+<h6 class="p">JanYears3 = c(rep(2010,31), rep(2011,31), rep(2012,31), rep(2013,31),</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rep(2014,31), rep(2015,31), rep(2016,31), rep(2017,31));</h6>
+<p></p>
+<p>or we could make a vector from <strong>2010</strong> to <strong>2017</strong> and use the <em><strong>each</strong> </em>parameter:</p>
+<h6 class="p">JanYears4 = rep( c(2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017), each=31);</h6>
+<p></p>
+<p>or, to reduce even more code, we could using a sequence to represent all years from <strong>2010</strong> to <strong>2017</strong>:</p>
+<h6 class="p">JanYears5 = rep( 2010:2017, each=31);</h6>
+<p></p>
+<p><img src="../Images/R-03-04%20Each%20Param.PNG" alt="" class="fs" /></p>
+<p>Using the <em><strong>each</strong> </em>parameter and sequences to reduce code in <em><strong>rep()</strong></em></p>
+<p></p>
+<p></p>
+<p></p>
+</body>
+</html>

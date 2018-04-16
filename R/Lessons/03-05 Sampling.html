@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2268098" target="_self">t-tests and ANOVAS</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2268103" target="_self">Linear Regressions</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">03-05 Sampling</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Creating a uniform random sample</li>
+<li>Creating a normal sample</li>
+<li>Creating repeatable pseudo-random values</li>
+<li>Saving and loading list objects</li>
+</ul>
+<h2>Concepts</h2>
+<h2>Script for this lesson</h2>
+<p><a href="../Scripts/3-5.r" target="_blank" rel="noopener noreferrer" class="download">You can get the script for this lesson here</a>.&nbsp; The lesson goes in order on the script.&nbsp; You can comment and uncomment multiple lines in the script using Control-Shift-C in R (Command-Shift-C on a MAC).</p>
+<h2>Uniform random sampling</h2>
+<p>There are times when you want to take random samples from a large database of values, like temperatures from multiple years and locations.&nbsp; One possible reason is to evaluate a suite of potential multiple potential weather scenarios.&nbsp; In this example, we will take random values without any weighting.&nbsp; In other words, all values have the same probability of being chosen.</p>
+<p></p>
+<p>Note: this lesson involved code that picks random values.&nbsp; This means that the script will produce different results each time it is executed -- until we introduce <em><strong>set.seed()</strong></em>.</p>
+<h3>sample of numbers</h3>
+<p>We can use the<strong> </strong><em><strong>sample()</strong></em> function to extract a random sample from a set of observations.&nbsp;</p>
+<p><em><strong></strong></em></p>
+<p><em><strong>sample()</strong></em> has three parameters:</p>
+<ul>
+<li><em><strong>x:</strong></em> the observations we are taking a random sample from (in this case, a sequence vector)</li>
+<li><em><strong>size</strong></em>: the number of samples we will take.</li>
+<li><em><strong>replace</strong></em>: whether we allow for an observation to be sampled multiple times (<em><strong>replace=TRUE</strong></em> means we allow resampling of the same observation)</li>
+</ul>
+<p></p>
+<p>In the following code, the parameters for <em><strong>sample()</strong></em> are set so that:</p>
+<ul>
+<li>The data set we are using is the sequence 1-10:&nbsp;<em><strong> c(1:10)</strong></em></li>
+<li>We are taking eight random samples: <em><strong>size</strong></em>=8</li>
+<li>We allow repeat observations (<em><strong>replace</strong></em>) in <em><strong>randomSample1</strong></em> but not in <em><strong>randomSample2.&nbsp; <br /></strong></em>Note: different observations can still have the same value</li>
+</ul>
+<p><em><strong></strong></em></p>
+<h6 class="partial">randomSample1 = sample( c(1:10), size=8, replace=TRUE);<br />randomSample2 = sample( c(1:10), size=8, replace=FALSE);</h6>
+<p></p>
+<p>In <em class="figureRef" title="sample">fig</em>, <em><strong>randomSample1</strong> </em>has two values that were repeated (3 and 5), whereas <em><strong>randomSample2</strong> </em>has no repeated values.&nbsp; <em class="hl">Running the script again will produce different values</em> but <em><strong>randomSample2</strong> </em>will always have unique values because <em><strong>replace=FALSE</strong></em>.</p>
+<p>&nbsp;</p>
+<p><img src="../Images/R-03-05%20Sampling.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="sample">Random sampling of a vector with replacement and without replacement</h5>
+<h3>Sampling a data vector</h3>
+<p>We can also use <em><strong>sample()</strong></em> to choose random observations from a matrix. Remember that<em class="hl"> a matrix is a reshaped vector with rows and columns</em>.&nbsp; In this case, we will get random observations from the January temperature matrix from the previous lessons.&nbsp;</p>
+<p></p>
+<p>First we will get the data from the CSV file we create in lesson 3-2 and then we need to convert the data frame into a matrix.</p>
+<h6 class="partial">lansJanTempsDF = read.csv(file = "data/lansingJanTemps.csv"); <br />lansJanTemps = as.matrix(x=lansJanTempsDF);</h6>
+<p></p>
+<p>Remember that <em><strong>lansJanTemps</strong> </em>contain 6 years worth of January temperature. So, 31*6 = 186 temperature observations in all.&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-03-05%20Matrix%20of%20Temperatures.PNG" alt="" class="flexSize" /></p>
+<h5>The <strong>lansJanTemp</strong> matrix with six years of January temperatures.</h5>
+<p></p>
+<p>We will take 80 random samples from <em><strong>lansJanTemps</strong> </em>allowing for repeats and create a histogram of the random observations.&nbsp; We will also add a vertical line to the histogram that represents the mean value.</p>
+<p></p>
+<h6 class="partial">randomTemps = sample(x=lansJanTemps, size=80, replace=TRUE);<br />hist(x=randomTemps);</h6>
+<h6>abline(v=mean(randomTemps), col="red", lty=4);</h6>
+<p></p>
+<p>Note: all 80 values in <em><strong>randomTemps</strong> </em>can be displayed in the Console Window by typing "lansJanTemps " and hitting Enter.&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-03-05%20Sampling%20of%20Matrix.PNG" alt="" class="flexSize" /></p>
+<h5>Random sampling of temperature values from the <strong>lansJanTemps</strong> matrix</h5>
+<h2>Sampling from a normal distribution</h2>
+<p><em><strong>sample()</strong></em> creates a random sample where each observation has the same chance of being picked (i.e., uniform probability). If we want to create a set of observations that comes from a normal distribution with a specified mean and variance we use the function<em><strong> rnorm()</strong></em>.&nbsp;<em><strong></strong></em></p>
+<p></p>
+<p><em><strong>rnorm()</strong></em> has 3 parameters:</p>
+<ul>
+<li><em><strong>n</strong></em>: the number of observations to sample</li>
+<li><em><strong>mean</strong></em>: the mean of the distribution</li>
+<li><em><strong>sd</strong></em>: the standard deviation of the distribution</li>
+</ul>
+<p></p>
+<p>The following code samples and summarizes <strong>200</strong> observations from a normal distribution with a mean of <strong>20</strong> and a standard deviation of <strong>4</strong>.&nbsp;</p>
+<h6 class="p">normalDist = rnorm(n=200, mean=20, sd=4);</h6>
+<p></p>
+<p>The values in <em><strong>normalDist</strong> </em>can be display visually in a histogram using<em><strong> hist()</strong></em>.&nbsp; I have also put a vertical line in to represent the mean value of the <em><strong>normalDist</strong> </em>using <em><strong>abline()</strong></em>:</p>
+<h6 class="partial">hist(x=normalDist, col=c("blue", "green"));<br />abline(v=mean(normalDist), col="red", lty=4, lwd=3); # line type, line width</h6>
+<p></p>
+<p>The histogram (<em class="figureRef" title="hist">fig</em>) shows a fairly normal distribution of values and the mean is close to 20. Of course, the more samples you use, the more likely the distribution will look normal and the mean will be at 20.&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-03-05%20Normal%20Dist.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="hist">Normal distribution: <strong>200</strong> samples with mean <strong>20</strong> and standard deviation <strong>4</strong></h5>
+<p></p>
+<p>Note: the values are being picked at random so the histogram will look different each time you execute the script.</p>
+<h3>Normal temperature values</h3>
+<p>Instead of using hardcoded values (<em><strong>mean = </strong></em><strong>20</strong><em><strong>, sd = </strong></em><strong>4</strong>) for a normal distribution, we are going to sample from a normal distribution with the same mean and standard deviation as the <em><strong>lansJanTemps</strong> </em>matrix.&nbsp;&nbsp;</p>
+<p></p>
+<p>We use <em><strong>mean()</strong></em> and <em><strong>sd()</strong></em> to get the mean and standard deviation from the <em><strong>lansJanTemps</strong> </em>matrix and use these values as the sample mean and standard deviation in <em><strong>rnorm():</strong></em></p>
+<h6 class="partial">normalTemps = rnorm(n=100, mean = mean(lansJanTemps),</h6>
+<h6 class="partial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sd=sd(lansJanTemps));</h6>
+<p></p>
+<p>So, in the code above, we generate 100 temperature observations from a normal distribution based on the mean and standard deviation of&nbsp;<em><strong>lansJanTemps.&nbsp; </strong></em>The data generated are saved in <em><strong>normalTemps</strong></em>.<strong><br /></strong></p>
+<p></p>
+<p>Then we use a histogram to make a visual representation of <em><strong>normalTemp</strong> </em>(using <em><strong>hist()</strong></em>)<em> </em>and, to the histogram, we add a vertical line at the mean value (using <em><strong>abline()</strong></em>):</p>
+<h6 class="p">hist(normalTemps, angle=60, density=10,</h6>
+<h6 class="partial">&nbsp;&nbsp;&nbsp;&nbsp; col=c("purple", "black", "red"),<br />&nbsp;&nbsp;&nbsp;&nbsp; main="Histogram of Normal Temps Vector",<br />&nbsp;&nbsp;&nbsp;&nbsp; xlab="Normal Temps");</h6>
+<h6 class="partial"># lty: line type, lwd: line width<br />abline(v=mean(normalTemps), col="darkgreen", lty=6, lwd=3);</h6>
+<p></p>
+<p>We can display all 100 observations in the Console Window by typing in "normalTemps<strong></strong>" and hitting Enter. The distribution of the 100 temperature observations is shown in the histogram.</p>
+<p></p>
+<p><img src="../Images/R-03-05%20Normal%20Dist%20TEmperatures.PNG" alt="" class="flexSize" /></p>
+<h5>Generating normalized temperature data based on the temperature values from the <strong>lansJanTemps</strong> vector</h5>
+<h2>Psuedo-Random values</h2>
+<p>Every time your script is executed, a new random set of observations is produced.&nbsp; If you want to replicate your results there is a function called <em><strong>set.seed().&nbsp; set.seed() </strong></em>will produce the same "random" numbers every time using a seed number.&nbsp; In other words, <em><strong>set.seed()</strong></em> produces observations that look random but the values do not change each time the script is executed.</p>
+<h3>Seed value</h3>
+<p>Here is a really good&nbsp;<a href="https://www.youtube.com/watch?v=C82JyCmtKWg" target="_blank" rel="noopener noreferrer">video on PBS Infinite Series</a> about random number generators, pseudo-random number generators, and seed numbers.&nbsp; <a href="https://www.youtube.com/watch?v=C82JyCmtKWg&amp;t=02m15s" target="_blank" rel="noopener noreferrer">The discussion on seed numbers starts at 2:15</a>.</p>
+<p></p>
+<p><em><strong>set.seed()</strong> </em>takes one parameter and that is the seed number.&nbsp; The seed number is the starting point for a complex formula that produces a series of random-looking, or pseudo-random, values.&nbsp; Here we set the seed number to <strong>23</strong> and ran a couple samples.&nbsp; Each time you execute the code, <em><strong>seedSample1</strong> </em>and <em><strong>seedSample2</strong> </em>will have the same value (although they are different from each-other).</p>
+<h6 class="partial">set.seed(seed=23);<br />seedSample1 = sample( x=c(1:100), size=20 );<br />seedSample2 = sample( x=c(1:100), size=20 );</h6>
+<p class="partial"></p>
+<p class="partial"><img src="../Images/R-03-05%20Seed%20Sample.PNG" alt="" class="fs" /></p>
+<h5 class="partial">Pseudo-random values produced by a seed number.</h5>
+<p></p>
+<h3>Changing the seed value</h3>
+<p>Each time we change the seed value, we "reset" the pseudo-random number generator.&nbsp; <em><strong>seedSample3</strong> </em>and <em><strong>seedSample4</strong> </em>will always have the same 20 values based on a generator seeded with the value <strong>28</strong>.&nbsp; <em><strong>seedSample5</strong> </em>and <em><strong>seedSample6</strong> </em>will be identical to <em><strong>seedSample1</strong> </em>and <em><strong>seedSample2 </strong></em> because the seed value was reset to <strong>23</strong>.</p>
+<h6 class="partial">set.seed(seed=28);<br />seedSample3 = sample( x=c(1:100), size=20 );<br />seedSample4 = sample( x=c(1:100), size=20 );</h6>
+<h6></h6>
+<h6>set.seed(seed=23);&nbsp;&nbsp; # same seed value as above<br />seedSample5 = sample( x=c(1:100), size=20 );&nbsp; # will be same as seedSample1<br />seedSample6 = sample( x=c(1:100), size=20 );&nbsp; # will be same as seedSample2</h6>
+<p></p>
+<p><img src="../Images/R-03-05%20Set%20Seed.PNG" alt="" class="flexSize" /></p>
+<h5>Using <strong>set.seed()</strong> to create pseudo-random values</h5>
+<p></p>
+<p>Note: if you want to stop using the pseudo-random generator in your script, then call:</p>
+<h6 class="p">set.seed(NULL);&nbsp; # not in the lesson's script</h6>
+<h3>Pseudo-random values from a matrix</h3>
+<p><em><strong>set.seed()</strong> </em>has been executed in our script and a seed value has been established. So any time we ask for random values in the script, pseudo-random values will be generated based on the seed value (in this case, <em><strong>23)</strong></em>.</p>
+<p></p>
+<p>The following code <em class="hl">will produce the same</em> 80 pseudo-random values from the <em><strong>lansJanTemps</strong> </em>matrix each time:</p>
+<h6 class="partial">setSeedTemps = sample(x=lansJanTemps, size=80, replace=TRUE);</h6>
+<p></p>
+<p>And the following code <em class="hl">will produce the same</em> 100 normalized pseudo-random values based on the mean and standard deviation from <em><strong>lansJanTemps</strong></em>.</p>
+<h6 class="partial">setSeedNormalTemps = rnorm(n=100, mean = mean(lansJanTemps),</h6>
+<h6 class="partial">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sd=sd(lansJanTemps));</h6>
+<p></p>
+<p><img src="../Images/R-03-05%20Set%20Seed%20for%20MAtrix.PNG" alt="" class="flexSize" /></p>
+<h5>Using <strong>set.seed()</strong> to create pseudo-random temperature data.</h5>
+<p></p>
+<p>Try this out by running the code multiple times without changing the seed number.&nbsp; Then change the seed number and see what happens.</p>
+<h2>Saving the data you generated</h2>
+<p>We have generated four different vectors with temperature data in this lesson: <em><strong>randomTemps</strong></em>, <em><strong>normalTemps</strong></em>, <em><strong>setSeedTemps, and setSeedNormalTemp</strong></em>.&nbsp; We might want to save these vectors for later use -- perhaps in another script.&nbsp; However, we cannot save the four vectors to a data frame because the vectors have different sizes (i.e., they have a different number of values).&nbsp; If we want to put the four vectors into one structure, we need to use a <em><strong>list.&nbsp;</strong></em> We can create a list using the <em><strong>list()</strong></em> function.<strong></strong><em><strong><br /></strong></em></p>
+<p><em><strong></strong></em></p>
+<h6 class="p">listOfTemps = list("Random_Temps" = randomTemps, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Normal_Temps" = normalTemps, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Set_Seed_Temps" = setSeedTemps, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Set_Seed_Normal_Temps" = setSeedNormalTemps);</h6>
+<p></p>
+<p>In this case, the quoted values become the vector's name in the list.</p>
+<p></p>
+<p><img src="../Images/R-03-05%20List%20of%20Temps.PNG" alt="" class="flexSize" /></p>
+<h5>Creating a <strong>list</strong> of the four temperature vectors we created in the script.</h5>
+<p></p>
+<h3><em><strong>Saving and loading a list object</strong></em></h3>
+<p>We will save the list to a file, called<em><strong> weatherList.rdata</strong></em>, so we can access the values from another script.</p>
+<h6 class="partial">save(listOfTemps, file = "data/weatherList.rdata");</h6>
+<p>The file <em><strong>weatherList.rdata</strong></em> now exists in your data folder and can be called from another script.</p>
+<p></p>
+<h3>Opening the list from another script</h3>
+<p>From another script, we can load the data from the file <em><strong>weatherList.rdata</strong></em>, which resides in your R data directory.</p>
+<p></p>
+<p><em class="hl">Note: the code in the rest of this lesson is not in the lesson's script.</em></p>
+<p></p>
+<p>We use <em><strong>load()</strong></em> to load the data from the <em><strong>weatherList.rdata</strong></em> file for use in the current script.</p>
+<h6 class="partial">load("data/weatherList.rdata"));</h6>
+<p></p>
+<p>Notice that this loaded <em><strong>listOfTemps</strong> </em>that was saved from the other script -- and all the values are the same as before.</p>
+<p></p>
+<p><img src="../Images/R-03-05%20Load%20List.PNG" alt="" class="flexSize" /></p>
+<h5>Loading the <strong>list</strong> that was saved from the another script file.</h5>
+<p><em><strong></strong></em></p>
+<p>If we want to take elements out of the list and save them to a vector we need to use double brackets <em><strong>[[ ]] </strong></em>instead of single brackets.</p>
+<p></p>
+<p>We can refer to the column by its name:</p>
+<h6 class="partial">normalTemps = listOfTemps[["Normal Temps"]];</h6>
+<p></p>
+<p>Or by the column number</p>
+<h6 class="partial">setSeedTemps = listOfTemps[[3]];</h6>
+<p></p>
+<p><img src="../Images/R-03-05%20Subset%20columns.PNG" alt="" class="flexSize" /></p>
+<h5>Saving columns from a <strong>list</strong> to a vector.</h5>
+<h2>Application</h2>
+<p>1) Using the data from lesson 3-1 (saved as "data/formattedLansingWeather.csv")</p>
+<p>- get 50 samples of the average wind speed (AWND) and allow for repeats</p>
+<p>- get 30 samples of precipitation (PRCP) and do not allow for repeats</p>
+<p>2) Create a set of wind speed values that has a normal distribution with mean and standard deviation equal to the wind speed data from lesson 3-1.&nbsp; Create distributions with n=20, 50, and 200 values.&nbsp; Create a histogram for each of the distributions and show where the mean value is.</p>
+<p>3) Repeat #2 using a seed value of 15.</p>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=MichiganSt-1980313" target="_self">Subsetting Operations</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=457124&amp;type=content&amp;rcode=michiganstate-2028086" target="_self">Vector Mathematics</a></p>
+<h1 class="title" id="title">02-03: Vectors and Iterative Operations</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Use a for() to iterate through a vector</li>
+<li>Perform mathematical operations using vector values</li>
+</ul>
+<h2>Concepts</h2>
+<p>- need to mention in video that we are learning what looks at first to be the more complicated way of vector manipulation (using for() loops) -- but for loops are a very important concept that are too often hidden in the details.&nbsp; But if you ever want to tweak something or...<br /><em></em></p>
+<h2>Iteration (running code multiple times)</h2>
+<p><em></em>Programmers often want to execute, or iterate, similar code multiple times.&nbsp; The most simplistic example is a counter.&nbsp; If you wanted your script to count from 1 to 5, you could simply output the numbers one to five in order:</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>cat("count is ", 1, "\n");</h6>
+<h6>cat("count is ", 2, "\n");</h6>
+<h6>cat("count is ", 3, "\n");</h6>
+<h6>cat("count is ", 4, "\n");</h6>
+<h6>cat("count is ", 5, "\n");</h6>
+<p></p>
+<p><img src="PastedImage_v2yvmmd9htb6k151els3955ewaiby00153171344.png" class="flexSize" id="count" /></p>
+<p class="caption">Output numbers 1 through 5</p>
+<p></p>
+<p>While this works, you can see that this would get ugly quick if you wanted to count to 100.&nbsp; And completely impractical for counts of 1000 or 1,000,000.&nbsp; But in programming we can reduce this above code to just a few lines no matter how high the count is.</p>
+<p></p>
+<h2>for() and vector</h2>
+<p>There are two parts to iterating the code above: <em><strong>for()</strong> </em>loops and <em><strong>vector </strong></em>values<strong></strong><em><strong><br /></strong></em></p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>for(i in 1:5)&nbsp; # run the attached codeblock from 1 to 5</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("the count is", i, "\n");</h6>
+<h6>}</h6>
+<p></p>
+<p>This line contains most of the magic</p>
+<h6 class="partial">for(i in 1:5)</h6>
+<p>1) It declares <em><strong>i</strong> </em>as a variable (what I will call the <span style="color: #660000;"><em>iteration variable</em></span>) and<em><strong> i</strong></em> will take the values from the value sequence 1:5</p>
+<p>2) The <em><strong>for()</strong></em> executes the attached codeblock 5 times -- for each value of <em><strong>i</strong></em> (1,2,3,4,5)</p>
+<p></p>
+<p>Each time the codeblock iterates, the<em><strong> i</strong></em> value changes (1,2,3,4,5), which changes the output of this code:</p>
+<h6 class="partial">&nbsp; cat("the count is", i, "\n");</h6>
+<p></p>
+<p><em><strong><img src="PastedImage_nrdpt70912lrf074pbz45k31lnfr113t00153181181.png" class="flexSize" /></strong></em></p>
+<h5>Counting from 1 to 5 by iterating a codeblock five times</h5>
+<p></p>
+<p>Vectors are at the core of most iterations.&nbsp; Let's take a step back and learn how to create out own vector, and then later use these vectors with<em><strong> for().</strong></em></p>
+<h2>Creating your own vectors</h2>
+<p>Vectors are variables that hold multiple values.&nbsp; In the last lesson we created vectors by pulling columns out of <em><strong>weatherData&nbsp;</strong> </em>(e.g., <em><strong>highTempData</strong> </em>or <em><strong>lowTempData</strong></em>).&nbsp; <em><strong>highTempData</strong> </em>and <em><strong>lowTempData</strong> </em>each had 14 values, representing 14 days of measurements,&nbsp; and we could access individual values using the subset operator (e.g. <em><strong>highTempData</strong></em>[3] is the 3rd value in the <em><strong>highTempData</strong> </em>vector).&nbsp;</p>
+<p></p>
+<p>Now we are going to manually create vectors and assign multiple values to them.</p>
+<p>Here are two ways to do this in R:</p>
+<p>1) We can create a variable and assign multiple values to it using the <em><strong>c() </strong></em>command (<em><strong>v1</strong> </em>and <em><strong>v2</strong> </em>in the code below)</p>
+<p><em></em>2) We can create a sequence of numbers using the sequence operator ( <em><strong>:</strong> </em>) (<em><strong>v3</strong></em>, <em><strong>v4</strong></em>, and <em><strong>v5</strong> </em>in the code below)</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br /> v1 = c(4,-1,7,0,9);<br /> v2 = c(34,67,1,-88,432,6,-3);<br /> v3 = 1:5;&nbsp;&nbsp; # sequence from 1 up to 5<br /> v4 = -6:3;&nbsp; # sequence from -6 up to 3<br /> v5 = 24:18; # sequence from 24 down to 18</h6>
+<p></p>
+<p><img src="../Images/R-02-03%20Manually%20creating%20vectors.PNG" alt="" class="flexSize" /></p>
+<h5>Creating vector in R using c() and the sequence operator</h5>
+<p></p>
+<p>In the Environment Window all the values for each of the vector variable are shown.&nbsp;</p>
+<p></p>
+<p>Looking at <em><strong>v4</strong></em>:</p>
+<p><em><strong>int[1:10]</strong> </em>says there are 10 integer values in the vector <em><strong>v4</strong></em></p>
+<p>The order of the values in the vector <em><strong>v4</strong> </em>is:<em><strong> -6,-5,-4,-3,-2,-1,0,1,2,3</strong></em></p>
+<p><em><strong></strong></em></p>
+<p><em></em>so we can access all the values in v4 using a subset operator:</p>
+<h6>v4[1] = -6&nbsp;&nbsp; # first value in v4</h6>
+<h6>v4[2] = -5&nbsp;&nbsp; # second value in v4</h6>
+<h6>v4[3] = -4&nbsp;&nbsp; # third value in v4</h6>
+<h6>...</h6>
+<h6>v4[10] = 3&nbsp;&nbsp; # last value in v4</h6>
+<p></p>
+<h3>Indexing vector values</h3>
+<p>We can index any of the vectors we just created.&nbsp; The following script outputs the 3rd value of each of the 5 vector variables (<em><strong>v1,v2,v3,v4,v5</strong></em>):</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br /> v1 = c(4,-1,7,0,9);<br /> v2 = c(34,67,1,-88,432,6,-3);<br /> v3 = 1:5; # sequence from 1 up to 5<br /> v4 = -6:3; # sequence from -6 up to 3<br /> v5 = 24:18; # sequence from 24 down to 18<br /> <br /> cat("v1[3]=", v1[3], "\n");<br /> cat("v2[3]=", v2[3], "\n");<br /> cat("v3[3]=", v3[3], "\n");<br /> cat("v4[3]=", v4[3], "\n");<br /> cat("v5[3]=", v5[3], "\n");</h6>
+<p></p>
+<p>Note that "v5[3]" (in quotes) <em><span style="color: #660000;">outputs the string "v5[3]"</span></em> whereas<em><strong> v5[3]</strong></em> (no quotes) <em><span style="color: #660000;">outputs the value of <strong>v5[3]</strong></span></em></p>
+<p><em><strong></strong></em></p>
+<p><em><strong><img src="../Images/R-02-03%20Indexing%20vectors.PNG" alt="" class="flexSize" /></strong></em></p>
+<h5>Indexing values in the vectors<strong> </strong></h5>
+<h2>For loops and iteration number</h2>
+<p>For reasons of convention, you will often see the variable in the <em><strong>for()</strong></em> named <em><strong>i</strong></em>, but any name can be given to this variable -- in the following example we will change the name of the iteration variable to <em><strong>myCounter</strong></em>.</p>
+<p><em><strong></strong></em></p>
+<p><em><strong></strong></em>The codeblock attached to the <em><strong>for()</strong></em> will be executed using the vector sequence 5:11.&nbsp;</p>
+<p></p>
+<p>The first time the codeblock is executed <em><strong>myCounter</strong> </em>is assigned the value 5.</p>
+<p>The second time the codeblock is executed <em><strong>myCounter</strong> </em>is assigned the value 6.</p>
+<p>The seventh (and last) time the codeblock is executed <em><strong>myCounter</strong> </em>is assigned the value 11.</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>for(myCounter in 5:11)</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("the count is", myCounter,"\n");</h6>
+<h6>}</h6>
+<p></p>
+<p><img src="../Images/R-02-03%20Sequence%20from%20non-1%20number.PNG" alt="" class="flexSize" id="sequence" /></p>
+<p class="caption">Iterating a sequence from 5 to 11</p>
+<p></p>
+<p>Notice that changing the name of the iteration variable (<em><strong>myCount</strong></em>) did not change the execution of the script.&nbsp;</p>
+<h3>Using the iteration variable</h3>
+<p class="">Each time the <em><strong>for()</strong></em> iterates, the iteration variable, <em><strong>myCount</strong></em>, is assigned a new value <em><strong></strong></em>(<em class="figureRef" title="sequence">fig</em>), and the iteration variable<em><strong></strong></em> can be used just like any other variable.&nbsp; The following example performs a mathematical operation (multiply by 10) on the iteration variable inside the <em><strong>for()</strong></em>.</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>for(iterationVal in -4:3)</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("Value of iteration variable: ", iterationVal, "\n");</h6>
+<h6>&nbsp; cat("iteration variable multiplied by 10:", iterationVal*10, "\n");</h6>
+<h6>}</h6>
+<p></p>
+<p>Note the sequence goes from -4 to 3 and has 8 values (-4, -3, -2, -1, 0, 1, 2, 3)</p>
+<p></p>
+<p><img src="../Images/R-02-03%20Sequence%20starting%20from%20negative%20number.PNG" alt="" class="flexSize" /></p>
+<p class="caption">Iterating through the sequence and multiplying each number by 10</p>
+<h3 class="">Running the sequence backwards</h3>
+<p>We can run the sequence backwards...</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>for(iterationVal in 24:16)</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("Value of iteration variable: ", iterationVal, "\n");</h6>
+<h6>&nbsp; cat("The inverse of the iteration value is:", 1/iterationVal, "\n");</h6>
+<h6>}</h6>
+<p>In this case the iteration value starts at 24 and iterates down to 16 -- meaning the codeblock run 9 times (24,23,22,21,20,19,18,17,16)</p>
+<p></p>
+<p><img src="../Images/R-02-03%20Sequence%20going%20backwards.PNG" alt="" class="flexSize" /></p>
+<h5>Iterating the sequence backwards - from 24 down to 16</h5>
+<h3>Changing the iteration values</h3>
+<p>We can also manually declare values for the iteration variable in the <em><strong>for()</strong> </em>by creating a vector using<strong> c().</strong></p>
+<p></p>
+<p>The following code has the iteration variable cycle seven times for the seven values inside the vector created by <em><strong>c()</strong></em>.</p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>for(itVal in c(6, 17, -1, 4, -9, 4.2, 0.0012) )</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("Value of itVal: ", itVal, ", and ");</h6>
+<h6>&nbsp; cat("itVal squared = ", itVal^2, "\n");</h6>
+<h6>}</h6>
+<p><em><strong></strong></em></p>
+<p>Notice that we can use negative numbers, whole numbers, and decimal numbers in the same vector.&nbsp;</p>
+<p><strong><em></em></strong></p>
+<p><em><strong><img src="../Images/R-02-03%20Manual%20Vector%20Values.PNG" alt="" class="flexSize" /></strong></em></p>
+<h5 class="caption"><em></em>Iterating the manually entered vector values</h5>
+<h2>for() and vectors from a DataFrame</h2>
+<p>An example of how <em><strong>for()</strong></em> really shines is it's ability to iterate through values in a data vector using the iterating variable as an index. In the previous lesson, we pulled the <em><strong>highTemp</strong> </em>and <em><strong>lowTemp</strong> </em>data from <em><strong>weatherData</strong> </em>and saved them both as vectors.&nbsp; We can use <em><strong>for()</strong> </em>to iterate through and output all the values in a vector using the subsetting operation ( <em><strong>[ ]</strong></em> )<strong><em>.&nbsp; </em></strong>Note that "highTemp" and "lowTemp" are the column header values in <em><strong>weatherData</strong></em>.<strong> </strong><em><strong></strong><strong></strong></em></p>
+<p></p>
+<div class="codeBlock">
+<h6 class="code firstLine">rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6 class="code">&nbsp;</h6>
+<h6 class="code">weatherData = read.csv("data/LansingWeather2.csv")</h6>
+<h6 class="code">highTempData = weatherData[ ,"highTemp"];&nbsp; # high temperature vector</h6>
+<h6 class="code lastLine">lowTempData = weatherData[ ,"lowTemp"]; &nbsp;&nbsp; # low temperature vector</h6>
+</div>
+<h6><br />for(day in 1:14)<br />{<br />&nbsp; cat(day, "- ");</h6>
+<h6>&nbsp; cat("high:", highTempData[day]);</h6>
+<h6>&nbsp; cat(", low:", lowTempData[day], "\n");<br />}</h6>
+<p></p>
+<p>It the above code, the <em><strong>for()</strong></em> loops through all the values in <em><strong>highTempData </strong></em>and<strong> </strong><em><strong>lowTempData</strong></em> and <em><strong>day</strong></em>, the iterating variable, becomes the index for the vectors<em>.&nbsp; <strong>day</strong> </em>goes through the vector sequence 1:14, representing the 14 days of weather data in <em><strong>highTempData </strong></em>and<strong> </strong><em><strong>lowTempData</strong></em>.&nbsp;</p>
+<p></p>
+<p><img src="PastedImage_ukwnma564no7gvz8al05fa6fak3yh7ei00153181181.png" class="flexSize" /></p>
+<p class="caption">Output the values from the vectors highTempData and lowTempData</p>
+<h3>Getting the length of the vector</h3>
+<p>We often do not know the length of the vector beforehand because that requires knowing how much data we input from the CSV file.&nbsp; In other words, we don't know how many days of weather data we have.&nbsp; But we can have R determine the number of days by determining the length of the vector.</p>
+<p></p>
+<div class="codeBlock">
+<h6 class="code firstLine">rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6 class="code">&nbsp;</h6>
+<h6 class="code">weatherData = read.csv("data/LansingWeather2.csv");</h6>
+<h6 class="code">highTempData = weatherData[ ,"highTemp"];&nbsp;</h6>
+</div>
+<h6><span style="color: #ffff00;">dataSize = length(highTempData);&nbsp; # get length of vector<br /></span></h6>
+<h6><br />for(day in 1:dataSize)<br />{<br />&nbsp; cat("high temp:", highTempData[day], "\n");<br />}</h6>
+<p></p>
+<p><img src="PastedImage_np3a8hyrvlih27a7r13gkq32yypduzbi00153181181.png" class="flexSize" /></p>
+<h5>finding the length of a vector</h5>
+<p></p>
+<p>The code</p>
+<h6 class="partial" title="6">dataSize = length(highTempData);</h6>
+<p>assigned the length of the <em><strong>highTempData</strong> </em>vector (14) to the variable <em><strong>dataSize </strong></em>(shown in the Environment Window)<strong></strong><em><strong><br /></strong></em></p>
+<p><em><strong></strong></em></p>
+<p>and we use the variable <em><strong>dataSize</strong> </em>in the <em><strong>for() </strong></em>as the last value in the vector sequence</p>
+<h6 class="partial" title="8">for(day in 1:dataSize)</h6>
+<p></p>
+<p>So the above script works if we recorded 14 days of high temperatures, 24 days, or 2,400,000 days.&nbsp;</p>
+<p></p>
+<h2>Using for() to subtract vector values</h2>
+<p>Let's say we want to figure out the difference between the daily high and low temperatures.&nbsp;</p>
+<p></p>
+<p>Like before we can do the difference calculation iteratively, once for each day.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br /> weatherData = read.csv("data/LansingWeather2.csv");<br /> highTempData = weatherData[ ,"highTemp"]; <br /> lowTempData = weatherData[ ,"lowTemp"]; <br /> <br /> dataSize = length(highTempData); # same as length(lowTempData)<br /> <br /> for(day in 1:dataSize)<br /> {<br />&nbsp; cat(highTempData[day] - lowTempData[day], "\n");<br /> }</h6>
+<p></p>
+<p>Line 8 could also be</p>
+<h6 class="partial" title="8">dataSize = length(lowTempData);</h6>
+<p>as a proper data frame must have the same number of values in each column.</p>
+<p></p>
+<p>Line 12</p>
+<h6 class="partial" title="12">&nbsp; cat(highTempData[day] - lowTempData[day], "\n");</h6>
+<p>subtracts the <em><strong>lowTempData</strong> </em>value from the <em><strong>highTempData</strong> </em>value indexed by the iteration variable <em><strong>day.</strong></em></p>
+<p></p>
+<p><img src="PastedImage_464o5g3umrxp1x6kw8nhfo304pi3x8rj00153181181.png" class="flexSize" /></p>
+<h5>Output the daily difference between the high temperatures and low temperature</h5>
+<h2>Creating a vector and saving values to it</h2>
+<p>The last step is to save the difference in temperature to a vector.&nbsp; In the following example, <em><strong>changeInTemp</strong> </em>is declared as a vector and is iteratively assigned the difference between the <em><strong>highTempData</strong> </em>and <em><strong>lowTempData</strong> </em>values</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br /> weatherData = read.csv("data/LansingWeather2.csv");<br /> highTempData = weatherData[ ,"highTemp"]; <br /> lowTempData = weatherData[ ,"lowTemp"]; <br /> <br /> dataSize = length(highTempData);<br /> <span style="color: #ffff00;">changeInTemp = c();</span>&nbsp; # declares changeInTemp as a vector</h6>
+<h6><br /> for(day in 1:dataSize)<br /> {<br />&nbsp;<span style="color: #ffff00;"> changeInTemp[day] =</span> highTempData[day] - lowTempData[day];<br /> }</h6>
+<p></p>
+<p><img src="../Images/R-02-03%20Subtracting%20vectors%20with%20iteration.PNG" alt="" class="flexSize" /></p>
+<h5>Assigning the difference of two vectors to a third vector</h5>
+<p></p>
+<p>The line</p>
+<h6><span style="color: #ffff00;" class="partial">changeInTemp = c();</span></h6>
+<p>declares <em><strong>changeInTemp</strong> </em>as a variable with multiple values (i.e., a vector).&nbsp;</p>
+<p></p>
+<p>Without the above line, this line:</p>
+<h6 class="partial"><span style="color: #ffff00;">changeInTemp[day] =</span> highTempData[day] - lowTempData[day];</h6>
+<p>will cause an "Object not found" error</p>
+<p></p>
+<p><img src="../Images/R-02-03%20Forgetting%20to%20declare%20vector%20error.PNG" alt="" class="flexSize" /></p>
+<h5>Object not found error because the variable was not declared as a vector.</h5>
+<h2>An R shortcut for subtracting and saving vector</h2>
+<p>R makes it easy to subtract values from a vector and save it to another vector.&nbsp; You can treat the vectors as if they were single-value variables and do this:</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);<br /> <br /> weatherData = read.csv("data/LansingWeather2.csv")<br /> highTempData = weatherData[ ,"highTemp"]; <br /> lowTempData = weatherData[ ,"lowTemp"]; <br /> <br /> <span style="color: #ffff00;">changeInTemp = highTempData - lowTempData;</span></h6>
+<p></p>
+<p><em><strong><img src="../Images/R-02-03%20Change%20in%20temp%20vector.PNG" alt="" class="flexSize" /></strong></em></p>
+<h5>Creating a new vector and assigning values to it</h5>
+<p></p>
+<p>Essentially, this line of code</p>
+<h6 class="partial"><span style="color: #ffff00;">changeInTemp = highTempData - lowTempData;</span></h6>
+<p><span style="color: #000000;"></span></p>
+<p><span style="color: #000000;">is doing the same thing as:</span></p>
+<h6 class="partial">dataSize = length(highTempData); <br /> changeInTemp = c();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
+<h6 class="partial"><br /> for(day in 1:dataSize)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6>
+<h6 class="partial">{</h6>
+<h6 class="partial">&nbsp;&nbsp; changeInTemp[day] = highTempData[day] - lowTempData[day];<br /> }</h6>
+<p></p>
+<p>While you would probably use the one line version in your code, it is important to understand the long version because it contains many programming components you will need to use is other places:</p>
+<p>1) finding the length of a vector (line 1)</p>
+<p>2) declaring a variable is a vector (line 2)</p>
+<p>3) iteratively performing mathematics on vector values (lines 4, 6)</p>
+<p>4) saving values to a vector (line 6)</p>
+<p></p>
+<h2 class="application" title="Lesson Practice">Application</h2>
+<p>As always, declare your variables at the top of your script.</p>
+<p></p>
+<p>A) Create a <em><strong>for()</strong> </em>loop that</p>
+<p>&nbsp; 1) goes sequentially down from 12 to 5</p>
+<p>&nbsp; 2) outputs the cubed power (3rd power) and the cubed root (1/3rd power) of each value</p>
+<p></p>
+<p>B) Create a script that reads in the daily high temperatures, converts the temperatures to Celsius, and save the values in a vector called celsiusHighTemps.&nbsp; Do this two ways:</p>
+<p>&nbsp;&nbsp; 1) using for()</p>
+<p>&nbsp;&nbsp; 2) using vector mathematics</p>
+<p>&nbsp;<math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>c</mi><mi>e</mi><mi>l</mi><mi>s</mi><mi>i</mi><mi>u</mi><mi>s</mi><mi>T</mi><mi>e</mi><mi>m</mi><mi>p</mi><mo>&#xA0;</mo><mo>=</mo><mo>&#xA0;</mo><mfrac><mn>5</mn><mn>9</mn></mfrac><mo>(</mo><mi>f</mi><mi>a</mi><mi>r</mi><mi>e</mi><mi>n</mi><mi>h</mi><mi>e</mi><mi>i</mi><mi>t</mi><mi>T</mi><mi>e</mi><mi>m</mi><mi>p</mi><mo>&#xA0;</mo><mo>-</mo><mn>32</mn><mo>)</mo></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;u&lt;/mi&gt;&lt;mi&gt;s&lt;/mi&gt;&lt;mi&gt;T&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;5&lt;/mn&gt;&lt;mn&gt;9&lt;/mn&gt;&lt;/mfrac&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;h&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;i&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;T&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;m&lt;/mi&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mo&gt;-&lt;/mo&gt;&lt;mn&gt;32&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/math&gt;"}</annotation></semantics></math></p>
+<p>&nbsp;</p>
+<p></p>
+<h2>Trap: For loops that do not end</h2>
+<p></p>
+</body>
+</html>

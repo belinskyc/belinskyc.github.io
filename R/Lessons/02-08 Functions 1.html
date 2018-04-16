@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/>
+<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+	
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2028088" target="_self">Plots 1</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2067120" target="_self">Plots 2</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">02-08: Functions</h1>
+<h2>Purpose</h2>
+<ul>
+<li>Create reusable code (a function) </li>
+<li>Use parameters in functions</li>
+<li>Use Boolean values as parameters</li>
+<li>Use return values in functions</li>
+</ul>
+<h2>Concepts</h2>
+<h2>The road to repeatable code (functions)</h2>
+<p><em><strong>mean()</strong></em>, <em><strong>max()</strong></em>, <em><strong>plot()</strong></em> are all examples of functions.&nbsp; Functions are reusable code that get executed from within a script -- it is sort of a script within a script.&nbsp; We use functions to avoid writing the same code over and over again.&nbsp; In the last lesson we used a function called <em><strong>plot()</strong> </em>each time we wanted to produce a plot.&nbsp; <em><strong>plot()</strong></em> is a function built into R to handle the multitude of plotting situations that R programmers implement.&nbsp; We are going to create our own function that is a lot simpler but, like<em><strong> plot()</strong></em>, can be used over and over again.</p>
+<p></p>
+<p>The function we will create is called <em><strong>pythagoras()</strong></em> and it will take two input values representing the smaller sides of a right triangle. <em><strong>pythagoras()</strong> </em>solves for the long side of the triangle, or the hypotenuse and returns the answer to the caller using an R function called <em><strong>return()</strong></em>.</p>
+<p></p>
+<p>So <em><strong>pythagoras()</strong></em> executes the formula: c<sup>2</sup> = a<sup>2</sup> + b<sup>2&nbsp; </sup>or <math title=""  xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><semantics><mstyle><mi>c</mi><mo>&#xA0;</mo><mo>=</mo><mo>&#xA0;</mo><mroot><mrow><msup><mi>a</mi><mn>2</mn></msup><mo>&#xA0;</mo><mo>+</mo><mo>&#xA0;</mo><msup><mi>b</mi><mn>2</mn></msup></mrow><mrow></mrow></mroot></mstyle><annotation encoding="wiris">{"version":"1.1","math":"&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mroot&gt;&lt;mrow&gt;&lt;msup&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mo&gt;&amp;#xA0;&lt;/mo&gt;&lt;msup&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;/mrow&gt;&lt;/mroot&gt;&lt;/math&gt;"}</annotation></semantics></math>.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>pythagoras=function(a,b)</h6>
+<h6>{</h6>
+<h6>&nbsp; c = (a^2 + b^2)^(1/2);</h6>
+<h6>&nbsp; return (c);</h6>
+<h6>}</h6>
+<h6></h6>
+<h6>hypoteneuse = pythagoras(a=5, b=7);</h6>
+<p></p>
+<p>It is useful to think of functions as having three components: parameters (inputs), code, and a return value (outputs). In the case of <strong>pythagoras(), </strong>the parameters are <em><strong>a</strong></em> and <em><strong>b</strong></em>, the code is inside the curly brackets, and the return value is <em><strong>c</strong></em>.&nbsp; On line 10, <em><strong>pythagoras()</strong></em> is called and the the parameters <em><strong>a</strong> </em>and <em><strong>b</strong></em> are assigned the values <em><strong>5</strong></em> and <em><strong>7</strong></em>.&nbsp; On line 6, <em><strong>c</strong></em> is calculated using <em><strong>a</strong></em> and <em><strong>b</strong></em>.&nbsp; On line 7, <em><strong>pythagoras()</strong> </em>uses the <em><strong>return()</strong></em> function to return the answer (<em><strong>c</strong></em> = <em><strong>8.602</strong></em>) and this value gets saved to the variable in line 10 named <em><strong>hypotenuse</strong></em>.</p>
+<p></p>
+<p><img src="../Images/R-02-08%20Calling%20a%20function.PNG" alt="" class="flexSize" /></p>
+<h5>Calling the <strong>pythagoras()</strong> function with two values (sides of a triangle) to solve the third value (<strong>hypotenuse</strong>)</h5>
+<p></p>
+<h2>Function Details</h2>
+<p>There is a whole lot going on here and we will take it step by step</p>
+<p></p>
+<h6 class="p"><span class="hl">pythagoras=function</span>(a,b)</h6>
+<h6>{</h6>
+<h6>&nbsp; c = (a^2 + b^2)^(1/2);</h6>
+<h6>&nbsp; return (c);</h6>
+<h6><span class="">}</span></h6>
+<h6></h6>
+<h6>hypoteneuse = pythagoras(a=5, b=7);</h6>
+<p></p>
+<p><em><strong>pythagoras()</strong></em> is declared like a variable except there is the term <em><strong>function().</strong> <span style="color: #660000;">Variable are assigned values (e.g., x=4) and functions are assigned codeblocks.</span></em> The codeblock assigned to <em><strong>pythagoras()</strong> </em>is designated by the curly brackets on lines 2 and 5 ( <em><strong>{ }</strong></em> ).&nbsp; This means that whenever<em><strong> pythagoras()</strong></em> is called in the script, the codeblock attached to <em><strong>pythagoras()</strong></em> will be executed.</p>
+<p></p>
+<h6 class="p">pythagoras=function<span class="hl">(a,b)</span></h6>
+<h6>{</h6>
+<h6>&nbsp; c = (a^2 + b^2)^(1/2);</h6>
+<h6>&nbsp; return (c);</h6>
+<h6>}</h6>
+<h6></h6>
+<h6>hypoteneuse = pythagoras(a=5, b=7);</h6>
+<p></p>
+<p>Inside the parentheses following "function" are the parameters used by the function (<em><strong>a</strong> </em>and <em><strong>b</strong></em>).&nbsp;&nbsp; <strong></strong><em><strong>a</strong></em> and <em><strong>b</strong></em> are variables used in<em><strong> pythagoras()</strong></em> and the values of<em><strong> a</strong></em> and <em><strong>b</strong></em> are assigned by the caller. &nbsp;</p>
+<p></p>
+<h6 class="p">pythagoras=function(a,b)</h6>
+<h6>{</h6>
+<h6>&nbsp; <span class="hl">c = (a^2 + b^2)^(1/2);</span></h6>
+<h6>&nbsp; return (c);</h6>
+<h6>}</h6>
+<h6></h6>
+<h6>hypoteneuse = pythagoras(a=5, b=7);</h6>
+<p></p>
+<p>The variables (<em><strong>a</strong></em> and<em><strong> b</strong></em>) are assigned values by the user, in this case: <em><strong>a=5, b=7.</strong></em>&nbsp;<em><strong> pythagoras()</strong> </em>uses the variables <em><strong>a</strong></em> and <em><strong>b</strong></em> to calculate the third side of the right triangle.&nbsp; The result of the calculation is assigned to the variable named <em><strong>c </strong></em>(line 4).</p>
+<p></p>
+<h6 class="p">pythagoras=function(a,b)</h6>
+<h6>{</h6>
+<h6>&nbsp; c = (a^2 + b^2)^(1/2);</h6>
+<h6>&nbsp;<span class="hl"> return (c);</span></h6>
+<h6>}</h6>
+<h6></h6>
+<h6>hypoteneuse = pythagoras(a=5, b=7)</h6>
+<p></p>
+<p>The <em><strong>return()</strong> </em>function specifies the results of the function (<em><strong>c</strong></em>).&nbsp; In other words, <em><strong>pythagoras()</strong></em> is returning the answer, which is the value of <em><strong>c</strong></em>, <strong>8.507</strong>, to the user.</p>
+<p></p>
+<h6 class="p">pythagoras=function(a,b)</h6>
+<h6>{</h6>
+<h6>&nbsp; c = (a^2 + b^2)^(1/2);</h6>
+<h6>&nbsp; return (c);</h6>
+<h6>}</h6>
+<h6></h6>
+<h6><span class="">hypoteneuse = <span class="hl">pythagoras(a=5, b=7)</span>;</span></h6>
+<p></p>
+<p>To summarize: the function <em><strong>pythagoras()</strong> </em>executes using input parameters <em><strong>a</strong></em>=5, and <em><strong>b</strong></em>=7, does its calculation, and assigns the answer to <em><strong>c</strong></em>. The value of <em><strong>c</strong></em>, which is<em><strong> 8.602</strong></em>, is returned to the caller and assigned to the variable <em><strong>hypotenuse</strong></em>.</p>
+<p></p>
+<h2>Reusing a function</h2>
+<p>The reason to create functions is to easily reuse a block of code.&nbsp; We don't have to create new code every time we want to solve for the third side in a right triangle, we just call <em><strong>pythagoras()</strong></em> and pass in the value of the two smaller sides of the right triangle.&nbsp;</p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>pythagoras=function(a,b)</h6>
+<h6>{</h6>
+<h6>&nbsp; c = (a^2 + b^2)^(1/2);</h6>
+<h6>&nbsp; return (c);</h6>
+<h6>}</h6>
+<h6></h6>
+<h6><span class="">hypoteneuse1</span> = pythagoras(a=5, b=7);</h6>
+<h6><span class="">hypoteneuse2</span> = pythagoras(a=10, b=23);</h6>
+<h6><span class="">hypoteneuse3</span> = <span class="hl">pythagoras(a=18, b=12)</span>;</h6>
+<h6>hypoteneuse4 = <span class="hl">pythagoras(b=12, a=18)</span>;</h6>
+<h6>hypoteneuse5 = <span class="hl">pythagoras(18, 12)</span>;</h6>
+<p></p>
+<p>Note that you will often see code that skips the variable names as in:</p>
+<h6 class="partial">hypoteneuse3 = <span class="hl">pythagoras(18, 12)</span>;</h6>
+<p>This line of code works as long as the values are put in the correct order -- it is the equivalent of:</p>
+<h6 class="partial">hypoteneuse3 = <span class="hl">pythagoras(a=18, b=12)</span>;</h6>
+<p>You can also move the variables around and it will execute exactly the same:</p>
+<h6 class="partial">hypoteneuse3 = <span class="hl">pythagoras(b=12, a=18)</span>;</h6>
+<p>All three of these lines will call<strong><em> pythagoras() </em></strong>and assign <em><strong>a</strong></em> the value <em><strong>18</strong> </em>and assign<em><strong> b</strong></em> the value <em><strong>12</strong></em></p>
+<h3>Variable names do not matter... to R</h3>
+<p>Variable names are generally chosen to make it easier for the reader to understand the script.&nbsp; But the script could care less what variable names you use.&nbsp; The following script executes the exact same calculation and returns the exact same value as the script above -- it just uses variable and function names that are not intuitive to the user.&nbsp;</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>doStuff=function(aValue, anotherValue)</h6>
+<h6>{</h6>
+<h6>&nbsp; answerToStuff = (aValue^2 + anotherValue^2)^(1/2);</h6>
+<h6>&nbsp; return (answerToStuff);</h6>
+<h6>}</h6>
+<h6></h6>
+<h6>whatIGot = doStuff(aValue=5, anotherValue=7);</h6>
+<p></p>
+<h2>Function for temperature conversion</h2>
+<p>We are going to do one more example-- a function that converts all temperature values in a vector from Fahrenheit to Celsius and from Celsius to Fahrenheit.</p>
+<h3>Single value conversion</h3>
+<p>We will start with the conversion of a single value from Fahrenheit to Celsius</p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>convertTemp=function(tempVal)</h6>
+<h6>{</h6>
+<h6>&nbsp; convertedTemp = (5/9)*(tempVal -32); # Fahrenheit to Celsius conversion</h6>
+<h6>&nbsp; return (convertedTemp);</h6>
+<h6>}</h6>
+<h6></h6>
+<h6>temp1 = convertTemp(32);</h6>
+<h6>temp2 = convertTemp(-20);</h6>
+<h6>temp3 = convertTemp(80);</h6>
+<h6>temp4 = convertTemp(tempVal = 80);</h6>
+<p></p>
+<p>Notice that <em><strong>temp4</strong> </em>explicitly sets the function parameter <em><strong>tempVal = 80,</strong> </em>whereas <em><strong>temp3</strong> </em>does not.&nbsp; But <em><strong>temp3</strong> </em>and <em><strong>temp4</strong> </em>still evaluate to the same value.&nbsp;</p>
+<p></p>
+<p><img src="../Images/R-02-08%20Farenheit%20to%20Celsius.PNG" alt="" class="flexSize" /></p>
+<h5>Converting single temperature values from Fahrenheit to Celsius</h5>
+<p></p>
+<h3>Converting in both directions: Boolean Variable</h3>
+<p>In the previous unit we generated <em><strong>TRUE</strong> </em>and <em><strong>FALSE</strong> </em>statements by performing conditional operations on a variable like:</p>
+<h6 class="partial">if( yourAge &gt; 20 &amp;&amp; yourAge &lt; 50) # yourAge betwen 20 and 50</h6>
+<p>or</p>
+<h6 class="partial"># checking two spellings of Muenster</h6>
+<h6 class="partial">if(favCheese == "Muenster" || favCheese == "Meunster")</h6>
+<p></p>
+<p><em><strong>TRUE</strong> </em>and <em><strong>FALSE</strong> </em>are predefined words in R and can be used as values for a variable.&nbsp; A variable that has <em><strong>TRUE</strong> </em>or <em><strong>FALSE</strong> </em>as a value is called a <em><span style="color: #660000;">Boolean Variable</span></em>.&nbsp; In the next example we will use a Boolean variables as a function parameter (<em><strong>toCelsius</strong></em>) to check how the user wants to convert the temperature values:</p>
+<p></p>
+<p>if the parameter <em><strong>toCelsius</strong> </em>is set to <em><strong>TRUE</strong></em>: convert from Fahrenheit to Celsius</p>
+<p>if&nbsp;the parameter <em><strong>toCelsius</strong> </em>is set to <em><strong>FALSE</strong></em>: convert from Celsius to Fahrenheit</p>
+<p></p>
+<p>Boolean variables can only be set to <em><strong>TRUE</strong> </em>or <em><strong>FALSE </strong></em>so they are convenient when you have a scenario with exclusively two options.</p>
+<h3>Conditional statements inside a function</h3>
+<p>Now we want a function that can do temperature conversions in two directions:<strong> Fahrenheit (F) -&gt; Celsius (C)</strong> and <strong>Celsius (C) -&gt; Fahrenheit (F)</strong>.&nbsp; The function needs to differentiate between an <strong>F -&gt; C</strong> conversion and a <strong>C -&gt; F</strong> conversion. Since there are exclusively two possibilities we can use a <em><strong>TRUE</strong></em>/<em><strong>FALSE</strong> </em>scenario.&nbsp; In the script below, the function has two parameters that the user needs to set: <em><strong>tempVal</strong> </em>and <em><strong>toCelsius</strong></em>.&nbsp;</p>
+<p><em><strong></strong></em></p>
+<p><em><span style="color: #660000;"><strong>toCelsius</strong> can only have two values: <strong>TRUE</strong> and <strong>FALSE</strong>.</span></em>&nbsp;</p>
+<p>If <em><strong>toCelsius</strong> </em>is <em><strong>TRUE</strong></em>, we will use the<strong> F -&gt; C</strong> conversion, if <em><strong>toCelsius</strong> </em>is <em><strong>FALSE</strong></em>, we will use the <strong>C -&gt; F</strong> conversion.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>convertTemp=function(tempVal, toCelsius)</h6>
+<h6>{</h6>
+<h6>&nbsp; if(toCelsius == TRUE)</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp; &nbsp; convertedTemp = (5/9)*(tempVal -32); # Fahrenheit to Celsius conversion</h6>
+<h6>&nbsp; }</h6>
+<h6>&nbsp; else&nbsp; # toCelsius is FALSE</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp; convertedTemp = (9/5)* tempVal + 32; # Celsius to Fahrenheit conversion</h6>
+<h6>&nbsp; }</h6>
+<h6>&nbsp; return (convertedTemp);</h6>
+<h6>}</h6>
+<h6></h6>
+<h6>temp1 = convertTemp(32, TRUE);&nbsp;&nbsp;&nbsp; # without parameter names</h6>
+<h6>temp2 = convertTemp(32, FALSE);&nbsp;&nbsp; # without parameter names</h6>
+<h6>temp3 = convertTemp(tempVal = 0, toCelsius = TRUE);&nbsp; # with parameter names</h6>
+<h6>temp4 = convertTemp(tempVal = 0, toCelsius = FALSE); # with parameter names</h6>
+<p></p>
+<p>Notice that <em><strong>TRUE</strong> </em>and <em><strong>FALSE</strong> </em>are not in quotes.&nbsp; <em><strong>TRUE</strong> </em>and <em><strong>FALSE</strong> </em>are reserved keywords in R.&nbsp; This means <em><strong>TRUE</strong> </em>and <em><strong>FALSE</strong> </em>cannot be assigned a value (i.e., <em><strong>TRUE</strong> </em>= <strong>5</strong> will return an error).</p>
+<p></p>
+<p><img src="../Images/R-02-08%20Farenheit%20to%20%20and%20from%20Celsius.PNG" alt="" class="flexSize" /></p>
+<h5>Using a Boolean (<em><strong>TRUE</strong></em>/<em><strong>FALSE)</strong> </em>value to determine the direction of the temperature conversion.</h5>
+<p></p>
+<h3>Using a vector instead of a single value</h3>
+<p>The function<strong> </strong><em><strong>convertTemp</strong>() </em>works with a vector of temperature values without any modification because R is flexible enough to treat operations on an entire vector the same way it treats operations involving single values.</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>convertTemp=function(tempVal, toCelsius)</h6>
+<h6>{</h6>
+<h6>&nbsp; if(toCelsius == TRUE)</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp; &nbsp; convertedTemp = (5/9)*(tempVal -32); # Fahrenheit to Celsius conversion</h6>
+<h6>&nbsp; }</h6>
+<h6>&nbsp; else&nbsp; # toCelsius = FALSE</h6>
+<h6>&nbsp; {</h6>
+<h6>&nbsp;&nbsp;&nbsp; convertedTemp = (9/5)* tempVal + 32; # Celsius to Fahrenheit conversion</h6>
+<h6>&nbsp; }</h6>
+<h6>&nbsp; return (convertedTemp);</h6>
+<h6>}</h6>
+<h6></h6>
+<h6>temp1 = convertTemp(c(-10,0,10,20), TRUE);</h6>
+<h6>temp2 = convertTemp(c(-10,0,10,20), FALSE);</h6>
+<h6>temp3 = convertTemp(tempVal = c(40,50,60,70), toCelsius = TRUE);</h6>
+<h6>temp4 = convertTemp(tempVal = c(40,50,60,70), toCelsius = FALSE);</h6>
+<p></p>
+<p>When <em><strong>convertTemp()</strong></em> is called in lines 17-20:</p>
+<ul>
+<li>a vector with four values is assigned to <em><strong>tempVal</strong></em>.&nbsp;</li>
+<li><em><strong>tempVal</strong> </em>gets used to calculate <em><strong>convertedTemp</strong></em> (lines 8 and 12)</li>
+<li><em><strong>convertedTemp</strong> </em>will be a vector with the same number of values as <em><strong>tempVal</strong></em></li>
+</ul>
+<p></p>
+<p><em><strong>convertedTemp</strong>,</em> a vector, <em></em>is returned to the caller (line 14).&nbsp; The value of <em><strong>convertedTemp</strong> </em>is saved into the variables named <em><strong>temp1</strong></em>, <em><strong>temp2</strong></em>, <em><strong>temp3</strong></em>, and <em><strong>temp4</strong></em>, which will also be vectors.</p>
+<p></p>
+<p><img src="../Images/R-02-08%20Converting%20a%20vector%20of%20values.PNG" alt="" class="flexSize" /></p>
+<h5 class="" id="mult-vectors">Converting multiple values in a vector.</h5>
+<p></p>
+<p class="linkTo" title="for">Extension: Using a for() to iterate through the vector values</p>
+<h2>Application</h2>
+<p>1) Create<em><strong> one function</strong></em> that does all of the following weight conversions:</p>
+<p style="padding-left: 30px;">a) kg -&gt; g</p>
+<p style="padding-left: 30px;">b) g -&gt; kg</p>
+<p style="padding-left: 30px;">c) lb -&gt; g</p>
+<p style="padding-left: 30px;">d) g --&gt; lb</p>
+<p style="padding-left: 30px;">e) lb -&gt; kg</p>
+<p style="padding-left: 30px;">f) kg -&gt; lb</p>
+<p></p>
+<p>Hint: One way to think about this is that the function has an if-else structure with six possibilities (one for each conversion) and the parameter for the functions determines which of the six gets executed.</p>
+<p></p>
+<p>2) Create a function that finds the <em class="hl">difference in temperatures</em> between consecutive days and returns the temperature differences as a vector (i.e., take the application for lesson 2-5 and turn it into a function)</p>
+<p></p>
+<p>So if you have four high temperatures: <strong>40, 45, 35, 42</strong>:<em><strong></strong></em></p>
+<p>the temperature difference returned by the function would be: <strong>5, -10, 7</strong></p>
+<p></p>
+<p>Note:<em class="hl"> the return vector has one less value</em> than the vector given to the function.</p>
+<p></p>
+<h2 class="extension" id="for">Extension: Using a for() to iterate through vector values</h2>
+<p>The following example functionally does the same thing as <em class="figureRef" title="mult-vectors">fig </em>except with a<em><strong> for(). </strong>&nbsp;<strong> </strong></em> While it takes more code to do it this way, it also opens up the possibility of doing more processing on the values (e.g., checking for invalid values).</p>
+<p></p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6></h6>
+<h6>convertTemp=function(tempVal, toCelsius)</h6>
+<h6>{</h6>
+<h6>&nbsp; convertedTemp = c();&nbsp; # declare convertedTemp as a vector</h6>
+<h6></h6>
+<h6>&nbsp; for(i in 1:length(tempVal))&nbsp; # go through each value in the vector</h6>
+<h6>&nbsp; {&nbsp;</h6>
+<h6>&nbsp;&nbsp;&nbsp; if(toCelsius == TRUE)</h6>
+<h6>&nbsp; &nbsp; {</h6>
+<h6>&nbsp; &nbsp; &nbsp; convertedTemp[i] = (5/9)*(tempVal[i] -32); # F to C conversion</h6>
+<h6>&nbsp; &nbsp; }</h6>
+<h6>&nbsp; &nbsp; else&nbsp; # toCelsius = FALSE</h6>
+<h6>&nbsp; &nbsp; {</h6>
+<h6>&nbsp; &nbsp; &nbsp; convertedTemp[i] = (9/5)* tempVal[i] + 32; # C to F conversion</h6>
+<h6>&nbsp;&nbsp;&nbsp; }</h6>
+<h6>&nbsp; }</h6>
+<h6>&nbsp; return (convertedTemp);</h6>
+<h6>}</h6>
+<h6>temp1 = convertTemp(c(-10,0,10,20), TRUE);</h6>
+<h6>temp2 = convertTemp(c(-10,0,10,20), FALSE);</h6>
+<h6>temp3 = convertTemp(tempVal = c(40,50,60,70), toCelsius = TRUE);</h6>
+<h6>temp4 = convertTemp(tempVal = c(40,50,60,70), toCelsius = FALSE);</h6>
+</body>
+</html>

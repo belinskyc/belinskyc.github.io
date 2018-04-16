@@ -1,0 +1,339 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>	
+	<title>Installing R Studio</title>
+	<meta charset="UTF-8"/> 
+	<link rel="stylesheet" href="../../Programming/editor.css" type="text/css" />
+	<script>
+		/** The following code does the equivalent of 
+			[script src="../../Programming/module.js"][/script]
+			but it is done this way so D2L does not modify the url **/
+		var scriptFile = document.createElement('script');
+		scriptFile.onload = function() 
+		{
+		  // action to perform when script is loaded -- currently not needed;
+		};
+		scriptFile.src = "../../Programming/module.js";
+		document.getElementsByTagName('head')[0].appendChild(scriptFile);
+	</script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1.min.js"></script>
+
+</head>
+
+<body>
+<p class="lessonLink previousLesson" title="link to previous lesson">Previously: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=MichiganSt-1920039" target="_self">If-Else Statements</a></p>
+<p class="lessonLink nextLesson" title="link to next lesson">Up Next: <a href="/d2l/common/dialogs/quickLink/quickLink.d2l?ou=704361&amp;type=content&amp;rcode=michiganstate-2028084" target="_self">Complex Conditional Statements</a></p>
+<p class="lessonLink homePage"><a href="/d2l/home/457124" target="_parent">Home</a> &nbsp; <a href="javascript:window.print()">Print</a></p>
+<h1 class="title" id="title">01-09: Multiple Conditions</h1>
+<h2>Purpose</h2>
+<ul>
+<li>introduce the logical operators and use them to combine conditions in a conditional statement</li>
+<li>create conditional statements that check for multiple values on a single variable</li>
+<li>create conditional statements that check the value of multiple variables</li>
+</ul>
+<h2>Concepts</h2>
+<h2>More Complex Decisions</h2>
+<p>Until now our conditional statements have only checked one condition (e.g., Is the animal a llama? Is the temperature greater than 50?&nbsp; Did the fish get caught from north port?).&nbsp; However, we often care about multiple conditions (e.g., Is the animal a llama <em><strong>or</strong> an alpaca</em>? Is the <em>temperature between 50 <strong>and</strong> 80</em>?,&nbsp; Did the fish get caught from north port <em><strong>or</strong> </em>south port?).</p>
+<p></p>
+<p>Multiple conditions in English are almost always denoted by the words <em><strong>and</strong> </em>and <em><strong>or.&nbsp;</strong></em><strong>&nbsp;</strong>In R, there are operators that represent <em><strong>and</strong> </em>and <em><strong>or</strong> </em>called<em class="hl"> logical operators</em>.&nbsp; <em><strong>and</strong> </em>is represent by <em><strong>&amp;&amp;</strong> </em>while <em><strong>or</strong> </em>is represented by <em><strong>||</strong></em>.</p>
+<p></p>
+<table>
+<tbody>
+<tr>
+<td><strong>Operator Type</strong></td>
+<td><strong>Purpose</strong></td>
+<td><strong>R Symbols </strong></td>
+</tr>
+<tr>
+<td><strong>Assignment</strong></td>
+<td>Assign a value to a variable</td>
+<td>= or &lt;-</td>
+</tr>
+<tr>
+<td><strong>Mathematical</strong></td>
+<td>Perform a mathematical operation on a numeric value</td>
+<td>+, -, *, /, ^</td>
+</tr>
+<tr>
+<td><strong>Conditional <br /></strong></td>
+<td>Compare two values</td>
+<td>==, !=, &gt;, &lt;, &gt;=, &lt;=</td>
+</tr>
+<tr>
+<td><strong>Logical</strong></td>
+<td>Combine conditions</td>
+<td>&amp;&amp;, ||, &amp;, |</td>
+</tr>
+</tbody>
+</table>
+<p></p>
+<p class="linkTo" title="singleChar">Extension: The single character logical operators <em><strong>&amp;</strong></em> and<em><strong> |</strong> </em></p>
+<p></p>
+<h3>Checking for multiple spellings of a word</h3>
+<p>A couple of lesson ago we asked the user for their favorite cheese and, of course, the answer is "Muenster".&nbsp; However, "Muenster" is not the easiest word to spell -- for example, it is often misspelled "Meunster".&nbsp; We can make our script more robust by using logical operators to check for alternative spellings (e.g., multiple conditions).</p>
+<p></p>
+<p>Instead of asking: Is <em><strong>favCheese</strong> </em>equal to "Muenster"?</p>
+<p>We want to ask: Is <em><strong>favCheese</strong> </em>equal to "M<span class="hl">ue</span>nster" <em><strong>or</strong> </em>"M<span class="hl">eu</span>nster"?</p>
+<p></p>
+<p>But in programming, we need to be more explicit and ask:</p>
+<p>Is <em><strong>favCheese</strong> </em>equal to "M<span class="hl">ue</span>nster" <em><strong>or</strong> </em>is<em> <strong>favCheese</strong> </em>equal to<em> </em>"M<span class="hl">eu</span>nster"?</p>
+<p></p>
+<p>In R this is written as:</p>
+<h6 class="partial">if( favCheese == "Muenster" || favCheese == "Meunster" )</h6>
+<h2>The <em><strong>or</strong> </em>operator ( || ) -- checking 2 conditions</h2>
+<p>We can put the above <em><strong>favCheese</strong> </em>conditions into one conditional statement by using the <em><strong>or</strong> </em>operator.&nbsp; The symbol for the <em><strong>or</strong> </em>operator is (<em><strong> ||</strong> </em>).&nbsp; <em class="linkTo" id="link-or-keyboard">Extension: || on the keyboard</em>. The <em><strong>or</strong></em> operator takes two conditions and returns <em><strong>TRUE</strong> <span class="hl">if either condition </span></em>is <em><strong>TRUE</strong></em> and returns <em><strong>FALSE</strong> </em>only if both conditions are <em><strong>FALSE.</strong></em></p>
+<p><em><strong></strong></em></p>
+<h6>rm(list=ls());&nbsp;&nbsp; options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>favCheese = readline("What is your favorite cheese? ");</h6>
+<h6>if(favCheese == "Muenster" || favCheese == "Meunster")&nbsp;</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("You are a culinary genius!!");</h6>
+<h6>}</h6>
+<p></p>
+<p>The above code will execute the "culinary genius" codeblock if the user entered either spelling of "Muenster".</p>
+<p></p>
+<p><img src="../Images/R-01-09%20Check%20for%20mult%20spelling.PNG" alt="" class="flexSize" /></p>
+<h5>Using or ( || ) to checking for two different spellings of our favorite cheese</h5>
+<p></p>
+<p>Note: If there are multiple conditions then <em class="hl">each condition must be explicitly stated</em>.&nbsp; R will faithfully execute the following code but the result will be <em><strong>TRUE</strong> </em>no matter what the user enters.</p>
+<h6 class="partial"># error: need to be explicit about the conditions</h6>
+<h6 class="partial">if(favCheese == "<span class="hl">Mue</span>nster" || "<span class="hl">Meu</span>nster")</h6>
+<h6 class="partial">{</h6>
+<h6 class="partial">&nbsp;&nbsp; cat("I will always be executed because there is</h6>
+<h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a logical error in the conditional statement");</h6>
+<h6 class="partial">}</h6>
+<p class="">We talk more about this issue here-- <em class="linkTo" title="explicit-conditions">Trap: All conditional statements must be explicitly stated</em></p>
+<h3>The <em><strong>or</strong> </em>operator ( || ) -- checking more than 2 conditions</h3>
+<p>We can use the (<em><strong> ||</strong> </em>) to check for more variations of "Muenster".&nbsp; The conditional statement in the script below checks six variations of "Muenster" and returns <em><strong>TRUE</strong> </em>if <em><strong>favCheese</strong> </em>matches <em><span class="hl">any of the six spellings</span></em>.&nbsp;</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>favCheese = readline("What is your favorite cheese? ");</h6>
+<h6>if( favCheese == "<span class="hl">Mue</span>nster" || favCheese == "<span class="hl">mue</span>nster" ||</h6>
+<h6>&nbsp;&nbsp;&nbsp; favCheese == "<span class="hl">Mu</span>nster"&nbsp; || favCheese == "<span class="hl">mu</span>nster" ||</h6>
+<h6>&nbsp;&nbsp;&nbsp; favCheese == "<span class="hl">Meu</span>nster" || favCheese == "<span class="hl">meu</span>nster" )&nbsp;</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("You are a culinary genius!!");</h6>
+<h6>}</h6>
+<p></p>
+<p>Note: the conditional statement have been broken up into multiple line to make it easier to read.</p>
+<p></p>
+<p><img src="../Images/R-01-09%20Check%20for%20six%20spelling.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption">Multiple conditions allowing for many possible spelling of muenster (still have grammar error...)</h5>
+<p></p>
+<h2>Getting a range of numbers: the and ( &amp;&amp; ) operator</h2>
+<p>The ( <em><strong>||</strong> </em>) operator can also be used to check for different numeric value.&nbsp; For example if you want to output a message for anyone who is <strong>18</strong>, <strong>19</strong>, or <strong>20</strong> years old you can check the three conditions: <em><strong>(yourAge == 18) </strong></em>or (<em><strong>yourAge == 19</strong></em>) or (<em><strong>yourAge == 20</strong></em>).</p>
+<p></p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6 class="">&nbsp;</h6>
+<h6>yourAge = readline("How old are you? ");</h6>
+<h6>yourAge = as.numeric(yourAge);</h6>
+<h6>&nbsp;</h6>
+<h6># if yourAge is 18,19, or 20</h6>
+<h6>if( yourAge == 18 || yourAge == 19 || yourAge == 20 )&nbsp;</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("You have your whole life ahead of you!!");</h6>
+<h6>}</h6>
+<p></p>
+<p>The conditional statement is only going to be <em><strong>TRUE</strong> </em>for the integers <strong>18</strong>, <strong>19</strong>, and <strong>20</strong>. It will be <em><strong>FALSE</strong> </em>for all other value, including decimal values like 18.5 or 20.1.</p>
+<p></p>
+<p><img src="../Images/R-01-09%2018-19-20.PNG" alt="" class="flexSize" /></p>
+<h5>Using or ( || ) to check for three different ages</h5>
+<p></p>
+<p>This coding is unwieldy if you have a larger range of numbers.&nbsp; For example "all ages between <strong>20</strong> and <strong>40</strong>" would require <strong>21</strong> conditions:&nbsp;</p>
+<h6 class="partial">if(yourAge == 20 || yourAge ==21 || yourAge == 22 ||</h6>
+<h6 class="partial">&nbsp;&nbsp; yourAge == 23 || ... || yourAge == 40 )</h6>
+<p></p>
+<p>And you would need an infinite number of conditions if you want to include all decimal numbers in between <strong>20</strong> and <strong>40</strong>.</p>
+<h2>Multiple conditions using the and ( &amp;&amp; ) operator</h2>
+<p>We need to create a conditional statement that looks at a range of numbers (20 through 40) -- this is done with two conditions connected using the <em><strong>and</strong></em> operator ( <em><strong>&amp;&amp; </strong></em>).&nbsp;</p>
+<p></p>
+<p class="">The picture (<em class="figureRef" title="range">Fig</em>) shows the overlap between two conditions that make up "all ages between <strong>20</strong> and <strong>40</strong>":</p>
+<ol>
+<li>top blue arrow: (<em><strong>yourAge &gt; 20</strong></em>)</li>
+<li>bottom orange arrow: (<em><strong>yourAge &lt; 40</strong></em>)</li>
+</ol>
+<p></p>
+<p><img src="../Images/R-01-09-RangeOfNumbers.png" alt="" class="figure" /></p>
+<h5 class="caption" id="range">Creating a range using the <em><strong>&amp;&amp;</strong> </em>operator</h5>
+<p></p>
+<p>The overlap between the two arrows represents when the conditions (<em><strong>yourAge</strong> </em>&gt; <em><strong>20</strong></em>) and (<em><strong>yourAge</strong> </em>&lt; <em><strong>40</strong></em>) are both <em><strong>TRUE</strong></em>.&nbsp;</p>
+<p></p>
+<p>In R the statement is:</p>
+<h6 class="partial">if (yourAge &gt; 20 <span class="hl">&amp;&amp; </span>yourAge &lt; 40 )</h6>
+<p></p>
+<p>And putting the above conditional statement into a script:</p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>yourAge = readline("How old are you? ");</h6>
+<h6>yourAge = as.numeric(yourAge);</h6>
+<h6>&nbsp;</h6>
+<h6># ages both greater than 20 and less than 40 (so ages in between 20 and 40)</h6>
+<h6>if( yourAge &gt; 20 &amp;&amp; yourAge &lt; 40 )</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("You still have your whole life ahead of you!!")</h6>
+<h6>}</h6>
+<p></p>
+<p><img src="../Images/R-01-09%20Age%20Range.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="age">Using the <strong>&amp;&amp;</strong> operator to check a range of numbers</h5>
+<p></p>
+<p>Where <em><strong>or</strong> ( </em><strong>||</strong> <em>) </em>outputs <em><strong>TRUE</strong> </em>if either of the conditions are <em><strong>TRUE</strong></em>, <em><strong>and</strong> (</em><strong> &amp;&amp;</strong><em> ) </em>outputs <em><strong>TRUE</strong> </em>only <span style="color: #990000;"><em>if both the conditions </em></span>are <em><strong>T</strong><strong>RUE</strong></em>.&nbsp;</p>
+<h3>Checking the values of multiple variable using &amp;&amp;</h3>
+<p>The <em><strong>and</strong> </em>( <em><strong>&amp;&amp;</strong> </em>) operator can also be used to make conditional operations on multiple variables. For instance you might want to look for people who like llamas&nbsp; ( <em><strong>favAnimal </strong><strong>== "Llama"</strong></em> ) and like Muenster cheese ( <em><strong>favCheese == "Muenster"&nbsp;</strong> </em>):</p>
+<h6 class="partial">if( favAnimal == "Llama" &amp;&amp; favCheese == "Muenster" )&nbsp; # TRUE for this author</h6>
+<p></p>
+<p>or you might want all fish under the age of 5 ( <em><strong>fishAge &lt; 5</strong></em> ) that were caught at night ( <em><strong>catchTime == "night"</strong></em> ):</p>
+<h6 class="partial">if( fishAge &lt; 5 &amp;&amp; catchTime == "night" )</h6>
+<p><em><strong></strong></em></p>
+<p>Or, you might want a simple check of both day and weather:</p>
+<h6>rm(list=ls()); options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>day = readline("Is this a weekday or weekend? ");</h6>
+<h6>weather = readline("Is it rainy or sunny? ");</h6>
+<h6>&nbsp;</h6>
+<h6>if( day == "weekend" &amp;&amp; weather == "sunny" )</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("Go out and play!!");</h6>
+<h6>}</h6>
+<p><em><strong></strong></em></p>
+<p><em><strong><img src="../Images/R-01-09%20Sunny%20and%20weekend.PNG" alt="" class="flexSize" /></strong></em></p>
+<h5 class="" id="day-weather">Using <strong>&amp;&amp;</strong> to check the value of two different variables</h5>
+<h2 class="" title="If-Else-If, &amp;&amp; operator">If-else-if with the and (&amp;&amp;) operator</h2>
+<p>The above script (<em class="figureRef" title="day-weather">fig</em>) has two variables ( <em><strong>day</strong> </em>and <em><strong>weather</strong> </em>) and each variable has two possible values ( <em><strong>weekday</strong>,</em><em><strong>weekend &amp;</strong></em> <em><strong>sunny</strong>,</em><em><strong>rainy</strong> </em>).&nbsp;</p>
+<p>This means there are <em><span class="hl">four possible combinations of day and weather: </span></em></p>
+<ol>
+<li><span style="color: #000000;">weekday/sunny</span></li>
+<li><span style="color: #000000;">weekday/rainy</span></li>
+<li><span style="color: #000000;">weekend/sunny</span></li>
+<li><span style="color: #000000;">weekend/rainy</span></li>
+</ol>
+<p></p>
+<p>We can use an <em><strong>if-else-if</strong> </em>structure to handle the four possible <em><strong>day/weather</strong></em> conditions and provide a different response for each of the four possibilities:</p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>day = readline("Is this a weekday or weekend? ");</h6>
+<h6>weather = readline("Is it rainy or sunny? ");</h6>
+<h6>&nbsp;</h6>
+<h6>if( day == "weekend" &amp;&amp; weather == "sunny" ) &nbsp; &nbsp; &nbsp; # 1st condition</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("Go out and play!!");</h6>
+<h6>}</h6>
+<h6>else if( day == "weekend" &amp;&amp; weather == "rainy" )&nbsp; # 2nd condition</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("Stay inside and cry!!");</h6>
+<h6>}</h6>
+<h6>else if( day == "weekday" &amp;&amp; weather == "sunny" )&nbsp; # 3rd condition</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("Sit at work and cry!!");</h6>
+<h6>}</h6>
+<h6>else if( day == "weekday" &amp;&amp; weather == "rainy" )&nbsp; # 4th condition</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("Well, your not missing anything at work!!");</h6>
+<h6>}</h6>
+<p></p>
+<p><img src="../Images/R-01-09%20day%20and%20weather%20x4.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="day">Checking the four possible <strong>day</strong> and <strong>weather</strong> conditions</h5>
+<h3>Using else as an error condition</h3>
+<p>In the previous script (<em class="figureRef" title="day">fig</em>), the four possible combinations of day and weather are presented in the <em><strong>if-else-if</strong></em> structure and the script outputs a message for all four conditions.&nbsp; However, there is no message if all four conditions fails.&nbsp; In other words, we have no error condition.</p>
+<p></p>
+<p>To add an <em><span class="hl">error condition</span></em>, we attach an <em><strong>else</strong> </em>statement at the end of the <em><strong>if-else-if</strong> </em>structure.&nbsp; The <em><strong>else</strong> </em>statement is a waste-basket condition that captures anything the <em><strong>if-else-if</strong></em> structure missed.&nbsp;&nbsp;</p>
+<p></p>
+<p>So, we can take the above day/weather example and add an <em><strong>else</strong> </em>as an error condition to capture every other possible input from the user:</p>
+<h6>rm(list=ls());&nbsp; options(show.error.locations = TRUE);</h6>
+<h6>&nbsp;</h6>
+<h6>day = readline("Is this a weekday or weekend? ");</h6>
+<h6>weather = readline("Is it rainy or sunny? ");</h6>
+<h6>&nbsp;</h6>
+<h6>if( day == "weekend" &amp;&amp; weather == "sunny" )</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("Go out and play!!");</h6>
+<h6>}</h6>
+<h6>else if( day == "weekend" &amp;&amp; weather == "rainy" )</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("Stay inside and cry!!");</h6>
+<h6>}</h6>
+<h6>else if( day == "weekday" &amp;&amp; weather == "sunny" )</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("Sit at work and cry!!");</h6>
+<h6>}</h6>
+<h6>else if( day == "weekday" &amp;&amp; weather == "rainy" )</h6>
+<h6>{</h6>
+<h6>&nbsp;&nbsp; cat("Well, your not missing anything at work!!");</h6>
+<h6>}</h6>
+<h6>else</h6>
+<h6>{</h6>
+<h6>&nbsp; cat("I'm sorry, I did not understand what you said.&nbsp; Please try again.");</h6>
+<h6>}</h6>
+<p></p>
+<p><img src="../Images/R-01-09%20day%20weather%20error%20cond.PNG" alt="" class="flexSize" /></p>
+<h5 class="caption" id="error">Adding an error condition (<strong>else</strong>) to an<strong> if-else-if</strong> structure</h5>
+<p></p>
+<p>It is good programming practice in an <em><strong>if-else-if</strong></em> structure to create an error statement (<em class="figureRef" title="error">fig</em>) that executes when all other conditions are checked and returns <em><strong>FALSE</strong></em>.</p>
+<h2>Application</h2>
+<p>A) Have a user enter values for:</p>
+<p style="padding-left: 30px;">1) The age of a fish</p>
+<p style="padding-left: 30px;">2) The weight of the fish</p>
+<p style="padding-left: 30px;">3) The location that the fish was caught (north or south)</p>
+<p style="padding-left: 30px;">4) The gender of the fish</p>
+<p></p>
+<p>B) Give a message if the fish is between 5 and 8 years old.</p>
+<p></p>
+<p>C) Give a message if the fish weighs between 50 and 150 grams.</p>
+<p></p>
+<p>D) Give a message for each of the four possible gender/port conditions&nbsp; (male &amp; female, north and south) and add an error case for values that don't match any of the conditions.</p>
+<p></p>
+<p>E) Challenge: Give a message if the fish weighs between 20 and 100 grams and comes from either the north or south port.</p>
+<h2 class="extension" id="or-keyboard">Extension: The or ( || ) operator on the keyboard</h2>
+<p>The <em><strong>or</strong> </em>symbol ( <em><strong>||</strong> </em>) is made up of two "pipe characters" (<em><strong> |</strong> </em>).&nbsp; On most keyboards, the pipe character (<em><strong> |</strong></em> ) is on the same key as the backslash (<em><strong> \</strong></em> ) and right above the <em><strong>Enter</strong></em> (<em class="figureRef" title="keyboard">Fig)</em>.&nbsp; Sometimes the pipe symbol will be broken like this:&nbsp;<em><strong><span style="font-size: 125%;">&brvbar;</span> </strong></em></p>
+<p></p>
+<p><img src="../Images/R-01-09%20keyboard.jpg" alt="Keyboard - placement of pipe character" class="flexSize figure" />&nbsp;</p>
+<h5 class="caption" id="keyboard">Keyboard - placement of pipe character</h5>
+<h2 class="trap" id="explicit-conditions">Trap: All conditional statements must be explicit</h2>
+<p>When we are verbalizing conditional statements we often skip variable names if they have already been used for instance:</p>
+<ul>
+<li><span class="">If the fish's age is 2 or 3</span></li>
+<li><span class="">If your favorite animal is a llama or an alpaca</span></li>
+</ul>
+<p></p>
+<p>Because of this, it is intuitive to make the corresponding conditional statements:</p>
+<ul>
+<li><span class="">if (fishAge == 2 || 3)</span></li>
+<li><span class="">if (favAnimal == "llama" || "alpaca")</span></li>
+</ul>
+<p></p>
+<p>But in scripting every conditional statement must be explicit -- in other words all conditions need a variable and a value. In English this would be:</p>
+<ul>
+<li><span class="" style="color: #000000;">If the fish's age is 2 or the fish's age is 3</span></li>
+<li><span class="" style="color: #000000;">If the favorite animal is a llama or the favorite animal is an alpaca</span></li>
+</ul>
+<p><span style="color: #990000;"></span></p>
+<p><span style="color: #000000;">And in script these conditional statements are:</span></p>
+<ul>
+<li><span class="">if (fishAge == 2 || fishAge == 3)</span></li>
+<li><span class="">if (favAnimal == "llama" || favAnimal == "alpaca")</span></li>
+</ul>
+<p><span style="color: #990000;"></span></p>
+<h3><span class="">Why the conditions must be explicit</span></h3>
+<p><span class="">The following statements:</span></p>
+<ul>
+<li>if (fishAge == 2 || 3)</li>
+<li>if (favAnimal == "llama" || "alpaca")</li>
+</ul>
+<p></p>
+<p>Are effectively making the statements:</p>
+<ul>
+<li>if (fishAge == 2)<em><strong> or</strong></em> if(3)</li>
+<li>if (favAnimal == "llama") <em><strong>or</strong></em> if("alpaca")</li>
+</ul>
+<p></p>
+<p><em><strong>if(</strong></em>"alpaca"<strong></strong><em><strong>)</strong></em> will cause an error because string values cannot be translated by R into a logical value (i.e., <em><strong>TRUE</strong> </em>or <em><strong>FALSE</strong></em>)</p>
+<p></p>
+<p>However, <em class="hl">R can translate all numeric values into a logical value</em>.&nbsp; In fact, all numeric values except <strong>0</strong>, get translated to <em><strong>TRUE</strong> </em>and <strong>0</strong> gets translated as <em><strong>FALSE</strong></em>.</p>
+<p></p>
+<p>So, <em><strong>3</strong></em>, when used in a conditional statement is <em><strong>TRUE</strong></em>, meaning <strong>if(</strong>fishAge == 2 || 3<strong>)</strong> is <em><strong>TRUE</strong> </em>no matter what the value of <em><strong>fishAge</strong> </em>is.</p>
+<h2 id="singleChar" class="extension">Extension: The single character logical operators: and ( &amp; ) or ( | )</h2>
+<p>You will often see the operators <em><strong>&amp;</strong></em> and<em><strong> |</strong> </em>used in place of <em><strong>&amp;&amp;</strong></em> and <em><strong>||</strong></em>.&nbsp; For all the examples we have done so far, the single logical operators (<em><strong>&amp;, |</strong></em>) are functionally equivalent to the double logical operators (<em><strong>&amp;&amp;, ||</strong></em>).&nbsp; This is because we have only looked at variables with one value.&nbsp; The functionality between the single and double logical operator change when we start dealing with <em class="hl">variables that have multiple values</em> (called <em class="hl">vectors</em>).&nbsp;&nbsp; We will talk more about this when we introduce vectors. Essentially, single logical operators look at individual values in vectors whereas double operators look at the whole vector.</p>
+<p><span style="color: #990000;"></span></p>
+</body>
+</html>
