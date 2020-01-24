@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>01-01: GGPlot Installation and Setup</title>
+	<meta charset="UTF-8">
+	<script>
+	function downloadDataUrlFromJavascript(filename, dataUrl) {
+
+    // Construct the 'a' element
+    var link = document.createElement("a");
+    link.download = filename;
+    link.target = "_blank";
+
+    // Construct the URI
+    link.href = dataUrl;
+    document.body.appendChild(link);
+    link.click();
+
+    // Cleanup the DOM
+    document.body.removeChild(link);
+    delete link;
+}
+
+/*		var fileContent = 'https://github.com/belinskyc/GGPlot-Class/raw/master/scripts/lesson01.R';
+		var fileName = 'ads.r';
+
+		const blob = new Blob([fileContent], { type: 'text/plain' });
+		const a = document.createElement('a');
+		a.setAttribute('download', fileName);
+		a.setAttribute('href', window.URL.createObjectURL(blob));
+		a.click();*/
+	
+/*fetch('https://github.com/belinskyc/GGPlot-Class/raw/master/scripts/lesson01.R')
+  .then(resp => resp.blob())
+  .then(blob => {
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    // the filename you want
+    a.download = 'a.r';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    alert('your file has downloaded!'); // or you know, something with better UX...
+  });
+  .catch(() => alert('oh no!'));*/
+
+//downloadURI("https://github.com/belinskyc/GGPlot-Class/raw/master/scripts/lesson01.R", "bb.r");
+  /*
+  function downloadFile(data, fileName, type="text/plain") 
+  {
+  // Create an invisible A element
+  const a = document.createElement("a");
+  a.style.display = "none";
+  document.body.appendChild(a);
+
+  // Set the HREF to a Blob representation of the data to be downloaded
+  a.href = window.URL.createObjectURL(
+    new Blob([data], { type })
+  );
+
+  // Use download attribute to set set desired file name
+  a.setAttribute("download", fileName);
+
+  // Trigger the download by simulating click
+  a.click();
+
+  // Cleanup
+  window.URL.revokeObjectURL(a.href);
+  document.body.removeChild(a);
+}
+*/
+function downloadFile(data, name = 'file', type = 'text/plain') {
+  const { createElement } = document
+  const { URL: { createObjectURL, revokeObjectURL }, setTimeout } = window
+
+  const blob = new Blob([data], { type })
+  const url = createObjectURL(blob)
+
+  const anchor = createElement('a')
+  anchor.setAttribute('href', url)
+  anchor.setAttribute('download', name)
+  anchor.click()
+
+  setTimeout(() => { revokeObjectURL(url) }, 100)
+}
+  
+	</script>
+</head>
+
+
+<body>
+<a id="download_link" download="this.r" href="" >Download as Text File</a>
+<br/><br/>
+<a href="data:text/plain;charset=UTF-8,https://github.com/belinskyc/GGPlot-Class/raw/master/scripts/lesson01.R" download>Click here--asdf</a>
+<br/><br/>
+<a href="https://github.com/belinskyc/GGPlot-Class/raw/master/scripts/lesson01.R" 
+	download="" target="_new">
+	Hello
+</a>
+<br/><br/>
+<a download="kjerk.sa"
+href="data:text/plain;base64,SGVsbG8sIHdvcmxkISBJJ20gZG93bmxvYWRlZCB2aWEgImRhdGE6dGV4dC9wbGFpbjsuLi4iIFVSTCB1c2luZyA8YSBkb3dubG9hZD0iZmlsZV9uYW1lIi4uLj4uDQpNeSBiaXJ0aHBsYWNlOiBodHRwOi8vc3RhY2tvdmVyZmxvdy5jb20vcXVlc3Rpb25zLzY0Njg1MTcvDQoNCk1vcmUgYWJvdXQ6DQpodHRwOi8vd3d3LnczLm9yZy9UUi9odG1sL2xpbmtzLmh0bWwjYXR0ci1oeXBlcmxpbmstZG93bmxvYWQNCmh0dHA6Ly93d3cudzMub3JnL1RSL2h0bWwvbGlua3MuaHRtbCNkb3dubG9hZGluZy1yZXNvdXJjZXMNCg0KQnJvd3NlciBzdXBwb3J0OiBodHRwOi8vY2FuaXVzZS5jb20vZG93bmxvYWQ=">
+    Download text file
+</a>
+<br/><br/>
+<a download="blah.r"
+href="data:text/plain;https://github.com/belinskyc/GGPlot-Class/raw/master/scripts/lesson01.R">
+    Download text file
+</a>
+<script>
+/*fetch('https://github.com/belinskyc/GGPlot-Class/raw/master/scripts/lesson01.R')
+  .then(response => response.text())
+  .then((data) => {
+    console.log(data)
+  })*/
+  
+ downloadDataUrlFromJavascript("aa.r", "https://github.com/belinskyc/GGPlot-Class/raw/master/scripts/lesson01.R")
+//	function Download(url) 
+//	{
+//    document.getElementById('my_iframe').src = url;
+//	};
+	//Download("https://github.com/belinskyc/GGPlot-Class/raw/master/scripts/lesson01.R");
+	
+	//downloadFile("https://github.com/belinskyc/GGPlot-Class/raw/master/scripts/lesson01.R", "bb.r")
+	</script>
+</body>
+</html>

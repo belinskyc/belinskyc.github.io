@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>01-01: GGPlot Installation and Setup</title>
+	<meta charset="UTF-8">
+
+</head>
+
+
+<body>
+<a href="https://belinskyc.github.io/test.r" download>Click here</a>
+<script>
+var xhr = new XMLHttpRequest();
+xhr.open('GET', 'blob:http%3A//github.com/belinskyc/GGPlot-Class/raw/master/scripts/lesson01.R', true);
+xhr.responseType = 'blob';alert(xhr);
+xhr.onload = function(e) {
+
+  if (this.status == 200) {
+    var myBlob = this.response;
+    // myBlob is now the blob that the object URL pointed to.
+  }
+};
+xhr.send();
+
+//blob = fetch("https://github.com/belinskyc/GGPlot-Class/raw/master/scripts/lesson01.R").then(r => r.blob());
+</script>
+</body>
+</html>
